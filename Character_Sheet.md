@@ -55,7 +55,7 @@
 
 ## 🛡️ Quick Stats
 * **Armor Class:** 19 (Layered: Base leather armor 12 + Dex 5 + Cloak/Flight Suit 1 + Dragon Scale Shoulder Pads 1)
-* **Hit Points:** 96 (Current: 96 / Max: 96)
+* **Hit Points:** 102 (Current: 102 / Max: 102)
 * **Initiative:** +5 (+8 entering combat)
 * **Speed:** 25 ft (Hopping) | 25 ft (Climbing) | 25 ft (Swimming)
 * **Proficiency Bonus:** +5
@@ -282,7 +282,7 @@
 ### 💍 Major Magic Items & Attunement
 *Current Attunement Slots: 2 / 3*
 
-* **Amulet +1:** ✅ **Attuned**. (Original Price: 700g).
+* **Amulet (+1 Ability Score):** ✅ **Attuned**. (Original Price: 700g). **Effect:** Increase one ability score by **+1**.
 * **Gloves of Swimming and Climbing:** ✅ **Attuned**. While wearing these gloves, you have a climbing speed and a swimming speed equal to your walking speed, and you gain a +5 bonus to Strength (Athletics) checks made to climb or swim.
 * **Tongue Ring of Taunting:** (Requires Attunement). *Magical Insult* (1/day): DC 14 CHA save or target is distracted for one turn.
 * **Beaded Crown Charm:** (Requires Attunement). (Original Price: 1000g). 1/day: When reduced to 0 HP, go to 1 HP instead.
@@ -313,6 +313,14 @@
 * **Lava Darts (x5):** 1d8 Piercing + Lava effects (Sticky).
 * **+1 Enchanted Darts (x135):** 1d8 Piercing + Magic damage. Purchased to mix with elements for new dart types.
 * **Standard Darts (x59):** 1d8 Piercing.
+
+> **Ammo tracking (Double-Barrel homebrew):** When you fire **2 shots of the same dart type** (one per barrel), it only consumes **1 dart** from inventory.
+>
+> - **2× Standard shots** → remove **1× Standard dart**
+> - **2× Fire shots** → remove **1× Fire dart**
+> - **1× Fire + 1× Standard** → remove **1× Fire** and **1× Standard**
+>
+> **Umbra shop pricing (typical):** Common magic darts average **~1 gp = 2 darts**.
 * **Ball Bearings (x989):** Non-lethal area denial.
 * **Dagger (+1 Fey Inverted Water Fall Blessing):** 1d4 + 6 damage. Range 20/60. (Original Price: 500g? - *Note: Dipped in Fey Inverted Water Fall Blessing*).
 * **Poison-Dipped Dagger:** Regular dagger with an unknown poison coating.
@@ -366,7 +374,7 @@
 
 **Core loop:** ranged skirmisher + spores druid control.
 
-- **AC 19**, **HP 96**, **Init +5** (often **+8** when entering combat).
+- **AC 19**, **HP 102**, **Init +5** (often **+8** when entering combat).
 - **Main weapon:** Vanguard Double-Barrel Blowgun (+1).
 - **Common turns:** **4 shots**; **first round:** **6 shots**.
 - **Key passives:** Perception 19.
