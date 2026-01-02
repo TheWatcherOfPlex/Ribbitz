@@ -91,6 +91,12 @@
 | **CHA** | 8 | -1 | -1 |
 
 **Skills:**
+
+### ⭐ Proficiencies (at a glance)
+
+**Saving Throws:** ⭐ DEX, ⭐ WIS  \
+**Skills:** ⭐ Acrobatics, ⭐ Arcana, ⭐ Medicine, ⭐ Nature, ⭐ Perception, ⭐ Stealth, ⭐ Survival
+
 - ⭐ **Acrobatics:** +5 (DEX)
 - **Animal Handling:** +4 (WIS)
 - ⭐ **Arcana:** +4 (INT -1 + Prof 5)
