@@ -78,38 +78,41 @@
 ---
 
 ## 📊 Ability Scores & Skills
+
+> **Legend:** ⭐ = proficient (adds PB)
+
 | Stat | Score | Mod | Save |
-| :--- | :---: | :---: | :--- |
-| **STR** | 14 | +2 | [ ] +2 |
-| **DEX** | 20 | +5 | [x] +10 |
-| **CON** | 16 | +3 | [ ] +3 |
-| **INT** | 9 | -1 | [ ] -1 |
-| **WIS** | 18 | +4 | [x] +9 |
-| **CHA** | 8 | -1 | [ ] -1 |
+| :--- | :---: | :---: | :---: |
+| **STR** | 14 | +2 | +2 |
+| **DEX** | 20 | +5 | ⭐ +10 |
+| **CON** | 16 | +3 | +3 |
+| **INT** | 9 | -1 | -1 |
+| **WIS** | 18 | +4 | ⭐ +9 |
+| **CHA** | 8 | -1 | -1 |
 
 **Skills:**
-- [x] **Acrobatics:** +5 (DEX)
-- [ ] **Animal Handling:** +4 (WIS)
-- [x] **Arcana:** +4 (INT -1 + Prof 5)
-- [ ] **Athletics:** +2 (STR)
+- ⭐ **Acrobatics:** +5 (DEX)
+- **Animal Handling:** +4 (WIS)
+- ⭐ **Arcana:** +4 (INT -1 + Prof 5)
+- **Athletics:** +2 (STR)
   - *Gloves of Swimming and Climbing:* **Add +5** (+7 Total) and no extra movement cost for Swimming or Climbing.
-- [ ] **Deception:** -1 (CHA)
-- [ ] **History:** -1 (INT)
-- [ ] **Insight:** +4 (WIS)
-- [ ] **Intimidation:** -1 (CHA)
-- [ ] **Investigation:** -1 (INT)
-- [x] **Medicine:** +9 (WIS 4 + Prof 5)
+- **Deception:** -1 (CHA)
+- **History:** -1 (INT)
+- **Insight:** +4 (WIS)
+- **Intimidation:** -1 (CHA)
+- **Investigation:** -1 (INT)
+- ⭐ **Medicine:** +9 (WIS 4 + Prof 5)
   - *Natural Explorer:* **Add +5** (+14 Total) in Swamp/Forest
-- [x] **Nature:** +4 (INT -1 + Prof 5)
+- ⭐ **Nature:** +4 (INT -1 + Prof 5)
   - *Natural Explorer:* **Add +5** (+9 Total) in Swamp/Forest
-- [x] **Perception:** +9 (WIS 4 + Prof 5)
+- ⭐ **Perception:** +9 (WIS 4 + Prof 5)
   - *Natural Explorer:* **Add +5** (+14 Total) in Swamp/Forest
-- [ ] **Performance:** -1 (CHA)
-- [ ] **Persuasion:** -1 (CHA)
-- [ ] **Religion:** -1 (INT)
-- [ ] **Sleight of Hand:** +5 (DEX)
-- [x] **Stealth:** +10 (DEX 5 + Prof 5)
-- [x] **Survival:** +9 (WIS 4 + Prof 5)
+- **Performance:** -1 (CHA)
+- **Persuasion:** -1 (CHA)
+- **Religion:** -1 (INT)
+- **Sleight of Hand:** +5 (DEX)
+- ⭐ **Stealth:** +10 (DEX 5 + Prof 5)
+- ⭐ **Survival:** +9 (WIS 4 + Prof 5)
   - *Natural Explorer:* **Add +5** (+14 Total) in Swamp/Forest
 
 *Languages: Common, Grung/Frog Folk, Yuan-ti (Parseltongue), Orcish, Druidic.*
@@ -273,10 +276,10 @@
 ### 💍 Major Magic Items & Attunement
 *Current Attunement Slots: 2 / 3*
 
-* [ ] **Amulet +1:** (✅ **Attuned**). (Original Price: 700g).
-* [ ] **Gloves of Swimming and Climbing:** (✅ **Attuned**). While wearing these gloves, you have a climbing speed and a swimming speed equal to your walking speed, and you gain a +5 bonus to Strength (Athletics) checks made to climb or swim.
-* [ ] **Tongue Ring of Taunting:** (Requires Attunement). *Magical Insult* (1/day): DC 14 CHA save or target is distracted for one turn.
-* [ ] **Beaded Crown Charm:** (Requires Attunement). (Original Price: 1000g). 1/day: When reduced to 0 HP, go to 1 HP instead.
+* **Amulet +1:** ✅ **Attuned**. (Original Price: 700g).
+* **Gloves of Swimming and Climbing:** ✅ **Attuned**. While wearing these gloves, you have a climbing speed and a swimming speed equal to your walking speed, and you gain a +5 bonus to Strength (Athletics) checks made to climb or swim.
+* **Tongue Ring of Taunting:** (Requires Attunement). *Magical Insult* (1/day): DC 14 CHA save or target is distracted for one turn.
+* **Beaded Crown Charm:** (Requires Attunement). (Original Price: 1000g). 1/day: When reduced to 0 HP, go to 1 HP instead.
 * **Sky Warden Bow +2:** Magical weapon. (Original Price: 350g).
 
 ### 🧪 Combat Consumables
