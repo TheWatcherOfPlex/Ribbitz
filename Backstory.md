@@ -1,4 +1,49 @@
-# The Legend of Ribbits
+<!--
+Ribbitz document: Backstory
+Primary purpose: narrative + quick summary.
+-->
+
+# 📜 Backstory (Ribbitz)
+
+**Navigation:**
+- ⬅️ [README](./README.md)
+- 📄 [Basic Stats](./Basic%20Stats.md)
+- ⚔️ [Actions](./Actions.md)
+- 🎒 [Inventory](./Inventory.md)
+- ✨ [Class Features](./Class%20Features.md)
+- ✨ [Spells & Magic Abilities](./Spells_and_Magic_Abilities.md)
+
+---
+
+## Summary
+
+<details>
+<summary><h3>PreCampaign Ribbitz Backstory (click to expand)</h3></summary>
+
+*"Those who have seen, have the sight."*
+
+* **Origins:** Born in the Genesis Pond under **The Great Golden Risabere** on Mt. Zenith. Raised in the **Caverns of Consciousness** to study farm management and plant lore.
+* **Mentorship:** Studied under **Darako** (Blue Grung), mastering medicinal herbs, smokes, and tonics.
+* **The Restless Purple:** Unlike traditional Purple Grung, Ribbitz longed for the outside. He befriended **Perac** (Orange Grung hunter) and begged to join the hunt.
+* **The Double Hop Stomp:** Developed a signature hunting technique with Perac, combining Ribbitz's thirst-poison and Perac's fear-poison to drive boars into river-side traps.
+* **The Ascension:** During his ceremony, Ribbitz presented Risabere with Moose antlers and the **Arcana Maximus** (lighting-blue mushroom).
+* **Eyes of the Golden:** In an unprecedented move, Risabere named Ribbitz and Perac as the first "Eyes of the Golden"—royal seeker-rangers sent to investigate new powers and find allies.
+* **Awakened Magic:** Blessed with glowing azure eye markings and having consumed the Blue Mushroom, Ribbitz's "frog magic" was unlocked.
+* **The Journey South:** Dispatched to human settlements to trade for secrets and learn about the world. He was last seen at **Umbra Academy** undergoing trials.
+
+**Key Names & Figures:**
+* **The Great Golden Risabere:** Visionary King; established meritocratic "Ascension" and reformatory "Fall."
+* **Perac (Orange):** Best friend, hunting mentor, and fellow "Eye of the Golden."
+* **Darako (Blue):** Medicinal mentor; still cares for Ribbitz's gardens in the caverns.
+* **Adalle Retovic:** Wizard of Talgar whose stranded accounts preserve these legends.
+* **Simon Smeck:** Translator of Ribbitz's legend into Common.
+* **Dr. Daryll Fenham, Ph.D.:** Recipient and archivist of the translated accounts.
+
+</details>
+
+---
+
+## Full Story — The Legend of Ribbits
 
 Preface: This story has been translated to Common by Simon Smeck, penman to Dr. Daryll Fenham, Ph.D. The original source work is based on the writings of Adalle Retovic, a wizard from Talgar who found himself living among the Grung after a failed flight spell left him injured on Mt. Zenith. It is worth noting that the Grung prefer to rely on spoken tradition rather than written. These works should be considered, like all legends, to be a loose accounting of events in those days. The Grung themselves use the tales for illustrative purposes rather than statements of fact.
 

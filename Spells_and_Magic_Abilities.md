@@ -6,6 +6,14 @@ Do not publish/distribute.
 
 # ✨ Spells & Magic Abilities — PRIVATE (Ribbitz)
 
+**Navigation:**
+- ⬅️ [README](./README.md)
+- 📄 [Basic Stats](./Basic%20Stats.md)
+- ⚔️ [Actions](./Actions.md)
+- 🎒 [Inventory](./Inventory.md)
+- ✨ [Class Features](./Class%20Features.md)
+- 📜 [Backstory](./Backstory.md)
+
 > **Purpose:** Full-reference sheet for running Ribbitz at the table.
 >
 > - **Spell/feature rules text** goes here (paste official text).
@@ -406,6 +414,11 @@ Each spell/feature section has:
 ### Official Text
 > (paste spell text here)
 
+
+#  5th and 6th Level Spells
+
+**Ribbits has not learned any 5th or 6th level spells yet, but he can upcast a lower level spell at a 5th or 6th level**
+
 ---
 
 # 🧬 Magic Abilities (Non-Spell)
@@ -474,7 +487,17 @@ Each spell/feature section has:
 **Source:** *(Homebrew / table doc)*
 
 ### Official Text
-> (paste feature text here)
+**Song of the Grung — Con Save (Spell Save DC)**
+
+- **1/Long Rest cooldown**
+- **Casting time:** 1 action — croak into blowgun
+- **Limit:** 1 use per day
+- **Range:** 30 ft line originating from caster
+- **Effect:** Create a wave of thunderous force; **all creatures** in the line must make a CON save or take **2d8 thunder damage**.
+- **On a successful save:** Targets take **half** damage
+- **On a failed save:** Targets take full damage and are **deafened for 1 minute**
+- **Push:** On a failed save, the creature is pushed **10 ft** away from the caster
+- **Targets within 15 ft of the caster** are **deafened for 1 turn**
 
 ### Ribbitz Notes / Math
 - <span style="color: #8a2be2;"><b>DC 17</b></span> (uses Spell Save DC)
