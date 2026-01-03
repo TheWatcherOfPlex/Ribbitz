@@ -22,6 +22,7 @@ Primary purpose: Class + feat rules reference + level-scaled trackers.
 ### Frog Eyes
 - **Darkvision:** 60 ft.
 - Eyes are usually the same color as the frog, but turn a glowing red or green if alignment drops to evil.
+- + `30 ft (Umbral Sight)` for a total of 90 ft of darkvision
 
 ### Ability Score Increase
 - DEX +2, CON +1 (already applied to Ribbitz totals).
