@@ -47,7 +47,7 @@
 * **Simon Smeck:** Translator of Ribbitz's legend into Common.
 * **Dr. Daryll Fenham, Ph.D.:** Recipient and archivist of the translated accounts.
 
-*See official “Ribbits Backstory” document for full details.*
+**See the full story here:** [Backstory.md](./Backstory.md)
 
 </details>
 
@@ -60,7 +60,7 @@
 * **Speed:** 25 ft (Hopping) | 25 ft (Climbing) | 25 ft (Swimming)
 * **Sight / Vision:**
   - **Normal sight:** Standard line-of-sight (5e doesn’t use a hard ft limit; the DM sets visibility based on terrain, lighting, fog, etc.)
-  - **Darkvision:** **30 ft** (from **Umbral Sight**; Grung has no default darkvision)
+  - **Darkvision:** **90 ft** = `60 ft (Frog Eyes racial)` + `30 ft (Umbral Sight)`
 * **Proficiency Bonus:** +5
 
 ### 🧮 DCs & Core Numbers (with breakdown)
@@ -70,7 +70,7 @@
 - **Spell Save DC 17** = `8 + ProficiencyBonus (5) + Wisdom mod (4)`
 - **Spell Attack +9** = `ProficiencyBonus (5) + Wisdom mod (4)`
 - **Poison Skin DC 17** = `12 + ProficiencyBonus (5)`
-- **Poison Weapon DC 17** = `12 + ProficiencyBonus (5)`
+- **Poison Weapon DC 17** = `9 + ProficiencyBonus (5) + CON mod (3)`
 - **Song of the Grung DC 17** = `Spell Save DC (17)`
 * **Passives:**
   - **Perception:** 19
@@ -82,6 +82,7 @@
 ## 🐸 Racial / Homebrew Traits
 * **Eyes:** Gold eyes that glow a brighter gold when in communication or observation of the Great Golden.
 * **Amphibious:** Breathe in both air and water (Current limit 1 hour).
+* **Camouflage (Racial):** Proficiency in the Stealth skill.
 * **Active Camo (Bonus Action / PB uses per Long Rest):** Ribbitz becomes translucent and gains advantage on Stealth checks for up to 1 hour.
 * **Jumping (Hopping):**
   - **Long Jump:** (running start) = **d20 + (STR or DEX) + Proficiency** (Result = movement in feet).
@@ -172,11 +173,12 @@
 * **Unarmed Strike:** +7 to hit, 1 + 2 bludgeoning
 * **Bite (Grung):** +7 to hit, 1d6 + 2 piercing
 * **Tongue Slap (Grung):** +7 to hit, 1d8 + 2 bludgeoning (Range 10/15)
+* **Tongue Slap (Grung / Homebrew v4):** +7 to hit, **1d6 + STR mod (2) piercing** (Range 10/15)
 
 ### Special Actions
-* **Tongue Grapple:** Range 10/15. DC Dex/Acrobatics vs your Strength/Athletics. Can move enemy 10ft.
-* **Poison Skin (Passive/Touch):** Enemy touches you/hits with melee: CON Save DC **17** or Poisoned for 1 min.
-* **Poison Weapon (Action):** Apply Grung poison to weapon. +2d4 Poison damage. CON Save **17**.
+* **Tongue Grapple:** Range 10/15. DC Dex/Acrobatics vs your Strength/Athletics. Can move enemy 10ft. **Uses:** PB per Long Rest (PB=5).
+* **Poison Skin (Passive/Touch):** Any creature that grapples you or comes into direct contact with your skin or saliva must succeed on a CON save **DC 17** (`12 + PB`) or become Poisoned for 1 minute. A poisoned creature no longer in contact with you can repeat the save at the end of each of its turns, ending the effect on a success.
+* **Poison Weapon (Bonus Action):** Apply Grung poison to a weapon. Target must succeed on a CON save **DC 17** = `9 + PB (5) + CON mod (3)` to take the poison’s effect. Uses: PB per day (PB=5). Only if you’ve submerged/moistened your skin within the last 24 hours.
 * **Halo of Spores (Reaction):** Enemy within 10ft. CON Save vs Spell DC (17) or **1d6** necrotic damage (*roll the damage die twice (2d6 total) with Symbiotic Entity active*).
 
 ### Blowgun Special Options
@@ -199,7 +201,7 @@
 * **Primeval Awareness (PHB 92):** Action to expend spell slot to sense creature types.
 * **Extra Attack (PHB 92):** Attack twice instead of once with the Attack action.
 * **Dread Ambusher (XGtE 42):** +4 Initiative. 1st turn of combat: +10ft speed. 1st turn attack: +1 extra weapon attack for +1d8 damage.
-* **Umbral Sight (XGtE 42):** Darkvision: **30 ft** (Grung has none by default). Invisible to creatures relying on darkvision in darkness.
+* **Umbral Sight (XGtE 42):** Darkvision increases by **+30 ft** (stacks with Frog Eyes racial darkvision). Invisible to creatures relying on darkvision in darkness.
 
 ### Druid 9 (Circle of Spores)
 * **Druidic (PHB 66):** Secret magic language.

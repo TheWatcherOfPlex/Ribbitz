@@ -28,11 +28,18 @@ Welcome! This repo is a **shareable, DM-friendly home** for Ribbitz’s characte
 
 ---
 
+### 📜 Backstory
+
+- [Backstory.md](./Backstory.md)
+
+---
+
 ## 🧭 Quick Links
 
 - 📄 **Character Sheet:** [Character_Sheet.md](./Character_Sheet.md)
 - ✨ **Spells & Magic (Private):** [Spells_and_Magic_Abilities_PRIVATE.md](./Spells_and_Magic_Abilities_PRIVATE.md)
 - 🌐 **Spells & Magic (Public):** [Spells_and_Magic_Abilities_PUBLIC.md](./Spells_and_Magic_Abilities_PUBLIC.md)
+- 📜 **Backstory:** [Backstory.md](./Backstory.md)
 
 ---
 
@@ -47,7 +54,7 @@ For now:
 
 Later we’ll add:
 
-- 📜 Backstory (full)
+- 📜 Backstory (full) ✅
 - ✨ Spell lists / prepared spell loadouts
 - 🎒 Inventory breakdown
 - 🧰 Dice macros / roller files
