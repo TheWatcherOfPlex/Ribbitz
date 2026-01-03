@@ -11,20 +11,33 @@ Welcome! This repo is a **shareable, DM-friendly home** for Ribbitz’s characte
 
 ## 📌 Start Here
 
-### ✅ Character Sheet
+➡️ **Start with Basic Stats (main sheet):**
 
-➡️ **Read the full sheet here:**
-
-**[📄 Ribbitz_Character_Sheet.md](./Character_Sheet.md)**
+**[📄 Basic Stats.md](./Basic%20Stats.md)**
 
 ---
 
 ### ✨ Spells & Magic Abilities
 
-- 🔒 **Private (paste full spell/feature text here):**
-  - [Spells_and_Magic_Abilities_PRIVATE.md](./Spells_and_Magic_Abilities_PRIVATE.md)
-- 🌐 **Public (safe-to-share index + citations only):**
-  - [Spells_and_Magic_Abilities_PUBLIC.md](./Spells_and_Magic_Abilities_PUBLIC.md)
+- [Spells_and_Magic_Abilities.md](./Spells_and_Magic_Abilities.md)
+
+---
+
+### ⚔️ Actions (Combat)
+
+- [Actions.md](./Actions.md)
+
+---
+
+### 🎒 Inventory
+
+- [Inventory.md](./Inventory.md)
+
+---
+
+### ✨ Class Features
+
+- [Class Features.md](./Class%20Features.md)
 
 ---
 
@@ -36,9 +49,11 @@ Welcome! This repo is a **shareable, DM-friendly home** for Ribbitz’s characte
 
 ## 🧭 Quick Links
 
-- 📄 **Character Sheet:** [Character_Sheet.md](./Character_Sheet.md)
-- ✨ **Spells & Magic (Private):** [Spells_and_Magic_Abilities_PRIVATE.md](./Spells_and_Magic_Abilities_PRIVATE.md)
-- 🌐 **Spells & Magic (Public):** [Spells_and_Magic_Abilities_PUBLIC.md](./Spells_and_Magic_Abilities_PUBLIC.md)
+- 📄 **Basic Stats (Main):** [Basic Stats.md](./Basic%20Stats.md)
+- ⚔️ **Actions (Combat):** [Actions.md](./Actions.md)
+- 🎒 **Inventory:** [Inventory.md](./Inventory.md)
+- ✨ **Class Features:** [Class Features.md](./Class%20Features.md)
+- ✨ **Spells & Magic Abilities:** [Spells_and_Magic_Abilities.md](./Spells_and_Magic_Abilities.md)
 - 📜 **Backstory:** [Backstory.md](./Backstory.md)
 
 ---
@@ -47,16 +62,16 @@ Welcome! This repo is a **shareable, DM-friendly home** for Ribbitz’s characte
 
 For now:
 
-- **Character_Sheet.md** — the full (formatted) sheet
-
-- **Spells_and_Magic_Abilities_PRIVATE.md** — full spell/feature reference (paste official text; not for distribution)
-- **Spells_and_Magic_Abilities_PUBLIC.md** — shareable index (citations only)
+- **Basic Stats.md** — main sheet (numbers, skills, core homebrew)
+- **Actions.md** — combat reference (blowgun system, poisons, special actions)
+- **Inventory.md** — gear, consumables, ammo, valuables
+- **Class Features.md** — ranger/druid features, feats, and Grung v4 racial rules
+- **Spells_and_Magic_Abilities.md** — spell text + trackers (private)
+- **Backstory.md** — story + summary
 
 Later we’ll add:
 
-- 📜 Backstory (full) ✅
-- ✨ Spell lists / prepared spell loadouts
-- 🎒 Inventory breakdown
+- ✨ Prepared spell loadouts (per day)
 - 🧰 Dice macros / roller files
 - 🖼️ Weapon images & handouts
 
