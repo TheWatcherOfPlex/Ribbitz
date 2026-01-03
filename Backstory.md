@@ -11,7 +11,7 @@ Primary purpose: narrative + quick summary.
 - ⚔️ [Actions](./Actions.md)
 - 🎒 [Inventory](./Inventory.md)
 - ✨ [Class Features](./Class%20Features.md)
-- ✨ [Spells & Magic Abilities](./Spells_and_Magic_Abilities.md)
+- ✨ [Spells & Magic Abilities](./Spells%20and%20Magic%20Abilities.md)
 
 ---
 

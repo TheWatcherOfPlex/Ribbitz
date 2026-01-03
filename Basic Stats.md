@@ -10,7 +10,7 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 - ⚔️ [Actions](./Actions.md)
 - 🎒 [Inventory](./Inventory.md)
 - ✨ [Class Features](./Class%20Features.md)
-- ✨ [Spells & Magic Abilities](./Spells_and_Magic_Abilities.md)
+- ✨ [Spells & Magic Abilities](./Spells%20and%20Magic%20Abilities.md)
 - 📜 [Backstory](./Backstory.md)
 
 > **Ribbitz** is a **Level 15** Grung (Homebrew): **Ranger 6 (Gloom Stalker)** / **Druid 9 (Circle of Spores)**.

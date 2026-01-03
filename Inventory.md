@@ -10,7 +10,7 @@ Primary purpose: full inventory reference.
 - 📄 [Basic Stats](./Basic%20Stats.md)
 - ⚔️ [Actions](./Actions.md)
 - ✨ [Class Features](./Class%20Features.md)
-- ✨ [Spells & Magic Abilities](./Spells_and_Magic_Abilities.md)
+- ✨ [Spells & Magic Abilities](./Spells%20and%20Magic%20Abilities.md)
 - 📜 [Backstory](./Backstory.md)
 
 ---

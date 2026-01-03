@@ -10,7 +10,7 @@ Primary purpose: combat reference with clear action economy.
 - 📄 [Basic Stats](./Basic%20Stats.md)
 - 🎒 [Inventory](./Inventory.md)
 - ✨ [Class Features](./Class%20Features.md)
-- ✨ [Spells & Magic Abilities](./Spells_and_Magic_Abilities.md)
+- ✨ [Spells & Magic Abilities](./Spells%20and%20Magic%20Abilities.md)
 - 📜 [Backstory](./Backstory.md)
 
 ---
@@ -111,7 +111,7 @@ That flat 8 damage was too strong, so the DM converted it to **1d8**.
 - **Damage:** `2d8` thunder (half on success)
 - **On failed save:** push 10 ft away from caster; deafened rider effects
 
-> Full text + trackers live in: [Spells & Magic Abilities](./Spells_and_Magic_Abilities.md)
+> Full text + trackers live in: [Spells & Magic Abilities](./Spells%20and%20Magic%20Abilities.md)
 
 ### Double-Barrel (Bonus Action)
 - Shoot at multiple (2) enemies.

@@ -10,7 +10,7 @@ Primary purpose: Class + feat rules reference + level-scaled trackers.
 - 📄 [Basic Stats](./Basic%20Stats.md)
 - ⚔️ [Actions](./Actions.md)
 - 🎒 [Inventory](./Inventory.md)
-- ✨ [Spells & Magic Abilities](./Spells_and_Magic_Abilities.md)
+- ✨ [Spells & Magic Abilities](./Spells%20and%20Magic%20Abilities.md)
 - 📜 [Backstory](./Backstory.md)
 
 ---
