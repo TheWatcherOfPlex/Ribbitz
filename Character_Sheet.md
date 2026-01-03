@@ -58,7 +58,20 @@
 * **Hit Points:** 102 (Current: 102 / Max: 102)
 * **Initiative:** +5 (+8 entering combat)
 * **Speed:** 25 ft (Hopping) | 25 ft (Climbing) | 25 ft (Swimming)
+* **Sight / Vision:**
+  - **Normal sight:** Standard line-of-sight (5e doesn’t use a hard ft limit; the DM sets visibility based on terrain, lighting, fog, etc.)
+  - **Darkvision:** **30 ft** (from **Umbral Sight**; Grung has no default darkvision)
 * **Proficiency Bonus:** +5
+
+### 🧮 DCs & Core Numbers (with breakdown)
+
+> These are here so if the DM asks “how did you get that number?” you can point to the exact math.
+
+- **Spell Save DC 17** = `8 + ProficiencyBonus (5) + Wisdom mod (4)`
+- **Spell Attack +9** = `ProficiencyBonus (5) + Wisdom mod (4)`
+- **Poison Skin DC 17** = `12 + ProficiencyBonus (5)`
+- **Poison Weapon DC 17** = `12 + ProficiencyBonus (5)`
+- **Song of the Grung DC 17** = `Spell Save DC (17)`
 * **Passives:**
   - **Perception:** 19
   - **Insight:** 14
@@ -135,20 +148,26 @@
   - **Standard Damage (per barrel shot):** 1d8 piercing
   - **Heavy Hit (Sharpshooter) (per barrel shot):** +8 (Standard Hit -5)
   - **Heavy Damage (Sharpshooter) (per barrel shot):** 1d8 + 10 piercing
-  - **Arcane Darts:** 1d8 + 1d6 [Enchanted / Water / Fire / Lava] damage
-  - **Note (Damage History):** This weapon originally dealt **8 flat** (1 base + DEX + Fey Inverted Water Fall + a damage-only bonus). Flat 8 was too strong, so the DM converted it to **1d8**.
+  - **Arcane / Elemental Darts (rolled separately):**
+    - **Piercing:** `1d8` per hit
+    - **Elemental:** `1d6` per hit *(roll separately so the DM can split damage types cleanly)*
+  - **Macro Order (fast turns):**
+    1) **Hit:** Blowgun `Std/Hv xN Atk`
+    2) **Piercing:** Blowgun `Std/Hv xN Dmg`
+    3) **Elemental:** Blowgun `Elemental xN Dmg`
+  - **Note (Damage History):** This weapon originally dealt **8 flat** (1 base + DEX + 1 Fey Inverted Water Fall Blessing + a damage-only bonus from Rob Catagasts forge). The flat 8 damage was too strong, so the DM converted it to **1d8**.
   - **Double-Barrel (Homebrew):** When you take the Attack action with the blowgun, you can fire **2 shots per attack** (one per barrel).
   - **Shots per turn:**
     - Normal turns: **4 shots** (2 attacks × 2 barrels)
     - First round (Dread Ambusher): **6 shots** (3 attacks × 2 barrels)
   - **Range:** 25/100 *(Sharpshooter: no disadvantage beyond normal range; long-range shots up to 100 have no penalty).*
   - **Properties:** Loading, Weight 6 lbs, +1 Magic Weapon
-* **Dagger (+1 Fey Inverted Water Fall Blessing / Magical):**
-  - **Melee Hit:** +11 (+5 DEX, +5 PB, +1 Magic) | **Damage:** 1d4 + 6 piercing
-  - **Thrown Hit:** +11 | **Damage:** 1d4 + 6 piercing | **Range:** 20/60
+* **Dagger (Magic, +1 Fey Inverted Water Fall Blessing):**
+  - **Melee:** Hit `+11` = `PB 5 + DEX 5 + Magic 1` | Dmg `1d4 + 6` = `1d4 + DEX 5 + Magic 1`
+  - **Thrown:** Hit `+11` = `PB 5 + DEX 5 + Magic 1` | Dmg `1d4 + 6` = `1d4 + DEX 5 + Magic 1` | **Range:** 20/60
 * **Dagger (Poison-Dipped / Non-Magical):**
-  - **Melee Hit:** +10 (+5 DEX, +5 PB) | **Damage:** 1d4 + 5 piercing
-  - **Thrown Hit:** +10 | **Damage:** 1d4 + 5 piercing | **Range:** 20/60
+  - **Melee:** Hit `+10` = `PB 5 + DEX 5` | Dmg `1d4 + 5` = `1d4 + DEX 5`
+  - **Thrown:** Hit `+10` = `PB 5 + DEX 5` | Dmg `1d4 + 5` = `1d4 + DEX 5` | **Range:** 20/60
   - *Note:* Currently dipped in an unknown poison (Ask DM for effects upon use).
 * **Unarmed Strike:** +7 to hit, 1 + 2 bludgeoning
 * **Bite (Grung):** +7 to hit, 1d6 + 2 piercing
@@ -180,7 +199,7 @@
 * **Primeval Awareness (PHB 92):** Action to expend spell slot to sense creature types.
 * **Extra Attack (PHB 92):** Attack twice instead of once with the Attack action.
 * **Dread Ambusher (XGtE 42):** +4 Initiative. 1st turn of combat: +10ft speed. 1st turn attack: +1 extra weapon attack for +1d8 damage.
-* **Umbral Sight (XGtE 42):** Darkvision +30ft. Invisible to creatures relying on darkvision in darkness.
+* **Umbral Sight (XGtE 42):** Darkvision: **30 ft** (Grung has none by default). Invisible to creatures relying on darkvision in darkness.
 
 ### Druid 9 (Circle of Spores)
 * **Druidic (PHB 66):** Secret magic language.
@@ -200,6 +219,11 @@
 ## 📜 Spellcasting
 **Ability:** Wisdom | **Spell Save DC:** 17 | **Spell Attack:** +9
 
+> **Quick Reference Only:** This section lists what Ribbitz has available.
+> For full spell/feature text + trackers, see:
+> - 🔒 [Spells_and_Magic_Abilities_PRIVATE.md](./Spells_and_Magic_Abilities_PRIVATE.md)
+> - 🌐 [Spells_and_Magic_Abilities_PUBLIC.md](./Spells_and_Magic_Abilities_PUBLIC.md)
+
 ### Spell Slots (Standard Multiclass Level 12 - PHB 164-165)
 | 1st | 2nd | 3rd | 4th | 5th | 6th |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -210,7 +234,9 @@
 ### Prepared Spells
 * **Cantrips:** Guidance (Druid), Poison Spray (Druid), Primal Savagery (Druid), Chill Touch (Circle), **Gust** (Gift from Nine the Pixie Queen).
 
-#### 1st Level
+<details>
+<summary><h4>1st Level</h4></summary>
+
 * **Cure Wounds** (Druid | PHB 230)
 * **Speak with Animals** (Druid | PHB 277 | Ritual)
 * **Wild Cunning (UA)** (Druid | Ritual)
@@ -223,7 +249,11 @@
 * **Disguise Self** (Ranger | PHB 233)
 * **Hunter's Mark** (Feat | PHB 251 | Conc)
 
-#### 2nd Level
+</details>
+
+<details>
+<summary><h4>2nd Level</h4></summary>
+
 * **Healing Spirit** (Druid | XGtE 157 | Conc)
 * **Moonbeam** (Druid | PHB 261 | Conc)
 * **Gust of Wind** (Druid | PHB 248 | Conc)
@@ -234,16 +264,26 @@
 * **Blindness/Deafness** (Circle | PHB 219)
 * **Gentle Repose** (Circle | PHB 245 | Ritual)
 
-#### 3rd Level
+</details>
+
+<details>
+<summary><h4>3rd Level</h4></summary>
+
 * **Dispel Magic** (Druid | PHB 234)
 * **Revivify** (Druid | PHB 272)
 * **Animate Dead** (Circle | PHB 212)
 * **Gaseous Form** (Circle | PHB 244)
 
-#### 4th Level
+</details>
+
+<details>
+<summary><h4>4th Level</h4></summary>
+
 * **Polymorph** (Druid | PHB 266 | Conc)
 * **Blight** (Circle | PHB 219)
 * **Confusion** (Circle | PHB 224 | Conc)
+
+</details>
 
 ---
 

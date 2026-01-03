@@ -19,9 +19,20 @@ Welcome! This repo is a **shareable, DM-friendly home** for Ribbitz’s characte
 
 ---
 
+### ✨ Spells & Magic Abilities
+
+- 🔒 **Private (paste full spell/feature text here):**
+  - [Spells_and_Magic_Abilities_PRIVATE.md](./Spells_and_Magic_Abilities_PRIVATE.md)
+- 🌐 **Public (safe-to-share index + citations only):**
+  - [Spells_and_Magic_Abilities_PUBLIC.md](./Spells_and_Magic_Abilities_PUBLIC.md)
+
+---
+
 ## 🧭 Quick Links
 
 - 📄 **Character Sheet:** [Character_Sheet.md](./Character_Sheet.md)
+- ✨ **Spells & Magic (Private):** [Spells_and_Magic_Abilities_PRIVATE.md](./Spells_and_Magic_Abilities_PRIVATE.md)
+- 🌐 **Spells & Magic (Public):** [Spells_and_Magic_Abilities_PUBLIC.md](./Spells_and_Magic_Abilities_PUBLIC.md)
 
 ---
 
@@ -30,6 +41,9 @@ Welcome! This repo is a **shareable, DM-friendly home** for Ribbitz’s characte
 For now:
 
 - **Character_Sheet.md** — the full (formatted) sheet
+
+- **Spells_and_Magic_Abilities_PRIVATE.md** — full spell/feature reference (paste official text; not for distribution)
+- **Spells_and_Magic_Abilities_PUBLIC.md** — shareable index (citations only)
 
 Later we’ll add:
 
@@ -45,4 +59,3 @@ Later we’ll add:
 
 - This is a living document repo — sections may change as the campaign evolves.
 - If you’re the DM: feel free to browse and reference during sessions.
-
