@@ -39,10 +39,11 @@ Primary purpose: full inventory reference.
 * **Leather individual-Toe Boots:** Custom-made leather boots with individual toe slots designed specifically for Grung anatomy.
 
 ### 💍 Major Magic Items & Attunement
-*Current Attunement Slots: 2 / 3*
+*Current Attunement Slots: 3 / 3*
 
 * **Amulet (+1 Ability Score):** ✅ **Attuned**. (Original Price: 700g). **Effect:** Increase one ability score by **+1**.
 * **Gloves of Swimming and Climbing:** ✅ **Attuned**. While wearing these gloves, you have a climbing speed and a swimming speed equal to your walking speed, and you gain a +5 bonus to Strength (Athletics) checks made to climb or swim.
+* **Ring of Cold Resistance:** ✅ **Attuned**. (Original Price: 625g). **Effect:** Cold Resistance - 1/2 damage from cold.
 * **Tongue Ring of Taunting:** (Requires Attunement). *Magical Insult* (1/day): DC 14 CHA save or target is distracted for one turn.
 * **Beaded Crown Charm:** (Requires Attunement). (Original Price: 1000g). 1/day: When reduced to 0 HP, go to 1 HP instead.
 * **Skywarden's Longbow +2:** (Original Price: 350g). +2 magic weapon. No attunement required.
@@ -67,7 +68,7 @@ Primary purpose: full inventory reference.
   - **Ink Cap Poison (3 doses):** CON Save 17, 3d6 poison damage and poisoned condition. (Can dose with all 3 simultaneously to auto-win the DC).
   - **Paralysis Poison (2 vials):** Target is paralyzed.
   - **Venom Berry Extract (x5):** 1d4 poison damage every round. Effects stack. Can be cured by status-curing magic.
-  - **Zibbit Basic Poison:** 1d4 poison damage on hit. **DC 17 CON save** or poisoned. (Standard poison with higher DC).
+  - **Zibbit Basic Poison (x4):** 1d4 poison damage on hit. **DC 17 CON save** or poisoned. (Standard poison with higher DC).
   - **Frog Oil (Jar):** Provides advantage on checks to not drop items; cancels a critical failure once. Also makes your hands sticky.
   - **Pond Poppers (x5):** Explode with confetti and deal psychic damage.
 
@@ -103,6 +104,7 @@ Primary purpose: full inventory reference.
   - **Waterskin:** Filled with magic water from Earth Genasi town.
   - **Tinderbox:** Fire making supplies.
   - **Hemp Rope.**
+  - **Rations:** 2 days worth (2 meals per day) + tea for entire party.
 
 ### 🍄 Drugs & Herbs
 * **Grung Weed:** A seemingly never-ending supply coming right from Ribbitz’s home on Mt. Zenith.
@@ -119,7 +121,7 @@ Primary purpose: full inventory reference.
 * **Skyberry Fungus:** Jar containing 2 doses. Makes a target hover at 1/2 speed.
 
 ### 💰 Currency & Valuables
-* **Gold Pieces (GP):** 4,223.
+* **Gold Pieces (GP):** 3,598.
 * **Red Ruby (x1):** Worth 300g.
 * **Whisper Rock:** Tap to speak, record/replay, long-range summoning stone.
 * **Jade Piece:** From Earth Genasi King.
