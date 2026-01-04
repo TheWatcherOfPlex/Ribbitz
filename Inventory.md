@@ -80,7 +80,7 @@ Primary purpose: full inventory reference.
 * **+1 Enchanted Darts (x135):** 1d8 Piercing + Magic damage. Purchased to mix with elements for new dart types.
 * **Standard Darts (x59):** 1d8 Piercing.
 
-> **Umbra shop pricing (typical):** Common magic darts average **~1 gp = 2 darts**.
+> **Umbra shop pricing (typical):** Common darts average **~1 gp = 2 darts** magic darts average **~1 gp = 2 darts**.
 * **Ball Bearings (x989):** Non-lethal area denial.
 * **Dagger (+1 Fey Inverted Water Fall Blessing):** 1d4 + 6 damage. Range 20/60. (Original Price: 500g? - *Note: Dipped in Fey Inverted Water Fall Blessing*).
 * **Poison-Dipped Dagger:** Regular dagger with an unknown poison coating.

@@ -66,7 +66,7 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 
 <span style="color:#2e8b57"><b>Homebrew v4 (Grung):</b></span> Details live in **Class Features**.
 
-- **Frog Eyes:** Darkvision 60 ft *(+30 ft from Umbral Sight = 90 ft total).*  
+- **Frog Eyes:** Darkvision 90ft total, +60 ft race ability + 30 ft from Umbral Sight.*  
 - **Amphibious:** Breathe air + water *(fresh: 1h / salt: 30m).*
 - **Camouflage:** **Stealth proficiency**.
 - **Active Camo (Ribbitz-only):** Bonus Action, PB per Long Rest; gain advantage on Stealth checks for up to 1 hour.
