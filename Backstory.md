@@ -12,6 +12,7 @@ Primary purpose: narrative + quick summary.
 - 🎒 [Inventory](./Inventory.md)
 - ✨ [Class Features](./Class%20Features.md)
 - ✨ [Spells & Magic Abilities](./Spells%20and%20Magic%20Abilities.md)
+- 📚 [Reference Materials](./Reference%20Materials/)
 
 ---
 

@@ -12,6 +12,7 @@ Primary purpose: full inventory reference.
 - ✨ [Class Features](./Class%20Features.md)
 - ✨ [Spells & Magic Abilities](./Spells%20and%20Magic%20Abilities.md)
 - 📜 [Backstory](./Backstory.md)
+- 📚 [Reference Materials](./Reference%20Materials/)
 
 ---
 
@@ -99,6 +100,11 @@ Primary purpose: full inventory reference.
   - **Tinderbox:** Fire making supplies.
   - **Hemp Rope.**
   - **Rations:** 2 days worth (2 meals per day) + tea for entire party.
+
+### 📚 Books (Borrowed from Balthazar)
+* **Book of Necromancy:** Contents unknown to player, but confirmed to be about necromancy.
+* **Book of Potions and Poisons:** Old textbook full of useful potion and poison recipes.
+* **Book of Music:** Ancient book containing sheet music and chants from a long extinct race.
 
 ### 🍄 Drugs & Herbs
 * **Grung Weed:** A seemingly never-ending supply coming right from Ribbitz’s home on Mt. Zenith.

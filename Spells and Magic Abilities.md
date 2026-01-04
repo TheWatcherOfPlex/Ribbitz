@@ -13,6 +13,7 @@ Do not publish/distribute.
 - 🎒 [Inventory](./Inventory.md)
 - ✨ [Class Features](./Class%20Features.md)
 - 📜 [Backstory](./Backstory.md)
+- 📚 [Reference Materials](./Reference%20Materials/)
 
 > **Purpose:** Full-reference sheet for running Ribbitz at the table.
 >
@@ -136,13 +137,22 @@ You extend your hand toward a creature you can see within range and project a pu
 ---
 
 ## Primal Savagery
-**Source:** *Xanathar’s Guide to Everything* (2017) — p. 163
+**Source:** *Xanathar's Guide to Everything* (2017) — p. 163
 
 ### Official Text
-> (paste spell text here)
+**Level:** Transmutation cantrip  
+**Casting Time:** 1 action  
+**Range:** Self  
+**Components:** S  
+**Duration:** Instantaneous
+
+You channel primal magic to cause your teeth or fingernails to sharpen, ready to deliver a corrosive attack. Make a melee spell attack against one creature within 5 feet of you. On a hit, the target takes 1d10 acid damage. After you make the attack, your teeth or fingernails return to normal.
+
+**At Higher Levels:** The spell's damage increases by 1d10 when you reach 5th level (2d10), 11th level (3d10), and 17th level (4d10).
 
 ### Ribbitz Notes / Math
 - <span style="color: #8a2be2;"><b>Spell Attack = +9</b></span>
+- <span style="color: #8a2be2;"><b>Damage at Level 15 = 3d10</b></span> acid
 - Dice macro: **Spell Primal Savagery Atk**
 
 ---
@@ -170,13 +180,24 @@ If you hit an undead target, it also has disadvantage on attack rolls against yo
 ---
 
 ## Gust
-**Source:** *Xanathar’s Guide to Everything* (2017) — p. 157 (also: *Elemental Evil Player’s Companion* (2015) — p. 19)
+**Source:** *Xanathar's Guide to Everything* (2017) — p. 157 (also: *Elemental Evil Player's Companion* (2015) — p. 19)
 
 ### Official Text
-> (paste spell text here)
+**Level:** Transmutation cantrip  
+**Casting Time:** 1 action  
+**Range:** 30 feet  
+**Components:** V, S  
+**Duration:** Instantaneous
+
+You seize the air and compel it to create one of the following effects at a point you can see within range:
+
+- One Medium or smaller creature that you choose must succeed on a Strength saving throw or be pushed up to 5 feet away from you.
+- You create a small blast of air capable of moving one object that is neither held nor carried and that weighs no more than 5 pounds. The object is pushed up to 10 feet away from you. It isn't pushed with enough force to cause damage.
+- You create a harmless sensory affect using air, such as causing leaves to rustle, wind to slam shutters shut, or your clothing to ripple in a breeze.
 
 ### Ribbitz Notes / Math
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span> (if applicable)
+- <span style="color: #8a2be2;"><b>Save DC = 17</b></span> (for push effect)
+- Range: **30 feet**
 
 ---
 
@@ -248,35 +269,69 @@ You call out to the spirits of nature to aid you. When you cast this spell, choo
 ---
 
 ## Absorb Elements
-**Source:** *Xanathar’s Guide to Everything* (2017) — p. 150
+**Source:** *Xanathar's Guide to Everything* (2017) — p. 150
 
 ### Official Text
-> (paste spell text here)
+**Level:** 1st-level abjuration  
+**Casting Time:** 1 reaction, which you take when you take acid, cold, fire, lightning, or thunder damage  
+**Range:** Self  
+**Components:** S  
+**Duration:** 1 round
+
+The spell captures some of the incoming energy, lessening its effect on you and storing it for your next melee attack. You have resistance to the triggering damage type until the start of your next turn. Also, the first time you hit with a melee attack on your next turn, the target takes an extra 1d6 damage of the triggering type, and the spell ends.
+
+**At Higher Levels:** When you cast this spell using a spell slot of 2nd level or higher, the extra damage increases by 1d6 for each slot level above 1st.
 
 ### Ribbitz Notes / Math
+- <span style="color: #8a2be2;"><b>Reaction</b></span>: Triggered when taking acid, cold, fire, lightning, or thunder damage
+- <span style="color: #8a2be2;"><b>Bonus damage at 1st level = 1d6</b></span>
+- <span style="color: #8a2be2;"><b>Bonus damage at 2nd level = 2d6</b></span>
 - Dice macro: **Spell Absorb Elements (Bonus)** (currently `1d6`, adjust for upcasting later)
 
 ---
 
 ## Faerie Fire (Concentration)
-**Source:** *Player’s Handbook* (2014) — p. 239
+**Source:** *Player's Handbook* (2014) — p. 239
 
 ### Official Text
-> (paste spell text here)
+**Level:** 1st-level evocation  
+**Casting Time:** 1 action  
+**Range:** 60 feet  
+**Components:** V  
+**Duration:** Concentration, up to 1 minute
+
+Each object in a 20-foot cube within range is outlined in blue, green, or violet light (your choice).
+
+Any creature in the area when the spell is cast is also outlined in light if it fails a Dexterity saving throw. For the duration, objects and affected creatures shed dim light in a 10-foot radius.
+
+Any attack roll against an affected creature or object has advantage if the attacker can see it, and the affected creature or object can't benefit from being invisible.
 
 ### Ribbitz Notes / Math
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span>
+- <span style="color: #8a2be2;"><b>Save DC = 17</b></span> (DEX save)
+- <span style="color: #8a2be2;"><b>Area = 20-foot cube</b></span>
+- Range: **60 feet**
 - Concentration: use **Concentration (CON)** when hit.
 
 ---
 
 ## Goodberry
-**Source:** *Player’s Handbook* (2014) — p. 246
+**Source:** *Player's Handbook* (2014) — p. 246
 
 ### Official Text
-> (paste spell text here)
+**Level:** 1st-level transmutation  
+**Casting Time:** 1 action  
+**Range:** Touch  
+**Components:** V, S, M (a sprig of mistletoe)  
+**Duration:** Instantaneous
+
+Up to ten berries appear in your hand and are infused with magic for the duration. A creature can use its action to eat one berry. Eating a berry restores 1 hit point, and the berry provides enough nourishment to sustain a creature for one day.
+
+The berries lose their potency if they have not been consumed within 24 hours of the casting of this spell.
 
 ### Ribbitz Notes / Math
+- Creates **10 berries**, each heals **1 HP**
+- Each berry = 1 full day of nourishment
+- Duration: **24 hours** before berries lose potency
 - Dice macro: **Spell Goodberry (10x1hp)**
 
 ---
@@ -368,7 +423,22 @@ To discern that you are disguised, a creature can use its action to inspect your
 **Source:** *Player’s Handbook* (2014) — p. 251
 
 ### Official Text
-> (paste spell text here)
+Source: Player's Handbook
+
+1st-level divination
+
+Casting Time: 1 bonus action
+Range: 90 feet
+Components: V
+Duration: Concentration, up to 1 hour
+
+You choose a creature you can see within range and mystically mark it as your quarry. Until the spell ends, you deal an extra 1d6 damage to the target whenever you hit it with a weapon attack, and you have advantage on any Wisdom (Perception) or Wisdom (Survival) check you make to find it.
+
+If the target drops to 0 hit points before this spell ends, you can use a bonus action on a subsequent turn of yours to mark a new creature.
+
+At Higher Levels. When you cast this spell using a spell slot of 3rd or 4th level, you can maintain your concentration on the spell for up to 8 hours. When you use a spell slot of 5th level or higher, you can maintain your concentration on the spell for up to 24 hours.
+
+Spell Lists. Ranger
 
 ### Ribbitz Notes / Math
 - Free cast tracker: see **Fey Touched** section above.
@@ -439,7 +509,24 @@ On each of your turns after you cast this spell, you can use an action to move t
 **Source:** *Player’s Handbook* (2014) — p. 248
 
 ### Official Text
-> (paste spell text here)
+Source: Player's Handbook
+
+2nd-level evocation
+
+Casting Time: 1 action
+Range: Self (60-foot line)
+Components: V, S, M (a legume seed)
+Duration: Concentration, up to 1 minute
+
+A line of strong wind 60 feet long and 10 feet wide blasts from you in a direction you choose for the spell’s duration. Each creature that starts its turn in the line must succeed on a Strength saving throw or be pushed 15 feet away from you in a direction following the line.
+
+Any creature in the line must spend 2 feet of movement for every 1 foot it moves when moving closer to you.
+
+The gust disperses gas or vapor, and it extinguishes candles, torches, and similar unprotected flames in the area. It causes protected flames, such as those of lanterns, to dance wildly and has a 50 percent chance to extinguish them.
+
+As a bonus action on each of your turns before the spell ends, you can change the direction in which the line blasts from you.
+
+Spell Lists. Druid, Ranger (Optional), Sorcerer, Wizard
 
 ---
 
@@ -447,7 +534,18 @@ On each of your turns after you cast this spell, you can use an action to move t
 **Source:** *Player’s Handbook* (2014) — p. 255
 
 ### Official Text
-> (paste spell text here)
+Source: Player's Handbook
+
+2nd-level abjuration
+
+Casting Time: 1 action
+Range: Touch
+Components: V, S
+Duration: Instantaneous
+
+You touch a creature and can end either one disease or one condition afflicting it. The condition can be blinded, deafened, paralyzed, or poisoned.
+
+Spell Lists. Artificer, Bard, Cleric, Druid, Paladin, Ranger
 
 ---
 
@@ -499,7 +597,18 @@ Anything inside the extradimensional space drops out when the spell ends.
 **Source:** *Player’s Handbook* (2014) — p. 260
 
 ### Official Text
-> (paste spell text here)
+Source: Player's Handbook
+
+2nd-level conjuration
+
+Casting Time: 1 bonus action
+Range: Self
+Components: V
+Duration: Instantaneous
+
+Briefly surrounded by silvery mist, you teleport up to 30 feet to an unoccupied space that you can see.
+
+Spell Lists. Sorcerer, Warlock, Wizard
 
 ### Ribbitz Notes / Math
 - Free cast tracker: see **Fey Touched** section above.
@@ -553,15 +662,38 @@ The spell also effectively extends the time limit on raising the target from the
 **Source:** *Player’s Handbook* (2014) — p. 234
 
 ### Official Text
-> (paste spell text here)
+Source: Player's Handbook
 
+3rd-level abjuration
+
+Casting Time: 1 action
+Range: 120 feet
+Components: V, S
+Duration: Instantaneous
+
+Choose any creature, object, or magical effect within range. Any spell of 3rd level or lower on the target ends. For each spell of 4th level or higher on the target, make an ability check using your spellcasting ability. The DC equals 10 + the spell's level. On a successful check, the spell ends.
+
+At Higher Levels. When you cast this spell using a spell slot of 4th level or higher, you automatically end the effects of a spell on the target if the spell's level is equal to or less than the level of the spell slot you used.
+
+Spell Lists. Artificer, Bard, Cleric, Druid, Paladin, Sorcerer, Warlock, Wizard
 ---
 
 ## Revivify
 **Source:** *Player’s Handbook* (2014) — p. 272
 
 ### Official Text
-> (paste spell text here)
+Source: Player's Handbook
+
+3rd-level necromancy
+
+Casting Time: 1 action
+Range: Touch
+Components: V, S, M (diamonds worth 300 gp, which the spell consumes)
+Duration: Instantaneous
+
+You touch a creature that has died within the last minute. That creature returns to life with 1 hit point. This spell can’t return to life a creature that has died of old age, nor can it restore any missing body parts.
+
+Spell Lists. Artificer, Cleric, Druid (Optional), Paladin, Ranger (Optional)
 
 ---
 
@@ -569,16 +701,46 @@ The spell also effectively extends the time limit on raising the target from the
 **Source:** *Player’s Handbook* (2014) — p. 212
 
 ### Official Text
-> (paste spell text here)
+Source: Player's Handbook
 
+3rd-level necromancy
+
+Casting Time: 1 minute
+Range: 10 feet
+Components: V, S, M (a drop of blood, a piece of flesh, and a pinch of bone dust)
+Duration: Instantaneous
+
+This spell creates an undead servant. Choose a pile of bones or a corpse of a Medium or Small humanoid within range. Your spell imbues the target with a foul mimicry of life, raising it as an undead creature. The target becomes a skeleton if you chose bones or a zombie if you chose a corpse (the DM has the creature’s game statistics).
+
+On each of your turns, you can use a bonus action to mentally command any creature you made with this spell if the creature is within 60 feet of you (if you control multiple creatures, you can command any or all of them at the same time, issuing the same command to each one). You decide what action the creature will take and where it will move during its next turn, or you can issue a general command, such as to guard a particular chamber or corridor. If you issue no commands, the creature only defends itself against hostile creatures. Once given an order, the creature continues to follow it until its task is complete.
+
+The creature is under your control for 24 hours, after which it stops obeying any command you’ve given it. To maintain the control of the creature for another 24 hours, you must cast this spell on the creature again before the current 24-hour period ends. This use of the spell reasserts your control over up to four creatures you have animated with this spell, rather than animating a new one.
+
+At Higher Levels. When you cast this spell using a spell slot of 4th level or higher, you animate or reassert control over two additional undead creatures for each slot level above 3rd. Each of the creatures must come from a different corpse or pile of bones.
+
+Spell Lists. Cleric, Wizard
 ---
 
 ## Gaseous Form
 **Source:** *Player’s Handbook* (2014) — p. 244
 
 ### Official Text
-> (paste spell text here)
+Source: Player's Handbook
 
+3rd-level transmutation
+
+Casting Time: 1 action
+Range: Touch
+Components: V, S, M (a bit of gauze and a wisp of smoke)
+Duration: Concentration, up to 1 hour
+
+You transform a willing creature you touch, along with everything it’s wearing and carrying, into a misty cloud for the duration. The spell ends if the creature drops to 0 hit points. An incorporeal creature isn’t affected.
+
+While in this form, the target’s only method of movement is a flying speed of 10 feet. The target can enter and occupy the space of another creature. The target has resistance to nonmagical damage, and it has advantage on Strength, Dexterity, and Constitution saving throws. The target can pass through small holes, narrow openings, and even mere cracks, though it treats liquids as though they were solid surfaces. The target can’t fall and remains hovering in the air even when stunned or otherwise incapacitated.
+
+While in the form of a misty cloud, the target can’t talk or manipulate objects, and any objects it was carrying or holding can’t be dropped, used, or otherwise interacted with. The target can’t attack or cast spells.
+
+Spell Lists. Sorcerer, Warlock, Wizard
 ---
 
 # 🦠 4th Level Spells
@@ -587,7 +749,26 @@ The spell also effectively extends the time limit on raising the target from the
 **Source:** *Player’s Handbook* (2014) — p. 266
 
 ### Official Text
-> (paste spell text here)
+Source: Player's Handbook
+
+4th-level transmutation
+
+Casting Time: 1 action
+Range: 60 feet
+Components: V, S, M (a caterpillar cocoon)
+Duration: Concentration, up to 1 hour
+
+This spell transforms a creature that you can see within range into a new form. An unwilling creature must make a Wisdom saving throw to avoid the effect. A shapechanger automatically succeeds on this saving throw.
+
+The transformation lasts for the duration, or until the target drops to 0 hit points or dies. The new form can be any beast whose challenge rating is equal to or less than the target’s (or the target’s level, if it doesn’t have a challenge rating). The target’s game statistics, including mental ability scores, are replaced by the statistics of the chosen beast. It retains its alignment and personality.
+
+The target assumes the hit points of its new form. When it reverts to its normal form, the creature returns to the number of hit points it had before it transformed. If it reverts as a result of dropping to 0 hit points, any excess damage carries over to its normal form. As long as the excess damage doesn’t reduce the creature’s normal form to 0 hit points, it isn’t knocked unconscious.
+
+The creature is limited in the actions it can perform by the nature of its new form, and it can’t speak, cast spells, or take any other action that requires hands or speech.
+
+The target’s gear melds into the new form. The creature can’t activate, use, wield, or otherwise benefit from any of its equipment. This spell can’t affect a target that has 0 hit points.
+
+Spell Lists. Bard, Druid, Sorcerer, Wizard
 
 ---
 
@@ -595,7 +776,22 @@ The spell also effectively extends the time limit on raising the target from the
 **Source:** *Player’s Handbook* (2014) — p. 219
 
 ### Official Text
-> (paste spell text here)
+Source: Player's Handbook
+
+4th-level necromancy
+
+Casting Time: 1 action
+Range: 30 feet
+Components: V, S
+Duration: Instantaneous
+
+Necromantic energy washes over a creature of your choice that you can see within range, draining moisture and vitality from it. The target must make a Constitution saving throw. The target takes 8d8 necrotic damage on a failed save, or half as much damage on a successful one. This spell has no effect on undead or constructs.
+
+If you target a plant creature or a magical plant, it makes the saving throw with disadvantage, and the spell deals maximum damage to it. If you target a nonmagical plant that isn’t a creature, such as a tree or shrub, it doesn’t make a saving throw; it simply withers and dies.
+
+At Higher Levels. When you cast this spell using a spell slot of 5th level or higher, the damage increases by 1d8 for each slot level above 4th.
+
+Spell Lists. Druid, Sorcerer, Warlock, Wizard
 
 ---
 
@@ -603,7 +799,29 @@ The spell also effectively extends the time limit on raising the target from the
 **Source:** *Player’s Handbook* (2014) — p. 224
 
 ### Official Text
-> (paste spell text here)
+Source: Player's Handbook
+
+4th-level enchantment
+
+Casting Time: 1 action
+Range: 90 feet
+Components: V, S, M (three nut shells)
+Duration: Concentration, up to 1 minute
+
+This spell assaults and twists creatures’ minds, spawning delusions and provoking uncontrolled actions. Each creature in a 10-foot-radius sphere centered on a point you choose within range must succeed on a Wisdom saving throw when you cast this spell or be affected by it.
+
+An affected target can’t take reactions and must roll a d10 at the start of each of its turns to determine its behavior for that turn.
+
+d10	Behavior
+1	The creature uses all its movement to move in a random direction. To determine the direction, roll a d8 and assign a direction to each die face. The creature doesn’t take an action this turn.
+2-6	The creature doesn’t move or take actions this turn.
+7-8	The creature uses its action to make a melee attack against a randomly determined creature within its reach. If there is no creature within its reach, the creature does nothing this turn.
+9-10	The creature can act and move normally.
+At the end of its turns, an affected target can make a Wisdom saving throw. If it succeeds, this effect ends for that target.
+
+At Higher Levels. When you cast this spell using a spell slot of 5th level or higher, the radius of the sphere increases by 5 feet for each slot level above 4th.
+
+Spell Lists. Bard, Druid, Sorcerer, Wizard
 
 
 #  5th and 6th Level Spells
@@ -674,25 +892,26 @@ You can use this feature a number of times equal to your Wisdom modifier (minimu
 ---
 
 ## Poison Skin (Grung)
-**Source:** *(Homebrew / table doc)*
+Poisons
+Any creature that grapples you or comes into direct contact with your skin or saliva must succeed on a Constitution saving throw of (9 + your proficiency bonus + CON Mod) or become poisoned for 1 minute. A poisoned creature no longer in contact with you can repeat the saving throw at the end of each of its turns, ending the effect on a success.
+Sizes
 
-### Official Text
-> (paste trait text here)
+Each color of grung poison inflicts unique ailments:
+Green: Restricts movement.
+Blue: Forces the victim to shout and yelp against their will.
+Purple: Drives victims to desperately seek water.
+Red: Induces ravenous hunger.
+Orange: Causes irrational fears of friends.
+Gold: Charms the victim and grants the ability to speak the grung language.
 
-### Ribbitz Notes / Math
-- <span style="color: #8a2be2;"><b>DC 17</b></span> = `12 + PB (5)`
 
----
 
-## Poison Weapon (Grung)
-**Source:** *(Homebrew / table doc)*
 
-### Official Text
-> (paste trait text here)
+Poison Immunity
+You are immune to poison damage and the poisoned condition.
 
-### Ribbitz Notes / Math
-- <span style="color: #8a2be2;"><b>DC 17</b></span> = `12 + PB (5)`
-- Damage: +2d4 poison (per sheet)
+Poison Weapon
+You can apply your Grung color based poison to any weapon as a bonus action. The target must succeed on a saving throw with a DC of 9 + your proficiency bonus + your CON to take poison's effect. This ability can be used equal to your proficiency bonus per day, and only if you have submerged in water or moistened your skin within the last 24 hours.
 
 ---
 

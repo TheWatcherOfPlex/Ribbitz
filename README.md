@@ -17,6 +17,7 @@ Welcome! This repo is a **shareable home** for Ribbitz’s character documents.
 - ✨ **Class Features:** [Class Features.md](./Class%20Features.md)
 - ✨ **Spells & Magic Abilities:** [Spells and Magic Abilities.md](./Spells%20and%20Magic%20Abilities.md)
 - 📜 **Backstory:** [Backstory.md](./Backstory.md)
+- 📚 **Reference Materials:** [Reference Materials/](./Reference%20Materials/)
 
 ---
 

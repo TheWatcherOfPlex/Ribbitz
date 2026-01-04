@@ -12,6 +12,7 @@ Primary purpose: Class + feat rules reference + level-scaled trackers.
 - 🎒 [Inventory](./Inventory.md)
 - ✨ [Spells & Magic Abilities](./Spells%20and%20Magic%20Abilities.md)
 - 📜 [Backstory](./Backstory.md)
+- 📚 [Reference Materials](./Reference%20Materials/)
 
 ---
 
