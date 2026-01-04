@@ -73,6 +73,34 @@ This weapon originally dealt **8 flat** (1 base + DEX + 1 Fey Inverted Water Fal
 That flat 8 damage was too strong, so the DM converted it to **1d8**.
 
 ---
+
+### Skywarden's Longbow +2
+
+#### Core Stats
+
+| Item | Value |
+|---|---|
+| **Range** | 150/600 *(no disadvantage at long range with Sharpshooter feat)* |
+| **Properties** | +2 magic weapon, illumination |
+| **Damage** | `1d10` piercing *(per hit)* |
+
+#### Attack Rolls
+
+| Mode | To Hit | Damage |
+|---|---:|---|
+| **Standard** | **+14** | `1d10 + 7` piercing |
+| **Sharpshooter** | **+9** | `1d10 + 17` piercing |
+
+**Hit math:** `DEX 5 + PB 5 + Archery 2 + Magic 2 = +14`
+
+#### Special Features
+
+- **Ignores Cover:** Always ignores half cover and three-quarters cover
+- **Illumination:** Targets hit let off a faint light visible only to Ribbitz (tracks up to 3 targets)
+- **Pierce All Cover (1/day):** Once per day, can ignore ALL cover (including total cover) against one illuminated target
+
+---
+
 ### Other Attacks (Quick)
 
 | Attack | To Hit | Damage | Notes |

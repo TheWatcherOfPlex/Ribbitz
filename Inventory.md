@@ -45,7 +45,12 @@ Primary purpose: full inventory reference.
 * **Gloves of Swimming and Climbing:** ✅ **Attuned**. While wearing these gloves, you have a climbing speed and a swimming speed equal to your walking speed, and you gain a +5 bonus to Strength (Athletics) checks made to climb or swim.
 * **Tongue Ring of Taunting:** (Requires Attunement). *Magical Insult* (1/day): DC 14 CHA save or target is distracted for one turn.
 * **Beaded Crown Charm:** (Requires Attunement). (Original Price: 1000g). 1/day: When reduced to 0 HP, go to 1 HP instead.
-* **Sky Warden Bow +2:** Magical weapon. (Original Price: 350g).
+* **Skywarden's Longbow +2:** (Original Price: 350g). +2 magic weapon. No attunement required.
+  - **Properties:** Ignores half cover and three-quarters cover (always active).
+  - **Illumination:** Targets hit by this bow let off a faint light visible only to Ribbitz (tracks up to 3 targets at a time).
+  - **Pierce All Cover (1/day):** Once per day, can ignore ALL cover (including total cover) against one illuminated target.
+  - **Damage:** 1d10 + DEX + 2 piercing.
+  - **Range:** 150/600.
 
 ### 🧪 Combat Consumables
 * **Specialty Potions:**
@@ -62,7 +67,7 @@ Primary purpose: full inventory reference.
   - **Ink Cap Poison (3 doses):** CON Save 17, 3d6 poison damage and poisoned condition. (Can dose with all 3 simultaneously to auto-win the DC).
   - **Paralysis Poison (2 vials):** Target is paralyzed.
   - **Venom Berry Extract (x5):** 1d4 poison damage every round. Effects stack. Can be cured by status-curing magic.
-  - **Zibbit Basic Poison:** 1d4 poison damage on hit. DC 10 CON save or poisoned. (Basic Poison - PHB 153).
+  - **Zibbit Basic Poison:** 1d4 poison damage on hit. **DC 17 CON save** or poisoned. (Standard poison with higher DC).
   - **Frog Oil (Jar):** Provides advantage on checks to not drop items; cancels a critical failure once. Also makes your hands sticky.
   - **Pond Poppers (x5):** Explode with confetti and deal psychic damage.
 
@@ -125,6 +130,11 @@ Primary purpose: full inventory reference.
 * **Shiny Black Rock:** Taken from Fire Genasi guard on the walking building.
 * **Ash Jar:** Filled at the Fire Genasi border.
 * **Dragon Glass:** crate of assorted pieces up to 1ft x 5in.
-* **Magical Tea Set:** (Original Price: 250g).
+* **Trickster's Tea Set:** (Original Price: 250g). **1/day** magical tea set.
+  - When tea is poured and consumed from this set, the **owner** (Ribbitz) may choose one effect:
+    - **Option 1 - Blessing:** Consumers gain **advantage** on their next saving throw.
+    - **Option 2 - Trick:** Consumers must succeed on a **DC 15 CON save** or experience powerful but harmless hallucinations for **1 hour**.
+  - Uses: **1/day**
+  - Capacity: **4 cups maximum** per use
 
 ---
