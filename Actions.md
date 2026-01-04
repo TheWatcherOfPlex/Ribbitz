@@ -24,7 +24,7 @@ Primary purpose: combat reference with clear action economy.
 | Item | Value |
 |---|---|
 | **Range** | 25/100 *(Ribbits has Sharpshooter feat: no disadvantage at long range)* |
-| **Properties** | Loading, Double-Barrel (homebrew), +1 magic |
+| **Properties** | Double-Barrel (homebrew), +1 magic |
 | **Per-shot damage** | `1d8` piercing *(rolled per hit)* |
 | **Elemental damage** | `1d6` elemental *(rolled per elemental hit)* |
 
