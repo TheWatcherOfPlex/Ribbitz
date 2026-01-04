@@ -17,18 +17,18 @@ Primary purpose: combat reference with clear action economy.
 
 ## 🎯 Attacks
 
-### Vanguard Double-Barrel Blowgun (+1)
+### Vanguard Blowgun (+1) *(Broken - Single Shot)*
 
 #### Core Stats
 
 | Item | Value |
 |---|---|
 | **Range** | 25/100 *(Ribbits has Sharpshooter feat: no disadvantage at long range)* |
-| **Properties** | Double-Barrel (homebrew), +1 magic |
+| **Properties** | +1 magic *(broken in half - no longer double-barrel)* |
 | **Per-shot damage** | `1d8` piercing *(rolled per hit)* |
 | **Elemental damage** | `1d6` elemental *(rolled per elemental hit)* |
 
-#### Attack Rolls (per barrel shot)
+#### Attack Rolls
 
 | Mode | To Hit | Damage |
 |---|---:|---|
@@ -38,14 +38,11 @@ Primary purpose: combat reference with clear action economy.
 **Standard Hit math:** `DEX 5 + PB 5 + Archery 2 + Magic 1 = +13`
 **Sharpshooter Heavy Attack Hit math:** `DEX 5 + PB 5 + Archery 2 + Magic 1 - 5 Sharpshooter Pentalty= +8`
 
-#### Double-Barrel / Number of Shots
+#### Number of Shots
 
-- When you take the **Attack** action, you fire **2 shots per attack** (one per barrel).
-- **Normal turns:** 2 attacks × 2 barrels = **4 shots**
-- **First round (Dread Ambusher):** 3 attacks × 2 barrels = **6 shots**
-
-### Double-Barrel (Bonus Action)
-- Shoot at multiple (2) enemies.
+- When you take the **Attack** action, you fire **1 shot per attack**.
+- **Normal turns:** 2 attacks = **2 shots**
+- **First round (Dread Ambusher):** 3 attacks = **3 shots**
 
 ### Hot-Swap (Free Action)
 - Swap damage types at any time.

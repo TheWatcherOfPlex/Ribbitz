@@ -79,12 +79,6 @@ Primary purpose: full inventory reference.
 * **+1 Enchanted Darts (x135):** 1d8 Piercing + Magic damage. Purchased to mix with elements for new dart types.
 * **Standard Darts (x59):** 1d8 Piercing.
 
-> **Ammo tracking (Double-Barrel homebrew):** When you fire **2 shots of the same dart type** (one per barrel), it only consumes **1 dart** from inventory.
->
-> - **2× Standard shots** → remove **1× Standard dart**
-> - **2× Fire shots** → remove **1× Fire dart**
-> - **1× Fire + 1× Standard** → remove **1× Fire** and **1× Standard**
->
 > **Umbra shop pricing (typical):** Common magic darts average **~1 gp = 2 darts**.
 * **Ball Bearings (x989):** Non-lethal area denial.
 * **Dagger (+1 Fey Inverted Water Fall Blessing):** 1d4 + 6 damage. Range 20/60. (Original Price: 500g? - *Note: Dipped in Fey Inverted Water Fall Blessing*).
@@ -121,7 +115,7 @@ Primary purpose: full inventory reference.
 * **Skyberry Fungus:** Jar containing 2 doses. Makes a target hover at 1/2 speed.
 
 ### 💰 Currency & Valuables
-* **Gold Pieces (GP):** 3,598.
+* **Gold Pieces (GP):** 1,098.
 * **Red Ruby (x1):** Worth 300g.
 * **Whisper Rock:** Tap to speak, record/replay, long-range summoning stone.
 * **Jade Piece:** From Earth Genasi King.
