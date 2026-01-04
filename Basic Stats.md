@@ -33,7 +33,7 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 | Stat | Value |
 |---|---|
 | **AC** | **19** *(layered; details → Inventory)* |
-| **HP** | **102 / 102** |
+| **HP** | **61 / 102** |
 | **Initiative** | **+5** *(+8 entering combat)* |
 | **Speed** | 25 ft *(hop/climb/swim)* |
 | **Darkvision** | **90 ft** = `60 ft (Frog Eyes)` + `30 ft (Umbral Sight)` |
