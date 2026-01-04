@@ -18,6 +18,47 @@ Primary purpose: full inventory reference.
 
 ---
 
+
+## 💍 Major Magic Items & Attunement
+
+**Current Attunement:** 3 / 3 slots used
+
+### ✨ Attuned Items (3/3)
+- [📿 Amulet (+1 Ability Score)](#-amulet-1-ability-score--attuned) — Armor & Clothing
+- [🧤 Gloves of Swimming and Climbing](#-gloves-of-swimming-and-climbing--attuned) — Armor & Clothing
+- [💍 Ring of Cold Resistance](#-ring-of-cold-resistance--attuned) — Armor & Clothing
+
+### 🔓 Available for Attunement
+- [👅 Tongue Ring of Taunting](#-tongue-ring-of-taunting-not-attuned) — Armor & Clothing
+- [👑 Beaded Crown Charm](#-beaded-crown-charm-not-attuned) — Armor & Clothing
+
+### 🛡️ Magic Armor & Clothing
+- [⚔️ Dragon Scale Shoulder Pads (+1 Fey Blessing)](#%EF%B8%8F-dragon-scale-shoulder-pads-1-fey-blessing) — AC +1, Fire Resist, Poisonous Rebuke
+- [🪽 Flight Suit (+1 Fey Blessing)](#-flight-suit-1-fey-blessing-overlay) — AC +1, Fire Resist, Feather Fall, Gliding
+- [🧥 Main Outfit (Leather Armor +1 Fey Blessing)](#-main-outfit-leather-armor-1-fey-blessing) — Base AC 12 + DEX
+- [🧣 Black Grung Cloak (+1 Fey Blessing)](#-black-grung-cloak-1-fey-blessing-overlay) — AC +1
+- [🧣 Black Air Genasi Cloak (+1 Fey Blessing)](#-black-air-genasi-cloak-1-fey-blessing-overlay) — AC +1
+- [🧣 Rainbow Air Genasi Cloak (+1 Fey Blessing)](#-rainbow-air-genasi-cloak-1-fey-blessing-overlay) — AC +1
+
+### ⚔️ Magic Weapons
+- [🎯 Vanguard Blowgun +1 (Broken)](#-vanguard-blowgun-1-broken---single-shot) — +13 to hit, Special darts, Song of the Grung
+- [🏹 Skywarden's Longbow +2](#-skywardens-longbow-2) — +14 to hit, Ignores cover, Illumination
+- [🗡️ Dagger (+1 Fey Blessing)](#%EF%B8%8F-dagger-1-fey-blessing) — 1d4 + 6 damage
+
+### 🎯 Magic Ammunition
+- [✨ +1 Enchanted Darts (x135)](#-1-enchanted-darts-x135) — Mix with elements for new types
+
+### 🎒 Magic Bags & Tools
+- [🎒 Bag of Holding (+1 Fey Blessing)](#-bag-of-holding-1-fey-blessing) — 500 lbs / 64 cu ft
+- [🦆 Duck Bag (Bag of Holding +1 Fey Blessing)](#-bag-of-holding-duck-bag-1-fey-blessing) — Unlimited ducks!
+
+### 🔮 Magic Miscellaneous
+- [📢 Whisper Rock](#-whisper-rock) — Communication device
+- [🗿 Stone of Prayer](#-stone-of-prayer) — Contact Bull (30% chance)
+- [❓ One Use "DOUBT"](#-one-use-doubt) — DC 13 doubt effect
+- [☕ Trickster's Tea Set](#-tricksters-tea-set) — Blessing or trick (1/day)
+
+---
 ## 🛡️ Armor & Clothing (Layered System)
 
 **Ribbitz's AC: 19**  
@@ -101,12 +142,6 @@ Primary purpose: full inventory reference.
 **Description:** Custom-made leather boots with individual toe slots designed specifically for Grung anatomy
 
 </details>
-
----
-
-## 💍 Major Magic Items & Attunement
-
-**Current Attunement:** 3 / 3 slots used
 
 <details>
 <summary><h3>📿 Amulet (+1 Ability Score) ✅ ATTUNED</h3></summary>
@@ -310,6 +345,46 @@ Primary purpose: full inventory reference.
 <summary><h3>🗡️ Poison-Dipped Dagger</h3></summary>
 
 **Description:** Regular dagger with an unknown poison coating
+
+</details>
+
+<details>
+<summary><h3>🎯 Vanguard Blowgun +1 (Broken - Single Shot)</h3></summary>
+
+**Weapon Type:** +1 magic weapon (broken in half - no longer double-barrel)  
+**Damage:** 1d8 piercing + 1d6 elemental (if elemental dart is used)  
+**Range:** 25/100
+
+#### Attack Rolls
+
+| Mode | To Hit | Damage |
+|---|---:|---|
+| **Standard** | **+13** | 1d8 piercing + 1d6 elemental |
+| **Sharpshooter** | **+8** | 1d8 + 10 + 1d6 elemental |
+
+**Hit Math:** DEX 5 + PB 5 + Archery 2 + Magic 1 = +13
+
+#### Number of Shots
+- **Normal turns:** 2 attacks = **2 shots**
+- **First round (Dread Ambusher):** 3 attacks = **3 shots**
+
+#### Special Darts
+
+| Dart Type | Uses | Save DC | Effect |
+|-----------|------|---------|--------|
+| **Sleep** | 1/day | CON 17 | Unconscious 1 min |
+| **Paralyze** | 1/day | CON 17 | Paralyzed 1 min |
+| **Purple Grung** | 5/day | CON 17 | Seek water 1 min |
+
+#### Song of the Grung (1/day)
+- **Action:** 1 action (croak into blowgun)
+- **Range:** 30 ft line
+- **Save:** CON DC 17
+- **Damage:** 2d8 thunder (half on success)
+- **On failed save:** push 10 ft + deafened 1 minute
+
+#### History Note
+Originally dealt **8 flat damage** (too strong), DM converted to **1d8** for balance.
 
 </details>
 
