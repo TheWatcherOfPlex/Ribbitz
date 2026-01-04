@@ -4,7 +4,7 @@ This file is intended to contain full spell/feature text copied from owned ruleb
 Do not publish/distribute.
 -->
 
-# ✨ Spells & Magic Abilities
+# ✨ Spells & Magic Abilities — PRIVATE (Ribbitz)
 
 **Navigation:**
 - ⬅️ [README](./README.md)
@@ -15,7 +15,7 @@ Do not publish/distribute.
 - 📜 [Backstory](./Backstory.md)
 - 📚 [Reference Materials](./Reference%20Materials/)
 
-> 💡 **Tip:** Click on spell names to expand full official rules text.
+> 💡 **Tip:** Click spell level to see list → Click spell name to see full details.
 >
 > **Ribbitz-specific values** are shown in <span style="color: #8a2be2;"><b>PURPLE</b></span>.
 
@@ -78,7 +78,8 @@ Do not publish/distribute.
 
 ---
 
-# 🌿 Cantrips
+<details>
+<summary><h2>🌿 Cantrips (5 known)</h2></summary>
 
 <details>
 <summary><h3>🙏 Guidance</h3></summary>
@@ -195,9 +196,12 @@ You seize the air and compel it to create one of the following effects at a poin
 
 </details>
 
+</details>
+
 ---
 
-# 🌱 1st Level Spells
+<details>
+<summary><h2>🌱 1st Level Spells (11 prepared)</h2></summary>
 
 <details>
 <summary><h3>💚 Cure Wounds</h3></summary>
@@ -457,9 +461,12 @@ If the target drops to 0 hit points before this spell ends, you can use a bonus 
 
 </details>
 
+</details>
+
 ---
 
-# 🍄 2nd Level Spells
+<details>
+<summary><h2>🍄 2nd Level Spells (10 prepared)</h2></summary>
 
 <details>
 <summary><h3>🌿 Healing Spirit (Concentration)</h3></summary>
@@ -676,9 +683,12 @@ The spell also effectively extends the time limit on raising the target from the
 
 </details>
 
+</details>
+
 ---
 
-# 🌙 3rd Level Spells
+<details>
+<summary><h2>🌙 3rd Level Spells (4 prepared)</h2></summary>
 
 <details>
 <summary><h3>✨ Dispel Magic</h3></summary>
@@ -766,9 +776,12 @@ While in the form of a misty cloud, the target can't talk or manipulate objects,
 
 </details>
 
+</details>
+
 ---
 
-# 🦠 4th Level Spells
+<details>
+<summary><h2>🦠 4th Level Spells (3 prepared)</h2></summary>
 
 <details>
 <summary><h3>🐑 Polymorph (Concentration)</h3></summary>
@@ -862,15 +875,21 @@ At the end of its turns, an affected target can make a Wisdom saving throw. If i
 
 </details>
 
+</details>
+
 ---
 
-# ⚡ 5th and 6th Level Spells
+<details>
+<summary><h2>⚡ 5th and 6th Level Spells</h2></summary>
 
 **Ribbitz has not learned any 5th or 6th level spells yet, but can upcast lower level spells at these levels.**
 
+</details>
+
 ---
 
-# 🧬 Magic Abilities (Non-Spell)
+<details>
+<summary><h2>🧬 Magic Abilities (Non-Spell) (7 abilities)</h2></summary>
 
 <details>
 <summary><h3>🍄 Halo of Spores (Reaction)</h3></summary>
@@ -1007,6 +1026,8 @@ You can apply your Grung color based poison to any weapon as a bonus action. The
 #### Ribbitz Notes
 - <span style="color: #8a2be2;"><b>Save DC = 17</b></span> (uses Spell Save DC)
 - Tracker: see Long Rest Resets section
+
+</details>
 
 </details>
 
