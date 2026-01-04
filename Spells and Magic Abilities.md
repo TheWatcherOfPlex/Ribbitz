@@ -4,7 +4,7 @@ This file is intended to contain full spell/feature text copied from owned ruleb
 Do not publish/distribute.
 -->
 
-# ✨ Spells & Magic Abilities — PRIVATE (Ribbitz)
+# ✨ Spells & Magic Abilities
 
 **Navigation:**
 - ⬅️ [README](./README.md)

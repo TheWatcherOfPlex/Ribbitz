@@ -158,29 +158,6 @@ Primary purpose: full inventory reference.
 
 </details>
 
-<details>
-<summary><h3>🏹 Skywarden's Longbow +2</h3></summary>
-
-**No Attunement Required**  
-**Cost:** 350 gp  
-**Weapon Type:** +2 magic weapon  
-**Damage:** 1d10 + DEX + 2 piercing  
-**Range:** 150/600
-
-#### Properties
-
-**Ignores Cover (Always Active):**
-- Ignores half cover and three-quarters cover
-
-**Illumination:**
-- Targets hit by this bow let off a faint light visible only to Ribbitz
-- Tracks up to 3 targets at a time
-
-**Pierce All Cover (1/day):**
-- Once per day, can ignore ALL cover (including total cover) against one illuminated target
-
-</details>
-
 ---
 
 ## 🧪 Combat Consumables
@@ -333,6 +310,29 @@ Primary purpose: full inventory reference.
 <summary><h3>🗡️ Poison-Dipped Dagger</h3></summary>
 
 **Description:** Regular dagger with an unknown poison coating
+
+</details>
+
+<details>
+<summary><h3>🏹 Skywarden's Longbow +2</h3></summary>
+
+**No Attunement Required**  
+**Cost:** 350 gp  
+**Weapon Type:** +2 magic weapon  
+**Damage:** 1d10 + DEX + 2 piercing  
+**Range:** 150/600
+
+#### Properties
+
+**Ignores Cover (Always Active):**
+- Ignores half cover and three-quarters cover
+
+**Illumination:**
+- Targets hit by this bow let off a faint light visible only to Ribbitz
+- Tracks up to 3 targets at a time
+
+**Pierce All Cover (1/day):**
+- Once per day, can ignore ALL cover (including total cover) against one illuminated target
 
 </details>
 

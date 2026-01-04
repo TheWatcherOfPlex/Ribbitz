@@ -3,9 +3,13 @@ Ribbitz repository README
 Designed for GitHub viewing.
 -->
 
-# 🐸 Ribbitz (D&D Character)
+---
 
-Welcome! This repo is a **shareable home** for Ribbitz’s character documents.
+# 🐸 Vanguard Ribbitz Character "Sheet"
+- This is a repository of everything to do with Ribbits; organized, sources cited, and up to date.
+- This is a living repo; sections may change as the campaign evolves.
+- If you’re the DM: feel free to browse and reference during sessions.
+- These pages are updated during session, you may want to refresh often during game play as things will get edited live.
 
 ---
 
@@ -20,8 +24,3 @@ Welcome! This repo is a **shareable home** for Ribbitz’s character documents.
 - 📚 **Reference Materials:** [Reference Materials/](./Reference%20Materials/)
 
 ---
-
-## 📣 Notes
-
-- This is a living document repo — sections may change as the campaign evolves.
-- If you’re the DM: feel free to browse and reference during sessions.
