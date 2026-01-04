@@ -14,129 +14,649 @@ Primary purpose: full inventory reference.
 - 📜 [Backstory](./Backstory.md)
 - 📚 [Reference Materials](./Reference%20Materials/)
 
+> 💡 **Tip:** Click on item names to expand full details. AC breakdown summarized in [Basic Stats](./Basic%20Stats.md).
+
 ---
 
-## 🎒 Inventory & Items
+## 🛡️ Armor & Clothing (Layered System)
 
-> This section is long. Use the headers + GitHub search (`Ctrl+F`) to jump.
+**Ribbitz's AC: 19**  
+*Layered as: Main Outfit + Overlay (Cloak or Flight Suit) + Shoulder Pads*
 
-> **Tip:** “Need-to-know” armor + AC is summarized in [Basic Stats](./Basic%20Stats.md).
+<details>
+<summary><h3>⚔️ Dragon Scale Shoulder Pads (+1 Fey Blessing)</h3></summary>
 
-### 🛡️ Armor & Clothing (Layered System)
-*Ribbitz layers his gear to achieve **AC 19**. He wears the **Main Outfit** as a base, adds one **Overlay** (Cloak or Flight Suit), and tops it with his **Shoulder Pads**.*
+**AC Bonus:** +1  
+**Resistance:** Fire (1/2 damage)
 
-* **Dragon Scale Shoulder Pads (+1 Fey Inverted Water Fall Blessing):** (+1 AC, Fire Resistance - 1/2 damage).
-  - *Poisonous Rebuke* (Reaction, 1/day): Triggered when you take an attack. Discharges poisonous spores. Hostile creatures within 10ft must make a DC 16 CON save or take 2d8 poison damage and become **Poisoned**. Success: Half damage and no condition.
-  - *Vs Poison Resistance:* Immune creatures instead take 2d6 force damage and must make a DC 16 STR save or be knocked **Prone** (Large or larger creatures are immune to this prone effect).
-  - *Note:* Does not affect allies.
-* **Flight Suit (+1 Fey Inverted Water Fall Blessing Overlay):** (+1 AC, Fire Resistance - 1/2 damage). Webbed black suit.
-  - *Constant Feather Fall:* 60ft falling speed (no fall damage).
-  - *Gliding:* Fall 2ft for every 1ft moved horizontally.
-  - *Sky Warden:* Ability to make ranged attacks and acrobatic checks while airborne.
-* **Main Outfit (Leather Armor +1 Fey Inverted Water Fall Blessing):** AC = 12 + DEX. Black/brown leather with multiple pockets.
-* **Black Grung Cloak (+1 Fey Inverted Water Fall Blessing Overlay):** (+1 AC). Blood stained and weather beaten.
-* **Black Air Genasi made Cloak (+1 Fey Inverted Water Fall Blessing Overlay):** (+1 AC). Moves like it's underwater/space.
-* **Rainbow Air Genasi made Cloak (+1 Fey Inverted Water Fall Blessing Overlay):** (+1 AC). Moves like it's underwater/space.
-* **Leather individual-Toe Boots:** Custom-made leather boots with individual toe slots designed specifically for Grung anatomy.
+#### Poisonous Rebuke (Reaction, 1/day)
+**Trigger:** When you take an attack
 
-### 💍 Major Magic Items & Attunement
-*Current Attunement Slots: 3 / 3*
+**Effect:** Discharges poisonous spores. Hostile creatures within 10ft must make a **DC 16 CON save** or take **2d8 poison damage** and become **Poisoned**. 
 
-* **Amulet (+1 Ability Score):** ✅ **Attuned**. (Original Price: 700g). **Effect:** Increase one ability score by **+1**.
-* **Gloves of Swimming and Climbing:** ✅ **Attuned**. While wearing these gloves, you have a climbing speed and a swimming speed equal to your walking speed, and you gain a +5 bonus to Strength (Athletics) checks made to climb or swim.
-* **Ring of Cold Resistance:** ✅ **Attuned**. (Original Price: 625g). **Effect:** Cold Resistance - 1/2 damage from cold.
-* **Tongue Ring of Taunting:** (Requires Attunement). *Magical Insult* (1/day): DC 14 CHA save or target is distracted for one turn.
-* **Beaded Crown Charm:** (Requires Attunement). (Original Price: 1000g). 1/day: When reduced to 0 HP, go to 1 HP instead.
-* **Skywarden's Longbow +2:** (Original Price: 350g). +2 magic weapon. No attunement required.
-  - **Properties:** Ignores half cover and three-quarters cover (always active).
-  - **Illumination:** Targets hit by this bow let off a faint light visible only to Ribbitz (tracks up to 3 targets at a time).
-  - **Pierce All Cover (1/day):** Once per day, can ignore ALL cover (including total cover) against one illuminated target.
-  - **Damage:** 1d10 + DEX + 2 piercing.
-  - **Range:** 150/600.
+**On Success:** Half damage, no condition.
 
-### 🧪 Combat Consumables
-* **Specialty Potions:**
-  - **Potion of Fireworks (x1 bottle):** Untested.
-* **Healing Potions:**
-  - **Common/Standard (x3):** 2d4 + 2 HP.
-  - **Greater (x0):** 4d4 + 4 HP.
-  - **Superior:** 8d4 + 8 HP.
-  - **Supreme:** 10d4 + 20 HP.
-  - **Golden Elixir (x1):** Restore to full health + 10 Temporary HP.
-  - **Frog Salve Meds (x8):** Grung-specific healing and herbal application.
-* **Specialty Consumables:**
-  - **Potion of Haste (x2):** For 1 minute, speed is doubled, +2 bonus to AC, advantage on DEX saving throws, and gain one additional action (Attack [one weapon attack only], Dash, Disengage, Hide, or Use an Object). (DMG 188).
-  - **Ink Cap Poison (3 doses):** CON Save 17, 3d6 poison damage and poisoned condition. (Can dose with all 3 simultaneously to auto-win the DC).
-  - **Paralysis Poison (2 vials):** Target is paralyzed.
-  - **Venom Berry Extract (x5):** 1d4 poison damage every round. Effects stack. Can be cured by status-curing magic.
-  - **Zibbit Basic Poison (x4):** 1d4 poison damage on hit. **DC 17 CON save** or poisoned. (Standard poison with higher DC).
-  - **Frog Oil (Jar):** Provides advantage on checks to not drop items; cancels a critical failure once. Also makes your hands sticky.
-  - **Pond Poppers (x5):** Explode with confetti and deal psychic damage.
+**Vs Poison-Resistant Creatures:** Immune creatures instead take **2d6 force damage** and must make a **DC 16 STR save** or be knocked **Prone** (Large or larger creatures are immune to prone effect).
 
-### 🎯 Ammunition & Weapons
-* **Fire Darts (x11):** 1d8 Piercing + 1d6 Fire Magic. (1 Gold = 2 Darts).
-* **Water Darts (x17):** 1d8 Piercing + 1d6 Water Magic. (1 Gold = 2 Darts).
-* **Lava Darts (x5):** 1d8 Piercing + Lava effects (Sticky).
-* **+1 Enchanted Darts (x135):** 1d8 Piercing + Magic damage. Purchased to mix with elements for new dart types.
-* **Standard Darts (x59):** 1d8 Piercing.
+**Note:** Does not affect allies.
 
-> **Umbra shop pricing (typical):** Common darts average **~1 gp = 2 darts** magic darts average **~1 gp = 2 darts**.
-* **Ball Bearings (x989):** Non-lethal area denial.
-* **Dagger (+1 Fey Inverted Water Fall Blessing):** 1d4 + 6 damage. Range 20/60. (Original Price: 500g? - *Note: Dipped in Fey Inverted Water Fall Blessing*).
-* **Poison-Dipped Dagger:** Regular dagger with an unknown poison coating.
+</details>
 
-### 🛠️ Kits, Tools, & Bags
-* **Bag of Holding (+1 Fey Inverted Water Fall Blessing):** 2ft wide opening x 4ft deep. Max weight 500 lbs / 64 Cubic Feet capacity.
-* **Bag of Holding (Duck Bag) (+1 Fey Inverted Water Fall Blessing):** Duck-shaped bag with a seemingly unlimited supply of ducks (Roll D100 for Duck, Goose, or Hydra-Goose).
-* **Collapsible Telescoping Cauldron:** Large black cauldron that collapses flat when not in use.
-* **Herbalism Kit (Proficient):** Tools to create remedies, antitoxins, and healing potions.
-* **Grung Healing & Herb Kit (Proficient):** Grung-specific version of herbalism kit.
-* **Balthazar Lab Supplies:** Lab-grade glassware, stirring spoons, and basic lab equipment.
-* **Moisture Lotion:** Frog medicine to help Grung stay moist. Required daily application.
-* **Chunk of Jade:** Palm-sized chunk gifted from the Earth Genasi King.
-* **Utility:**
-  - **Mess Kit:** Plate, bowl, knife, fork.
-  - **Waterskin:** Filled with magic water from Earth Genasi town.
-  - **Tinderbox:** Fire making supplies.
-  - **Hemp Rope.**
-  - **Rations:** 2 days worth (2 meals per day) + tea for entire party.
+<details>
+<summary><h3>🪽 Flight Suit (+1 Fey Blessing Overlay)</h3></summary>
 
-### 📚 Books (Borrowed from Balthazar)
-* **Book of Necromancy:** Contents unknown to player, but confirmed to be about necromancy.
-* **Book of Potions and Poisons:** Old textbook full of useful potion and poison recipes.
-* **Book of Music:** Ancient book containing sheet music and chants from a long extinct race.
+**AC Bonus:** +1  
+**Resistance:** Fire (1/2 damage)  
+**Description:** Webbed black suit
 
-### 🍄 Drugs & Herbs
-* **Grung Weed:** A seemingly never-ending supply coming right from Ribbitz’s home on Mt. Zenith.
-* **Pixie Queen Weed:** "Stolen" from Nine. Super strong stash.
-* **White Powder:** Effect unknown / cannot remember.
-* **Green Powder:** +2 STR for 8 hours, then Exhaustion 1 until long rest.
-* **Unknown Named Drug ("Stun Powder"):** Stun poison. Inhaling makes the target feel violently ill. **Stunned** for 1 hour (Incapacitated, cannot move, speaks only falteringly, fails STR/DEX saves, attacks against them have advantage). 
-* **Blue Mushroom ("Arcana Maximus"):** Also known as the "Mother Mushroom". Endowed with pure life energy in arcane form. Abyss/Astral origin. Healing abilities. Magic defeats beholders.
-* **“Magic” Mushrooms:** Psychedelic effects.
-* **Creamy White Mushroom:** Not tested.
-* **Pixie Queen Mushroom:** Sample taken from her throne. Not tested.
-* **Fey Mushroom Kingdom:** Various jars of fey samples.
-* **Beige w/ Red Top Mushrooms:** Bag full. Provides +5 Temp HP & +3ft tall.
-* **Skyberry Fungus:** Jar containing 2 doses. Makes a target hover at 1/2 speed.
+#### Features
 
-### 💰 Currency & Valuables
-* **Gold Pieces (GP):** 1,098.
-* **Red Ruby (x1):** Worth 300g.
-* **Whisper Rock:** Tap to speak, record/replay, long-range summoning stone.
-* **Jade Piece:** From Earth Genasi King.
-* **Stone of Prayer:** Smooth stone with Bull's face. 30% chance to communicate with Bull (Roll 30 or under on D100).
-* **One use "DOUBT":** DC 13 - Make someone doubt their situation.
-* **Bedroll:** Water-resistant tarp made of woven plants.
-* **Rock from Trollneer:** Slate grey with flecks of hard red clay.
-* **Shiny Black Rock:** Taken from Fire Genasi guard on the walking building.
-* **Ash Jar:** Filled at the Fire Genasi border.
-* **Dragon Glass:** crate of assorted pieces up to 1ft x 5in.
-* **Trickster's Tea Set:** (Original Price: 250g). **1/day** magical tea set.
-  - When tea is poured and consumed from this set, the **owner** (Ribbitz) may choose one effect:
-    - **Option 1 - Blessing:** Consumers gain **advantage** on their next saving throw.
-    - **Option 2 - Trick:** Consumers must succeed on a **DC 15 CON save** or experience powerful but harmless hallucinations for **1 hour**.
-  - Uses: **1/day**
-  - Capacity: **4 cups maximum** per use
+**Constant Feather Fall:**
+- 60ft falling speed (no fall damage)
+
+**Gliding:**
+- Fall 2ft for every 1ft moved horizontally
+
+**Sky Warden:**
+- Ability to make ranged attacks and acrobatic checks while airborne
+
+</details>
+
+<details>
+<summary><h3>🧥 Main Outfit (Leather Armor +1 Fey Blessing)</h3></summary>
+
+**Base AC:** 12 + DEX modifier  
+**Ribbitz's AC:** 12 + 5 (DEX) = 17  
+**Description:** Black/brown leather with multiple pockets
+
+</details>
+
+<details>
+<summary><h3>🧣 Black Grung Cloak (+1 Fey Blessing Overlay)</h3></summary>
+
+**AC Bonus:** +1  
+**Description:** Blood stained and weather beaten
+
+</details>
+
+<details>
+<summary><h3>🧣 Black Air Genasi Cloak (+1 Fey Blessing Overlay)</h3></summary>
+
+**AC Bonus:** +1  
+**Description:** Moves like it's underwater/space
+
+</details>
+
+<details>
+<summary><h3>🧣 Rainbow Air Genasi Cloak (+1 Fey Blessing Overlay)</h3></summary>
+
+**AC Bonus:** +1  
+**Description:** Moves like it's underwater/space
+
+</details>
+
+<details>
+<summary><h3>👢 Leather Individual-Toe Boots</h3></summary>
+
+**Description:** Custom-made leather boots with individual toe slots designed specifically for Grung anatomy
+
+</details>
+
+---
+
+## 💍 Major Magic Items & Attunement
+
+**Current Attunement:** 3 / 3 slots used
+
+<details>
+<summary><h3>📿 Amulet (+1 Ability Score) ✅ ATTUNED</h3></summary>
+
+**Cost:** 700 gp  
+**Effect:** Increase one ability score by **+1**  
+**Ribbitz's Choice:** WIS (already applied to totals)
+
+</details>
+
+<details>
+<summary><h3>🧤 Gloves of Swimming and Climbing ✅ ATTUNED</h3></summary>
+
+**Effect:** While wearing these gloves:
+- Climbing speed equal to walking speed
+- Swimming speed equal to walking speed
+- **+5 bonus** to Strength (Athletics) checks made to climb or swim
+
+**Ribbitz's Athletics:** Base +2, with gloves +7
+
+</details>
+
+<details>
+<summary><h3>💍 Ring of Cold Resistance ✅ ATTUNED</h3></summary>
+
+**Cost:** 625 gp  
+**Effect:** Cold Resistance - 1/2 damage from cold
+
+</details>
+
+<details>
+<summary><h3>👅 Tongue Ring of Taunting (Not Attuned)</h3></summary>
+
+**Requires Attunement**
+
+**Magical Insult (1/day):**
+- Target makes **DC 14 CHA save**
+- On fail: Target is distracted for one turn
+
+</details>
+
+<details>
+<summary><h3>👑 Beaded Crown Charm (Not Attuned)</h3></summary>
+
+**Requires Attunement**  
+**Cost:** 1000 gp
+
+**Effect (1/day):** When reduced to 0 HP, go to 1 HP instead
+
+</details>
+
+<details>
+<summary><h3>🏹 Skywarden's Longbow +2</h3></summary>
+
+**No Attunement Required**  
+**Cost:** 350 gp  
+**Weapon Type:** +2 magic weapon  
+**Damage:** 1d10 + DEX + 2 piercing  
+**Range:** 150/600
+
+#### Properties
+
+**Ignores Cover (Always Active):**
+- Ignores half cover and three-quarters cover
+
+**Illumination:**
+- Targets hit by this bow let off a faint light visible only to Ribbitz
+- Tracks up to 3 targets at a time
+
+**Pierce All Cover (1/day):**
+- Once per day, can ignore ALL cover (including total cover) against one illuminated target
+
+</details>
+
+---
+
+## 🧪 Combat Consumables
+
+<details>
+<summary><h3>🍾 Specialty Potions</h3></summary>
+
+**Potion of Fireworks (x1 bottle):**
+- Effect: Untested
+
+</details>
+
+<details>
+<summary><h3>💚 Healing Potions</h3></summary>
+
+| Potion Type | Quantity | Healing |
+|-------------|----------|---------|
+| Common/Standard | x3 | 2d4 + 2 HP |
+| Greater | x0 | 4d4 + 4 HP |
+| Superior | x1 | 8d4 + 8 HP |
+| Supreme | x1 | 10d4 + 20 HP |
+| Golden Elixir | x1 | Full health + 10 Temp HP |
+| Frog Salve Meds | x8 | Grung-specific healing |
+
+</details>
+
+<details>
+<summary><h3>⚡ Potion of Haste (x2)</h3></summary>
+
+**Duration:** 1 minute
+
+**Effects:**
+- Speed is doubled
+- +2 bonus to AC
+- Advantage on DEX saving throws
+- Gain one additional action per turn
+
+**Additional Action Options:**
+- Attack (one weapon attack only)
+- Dash
+- Disengage
+- Hide
+- Use an Object
+
+**Source:** DMG 188
+
+</details>
+
+<details>
+<summary><h3>☠️ Poisons & Toxins</h3></summary>
+
+**Ink Cap Poison (3 doses):**
+- **Save:** CON DC 17
+- **Effect:** 3d6 poison damage and poisoned condition
+- **Note:** Can dose with all 3 simultaneously to auto-win the DC
+
+**Paralysis Poison (2 vials):**
+- **Effect:** Target is paralyzed
+
+**Venom Berry Extract (x5):**
+- **Damage:** 1d4 poison damage every round
+- **Effects stack**
+- Can be cured by status-curing magic
+
+**Zibbit Basic Poison (x4):**
+- **Damage:** 1d4 poison damage on hit
+- **Save:** CON DC 17 or poisoned
+- **Note:** Standard poison with higher DC
+
+</details>
+
+<details>
+<summary><h3>🐸 Frog Oil (Jar)</h3></summary>
+
+**Effects:**
+- Provides advantage on checks to not drop items
+- Cancels a critical failure once
+- Makes your hands sticky
+
+</details>
+
+<details>
+<summary><h3>🎊 Pond Poppers (x5)</h3></summary>
+
+**Effect:** Explode with confetti and deal psychic damage
+
+</details>
+
+---
+
+## 🎯 Ammunition & Weapons
+
+<details>
+<summary><h3>🔥 Fire Darts (x11)</h3></summary>
+
+**Damage:** 1d8 Piercing + 1d6 Fire  
+**Cost:** 1 gp = 2 darts
+
+</details>
+
+<details>
+<summary><h3>💧 Water Darts (x17)</h3></summary>
+
+**Damage:** 1d8 Piercing + 1d6 Water  
+**Cost:** 1 gp = 2 darts
+
+</details>
+
+<details>
+<summary><h3>🌋 Lava Darts (x5)</h3></summary>
+
+**Damage:** 1d8 Piercing + Lava effects  
+**Special:** Sticky
+
+</details>
+
+<details>
+<summary><h3>✨ +1 Enchanted Darts (x135)</h3></summary>
+
+**Damage:** 1d8 Piercing + Magic damage  
+**Note:** Purchased to mix with elements for new dart types
+
+</details>
+
+<details>
+<summary><h3>🎯 Standard Darts (x59)</h3></summary>
+
+**Damage:** 1d8 Piercing
+
+</details>
+
+<details>
+<summary><h3>⚫ Ball Bearings (x989)</h3></summary>
+
+**Use:** Non-lethal area denial
+
+</details>
+
+<details>
+<summary><h3>🗡️ Dagger (+1 Fey Blessing)</h3></summary>
+
+**Damage:** 1d4 + 6  
+**Range:** 20/60 (thrown)  
+**Cost:** ~500 gp  
+**Note:** Dipped in Fey Inverted Water Fall Blessing
+
+</details>
+
+<details>
+<summary><h3>🗡️ Poison-Dipped Dagger</h3></summary>
+
+**Description:** Regular dagger with an unknown poison coating
+
+</details>
+
+---
+
+## 🛠️ Kits, Tools, & Bags
+
+<details>
+<summary><h3>🎒 Bag of Holding (+1 Fey Blessing)</h3></summary>
+
+**Dimensions:** 2ft wide opening × 4ft deep  
+**Max Weight:** 500 lbs  
+**Max Volume:** 64 cubic feet
+
+</details>
+
+<details>
+<summary><h3>🦆 Bag of Holding (Duck Bag) (+1 Fey Blessing)</h3></summary>
+
+**Special Property:** Duck-shaped bag with a seemingly unlimited supply of ducks
+
+**Roll D100:**
+- Duck
+- Goose
+- Hydra-Goose
+
+</details>
+
+<details>
+<summary><h3>🍲 Collapsible Telescoping Cauldron</h3></summary>
+
+**Description:** Large black cauldron that collapses flat when not in use
+
+</details>
+
+<details>
+<summary><h3>🌿 Herbalism Kit (Proficient)</h3></summary>
+
+**Use:** Tools to create remedies, antitoxins, and healing potions
+
+</details>
+
+<details>
+<summary><h3>🐸 Grung Healing & Herb Kit (Proficient)</h3></summary>
+
+**Description:** Grung-specific version of herbalism kit
+
+</details>
+
+<details>
+<summary><h3>🧪 Balthazar Lab Supplies</h3></summary>
+
+**Contents:** Lab-grade glassware, stirring spoons, and basic lab equipment
+
+</details>
+
+<details>
+<summary><h3>💧 Moisture Lotion</h3></summary>
+
+**Description:** Frog medicine to help Grung stay moist  
+**Use:** Required daily application
+
+</details>
+
+<details>
+<summary><h3>💎 Chunk of Jade</h3></summary>
+
+**Description:** Palm-sized chunk gifted from the Earth Genasi King
+
+</details>
+
+<details>
+<summary><h3>🏕️ Utility Items</h3></summary>
+
+**Mess Kit:**
+- Plate, bowl, knife, fork
+
+**Waterskin:**
+- Filled with magic water from Earth Genasi town
+
+**Tinderbox:**
+- Fire making supplies
+
+**Hemp Rope**
+
+**Rations:**
+- 2 days worth (2 meals per day)
+- Tea for entire party
+
+</details>
+
+---
+
+## 📚 Books (Borrowed from Balthazar)
+
+<details>
+<summary><h3>💀 Book of Necromancy</h3></summary>
+
+**Contents:** Unknown to player, but confirmed to be about necromancy
+
+</details>
+
+<details>
+<summary><h3>🧪 Book of Potions and Poisons</h3></summary>
+
+**Contents:** Old textbook full of useful potion and poison recipes
+
+</details>
+
+<details>
+<summary><h3>🎵 Book of Music</h3></summary>
+
+**Contents:** Ancient book containing sheet music and chants from a long extinct race
+
+</details>
+
+---
+
+## 🍄 Drugs & Herbs
+
+<details>
+<summary><h3>🌿 Grung Weed</h3></summary>
+
+**Source:** Seemingly never-ending supply from Ribbitz's home on Mt. Zenith
+
+</details>
+
+<details>
+<summary><h3>✨ Pixie Queen Weed</h3></summary>
+
+**Source:** "Stolen" from Nine  
+**Potency:** Super strong stash
+
+</details>
+
+<details>
+<summary><h3>🤍 White Powder</h3></summary>
+
+**Effect:** Unknown / cannot remember
+
+</details>
+
+<details>
+<summary><h3>💪 Green Powder</h3></summary>
+
+**Effect:**
+- +2 STR for 8 hours
+- Then Exhaustion 1 until long rest
+
+</details>
+
+<details>
+<summary><h3>😵 "Stun Powder"</h3></summary>
+
+**Effect:** Stun poison. Inhaling makes the target feel violently ill.
+
+**Condition:** **Stunned** for 1 hour
+- Incapacitated
+- Cannot move
+- Speaks only falteringly
+- Fails STR/DEX saves
+- Attacks against them have advantage
+
+</details>
+
+<details>
+<summary><h3>🔵 Blue Mushroom ("Arcana Maximus")</h3></summary>
+
+**Also Known As:** "Mother Mushroom"
+
+**Properties:**
+- Endowed with pure life energy in arcane form
+- Abyss/Astral origin
+- Healing abilities
+- Magic defeats beholders
+
+</details>
+
+<details>
+<summary><h3>🍄 "Magic" Mushrooms</h3></summary>
+
+**Effect:** Psychedelic effects
+
+</details>
+
+<details>
+<summary><h3>🤍 Creamy White Mushroom</h3></summary>
+
+**Status:** Not tested
+
+</details>
+
+<details>
+<summary><h3>👑 Pixie Queen Mushroom</h3></summary>
+
+**Source:** Sample taken from her throne  
+**Status:** Not tested
+
+</details>
+
+<details>
+<summary><h3>🧚 Fey Mushroom Kingdom</h3></summary>
+
+**Contents:** Various jars of fey samples
+
+</details>
+
+<details>
+<summary><h3>🔴 Beige w/ Red Top Mushrooms (Bag)</h3></summary>
+
+**Effect:**
+- +5 Temp HP
+- +3 ft height
+
+</details>
+
+<details>
+<summary><h3>☁️ Skyberry Fungus (2 doses)</h3></summary>
+
+**Effect:** Makes a target hover at 1/2 speed
+
+</details>
+
+---
+
+## 💰 Currency & Valuables
+
+<details>
+<summary><h3>💰 Gold Pieces: 1,098 gp</h3></summary>
+
+Current gold total
+
+</details>
+
+<details>
+<summary><h3>💎 Red Ruby (x1)</h3></summary>
+
+**Worth:** 300 gp
+
+</details>
+
+<details>
+<summary><h3>📢 Whisper Rock</h3></summary>
+
+**Function:**
+- Tap to speak
+- Record/replay
+- Long-range summoning stone
+
+</details>
+
+<details>
+<summary><h3>💚 Jade Piece</h3></summary>
+
+**Source:** From Earth Genasi King
+
+</details>
+
+<details>
+<summary><h3>🗿 Stone of Prayer</h3></summary>
+
+**Description:** Smooth stone with Bull's face
+
+**Use:** 30% chance to communicate with Bull (Roll 30 or under on D100)
+
+</details>
+
+<details>
+<summary><h3>❓ One Use "DOUBT"</h3></summary>
+
+**Effect:** DC 13 - Make someone doubt their situation
+
+</details>
+
+<details>
+<summary><h3>🏕️ Bedroll</h3></summary>
+
+**Description:** Water-resistant tarp made of woven plants
+
+</details>
+
+<details>
+<summary><h3>🪨 Rock from Trollneer</h3></summary>
+
+**Description:** Slate grey with flecks of hard red clay
+
+</details>
+
+<details>
+<summary><h3>⚫ Shiny Black Rock</h3></summary>
+
+**Source:** Taken from Fire Genasi guard on the walking building
+
+</details>
+
+<details>
+<summary><h3>🏺 Ash Jar</h3></summary>
+
+**Source:** Filled at the Fire Genasi border
+
+</details>
+
+<details>
+<summary><h3>🪟 Dragon Glass (Crate)</h3></summary>
+
+**Contents:** Assorted pieces up to 1ft × 5in
+
+</details>
+
+<details>
+<summary><h3>☕ Trickster's Tea Set</h3></summary>
+
+**Cost:** 250 gp  
+**Uses:** 1/day  
+**Capacity:** 4 cups maximum per use
+
+**Effect:** When tea is poured and consumed from this set, the **owner** (Ribbitz) may choose one effect:
+
+**Option 1 - Blessing:**
+- Consumers gain **advantage** on their next saving throw
+
+**Option 2 - Trick:**
+- Consumers must succeed on a **DC 15 CON save** or experience powerful but harmless hallucinations for **1 hour**
+
+</details>
 
 ---
