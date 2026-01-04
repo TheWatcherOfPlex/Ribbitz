@@ -14,25 +14,35 @@ Primary purpose: full inventory reference.
 - 📜 [Backstory](./Backstory.md)
 - 📚 [Reference Materials](./Reference%20Materials/)
 
-> 💡 **Tip:** Click on item names to expand full details. AC breakdown summarized in [Basic Stats](./Basic%20Stats.md).
+> 💡 **Tip:** Click section to see categories → Click category to see items → Click item for details
 
 ---
 
-
-## 💍 Major Magic Items & Attunement
+<details open>
+<summary><h2>💍 Major Magic Items & Attunement</h2></summary>
 
 **Current Attunement:** 3 / 3 slots used
 
-### ✨ Attuned Items (3/3)
+<details>
+<summary><h3>✨ Attuned Items (3/3)</h3></summary>
+
 - [📿 Amulet (+1 Ability Score)](#-amulet-1-ability-score--attuned) — Armor & Clothing
 - [🧤 Gloves of Swimming and Climbing](#-gloves-of-swimming-and-climbing--attuned) — Armor & Clothing
 - [💍 Ring of Cold Resistance](#-ring-of-cold-resistance--attuned) — Armor & Clothing
 
-### 🔓 Available for Attunement
+</details>
+
+<details>
+<summary><h3>🔓 Available for Attunement</h3></summary>
+
 - [👅 Tongue Ring of Taunting](#-tongue-ring-of-taunting-not-attuned) — Armor & Clothing
 - [👑 Beaded Crown Charm](#-beaded-crown-charm-not-attuned) — Armor & Clothing
 
-### 🛡️ Magic Armor & Clothing
+</details>
+
+<details>
+<summary><h3>🛡️ Magic Armor & Clothing</h3></summary>
+
 - [⚔️ Dragon Scale Shoulder Pads (+1 Fey Blessing)](#%EF%B8%8F-dragon-scale-shoulder-pads-1-fey-blessing) — AC +1, Fire Resist, Poisonous Rebuke
 - [🪽 Flight Suit (+1 Fey Blessing)](#-flight-suit-1-fey-blessing-overlay) — AC +1, Fire Resist, Feather Fall, Gliding
 - [🧥 Main Outfit (Leather Armor +1 Fey Blessing)](#-main-outfit-leather-armor-1-fey-blessing) — Base AC 12 + DEX
@@ -40,26 +50,48 @@ Primary purpose: full inventory reference.
 - [🧣 Black Air Genasi Cloak (+1 Fey Blessing)](#-black-air-genasi-cloak-1-fey-blessing-overlay) — AC +1
 - [🧣 Rainbow Air Genasi Cloak (+1 Fey Blessing)](#-rainbow-air-genasi-cloak-1-fey-blessing-overlay) — AC +1
 
-### ⚔️ Magic Weapons
+</details>
+
+<details>
+<summary><h3>⚔️ Magic Weapons</h3></summary>
+
 - [🎯 Vanguard Blowgun +1 (Broken)](#-vanguard-blowgun-1-broken---single-shot) — +13 to hit, Special darts, Song of the Grung
 - [🏹 Skywarden's Longbow +2](#-skywardens-longbow-2) — +14 to hit, Ignores cover, Illumination
 - [🗡️ Dagger (+1 Fey Blessing)](#%EF%B8%8F-dagger-1-fey-blessing) — 1d4 + 6 damage
 
-### 🎯 Magic Ammunition
+</details>
+
+<details>
+<summary><h3>🎯 Magic Ammunition</h3></summary>
+
 - [✨ +1 Enchanted Darts (x135)](#-1-enchanted-darts-x135) — Mix with elements for new types
 
-### 🎒 Magic Bags & Tools
+</details>
+
+<details>
+<summary><h3>🎒 Magic Bags & Tools</h3></summary>
+
 - [🎒 Bag of Holding (+1 Fey Blessing)](#-bag-of-holding-1-fey-blessing) — 500 lbs / 64 cu ft
 - [🦆 Duck Bag (Bag of Holding +1 Fey Blessing)](#-bag-of-holding-duck-bag-1-fey-blessing) — Unlimited ducks!
 
-### 🔮 Magic Miscellaneous
+</details>
+
+<details>
+<summary><h3>🔮 Magic Miscellaneous</h3></summary>
+
 - [📢 Whisper Rock](#-whisper-rock) — Communication device
 - [🗿 Stone of Prayer](#-stone-of-prayer) — Contact Bull (30% chance)
 - [❓ One Use "DOUBT"](#-one-use-doubt) — DC 13 doubt effect
 - [☕ Trickster's Tea Set](#-tricksters-tea-set) — Blessing or trick (1/day)
 
+</details>
+
+</details>
+
 ---
-## 🛡️ Armor & Clothing (Layered System)
+
+<details>
+<summary><h2>🛡️ Armor & Clothing (Layered System)</h2></summary>
 
 **Ribbitz's AC: 19**  
 *Layered as: Main Outfit + Overlay (Cloak or Flight Suit) + Shoulder Pads*
@@ -193,9 +225,12 @@ Primary purpose: full inventory reference.
 
 </details>
 
+</details>
+
 ---
 
-## 🧪 Combat Consumables
+<details>
+<summary><h2>🧪 Combat Consumables</h2></summary>
 
 <details>
 <summary><h3>🍾 Specialty Potions</h3></summary>
@@ -281,9 +316,12 @@ Primary purpose: full inventory reference.
 
 </details>
 
+</details>
+
 ---
 
-## 🎯 Ammunition & Weapons
+<details>
+<summary><h2>🎯 Ammunition & Weapons</h2></summary>
 
 <details>
 <summary><h3>🔥 Fire Darts (x11)</h3></summary>
@@ -411,9 +449,12 @@ Originally dealt **8 flat damage** (too strong), DM converted to **1d8** for bal
 
 </details>
 
+</details>
+
 ---
 
-## 🛠️ Kits, Tools, & Bags
+<details>
+<summary><h2>🛠️ Kits, Tools, & Bags</h2></summary>
 
 <details>
 <summary><h3>🎒 Bag of Holding (+1 Fey Blessing)</h3></summary>
@@ -499,9 +540,12 @@ Originally dealt **8 flat damage** (too strong), DM converted to **1d8** for bal
 
 </details>
 
+</details>
+
 ---
 
-## 📚 Books (Borrowed from Balthazar)
+<details>
+<summary><h2>📚 Books (Borrowed from Balthazar)</h2></summary>
 
 <details>
 <summary><h3>💀 Book of Necromancy</h3></summary>
@@ -524,9 +568,12 @@ Originally dealt **8 flat damage** (too strong), DM converted to **1d8** for bal
 
 </details>
 
+</details>
+
 ---
 
-## 🍄 Drugs & Herbs
+<details>
+<summary><h2>🍄 Drugs & Herbs (16 items)</h2></summary>
 
 <details>
 <summary><h3>🌿 Grung Weed</h3></summary>
@@ -631,9 +678,12 @@ Originally dealt **8 flat damage** (too strong), DM converted to **1d8** for bal
 
 </details>
 
+</details>
+
 ---
 
-## 💰 Currency & Valuables
+<details>
+<summary><h2>💰 Currency & Valuables</h2></summary>
 
 <details>
 <summary><h3>💰 Gold Pieces: 1,098 gp</h3></summary>
@@ -731,6 +781,8 @@ Current gold total
 
 **Option 2 - Trick:**
 - Consumers must succeed on a **DC 15 CON save** or experience powerful but harmless hallucinations for **1 hour**
+
+</details>
 
 </details>
 
