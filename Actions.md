@@ -77,8 +77,8 @@ Primary purpose: combat reference with clear action economy.
 
 #### Note (Damage History)
 
-This weapon originally dealt **8 flat** (1 base + DEX + 1 Fey Inverted Water Fall Blessing + a damage-only bonus from Rob Catagasts forge).
-That flat 8 damage was too strong, so the DM converted it to **1d8**.
+This weapon originally dealt **10 flat** (1 base + DEX + 1 Fey Inverted Water Fall Blessing + a damage-only bonus from Rob Catagasts forge).
+That flat 10 damage was too strong, so the DM converted it to **1d8**.
 
 </details>
 
