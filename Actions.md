@@ -28,20 +28,26 @@ Primary purpose: combat reference with clear action economy.
 
 | Item | Value |
 |---|---|
+| **Weight** | 1 lb |
 | **Range** | 25/100 *(Ribbits has Sharpshooter feat: no disadvantage at long range)* |
 | **Properties** | +1 magic *(broken in half - no longer double-barrel)* |
 | **Per-shot damage** | `1d8` piercing *(rolled per hit)* |
 | **Elemental damage** | `1d6` elemental *(rolled per elemental hit)* |
 
-#### Attack Rolls
+#### Attack Roll Breakdown
 
-| Mode | To Hit | Damage |
-|---|---:|---|
-| **Standard** | **+13** | `1d8` piercing + `1d6` elemental (If elemental dart is used) |
-| **Sharpshooter Heavy Attack** | **+8** | `1d8` + piercing + `10` Sharpshooter Bonus Piercing + `1d6` elemental |
+**To Hit Calculation:**
+- **Standard:** DEX (5) + Proficiency (5) + Archery Fighting Style (2) + Magic Weapon (1) = **+13**
+- **Sharpshooter:** DEX (5) + Proficiency (5) + Archery (2) + Magic (1) - Sharpshooter Penalty (5) = **+8**
 
-**Standard Hit math:** `DEX 5 + PB 5 + Archery 2 + Magic 1 = +13`  
-**Sharpshooter Heavy Attack Hit math:** `DEX 5 + PB 5 + Archery 2 + Magic 1 - 5 Sharpshooter Penalty = +8`
+#### Damage Ranges (Per Shot)
+
+| Attack Type | Min | Avg | Max | Formula |
+|-------------|----:|----:|----:|---------|
+| **Standard** | 1 | 4.5 | 8 | 1d8 |
+| **Standard + Elemental** | 2 | 9 | 14 | 1d8 + 1d6 |
+| **Heavy (Sharpshooter)** | 11 | 14.5 | 18 | 1d8 + 10 |
+| **Heavy + Elemental** | 12 | 19 | 24 | 1d8 + 10 + 1d6 |
 
 #### Number of Shots
 
@@ -83,18 +89,25 @@ That flat 8 damage was too strong, so the DM converted it to **1d8**.
 
 | Item | Value |
 |---|---|
+| **Weight** | 2 lbs |
 | **Range** | 150/600 *(no disadvantage at long range with Sharpshooter feat)* |
 | **Properties** | +2 magic weapon, illumination |
-| **Damage** | `1d10` piercing *(per hit)* |
+| **Damage** | `1d10 + 7` piercing *(per hit)* |
 
-#### Attack Rolls
+#### Attack Roll Breakdown
 
-| Mode | To Hit | Damage |
-|---|---:|---|
-| **Standard** | **+14** | `1d10 + 7` piercing |
-| **Sharpshooter** | **+9** | `1d10 + 17` piercing |
+**To Hit Calculation:**
+- **Standard:** DEX (5) + Proficiency (5) + Archery Fighting Style (2) + Magic Weapon (2) = **+14**
+- **Sharpshooter:** DEX (5) + Proficiency (5) + Archery (2) + Magic (2) - Sharpshooter Penalty (5) = **+9**
 
-**Hit math:** `DEX 5 + PB 5 + Archery 2 + Magic 2 = +14`
+#### Damage Ranges (Per Shot)
+
+| Attack Type | Min | Avg | Max | Formula |
+|-------------|----:|----:|----:|---------|
+| **Standard** | 8 | 12.5 | 17 | 1d10 + 7 |
+| **Standard + Elemental** | 9 | 17 | 23 | 1d10 + 7 + 1d6 |
+| **Heavy (Sharpshooter)** | 18 | 22.5 | 27 | 1d10 + 7 + 10 |
+| **Heavy + Elemental** | 19 | 27 | 33 | 1d10 + 7 + 10 + 1d6 |
 
 #### Special Features
 
