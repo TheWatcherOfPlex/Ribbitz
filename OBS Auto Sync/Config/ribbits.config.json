@@ -1,0 +1,23 @@
+{
+  "sheet": {
+    "spreadsheetId": "1Vn1Xaq04AWDrrdz-RGO8m6V7SzuFyHrW31e47fnH2v0",
+    "worksheetName": "Stats",
+    "range": "A:E"
+  },
+  "auth": {
+    "mode": "webApp",
+    "webAppUrl": "https://script.google.com/macros/s/AKfycbyhhDkIeS3yhAnCCVr4MUi7GfquVceXzyeNQYtPQpX00ye5WBjMNe_EAZuC-2wxICJX/exec"
+  },
+  "output": {
+    "folder": "F:\\Working Files\\GitHub Desktop\\Ribbitz\\OBS Auto Sync\\Stats",
+    "encoding": "utf8NoBom"
+  },
+  "generatedMappingPath": ".\\mapping.generated.json",
+  "pollSeconds": 90,
+  "typeOrder": [
+    "health","combat","slots","resource","spellcasting","senses",
+    "identity","core","ability","save","skill","defense",
+    "proficiency","equipment","exploration","companions","features",
+    "feats","notes","custom","header"
+  ]
+}

@@ -1,0 +1,9 @@
+# Service Account Credentials - NEVER COMMIT!
+service-account.json
+
+# Generated mapping file
+mapping.generated.json
+
+# Logs
+*.log
+logs/

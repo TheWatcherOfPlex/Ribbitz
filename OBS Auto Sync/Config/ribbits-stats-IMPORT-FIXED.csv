@@ -1,0 +1,131 @@
+Label,Value,Type,Key,OutputFile
+== Health & Combat ==,,,header-health,
+HP Current,61,health,hp-current,hp-current.txt
+HP Maximum,102,health,hp-max,hp-max.txt
+Temp HP,0,health,temp-hp,temp-hp.txt
+AC,19,combat,ac,ac.txt
+Initiative Bonus,+5,combat,initiative,initiative.txt
+Initiative (First Combat),+8,combat,initiative-first,initiative-first.txt
+== Spell Slots ==,,,header-slots,
+1st Level Slots,'4/4,slots,slots-1st,slots-1st.txt
+2nd Level Slots,'3/3,slots,slots-2nd,slots-2nd.txt
+3rd Level Slots,'3/3,slots,slots-3rd,slots-3rd.txt
+4th Level Slots,'3/3,slots,slots-4th,slots-4th.txt
+5th Level Slots,'2/2,slots,slots-5th,slots-5th.txt
+6th Level Slots,'1/1,slots,slots-6th,slots-6th.txt
+== Resources (Short Rest) ==,,,header-short-rest,
+Wild Shape Uses,'2/2,resource,wild-shape,wild-shape.txt
+== Resources (Long Rest) ==,,,header-long-rest,
+Active Camo Uses,'5/5,resource,active-camo,active-camo.txt
+Fungal Infestation Uses,'4/4,resource,fungal-infestation,fungal-infestation.txt
+Fey Touched - Misty Step,'1/1,resource,fey-misty-step,fey-misty-step.txt
+Fey Touched - Hunter's Mark,'1/1,resource,fey-hunters-mark,fey-hunters-mark.txt
+== Resources (Per Day) ==,,,header-per-day,
+Song of the Grung,'1/1,resource,song-grung,song-grung.txt
+Poison Weapon Uses,'5/5,resource,poison-weapon,poison-weapon.txt
+Tongue Grapple Uses,'5/5,resource,tongue-grapple,tongue-grapple.txt
+Sleep Dart,'1/1,resource,dart-sleep,dart-sleep.txt
+Paralyze Dart,'1/1,resource,dart-paralyze,dart-paralyze.txt
+Purple Grung Darts,'5/5,resource,dart-purple,dart-purple.txt
+Skywarden Pierce Cover,'1/1,resource,skywarden-pierce,skywarden-pierce.txt
+== DCs & Attack Bonuses ==,,,header-dcs,
+Spell Save DC,17,spellcasting,spell-dc,spell-dc.txt
+Spell Attack Bonus,+9,spellcasting,spell-attack,spell-attack.txt
+Poison Skin DC,17,combat,poison-skin-dc,poison-skin-dc.txt
+Poison Weapon DC,17,combat,poison-weapon-dc,poison-weapon-dc.txt
+Song of the Grung DC,17,combat,song-grung-dc,song-grung-dc.txt
+== Passive Scores ==,,,header-passives,
+Passive Perception,19,senses,passive-perception,passive-perception.txt
+Passive Insight,14,senses,passive-insight,passive-insight.txt
+Passive Investigation,9,senses,passive-investigation,passive-investigation.txt
+== Identity ==,,,header-identity,
+Name,Ribbitz,identity,name,name.txt
+Race,Grung (Homebrew v4),identity,race,race.txt
+Class,Ranger 6 / Druid 9,identity,class,class.txt
+Subclass,Gloom Stalker / Circle of Spores,identity,subclass,subclass.txt
+Level,15,identity,level,level.txt
+Background,Vanguard of the Great Golden Risabere,identity,background,background.txt
+Alignment,Neutral Good,identity,alignment,alignment.txt
+Age,3.5 years,identity,age,age.txt
+Size,"Small (4' 0"", 55 lbs)",identity,size,size.txt
+== Core Stats ==,,,header-core,
+Proficiency Bonus,+5,core,proficiency,proficiency.txt
+Speed,25 ft,core,speed,speed.txt
+Darkvision,90 ft,senses,darkvision,darkvision.txt
+== Ability Scores ==,,,header-abilities,
+Strength,14,ability,str,str.txt
+Strength Modifier,+2,ability,str-mod,str-mod.txt
+Dexterity,20,ability,dex,dex.txt
+Dexterity Modifier,+5,ability,dex-mod,dex-mod.txt
+Constitution,16,ability,con,con.txt
+Constitution Modifier,+3,ability,con-mod,con-mod.txt
+Intelligence,9,ability,int,int.txt
+Intelligence Modifier,-1,ability,int-mod,int-mod.txt
+Wisdom,18,ability,wis,wis.txt
+Wisdom Modifier,+4,ability,wis-mod,wis-mod.txt
+Charisma,8,ability,cha,cha.txt
+Charisma Modifier,-1,ability,cha-mod,cha-mod.txt
+== Saving Throws ==,,,header-saves,
+Strength Save,+2,save,save-str,save-str.txt
+Dexterity Save,+10,save,save-dex,save-dex.txt
+Constitution Save,+3,save,save-con,save-con.txt
+Intelligence Save,-1,save,save-int,save-int.txt
+Wisdom Save,+9,save,save-wis,save-wis.txt
+Charisma Save,-1,save,save-cha,save-cha.txt
+== Skills ==,,,header-skills,
+Acrobatics,+10,skill,skill-acrobatics,skill-acrobatics.txt
+Animal Handling,+4,skill,skill-animal-handling,skill-animal-handling.txt
+Arcana,+4,skill,skill-arcana,skill-arcana.txt
+Athletics,+2,skill,skill-athletics,skill-athletics.txt
+Athletics (Swimming/Climbing),+7,skill,skill-athletics-gloves,skill-athletics-gloves.txt
+Deception,-1,skill,skill-deception,skill-deception.txt
+History,-1,skill,skill-history,skill-history.txt
+Insight,+4,skill,skill-insight,skill-insight.txt
+Intimidation,-1,skill,skill-intimidation,skill-intimidation.txt
+Investigation,-1,skill,skill-investigation,skill-investigation.txt
+Medicine,+9,skill,skill-medicine,skill-medicine.txt
+Medicine (Swamp/Forest),+14,skill,skill-medicine-terrain,skill-medicine-terrain.txt
+Nature,+4,skill,skill-nature,skill-nature.txt
+Nature (Swamp/Forest),+9,skill,skill-nature-terrain,skill-nature-terrain.txt
+Perception,+9,skill,skill-perception,skill-perception.txt
+Perception (Swamp/Forest),+14,skill,skill-perception-terrain,skill-perception-terrain.txt
+Performance,-1,skill,skill-performance,skill-performance.txt
+Persuasion,-1,skill,skill-persuasion,skill-persuasion.txt
+Religion,-1,skill,skill-religion,skill-religion.txt
+Sleight of Hand,+5,skill,skill-sleight,skill-sleight.txt
+Stealth,+10,skill,skill-stealth,skill-stealth.txt
+Survival,+9,skill,skill-survival,skill-survival.txt
+Survival (Swamp/Forest),+14,skill,skill-survival-terrain,skill-survival-terrain.txt
+== Attacks - Blowgun ==,,,header-blowgun,
+Blowgun To Hit,+13,combat,blowgun-hit,blowgun-hit.txt
+Blowgun To Hit (Sharpshooter),+8,combat,blowgun-hit-ss,blowgun-hit-ss.txt
+Blowgun Damage (Standard),1d8,combat,blowgun-dmg,blowgun-dmg.txt
+Blowgun Damage (Sharpshooter),1d8+10,combat,blowgun-dmg-ss,blowgun-dmg-ss.txt
+Blowgun Elemental Damage,1d6,combat,blowgun-elemental,blowgun-elemental.txt
+== Attacks - Longbow ==,,,header-longbow,
+Longbow To Hit,+14,combat,longbow-hit,longbow-hit.txt
+Longbow To Hit (Sharpshooter),+9,combat,longbow-hit-ss,longbow-hit-ss.txt
+Longbow Damage (Standard),1d10+7,combat,longbow-dmg,longbow-dmg.txt
+Longbow Damage (Sharpshooter),1d10+17,combat,longbow-dmg-ss,longbow-dmg-ss.txt
+== Attacks - Melee ==,,,header-melee,
+Dagger +1 To Hit,+11,combat,dagger-hit,dagger-hit.txt
+Dagger +1 Damage,1d4+6,combat,dagger-dmg,dagger-dmg.txt
+Dagger (Poison) To Hit,+10,combat,dagger-poison-hit,dagger-poison-hit.txt
+Dagger (Poison) Damage,1d4+5,combat,dagger-poison-dmg,dagger-poison-dmg.txt
+Bite To Hit,+7,combat,bite-hit,bite-hit.txt
+Bite Damage,1d6+2,combat,bite-dmg,bite-dmg.txt
+Tongue Slap To Hit,+7,combat,tongue-hit,tongue-hit.txt
+Tongue Slap Damage,1d6+2,combat,tongue-dmg,tongue-dmg.txt
+Unarmed Strike To Hit,+7,combat,unarmed-hit,unarmed-hit.txt
+Unarmed Strike Damage,3,combat,unarmed-dmg,unarmed-dmg.txt
+== Cantrip Damage ==,,,header-cantrips,
+Poison Spray Damage,3d12,spellcasting,poison-spray-dmg,poison-spray-dmg.txt
+Primal Savagery Damage,3d10,spellcasting,primal-savagery-dmg,primal-savagery-dmg.txt
+Chill Touch Damage,3d8,spellcasting,chill-touch-dmg,chill-touch-dmg.txt
+== Class Features (Active) ==,,,header-features,
+Symbiotic Entity Active,No,features,symbiotic-active,symbiotic-active.txt
+Symbiotic Entity Temp HP,36,features,symbiotic-temp-hp,symbiotic-temp-hp.txt
+Halo of Spores Damage,1d6,features,halo-damage,halo-damage.txt
+Halo of Spores (Symbiotic),2d6,features,halo-damage-symbiotic,halo-damage-symbiotic.txt
+Wild Shape Duration,4.5 hours,features,wild-shape-duration,wild-shape-duration.txt
+Wild Shape Max CR,1,features,wild-shape-cr,wild-shape-cr.txt

@@ -1,0 +1,18 @@
+Google Sheet
+
+Deployment ID
+AKfycbyhhDkIeS3yhAnCCVr4MUi7GfquVceXzyeNQYtPQpX00ye5WBjMNe_EAZuC-2wxICJX
+
+Web app
+https://script.google.com/macros/s/AKfycbyhhDkIeS3yhAnCCVr4MUi7GfquVceXzyeNQYtPQpX00ye5WBjMNe_EAZuC-2wxICJX/exec
+
+link
+https://docs.google.com/spreadsheets/d/1Vn1Xaq04AWDrrdz-RGO8m6V7SzuFyHrW31e47fnH2v0/edit?gid=0#gid=0
+
+Each stat gets saved in a folder for its category
+Save folder
+F:\Working Files\GitHub Desktop\Ribbitz\OBS Auto Sync\Stats
+
+
+All other files are kept in the Git folder
+F:\Working Files\GitHub Desktop\Ribbitz\OBS Auto Sync\Engine

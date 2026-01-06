@@ -1,0 +1,114 @@
+Key,Value
+hp-current,61
+hp-max,102
+temp-hp,0
+ac,19
+initiative,+5
+initiative-first,+8
+slots-1st,4/4
+slots-2nd,3/3
+slots-3rd,3/3
+slots-4th,3/3
+slots-5th,2/2
+slots-6th,1/1
+wild-shape,2/2
+active-camo,5/5
+fungal-infestation,4/4
+fey-misty-step,1/1
+fey-hunters-mark,1/1
+song-grung,1/1
+poison-weapon,5/5
+tongue-grapple,5/5
+dart-sleep,1/1
+dart-paralyze,1/1
+dart-purple,5/5
+skywarden-pierce,1/1
+spell-dc,17
+spell-attack,+9
+poison-skin-dc,17
+poison-weapon-dc,17
+song-grung-dc,17
+passive-perception,19
+passive-insight,14
+passive-investigation,9
+name,Ribbitz
+race,Grung (Homebrew v4)
+class,Ranger 6 / Druid 9
+subclass,Gloom Stalker / Circle of Spores
+level,15
+background,Vanguard of the Great Golden Risabere
+alignment,Neutral Good
+age,3.5 years
+size,"Small (4' 0"", 55 lbs)"
+proficiency,+5
+speed,25 ft
+darkvision,90 ft
+str,14
+str-mod,+2
+dex,20
+dex-mod,+5
+con,16
+con-mod,+3
+int,9
+int-mod,-1
+wis,18
+wis-mod,+4
+cha,8
+cha-mod,-1
+save-str,+2
+save-dex,+10
+save-con,+3
+save-int,-1
+save-wis,+9
+save-cha,-1
+skill-acrobatics,+10
+skill-animal-handling,+4
+skill-arcana,+4
+skill-athletics,+2
+skill-athletics-gloves,+7
+skill-deception,-1
+skill-history,-1
+skill-insight,+4
+skill-intimidation,-1
+skill-investigation,-1
+skill-medicine,+9
+skill-medicine-terrain,+14
+skill-nature,+4
+skill-nature-terrain,+9
+skill-perception,+9
+skill-perception-terrain,+14
+skill-performance,-1
+skill-persuasion,-1
+skill-religion,-1
+skill-sleight,+5
+skill-stealth,+10
+skill-survival,+9
+skill-survival-terrain,+14
+blowgun-hit,+13
+blowgun-hit-ss,+8
+blowgun-dmg,1d8
+blowgun-dmg-ss,1d8+10
+blowgun-elemental,1d6
+longbow-hit,+14
+longbow-hit-ss,+9
+longbow-dmg,1d10+7
+longbow-dmg-ss,1d10+17
+dagger-hit,+11
+dagger-dmg,1d4+6
+dagger-poison-hit,+10
+dagger-poison-dmg,1d4+5
+bite-hit,+7
+bite-dmg,1d6+2
+tongue-hit,+7
+tongue-dmg,1d6+2
+unarmed-hit,+7
+unarmed-dmg,3
+poison-spray-dmg,3d12
+primal-savagery-dmg,3d10
+chill-touch-dmg,3d8
+symbiotic-active,No
+symbiotic-temp-hp,36
+halo-damage,1d6
+halo-damage-symbiotic,2d6
+wild-shape-duration,4.5 hours
+wild-shape-cr,1
