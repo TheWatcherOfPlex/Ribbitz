@@ -118,15 +118,135 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 </details>
 
 <details>
-<summary><h3>Other Attacks (Quick Reference)</h3></summary>
+<summary><h3>Dagger (+1 Fey Blessing)</h3></summary>
 
-| Attack | To Hit | Damage | Notes |
-|---|---:|---|---|
-| **Dagger +1** | **+11** | `1d4 + 6` | melee or thrown (20/60) |
-| **Dagger (non-magical)** | **+10** | `1d4 + 5` | melee or thrown (20/60); currently poison-dipped |
-| **Unarmed Strike** | **+7** | `1 + 2` bludgeoning | |
-| **Bite** | **+7** | `1d6 + 2` piercing | |
-| **Tongue Slap** | **+7** | `1d6 + 2` piercing | range 10/15 |
+#### Core Stats
+
+| Item | Value |
+|---|---|
+| **Weight** | 1 lb |
+| **Range** | Melee or Thrown (20/60) |
+| **Properties** | Finesse, light, thrown, +1 Fey Blessing |
+| **Damage Type** | Slashing or Piercing |
+
+#### Attack Roll Breakdown
+
+**To Hit Calculation:**
+- **Melee/Thrown:** DEX (5) + Proficiency (5) + Fey Blessing (1) = **+11**
+
+#### Damage Ranges
+
+| Attack Type | Min | Avg | Max | Formula |
+|-------------|----:|----:|----:|---------|
+| **Standard** | 7 | 8.5 | 10 | 1d4 + 6 |
+
+**Note:** 1d4 base + DEX (5) + Fey Blessing (1)
+
+</details>
+
+<details>
+<summary><h3>Dagger (Non-Magical, Poison-Dipped)</h3></summary>
+
+#### Core Stats
+
+| Item | Value |
+|---|---|
+| **Weight** | 1 lb |
+| **Range** | Melee or Thrown (20/60) |
+| **Properties** | Finesse, light, thrown |
+| **Damage Type** | Slashing or Piercing |
+| **Special** | Currently coated with unknown poison |
+
+#### Attack Roll Breakdown
+
+**To Hit Calculation:**
+- **Melee/Thrown:** DEX (5) + Proficiency (5) = **+10**
+
+#### Damage Ranges
+
+| Attack Type | Min | Avg | Max | Formula |
+|-------------|----:|----:|----:|---------|
+| **Standard** | 6 | 7.5 | 9 | 1d4 + 5 |
+| **With Poison** | 6+ | 7.5+ | 9+ | 1d4 + 5 + poison |
+
+**Note:** 1d4 base + DEX (5)
+
+</details>
+
+<details>
+<summary><h3>Unarmed Strike</h3></summary>
+
+#### Core Stats
+
+| Item | Value |
+|---|---|
+| **Range** | Melee (5 ft) |
+| **Damage Type** | Bludgeoning |
+
+#### Attack Roll Breakdown
+
+**To Hit Calculation:**
+- **Melee:** STR (2) + Proficiency (5) = **+7**
+
+#### Damage Ranges
+
+| Attack Type | Min | Avg | Max | Formula |
+|-------------|----:|----:|----:|---------|
+| **Standard** | 3 | 3 | 3 | 1 + 2 |
+
+**Note:** 1 base + STR (2) - *flat damage, no die roll*
+
+</details>
+
+<details>
+<summary><h3>Bite</h3></summary>
+
+#### Core Stats
+
+| Item | Value |
+|---|---|
+| **Range** | Melee (5 ft) |
+| **Damage Type** | Piercing |
+| **Special** | Natural weapon |
+
+#### Attack Roll Breakdown
+
+**To Hit Calculation:**
+- **Melee:** STR (2) + Proficiency (5) = **+7**
+
+#### Damage Ranges
+
+| Attack Type | Min | Avg | Max | Formula |
+|-------------|----:|----:|----:|---------|
+| **Standard** | 3 | 5.5 | 8 | 1d6 + 2 |
+
+**Note:** 1d6 base + STR (2)
+
+</details>
+
+<details>
+<summary><h3>Tongue Slap</h3></summary>
+
+#### Core Stats
+
+| Item | Value |
+|---|---|
+| **Range** | 10/15 ft |
+| **Damage Type** | Piercing |
+| **Special** | Natural weapon, reach |
+
+#### Attack Roll Breakdown
+
+**To Hit Calculation:**
+- **Melee (Reach):** STR (2) + Proficiency (5) = **+7**
+
+#### Damage Ranges
+
+| Attack Type | Min | Avg | Max | Formula |
+|-------------|----:|----:|----:|---------|
+| **Standard** | 3 | 5.5 | 8 | 1d6 + 2 |
+
+**Note:** 1d6 base + STR (2)
 
 </details>
 

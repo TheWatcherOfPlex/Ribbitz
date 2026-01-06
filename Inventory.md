@@ -372,17 +372,58 @@ Primary purpose: full inventory reference.
 <details>
 <summary><h3>🗡️ Dagger (+1 Fey Blessing)</h3></summary>
 
-**Damage:** 1d4 + 6  
-**Range:** 20/60 (thrown)  
-**Cost:** ~500 gp  
-**Note:** Dipped in Fey Inverted Water Fall Blessing
+**Cost:** ~500 gp
+
+#### Core Stats
+
+| Item | Value |
+|---|---|
+| **Weight** | 1 lb |
+| **Range** | Melee or Thrown (20/60) |
+| **Properties** | Finesse, light, thrown, +1 Fey Blessing |
+| **Damage Type** | Slashing or Piercing |
+
+#### Attack Roll Breakdown
+
+**To Hit Calculation:**
+- **Melee/Thrown:** DEX (5) + Proficiency (5) + Fey Blessing (1) = **+11**
+
+#### Damage Ranges
+
+| Attack Type | Min | Avg | Max | Formula |
+|-------------|----:|----:|----:|---------|
+| **Standard** | 7 | 8.5 | 10 | 1d4 + 6 |
+
+**Note:** 1d4 base + DEX (5) + Fey Blessing (1) - Dipped in Fey Inverted Water Fall Blessing
 
 </details>
 
 <details>
-<summary><h3>🗡️ Poison-Dipped Dagger</h3></summary>
+<summary><h3>🗡️ Dagger (Non-Magical, Poison-Dipped)</h3></summary>
 
-**Description:** Regular dagger with an unknown poison coating
+#### Core Stats
+
+| Item | Value |
+|---|---|
+| **Weight** | 1 lb |
+| **Range** | Melee or Thrown (20/60) |
+| **Properties** | Finesse, light, thrown |
+| **Damage Type** | Slashing or Piercing |
+| **Special** | Currently coated with unknown poison |
+
+#### Attack Roll Breakdown
+
+**To Hit Calculation:**
+- **Melee/Thrown:** DEX (5) + Proficiency (5) = **+10**
+
+#### Damage Ranges
+
+| Attack Type | Min | Avg | Max | Formula |
+|-------------|----:|----:|----:|---------|
+| **Standard** | 6 | 7.5 | 9 | 1d4 + 5 |
+| **With Poison** | 6+ | 7.5+ | 9+ | 1d4 + 5 + poison |
+
+**Note:** 1d4 base + DEX (5)
 
 </details>
 
