@@ -391,7 +391,7 @@ Primary purpose: full inventory reference.
 
 **Weapon Type:** +1 magic weapon (broken in half - no longer double-barrel)  
 **Damage:** 1d8 piercing + 1d6 elemental (if elemental dart is used)  
-**Range:** 25/100
+**Range:** 25/100 (Ribbit's ranged weapon attacks ignore half and three-quarters cover and long range doesn't impose disadvantage. )
 
 #### Attack Rolls
 
