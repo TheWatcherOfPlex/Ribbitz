@@ -127,6 +127,18 @@ Your skin adapts to match your surroundings, granting you proficiency in the **S
 </details>
 
 <details>
+<summary><h3>🎭 Active Camo (Ribbitz-only Homebrew)</h3></summary>
+
+**Ribbitz's Uses:** 5/Long Rest (= Proficiency Bonus)
+
+**Effect:**
+As a **Bonus Action**, you can activate your camouflage to gain **Advantage on Stealth checks** for up to **1 hour**.
+
+You can use this ability a number of times equal to your **Proficiency Bonus** (currently 5), regaining all expended uses after a **Long Rest**.
+
+</details>
+
+<details>
 <summary><h3>☠️ Poison Contact (Skin/Saliva)</h3></summary>
 
 **Ribbitz's DC:** 17 (= 9 + Prof 5 + CON 3)
