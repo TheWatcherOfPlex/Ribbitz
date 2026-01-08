@@ -5,14 +5,15 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 
 # 🐸 Ribbitz — Basic Stats (Main Sheet)
 
-**Navigation:**
-- ⬅️ [README](./README.md)
-- ⚔️ [Actions](./Actions.md)
-- 🎒 [Inventory](./Inventory.md)
-- ✨ [Class Features](./Class%20Features.md)
-- ✨ [Spells & Magic Abilities](./Spells%20and%20Magic%20Abilities.md)
-- 📜 [Backstory](./Backstory.md)
-- 📚 [Reference Materials](./Reference%20Materials/)
+**Nav:**
+[Home](./README.md) | [Stats](./Basic%20Stats.md) | [Actions](./Actions.md) | [Inventory](./Inventory.md) | [Features](./Class%20Features.md) | [Spells/Magic](./Spells%20and%20Magic%20Abilities.md) | [Backstory](./Backstory.md) | [Images](./Images.md) | [Refs](./Reference%20Materials/)
+
+**On this page:**
+- [Identity](#-identity)
+- [Quick Stats](#-quick-stats)
+- [DCs, Saves, and Passives](#-dcs-saves-and-passives)
+- [Racial / Homebrew (Need-to-Know)](#-racial--homebrew-need-to-know)
+- [Ability Scores & Skills](#-ability-scores--skills)
 
 > **Ribbitz** is a **Level 15** Grung (Homebrew): **Ranger 6 (Gloom Stalker)** / **Druid 9 (Circle of Spores)**.
 

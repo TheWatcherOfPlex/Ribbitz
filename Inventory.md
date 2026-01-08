@@ -5,14 +5,16 @@ Primary purpose: full inventory reference.
 
 # 🎒 Inventory (Ribbitz)
 
-**Navigation:**
-- ⬅️ [README](./README.md)
-- 📄 [Basic Stats](./Basic%20Stats.md)
-- ⚔️ [Actions](./Actions.md)
-- ✨ [Class Features](./Class%20Features.md)
-- ✨ [Spells & Magic Abilities](./Spells%20and%20Magic%20Abilities.md)
-- 📜 [Backstory](./Backstory.md)
-- 📚 [Reference Materials](./Reference%20Materials/)
+**Nav:**
+[Home](./README.md) | [Stats](./Basic%20Stats.md) | [Actions](./Actions.md) | [Inventory](./Inventory.md) | [Features](./Class%20Features.md) | [Spells/Magic](./Spells%20and%20Magic%20Abilities.md) | [Backstory](./Backstory.md) | [Images](./Images.md) | [Refs](./Reference%20Materials/)
+
+**On this page:**
+- [Major Magic Items & Attunement](#-major-magic-items--attunement)
+- [Armor & Clothing](#-armor--clothing-layered-system)
+- [Combat Consumables](#-combat-consumables)
+- [Ammunition & Weapons](#-ammunition--weapons)
+- [Kits, Tools, & Bags](#-kits-tools--bags)
+- [Currency & Valuables](#-currency--valuables)
 
 > 💡 **Tip:** Click section to see categories → Click category to see items → Click item for details
 

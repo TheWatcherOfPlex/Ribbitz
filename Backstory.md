@@ -5,14 +5,12 @@ Primary purpose: narrative + quick summary.
 
 # 📜 Backstory (Ribbitz)
 
-**Navigation:**
-- ⬅️ [README](./README.md)
-- 📄 [Basic Stats](./Basic%20Stats.md)
-- ⚔️ [Actions](./Actions.md)
-- 🎒 [Inventory](./Inventory.md)
-- ✨ [Class Features](./Class%20Features.md)
-- ✨ [Spells & Magic Abilities](./Spells%20and%20Magic%20Abilities.md)
-- 📚 [Reference Materials](./Reference%20Materials/)
+**Nav:**
+[Home](./README.md) | [Stats](./Basic%20Stats.md) | [Actions](./Actions.md) | [Inventory](./Inventory.md) | [Features](./Class%20Features.md) | [Spells/Magic](./Spells%20and%20Magic%20Abilities.md) | [Backstory](./Backstory.md) | [Images](./Images.md) | [Refs](./Reference%20Materials/)
+
+**On this page:**
+- [TL;DR Summary](#tldr-summary)
+- [Full Story](#full-story--the-legend-of-ribbits)
 
 ---
 

@@ -6,14 +6,21 @@ Do not publish/distribute.
 
 # ✨ Spells & Magic Abilities — PRIVATE (Ribbitz)
 
-**Navigation:**
-- ⬅️ [README](./README.md)
-- 📄 [Basic Stats](./Basic%20Stats.md)
-- ⚔️ [Actions](./Actions.md)
-- 🎒 [Inventory](./Inventory.md)
-- ✨ [Class Features](./Class%20Features.md)
-- 📜 [Backstory](./Backstory.md)
-- 📚 [Reference Materials](./Reference%20Materials/)
+**Nav:**
+[Home](./README.md) | [Stats](./Basic%20Stats.md) | [Actions](./Actions.md) | [Inventory](./Inventory.md) | [Features](./Class%20Features.md) | [Spells/Magic](./Spells%20and%20Magic%20Abilities.md) | [Backstory](./Backstory.md) | [Images](./Images.md) | [Refs](./Reference%20Materials/)
+
+**Tracker Key:** 🟩 available · 🟥 spent
+
+**On this page:**
+- [Reset / Usage Trackers](#-reset--usage-trackers)
+- [Spell Slots Tracker](#-spell-slots-tracker-multiclass-caster-level-12)
+- [Casting Math](#-ribbitz-casting-math-quick)
+- [Cantrips](#-cantrips-5-known)
+- [1st Level](#-1st-level-spells-11-prepared)
+- [2nd Level](#-2nd-level-spells-10-prepared)
+- [3rd Level](#-3rd-level-spells-4-prepared)
+- [4th Level](#-4th-level-spells-3-prepared)
+- [Magic Abilities (Non-Spell)](#-magic-abilities-non-spell-7-abilities)
 
 > 💡 **Tip:** Click spell level to see list → Click spell name to see full details.
 >
@@ -27,7 +34,7 @@ Do not publish/distribute.
 
 **Wild Shape (Druid)**
 - Uses: **2** per short rest (also returns on long rest)
-- Tracker: [ ] [ ]
+- Tracker: 🟩🟩
 
 **Wild Companion (TCoE)**
 - **Consumes 1 Wild Shape use** to cast *Find Familiar* (Fey)
@@ -39,19 +46,19 @@ Do not publish/distribute.
 
 **Active Camo (Grung Homebrew)**
 - Uses: **5** per long rest (= Proficiency Bonus)
-- Tracker: [ ] [ ] [ ] [ ] [ ]
+- Tracker: 🟩🟩🟩🟩🟩
 
 **Fungal Infestation (Circle of Spores)**
 - Uses: **4** per long rest (= WIS modifier)
-- Tracker: [ ] [ ] [ ] [ ]
+- Tracker: 🟩🟩🟩🟩
 
 **Song of the Grung (Homebrew)**
 - Uses: **1/day**
-- Tracker: [ ]
+- Tracker: 🟩
 
 **Fey Touched (TCoE) - Free Casts**
-- *Misty Step*: [ ]
-- *Hunter's Mark*: [ ]
+- *Misty Step*: 🟩
+- *Hunter's Mark*: 🟩
 
 ---
 
@@ -61,12 +68,12 @@ Do not publish/distribute.
 
 | Slot Level | Total | Used |
 |---:|:---:|:---|
-| 1st | 4 | [ ] [ ] [ ] [ ] |
-| 2nd | 3 | [ ] [ ] [ ] |
-| 3rd | 3 | [ ] [ ] [ ] |
-| 4th | 3 | [ ] [ ] [ ] |
-| 5th | 2 | [ ] [ ] |
-| 6th | 1 | [ ] |
+| 1st | 4 | 🟩🟩🟩🟩 |
+| 2nd | 3 | 🟩🟩🟩 |
+| 3rd | 3 | 🟩🟩🟩 |
+| 4th | 3 | 🟩🟩🟩 |
+| 5th | 2 | 🟩🟩 |
+| 6th | 1 | 🟩 |
 
 ---
 

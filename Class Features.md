@@ -5,14 +5,15 @@ Primary purpose: Class + feat rules reference + level-scaled trackers.
 
 # ✨ Class Features (Ribbitz)
 
-**Navigation:**
-- ⬅️ [README](./README.md)
-- 📄 [Basic Stats](./Basic%20Stats.md)
-- ⚔️ [Actions](./Actions.md)
-- 🎒 [Inventory](./Inventory.md)
-- ✨ [Spells & Magic Abilities](./Spells%20and%20Magic%20Abilities.md)
-- 📜 [Backstory](./Backstory.md)
-- 📚 [Reference Materials](./Reference%20Materials/)
+**Nav:**
+[Home](./README.md) | [Stats](./Basic%20Stats.md) | [Actions](./Actions.md) | [Inventory](./Inventory.md) | [Features](./Class%20Features.md) | [Spells/Magic](./Spells%20and%20Magic%20Abilities.md) | [Backstory](./Backstory.md) | [Images](./Images.md) | [Refs](./Reference%20Materials/)
+
+**On this page:**
+- [Grung — Racial Traits](#-grung-homebrew-v4--racial-traits)
+- [Grung Alignment & Culture](#-grung-alignment--culture-lore)
+- [Ranger 6 (Gloom Stalker)](#-ranger-6-gloom-stalker)
+- [Druid 9 (Circle of Spores)](#-druid-9-circle-of-spores)
+- [Feats](#-feats)
 
 > 💡 **Tip:** Click on feature names to expand full official rules text.
 
