@@ -13,14 +13,38 @@ Designed for GitHub viewing.
 
 ---
 
-## 🧭 Quick Links
+## 🧭 Dashboard
+
+**Nav:**
+[Home](./README.md) | [Stats](./Basic%20Stats.md) | [Actions](./Actions.md) | [Inventory](./Inventory.md) | [Features](./Class%20Features.md) | [Spells/Magic](./Spells%20and%20Magic%20Abilities.md) | [Backstory](./Backstory.md) | [Images](./Images.md) | [Refs](./Reference%20Materials/)
+
+### ⚡ In-Session
 
 - 📄 **Basic Stats (Main):** [Basic Stats.md](./Basic%20Stats.md)
 - ⚔️ **Actions (Combat):** [Actions.md](./Actions.md)
 - 🎒 **Inventory:** [Inventory.md](./Inventory.md)
-- ✨ **Class Features:** [Class Features.md](./Class%20Features.md)
 - ✨ **Spells & Magic Abilities:** [Spells and Magic Abilities.md](./Spells%20and%20Magic%20Abilities.md)
-- 📜 **Backstory:** [Backstory.md](./Backstory.md)
+
+### 📚 Reference
+
+- ✨ **Class Features:** [Class Features.md](./Class%20Features.md)
 - 📚 **Reference Materials:** [Reference Materials/](./Reference%20Materials/)
+
+### 📜 Story
+
+- 📜 **Backstory:** [Backstory.md](./Backstory.md)
+
+### 🖼️ Images
+
+- 🖼️ **Images page:** [Images.md](./Images.md)
+- 📁 **Images folder:** [Images/](./Images/)
+
+---
+
+### ✅ Tracker Key
+
+For any trackers in this repo:
+- 🟩 = available
+- 🟥 = spent
 
 ---
