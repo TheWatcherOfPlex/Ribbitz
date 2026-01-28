@@ -437,7 +437,7 @@ Primary purpose: full inventory reference.
 | Item | Value |
 |---|---|
 | **Weight** | 1 lb |
-| **Range** | 25/100 *(Ribbits has Sharpshooter feat: no disadvantage at long range)* |
+| **Range** | 25/100 *(Ribbitz has Sharpshooter feat: no disadvantage at long range)* |
 | **Properties** | +1 magic *(broken in half - no longer double-barrel)* |
 | **Per-shot damage** | `1d8` piercing *(rolled per hit)* |
 | **Elemental damage** | `1d6` elemental *(rolled per elemental hit)* |
