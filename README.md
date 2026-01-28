@@ -11,17 +11,14 @@ Designed for GitHub viewing.
 - If you’re the DM: feel free to browse and reference during sessions.
 - These pages are updated during sessions; you may want to refresh often during gameplay as things will get edited live.
 
+<img src="./Images/4-Flying.png" alt="Ribbitz flying" width="320" />
+
 ---
 
 ## 🧭 Dashboard
 
 **Nav:**
-[Home](./README.md) | [Stats](./Basic%20Stats.md) | [Actions](./Actions.md) | [Inventory](./Inventory.md) | [Features](./Class%20Features.md) | [Spells/Magic](./Spells%20and%20Magic%20Abilities.md) | [Backstory](./Backstory.md) | [Images](./Images.md) | [Refs](./Reference%20Materials/)
-
-### 🖼️ Gallery
-
-![Ribbitz front view](./Images/1-Front.png)
-![Ribbitz flying](./Images/4-Flying.png)
+[Home](./README.md) | [Stats](./Basic%20Stats.md) | [Actions](./Actions.md) | [Inventory](./Inventory.md) | [Features](./Class%20Features.md) | [Racial Traits](./Racial%20Traits.md) | [Spells/Magic](./Spells%20and%20Magic%20Abilities.md) | [Backstory](./Backstory.md) | [Images](./Images.md) | [Refs](./Reference%20Materials/)
 
 ### ⚡ In-Session
 
@@ -33,6 +30,7 @@ Designed for GitHub viewing.
 ### 📚 Reference
 
 - ✨ **Class Features:** [Class Features.md](./Class%20Features.md)
+- 🐸 **Racial Traits:** [Racial Traits.md](./Racial%20Traits.md)
 - 📚 **Reference Materials:** [Reference Materials/](./Reference%20Materials/)
 
 ### 📜 Story

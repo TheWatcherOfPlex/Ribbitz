@@ -6,7 +6,7 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 # 🐸 Ribbitz — Basic Stats (Main Sheet)
 
 **Nav:**
-[Home](./README.md) | [Stats](./Basic%20Stats.md) | [Actions](./Actions.md) | [Inventory](./Inventory.md) | [Features](./Class%20Features.md) | [Spells/Magic](./Spells%20and%20Magic%20Abilities.md) | [Backstory](./Backstory.md) | [Images](./Images.md) | [Refs](./Reference%20Materials/)
+[Home](./README.md) | [Stats](./Basic%20Stats.md) | [Actions](./Actions.md) | [Inventory](./Inventory.md) | [Features](./Class%20Features.md) | [Racial Traits](./Racial%20Traits.md) | [Spells/Magic](./Spells%20and%20Magic%20Abilities.md) | [Backstory](./Backstory.md) | [Images](./Images.md) | [Refs](./Reference%20Materials/)
 
 **On this page:**
 - [Identity](#-identity)
@@ -65,7 +65,7 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 
 ## 🐸 Racial / Homebrew (Need-to-Know)
 
-<span style="color:#2e8b57"><b>Homebrew v4 (Grung):</b></span> Details live in **Class Features**.
+<span style="color:#2e8b57"><b>Homebrew v4 (Grung):</b></span> Details live in **Racial Traits**.
 
 - **Frog Eyes:** Darkvision 90ft total, +60 ft race ability + 30 ft from Umbral Sight.*  
 - **Amphibious:** Breathe air + water *(fresh: 1h / salt: 30m).*
@@ -73,7 +73,7 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 - **Active Camo (Ribbitz-only):** Bonus Action, PB per Long Rest; gain advantage on Stealth checks for up to 1 hour.
 - **Jumping:** `d20 + (STR or DEX) + PB` *(standing jump /2).*
 
-> **More info:** full Grung v4 rules → [Class Features](./Class%20Features.md)
+> **More info:** full Grung v4 rules → [Racial Traits](./Racial%20Traits.md)
 
 ---
 
