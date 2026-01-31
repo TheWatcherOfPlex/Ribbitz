@@ -1,0 +1,803 @@
+{
+  "updatedAt": "2026-01-31T01:20:04.675Z",
+  "stats": [
+    {
+      "label": "Label",
+      "value": "Value",
+      "type": "Type",
+      "key": "Key",
+      "outputFile": "OutputFile"
+    },
+    {
+      "label": "HP Current",
+      "value": 62,
+      "type": "health",
+      "key": "hp-current",
+      "outputFile": "hp-current.txt"
+    },
+    {
+      "label": "HP Maximum",
+      "value": 102,
+      "type": "health",
+      "key": "hp-max",
+      "outputFile": "hp-max.txt"
+    },
+    {
+      "label": "Temp HP",
+      "value": "0",
+      "type": "health",
+      "key": "temp-hp",
+      "outputFile": "temp-hp.txt"
+    },
+    {
+      "label": "AC",
+      "value": "19",
+      "type": "combat",
+      "key": "ac",
+      "outputFile": "ac.txt"
+    },
+    {
+      "label": "Initiative Bonus",
+      "value": "+5",
+      "type": "combat",
+      "key": "initiative",
+      "outputFile": "initiative.txt"
+    },
+    {
+      "label": "Initiative (First Combat)",
+      "value": "+8",
+      "type": "combat",
+      "key": "initiative-first",
+      "outputFile": "initiative-first.txt"
+    },
+    {
+      "label": "1st Level Slots",
+      "value": "4/4",
+      "type": "slots",
+      "key": "slots-1st",
+      "outputFile": "slots-1st.txt"
+    },
+    {
+      "label": "2nd Level Slots",
+      "value": "3/3",
+      "type": "slots",
+      "key": "slots-2nd",
+      "outputFile": "slots-2nd.txt"
+    },
+    {
+      "label": "3rd Level Slots",
+      "value": "3/3",
+      "type": "slots",
+      "key": "slots-3rd",
+      "outputFile": "slots-3rd.txt"
+    },
+    {
+      "label": "4th Level Slots",
+      "value": "3/3",
+      "type": "slots",
+      "key": "slots-4th",
+      "outputFile": "slots-4th.txt"
+    },
+    {
+      "label": "5th Level Slots",
+      "value": "2/2",
+      "type": "slots",
+      "key": "slots-5th",
+      "outputFile": "slots-5th.txt"
+    },
+    {
+      "label": "6th Level Slots",
+      "value": "1/1",
+      "type": "slots",
+      "key": "slots-6th",
+      "outputFile": "slots-6th.txt"
+    },
+    {
+      "label": "Wild Shape Uses",
+      "value": "2/2",
+      "type": "resource",
+      "key": "wild-shape",
+      "outputFile": "wild-shape.txt"
+    },
+    {
+      "label": "Active Camo Uses",
+      "value": "5/5",
+      "type": "resource",
+      "key": "active-camo",
+      "outputFile": "active-camo.txt"
+    },
+    {
+      "label": "Fungal Infestation Uses",
+      "value": "4/4",
+      "type": "resource",
+      "key": "fungal-infestation",
+      "outputFile": "fungal-infestation.txt"
+    },
+    {
+      "label": "Fey Touched - Misty Step",
+      "value": "1/1",
+      "type": "resource",
+      "key": "fey-misty-step",
+      "outputFile": "fey-misty-step.txt"
+    },
+    {
+      "label": "Fey Touched - Hunter's Mark",
+      "value": "1/1",
+      "type": "resource",
+      "key": "fey-hunters-mark",
+      "outputFile": "fey-hunters-mark.txt"
+    },
+    {
+      "label": "Song of the Grung",
+      "value": "1/1",
+      "type": "resource",
+      "key": "song-grung",
+      "outputFile": "song-grung.txt"
+    },
+    {
+      "label": "Poison Weapon Uses",
+      "value": "5/5",
+      "type": "resource",
+      "key": "poison-weapon",
+      "outputFile": "poison-weapon.txt"
+    },
+    {
+      "label": "Tongue Grapple Uses",
+      "value": "5/5",
+      "type": "resource",
+      "key": "tongue-grapple",
+      "outputFile": "tongue-grapple.txt"
+    },
+    {
+      "label": "Sleep Dart",
+      "value": "1/1",
+      "type": "resource",
+      "key": "dart-sleep",
+      "outputFile": "dart-sleep.txt"
+    },
+    {
+      "label": "Paralyze Dart",
+      "value": "1/1",
+      "type": "resource",
+      "key": "dart-paralyze",
+      "outputFile": "dart-paralyze.txt"
+    },
+    {
+      "label": "Purple Grung Darts",
+      "value": "5/5",
+      "type": "resource",
+      "key": "dart-purple",
+      "outputFile": "dart-purple.txt"
+    },
+    {
+      "label": "Skywarden Pierce Cover",
+      "value": "1/1",
+      "type": "resource",
+      "key": "skywarden-pierce",
+      "outputFile": "skywarden-pierce.txt"
+    },
+    {
+      "label": "Spell Save DC",
+      "value": "17",
+      "type": "spellcasting",
+      "key": "spell-dc",
+      "outputFile": "spell-dc.txt"
+    },
+    {
+      "label": "Spell Attack Bonus",
+      "value": "+9",
+      "type": "spellcasting",
+      "key": "spell-attack",
+      "outputFile": "spell-attack.txt"
+    },
+    {
+      "label": "Poison Skin DC",
+      "value": "17",
+      "type": "combat",
+      "key": "poison-skin-dc",
+      "outputFile": "poison-skin-dc.txt"
+    },
+    {
+      "label": "Poison Weapon DC",
+      "value": "17",
+      "type": "combat",
+      "key": "poison-weapon-dc",
+      "outputFile": "poison-weapon-dc.txt"
+    },
+    {
+      "label": "Song of the Grung DC",
+      "value": "17",
+      "type": "combat",
+      "key": "song-grung-dc",
+      "outputFile": "song-grung-dc.txt"
+    },
+    {
+      "label": "Passive Perception",
+      "value": "19",
+      "type": "senses",
+      "key": "passive-perception",
+      "outputFile": "passive-perception.txt"
+    },
+    {
+      "label": "Passive Insight",
+      "value": "14",
+      "type": "senses",
+      "key": "passive-insight",
+      "outputFile": "passive-insight.txt"
+    },
+    {
+      "label": "Passive Investigation",
+      "value": "9",
+      "type": "senses",
+      "key": "passive-investigation",
+      "outputFile": "passive-investigation.txt"
+    },
+    {
+      "label": "Name",
+      "value": "Ribbitz",
+      "type": "identity",
+      "key": "name",
+      "outputFile": "name.txt"
+    },
+    {
+      "label": "Race",
+      "value": "Grung (Homebrew v4)",
+      "type": "identity",
+      "key": "race",
+      "outputFile": "race.txt"
+    },
+    {
+      "label": "Class",
+      "value": "Ranger 6 / Druid 9",
+      "type": "identity",
+      "key": "class",
+      "outputFile": "class.txt"
+    },
+    {
+      "label": "Subclass",
+      "value": "Gloom Stalker / Circle of Spores",
+      "type": "identity",
+      "key": "subclass",
+      "outputFile": "subclass.txt"
+    },
+    {
+      "label": "Level",
+      "value": "15",
+      "type": "identity",
+      "key": "level",
+      "outputFile": "level.txt"
+    },
+    {
+      "label": "Background",
+      "value": "Vanguard of the Great Golden Risabere",
+      "type": "identity",
+      "key": "background",
+      "outputFile": "background.txt"
+    },
+    {
+      "label": "Alignment",
+      "value": "Neutral Good",
+      "type": "identity",
+      "key": "alignment",
+      "outputFile": "alignment.txt"
+    },
+    {
+      "label": "Age",
+      "value": "3.5 years",
+      "type": "identity",
+      "key": "age",
+      "outputFile": "age.txt"
+    },
+    {
+      "label": "Size",
+      "value": "Small (4' 0\", 55 lbs)",
+      "type": "identity",
+      "key": "size",
+      "outputFile": "size.txt"
+    },
+    {
+      "label": "Proficiency Bonus",
+      "value": "+5",
+      "type": "core",
+      "key": "proficiency",
+      "outputFile": "proficiency.txt"
+    },
+    {
+      "label": "Speed",
+      "value": "25 ft",
+      "type": "core",
+      "key": "speed",
+      "outputFile": "speed.txt"
+    },
+    {
+      "label": "Darkvision",
+      "value": "90 ft",
+      "type": "senses",
+      "key": "darkvision",
+      "outputFile": "darkvision.txt"
+    },
+    {
+      "label": "Strength",
+      "value": "14",
+      "type": "ability",
+      "key": "str",
+      "outputFile": "str.txt"
+    },
+    {
+      "label": "Strength Modifier",
+      "value": "+2",
+      "type": "ability",
+      "key": "str-mod",
+      "outputFile": "str-mod.txt"
+    },
+    {
+      "label": "Dexterity",
+      "value": "20",
+      "type": "ability",
+      "key": "dex",
+      "outputFile": "dex.txt"
+    },
+    {
+      "label": "Dexterity Modifier",
+      "value": "+5",
+      "type": "ability",
+      "key": "dex-mod",
+      "outputFile": "dex-mod.txt"
+    },
+    {
+      "label": "Constitution",
+      "value": "16",
+      "type": "ability",
+      "key": "con",
+      "outputFile": "con.txt"
+    },
+    {
+      "label": "Constitution Modifier",
+      "value": "+3",
+      "type": "ability",
+      "key": "con-mod",
+      "outputFile": "con-mod.txt"
+    },
+    {
+      "label": "Intelligence",
+      "value": "9",
+      "type": "ability",
+      "key": "int",
+      "outputFile": "int.txt"
+    },
+    {
+      "label": "Intelligence Modifier",
+      "value": "-1",
+      "type": "ability",
+      "key": "int-mod",
+      "outputFile": "int-mod.txt"
+    },
+    {
+      "label": "Wisdom",
+      "value": "18",
+      "type": "ability",
+      "key": "wis",
+      "outputFile": "wis.txt"
+    },
+    {
+      "label": "Wisdom Modifier",
+      "value": "+4",
+      "type": "ability",
+      "key": "wis-mod",
+      "outputFile": "wis-mod.txt"
+    },
+    {
+      "label": "Charisma",
+      "value": "8",
+      "type": "ability",
+      "key": "cha",
+      "outputFile": "cha.txt"
+    },
+    {
+      "label": "Charisma Modifier",
+      "value": "-1",
+      "type": "ability",
+      "key": "cha-mod",
+      "outputFile": "cha-mod.txt"
+    },
+    {
+      "label": "Strength Save",
+      "value": "+2",
+      "type": "save",
+      "key": "save-str",
+      "outputFile": "save-str.txt"
+    },
+    {
+      "label": "Dexterity Save",
+      "value": "+10",
+      "type": "save",
+      "key": "save-dex",
+      "outputFile": "save-dex.txt"
+    },
+    {
+      "label": "Constitution Save",
+      "value": "+3",
+      "type": "save",
+      "key": "save-con",
+      "outputFile": "save-con.txt"
+    },
+    {
+      "label": "Intelligence Save",
+      "value": "-1",
+      "type": "save",
+      "key": "save-int",
+      "outputFile": "save-int.txt"
+    },
+    {
+      "label": "Wisdom Save",
+      "value": "+9",
+      "type": "save",
+      "key": "save-wis",
+      "outputFile": "save-wis.txt"
+    },
+    {
+      "label": "Charisma Save",
+      "value": "-1",
+      "type": "save",
+      "key": "save-cha",
+      "outputFile": "save-cha.txt"
+    },
+    {
+      "label": "Acrobatics",
+      "value": "+10",
+      "type": "skill",
+      "key": "skill-acrobatics",
+      "outputFile": "skill-acrobatics.txt"
+    },
+    {
+      "label": "Animal Handling",
+      "value": "+4",
+      "type": "skill",
+      "key": "skill-animal-handling",
+      "outputFile": "skill-animal-handling.txt"
+    },
+    {
+      "label": "Arcana",
+      "value": "+4",
+      "type": "skill",
+      "key": "skill-arcana",
+      "outputFile": "skill-arcana.txt"
+    },
+    {
+      "label": "Athletics",
+      "value": "+2",
+      "type": "skill",
+      "key": "skill-athletics",
+      "outputFile": "skill-athletics.txt"
+    },
+    {
+      "label": "Athletics (Swimming/Climbing)",
+      "value": "+7",
+      "type": "skill",
+      "key": "skill-athletics-gloves",
+      "outputFile": "skill-athletics-gloves.txt"
+    },
+    {
+      "label": "Deception",
+      "value": "-1",
+      "type": "skill",
+      "key": "skill-deception",
+      "outputFile": "skill-deception.txt"
+    },
+    {
+      "label": "History",
+      "value": "-1",
+      "type": "skill",
+      "key": "skill-history",
+      "outputFile": "skill-history.txt"
+    },
+    {
+      "label": "Insight",
+      "value": "+4",
+      "type": "skill",
+      "key": "skill-insight",
+      "outputFile": "skill-insight.txt"
+    },
+    {
+      "label": "Intimidation",
+      "value": "-1",
+      "type": "skill",
+      "key": "skill-intimidation",
+      "outputFile": "skill-intimidation.txt"
+    },
+    {
+      "label": "Investigation",
+      "value": "-1",
+      "type": "skill",
+      "key": "skill-investigation",
+      "outputFile": "skill-investigation.txt"
+    },
+    {
+      "label": "Medicine",
+      "value": "+9",
+      "type": "skill",
+      "key": "skill-medicine",
+      "outputFile": "skill-medicine.txt"
+    },
+    {
+      "label": "Medicine (Swamp/Forest)",
+      "value": "+14",
+      "type": "skill",
+      "key": "skill-medicine-terrain",
+      "outputFile": "skill-medicine-terrain.txt"
+    },
+    {
+      "label": "Nature",
+      "value": "+4",
+      "type": "skill",
+      "key": "skill-nature",
+      "outputFile": "skill-nature.txt"
+    },
+    {
+      "label": "Nature (Swamp/Forest)",
+      "value": "+9",
+      "type": "skill",
+      "key": "skill-nature-terrain",
+      "outputFile": "skill-nature-terrain.txt"
+    },
+    {
+      "label": "Perception",
+      "value": "+9",
+      "type": "skill",
+      "key": "skill-perception",
+      "outputFile": "skill-perception.txt"
+    },
+    {
+      "label": "Perception (Swamp/Forest)",
+      "value": "+14",
+      "type": "skill",
+      "key": "skill-perception-terrain",
+      "outputFile": "skill-perception-terrain.txt"
+    },
+    {
+      "label": "Performance",
+      "value": "-1",
+      "type": "skill",
+      "key": "skill-performance",
+      "outputFile": "skill-performance.txt"
+    },
+    {
+      "label": "Persuasion",
+      "value": "-1",
+      "type": "skill",
+      "key": "skill-persuasion",
+      "outputFile": "skill-persuasion.txt"
+    },
+    {
+      "label": "Religion",
+      "value": "-1",
+      "type": "skill",
+      "key": "skill-religion",
+      "outputFile": "skill-religion.txt"
+    },
+    {
+      "label": "Sleight of Hand",
+      "value": "+5",
+      "type": "skill",
+      "key": "skill-sleight",
+      "outputFile": "skill-sleight.txt"
+    },
+    {
+      "label": "Stealth",
+      "value": "+10",
+      "type": "skill",
+      "key": "skill-stealth",
+      "outputFile": "skill-stealth.txt"
+    },
+    {
+      "label": "Survival",
+      "value": "+9",
+      "type": "skill",
+      "key": "skill-survival",
+      "outputFile": "skill-survival.txt"
+    },
+    {
+      "label": "Survival (Swamp/Forest)",
+      "value": "+14",
+      "type": "skill",
+      "key": "skill-survival-terrain",
+      "outputFile": "skill-survival-terrain.txt"
+    },
+    {
+      "label": "Blowgun To Hit",
+      "value": "+13",
+      "type": "combat",
+      "key": "blowgun-hit",
+      "outputFile": "blowgun-hit.txt"
+    },
+    {
+      "label": "Blowgun To Hit (Sharpshooter)",
+      "value": "+8",
+      "type": "combat",
+      "key": "blowgun-hit-ss",
+      "outputFile": "blowgun-hit-ss.txt"
+    },
+    {
+      "label": "Blowgun Damage (Standard)",
+      "value": "1d8",
+      "type": "combat",
+      "key": "blowgun-dmg",
+      "outputFile": "blowgun-dmg.txt"
+    },
+    {
+      "label": "Blowgun Damage (Sharpshooter)",
+      "value": "1d8+10",
+      "type": "combat",
+      "key": "blowgun-dmg-ss",
+      "outputFile": "blowgun-dmg-ss.txt"
+    },
+    {
+      "label": "Blowgun Elemental Damage",
+      "value": "1d6",
+      "type": "combat",
+      "key": "blowgun-elemental",
+      "outputFile": "blowgun-elemental.txt"
+    },
+    {
+      "label": "Longbow To Hit",
+      "value": "+14",
+      "type": "combat",
+      "key": "longbow-hit",
+      "outputFile": "longbow-hit.txt"
+    },
+    {
+      "label": "Longbow To Hit (Sharpshooter)",
+      "value": "+9",
+      "type": "combat",
+      "key": "longbow-hit-ss",
+      "outputFile": "longbow-hit-ss.txt"
+    },
+    {
+      "label": "Longbow Damage (Standard)",
+      "value": "1d10+7",
+      "type": "combat",
+      "key": "longbow-dmg",
+      "outputFile": "longbow-dmg.txt"
+    },
+    {
+      "label": "Longbow Damage (Sharpshooter)",
+      "value": "1d10+17",
+      "type": "combat",
+      "key": "longbow-dmg-ss",
+      "outputFile": "longbow-dmg-ss.txt"
+    },
+    {
+      "label": "Dagger +1 To Hit",
+      "value": "+11",
+      "type": "combat",
+      "key": "dagger-hit",
+      "outputFile": "dagger-hit.txt"
+    },
+    {
+      "label": "Dagger +1 Damage",
+      "value": "1d4+6",
+      "type": "combat",
+      "key": "dagger-dmg",
+      "outputFile": "dagger-dmg.txt"
+    },
+    {
+      "label": "Dagger (Poison) To Hit",
+      "value": "+10",
+      "type": "combat",
+      "key": "dagger-poison-hit",
+      "outputFile": "dagger-poison-hit.txt"
+    },
+    {
+      "label": "Dagger (Poison) Damage",
+      "value": "1d4+5",
+      "type": "combat",
+      "key": "dagger-poison-dmg",
+      "outputFile": "dagger-poison-dmg.txt"
+    },
+    {
+      "label": "Bite To Hit",
+      "value": "+7",
+      "type": "combat",
+      "key": "bite-hit",
+      "outputFile": "bite-hit.txt"
+    },
+    {
+      "label": "Bite Damage",
+      "value": "1d6+2",
+      "type": "combat",
+      "key": "bite-dmg",
+      "outputFile": "bite-dmg.txt"
+    },
+    {
+      "label": "Tongue Slap To Hit",
+      "value": "+7",
+      "type": "combat",
+      "key": "tongue-hit",
+      "outputFile": "tongue-hit.txt"
+    },
+    {
+      "label": "Tongue Slap Damage",
+      "value": "1d6+2",
+      "type": "combat",
+      "key": "tongue-dmg",
+      "outputFile": "tongue-dmg.txt"
+    },
+    {
+      "label": "Unarmed Strike To Hit",
+      "value": "+7",
+      "type": "combat",
+      "key": "unarmed-hit",
+      "outputFile": "unarmed-hit.txt"
+    },
+    {
+      "label": "Unarmed Strike Damage",
+      "value": "3",
+      "type": "combat",
+      "key": "unarmed-dmg",
+      "outputFile": "unarmed-dmg.txt"
+    },
+    {
+      "label": "Poison Spray Damage",
+      "value": "3d12",
+      "type": "spellcasting",
+      "key": "poison-spray-dmg",
+      "outputFile": "poison-spray-dmg.txt"
+    },
+    {
+      "label": "Primal Savagery Damage",
+      "value": "3d10",
+      "type": "spellcasting",
+      "key": "primal-savagery-dmg",
+      "outputFile": "primal-savagery-dmg.txt"
+    },
+    {
+      "label": "Chill Touch Damage",
+      "value": "3d8",
+      "type": "spellcasting",
+      "key": "chill-touch-dmg",
+      "outputFile": "chill-touch-dmg.txt"
+    },
+    {
+      "label": "Symbiotic Entity Active",
+      "value": "No",
+      "type": "features",
+      "key": "symbiotic-active",
+      "outputFile": "symbiotic-active.txt"
+    },
+    {
+      "label": "Symbiotic Entity Temp HP",
+      "value": "36",
+      "type": "features",
+      "key": "symbiotic-temp-hp",
+      "outputFile": "symbiotic-temp-hp.txt"
+    },
+    {
+      "label": "Halo of Spores Damage",
+      "value": "1d6",
+      "type": "features",
+      "key": "halo-damage",
+      "outputFile": "halo-damage.txt"
+    },
+    {
+      "label": "Halo of Spores (Symbiotic)",
+      "value": "2d6",
+      "type": "features",
+      "key": "halo-damage-symbiotic",
+      "outputFile": "halo-damage-symbiotic.txt"
+    },
+    {
+      "label": "Wild Shape Duration",
+      "value": "4.5 hours",
+      "type": "features",
+      "key": "wild-shape-duration",
+      "outputFile": "wild-shape-duration.txt"
+    },
+    {
+      "label": "Wild Shape Max CR",
+      "value": "1",
+      "type": "features",
+      "key": "wild-shape-cr",
+      "outputFile": "wild-shape-cr.txt"
+    }
+  ]
+}
