@@ -181,11 +181,11 @@
   background: rgba(26, 22, 44, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 18px;
-  padding: 18px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  min-height: 220px;
+  gap: 12px;
+  min-height: 180px;
 }
 
 .panel__header {
@@ -196,11 +196,11 @@
 
 .panel__header h2 {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .panel__tag {
-  font-size: 11px;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 2px;
   color: rgba(244, 239, 228, 0.55);
@@ -216,7 +216,7 @@
 
 .panel__content {
   display: grid;
-  gap: 16px;
+  gap: 12px;
 }
 
 .page-panel {
@@ -292,11 +292,27 @@
   align-items: center;
 }
 
+.inventory-table__row span,
+.inventory-table__row input {
+  min-width: 0;
+}
+
+.inventory-table__row span {
+  text-align: left;
+  padding: 8px 10px;
+  display: block;
+  box-sizing: border-box;
+}
+
 .inventory-table__row--header {
-  font-size: 12px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: rgba(243, 241, 255, 0.7);
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: rgba(12, 10, 22, 0.9);
 }
 
 .inventory-table__row input {
@@ -305,6 +321,8 @@
   border-radius: 8px;
   color: inherit;
   padding: 8px 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .inventory-table__loading {
@@ -384,19 +402,20 @@
 
 .panel__content--vitals {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .stat-control {
   background: rgba(120, 110, 255, 0.08);
   border: 1px solid rgba(120, 110, 255, 0.2);
   border-radius: 14px;
-  padding: 12px 14px;
+  padding: 10px 12px;
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .stat-control__label {
-  font-size: 13px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: rgba(244, 239, 228, 0.7);
@@ -404,8 +423,8 @@
 
 .stat-control__field {
   display: grid;
-  grid-template-columns: 36px 1fr 36px;
-  gap: 8px;
+  grid-template-columns: 30px minmax(0, 1fr) 30px;
+  gap: 6px;
   align-items: center;
 }
 
@@ -413,8 +432,8 @@
   background: rgba(120, 110, 255, 0.25);
   border-radius: 10px;
   color: inherit;
-  font-size: 18px;
-  height: 36px;
+  font-size: 16px;
+  height: 30px;
 }
 
 .stat-control__input {
@@ -422,64 +441,65 @@
   border: 1px solid rgba(120, 110, 255, 0.25);
   border-radius: 10px;
   color: inherit;
-  height: 36px;
-  padding: 0 10px;
+  height: 30px;
+  padding: 0 8px;
   text-align: center;
 }
 
 .stat-control__helper {
-  font-size: 12px;
+  font-size: 11px;
   color: rgba(244, 239, 228, 0.6);
 }
 
 .quick-stats {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .quick-stat {
-  padding: 10px;
+  padding: 8px;
   border-radius: 12px;
   background: rgba(120, 110, 255, 0.1);
   display: grid;
-  gap: 6px;
+  gap: 4px;
 }
 
 .quick-stat__value {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
 }
 
 .quick-stat__label {
-  font-size: 12px;
+  font-size: 11px;
   color: rgba(244, 239, 228, 0.65);
 }
 
 .ability-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .ability-card {
   background: rgba(120, 110, 255, 0.1);
   border-radius: 14px;
-  padding: 14px;
+  padding: 10px;
   text-align: center;
   display: grid;
-  gap: 6px;
+  gap: 4px;
 }
 
 .ability-card__label {
-  font-size: 12px;
+  font-size: 11px;
   letter-spacing: 1px;
   color: rgba(244, 239, 228, 0.65);
 }
 
 .ability-card__score {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
 }
 
 .ability-card__mod {
-  font-size: 14px;
+  font-size: 12px;
   color: #bcb5ff;
 }
 

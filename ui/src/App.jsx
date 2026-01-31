@@ -346,20 +346,6 @@ function App() {
                     ))}
                   </div>
                 </div>
-
-                <div className="panel">
-                  <div className="panel__header">
-                    <h2>Quick Links</h2>
-                    <span className="panel__tag">Reference</span>
-                  </div>
-                  <div className="panel__content link-grid">
-                    {navLinks.slice(1, 7).map((link) => (
-                      <NavLink key={link.label} className="tile" to={link.href}>
-                        {link.label}
-                      </NavLink>
-                    ))}
-                  </div>
-                </div>
               </section>
             }
           />

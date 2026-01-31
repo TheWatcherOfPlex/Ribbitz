@@ -14,7 +14,8 @@ function MarkdownPage({ title, source, variant = 'panel' }) {
       .then((response) => response.text())
       .then((text) => {
         if (isMounted) {
-          const cleaned = text
+          const normalized = text.replace(/\r\n/g, '\n')
+          const cleaned = normalized
             .replace(/\*\*Nav:[\s\S]*?\n\n/gi, '')
             .replace(/\*\*On this page:[\s\S]*?\n\n/gi, '')
             .replace(/>\s*💡[\s\S]*?\n\n/gi, '')
