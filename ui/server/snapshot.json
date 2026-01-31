@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-01-31T01:20:04.675Z",
+  "updatedAt": "2026-01-31T06:30:03.432Z",
   "stats": [
     {
       "label": "Label",
@@ -52,7 +52,7 @@
     },
     {
       "label": "1st Level Slots",
-      "value": "4/4",
+      "value": "3/4",
       "type": "slots",
       "key": "slots-1st",
       "outputFile": "slots-1st.txt"

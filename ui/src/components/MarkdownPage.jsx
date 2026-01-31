@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import rehypeRaw from 'rehype-raw'
 
-function MarkdownPage({ title, source }) {
+function MarkdownPage({ title, source, variant = 'panel' }) {
   const [content, setContent] = useState('')
   const [isLoading, setIsLoading] = useState(true)
 
@@ -13,7 +14,12 @@ function MarkdownPage({ title, source }) {
       .then((response) => response.text())
       .then((text) => {
         if (isMounted) {
-          setContent(text)
+          const cleaned = text
+            .replace(/\*\*Nav:[\s\S]*?\n\n/gi, '')
+            .replace(/\*\*On this page:[\s\S]*?\n\n/gi, '')
+            .replace(/>\s*💡[\s\S]*?\n\n/gi, '')
+            .replace(/<!--\s*PRIVATE[\s\S]*?-->/gi, '')
+          setContent(cleaned)
           setIsLoading(false)
         }
       })
@@ -29,18 +35,30 @@ function MarkdownPage({ title, source }) {
     }
   }, [source])
 
+  const markdownBody = (
+    <div className="page-panel__content">
+      {isLoading ? (
+        <div className="page-panel__loading">Loading...</div>
+      ) : (
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+          {content}
+        </ReactMarkdown>
+      )}
+    </div>
+  )
+
+  if (variant === 'embedded') {
+    return markdownBody
+  }
+
   return (
     <section className="page-panel">
-      <header className="page-panel__header">
-        <h2>{title}</h2>
-      </header>
-      <div className="page-panel__content">
-        {isLoading ? (
-          <div className="page-panel__loading">Loading...</div>
-        ) : (
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
-        )}
-      </div>
+      {title && (
+        <header className="page-panel__header">
+          <h2>{title}</h2>
+        </header>
+      )}
+      {markdownBody}
     </section>
   )
 }

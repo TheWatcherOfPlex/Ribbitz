@@ -1,0 +1,115 @@
+<!--
+Ribbitz document: Backstory
+Primary purpose: narrative + quick summary.
+-->
+
+# 📜 Backstory (Ribbitz)
+
+**Nav:**
+[Home](./README.md) | [Stats](./Basic%20Stats.md) | [Actions](./Actions.md) | [Inventory](./Inventory.md) | [Features](./Class%20Features.md) | [Racial Traits](./Racial%20Traits.md) | [Spells/Magic](./Spells%20and%20Magic%20Abilities.md) | [Backstory](./Backstory.md) | [Images](./Images.md) | [Refs](./Reference%20Materials/)
+
+**On this page:**
+- [TL;DR Summary](#tldr-summary)
+- [Full Story](#full-story--the-legend-of-ribbitz)
+
+---
+
+<details>
+<summary><h2>TL;DR Summary</h2></summary>
+
+*"Those who have seen, have the sight."*
+
+* **Origins:** Born in the Genesis Pond under **The Great Golden Risabere** on Mt. Zenith. Raised in the **Caverns of Consciousness** to study farm management and plant lore.
+* **Mentorship:** Studied under **Darako** (Blue Grung), mastering medicinal herbs, smokes, and tonics.
+* **The Restless Purple:** Unlike traditional Purple Grung, Ribbitz longed for the outside. He befriended **Perac** (Orange Grung hunter) and begged to join the hunt.
+* **The Double Hop Stomp:** Developed a signature hunting technique with Perac, combining Ribbitz's thirst-poison and Perac's fear-poison to drive boars into river-side traps.
+* **The Ascension:** During his ceremony, Ribbitz presented Risabere with Moose antlers and the **Arcana Maximus** (lighting-blue mushroom).
+* **Eyes of the Golden:** In an unprecedented move, Risabere named Ribbitz and Perac as the first "Eyes of the Golden"—royal seeker-rangers sent to investigate new powers and find allies.
+* **Awakened Magic:** Blessed with glowing azure eye markings and having consumed the Blue Mushroom, Ribbitz's "frog magic" was unlocked.
+* **The Journey South:** Dispatched to human settlements to trade for secrets and learn about the world. He was last seen at **Umbra Academy** undergoing trials.
+
+**Key Names & Figures:**
+* **The Great Golden Risabere:** Visionary King; established meritocratic "Ascension" and reformatory "Fall."
+* **Perac (Orange):** Best friend, hunting mentor, and fellow "Eye of the Golden."
+* **Darako (Blue):** Medicinal mentor; still cares for Ribbitz's gardens in the caverns.
+* **Adalle Retovic:** Wizard of Talgar whose stranded accounts preserve these legends.
+* **Simon Smeck:** Translator of Ribbitz's legend into Common.
+* **Dr. Daryll Fenham, Ph.D.:** Recipient and archivist of the translated accounts.
+
+</details>
+
+---
+
+<details>
+<summary><h2>Full Story — The Legend of Ribbitz</h2></summary>
+
+Preface: This story has been translated to Common by Simon Smeck, penman to Dr. Daryll Fenham, Ph.D. The original source work is based on the writings of Adalle Retovic, a wizard from Talgar who found himself living among the Grung after a failed flight spell left him injured on Mt. Zenith. It is worth noting that the Grung prefer to rely on spoken tradition rather than written. These works should be considered, like all legends, to be a loose accounting of events in those days. The Grung themselves use the tales for illustrative purposes rather than statements of fact.
+
+Author Statement: I find myself stranded on Mt. Zenith after a little mix-up with a flight scroll. Next time I'll stick to brooms. I woke in a cavern and to my surprise found an entire thriving civilization of Grung. Grung are suspicious of outsiders by nature, but for some reason, I was recovered after my fall and have been allowed to stay while I recover. It's a wonder I'm alive; both my legs are broken and what isn't broken is at least cracked. Had I been awake I would surely have screamed and wept myself to death. I'm in no state to make the journey back down the mountain, but with some assistance from a nice little fellow, a makeshift wheelchair, and a viscous foul-tasting potion provided by the Grung, I can make my way around this great city with only a mediocre amount of pain. This may be the research project I've been looking for, and I'm stuck here at any rate.
+
+---
+
+It is worth taking a moment, dear reader, to speak briefly on the rise of The Great Golden Risabere and why he shall be honored in history as being one of the forward thinkers of his time. 
+
+
+Although each Grung was still cast based on their birth attributes, as were all Grung in the days of old, under Risabere's rule, each grung was challenged and promoted based on their abilities and natural aptitudes. The Great Golden taught that this was the true strength of his tribe. Each Grung did their best at what they were the best at. Unlike most of the previous Golden Kings, Risabere was non-traditional and sought to lift his people to a new chapter often referred to as the "Golden Awakening''. Grung could now lift themselves to new levels and ascend their roles based on great deeds, talents, or special abilities. This process was called "The Ascension '' and was held sacred to most of Risabere's citizens, especially the young born under his rule. 
+
+Grung could also descend in a process they called "The Fall". Those who fall are demoted based on the offense. The Grung only executes the worst offenders. Most who fall to depths deemed too far for reformation are drugged until they exist in a zombie-like state contributing only to mindless manual labor until their debt to society has been paid. Once the debt is paid they are welcomed back into society at the bottom rung. Reformed citizens who work hard are allowed to climb the social ladder again and are only barred from occupying governmental office unless pardoned by Risabere himself. Those reformed who do not wish to rejoin society are allowed to leave unless they are deemed too dangerous to be allowed free. 
+
+The neighboring tribes would call The Ascension a seditious perversion of their traditions. They called Risabere "dangerous" and "reckless", but his numbers were greater and they grew more each year. Soon Grung from neighboring tribes fled to his realm, desperate for a chance at Ascension. 
+
+Three years into his reign, Risabere began sending scouts from his cavern kingdom. They followed the river from the mouth of his cave, down to the forest below and beyond. His scouts had been seen in the lands beyond his borders, some claiming to have seen them willingly wandering into human settlements looking to create trade routes and trade for magical items and secrets. This brings us to the tale of Ribbitz, a young purple Grung who ascended the ranks to become an "Eye of the Golden'' or "Seeker". 
+
+---
+
+The story of Ribbitz starts in a warm dark pool in the Genesis pond of the mighty Great Golden Risabere, in the first year of Risabere's rule. Once Ribbitz's legs and arms had developed he was sent to live in the misty Caverns of Consciousness. Ribbitz attended the traditional purple Grung classes on how to manage Grung communities as well as hands-on activities to teach skills and trades. Like all Grung under the Great Golden Risabere, his elders instilled in him a deep appreciation for the value of the individual being an individual first, working towards a greater whole.
+
+The young began each day with physical training while the afternoons were spent studying. The evenings and nights were their own. Ribbitz took to helping the elders in the garden and learning to prepare the food he created from his own efforts. He found a sense of connection to his plants and loved sharing his food with others. In his second season, he mentored under a Blue, named Darako, who commissioned a medicinal garden to be grown. At the end of the season, Darako taught him the art of rolling his herbs and creating medicinal smokes, salves, and tonics. Ribbitz took to smoking the herbs he grew nonstop as some of the Blues were prone to and could be found in the evenings watching the stars, a long pipe smoldering into the night before sleeping under the stars.
+
+For most of his adolescence, he let this be his calling, focusing his studies on farm management, plants, and cooking his crops. Frogfolk thought he was an oddity, but any concerns they may have had were wiped away when he showed up sharing his crops and offering to help when he saw someone in need. Ribbitz took Risabere's creeds seriously and believed in working towards a better future for his fellow Frogfolk. Although he loved his tribe and his garden, he found himself sneaking to the mouth of the caverns looking out longingly into the night growing restless.
+
+His friend Perac the Orange was permitted to leave the Caves every 3 days to hunt with the Green and Orange hunters. For weeks Ribbit would wait eagerly in his garden for Perac to come back with tales of the day's hunt while they smoked. He loved listening to the accounts of daring chases, crafty traps, and mysterious plants of energy the king sought. It wasn't long before he was begging the hunting leader to take him with them. Each day the old orange elder denied him, and each day Ribbit would be back there bouncing beside Perac begging to go. After a month of this, the old orange had had enough and an elder meeting was held to determine if it would be allowed. 
+
+During the meeting, Perac spoke up for Ribbitz to the elders and promised to keep him safe, but the elders were anxious to break tradition. Sure Green and Oranges hunted, but no Purple had ever been permitted to since the dark times of war. They were meant to stay within the village and were considered less hands-on than the other colors. Many spoke up saying how much Ribbitz helped them and there was deep concern about how they would continue without him if the worst should happen. The elders believed it was clear that Ribbitz was more valuable staying behind. Just when hope looked lost and it seemed the elders would deny the request, a speaker of Risabere himself arrived and "suggested" that Ribbitz be allowed to participate. After a brief recess, it was announced that Ribbitz was allowed to join, but only if he stayed with Perac as an escort.
+
+A few months later, Ribbitz had adapted quickly and learned to hunt. Perac would argue he was a natural, but Ribbitz knew he owed everything to Perac who had trained him and taught him everything he knew. The two were inseparable and had developed a great hunting system. They would track large game and set a trap near the river, then sit in a tree nearby and await their prey. Once it was facing the river, they would each shoot it with a poison dart. Ribbitz's poison would cause the prey to desperately need water, and Perac's would fill it with fear. The two combined could send a large boar hurling through the forest toward the river, where it would fall into the trap. This became known as the "Double Hop Stomp".
+
+With the food storage overflowing with the hunted game and the gardens overproducing for the first season in 3 generations, they took to expanding their skills and began bringing in plants that showed power abilities, much to the king's delight. As their first ascension ceremony approached the classes ended and they were allowed to hunt daily. They began mapping areas past the bounds of the elders and could spot the shimmering of plants of power from high in the treetops. Ribbitz insisted he could smell the very essence of power within them, but Perac always laughed saying he couldn't tell. Ribbitz began collecting a few of the seeds from the plants he turned into Risabere and planting them in a small garden he built by the bend of the river.
+
+On their first day of ascension, both Ribbitz and Perac were placed last in line and walked up to Risabere's throne together wearing leather armor created with the hide of game they had hunted. They presented Risaberes with a large rack of moose antlers that required the help of four other grungs to wrestle up the stairs, a decorative snakeskin belt, and a large glowing lighting-blue mushroom. Risabere hopped in excitement with the reveal of the mushroom and gestured them up to him. He held up their gifts and let out a mighty croak that shook the walls of the throne room causing a hush to fall over the chattering Grung watching below. The band fell silent and all turned their attention toward Risabere.
+
+"I judge thee to be worthy of the ranks of Rangers" He bellowed. The crowd cheered as the Golden's assistants rushed over to bestow the white stripes of a ranger. Ribbitz and Perac beamed at each other before turning to leave their hands up in excitement facing the crowd when Risabere spoke again, gluing them where they stood. "But, there is more I must ask of them" Risabere was holding the mushroom in his hand looking down at it with both excitement and concern. "Friends, a new power has come to our land. We've all seen it" he held up the glowing mushroom. Murmuring broke out but was quickly shushed back down. " This power is new to us and as many of you know, it's something my dear Blues and I have been investigating, but our research has yielded no clear answers. I require champions to venture forth to investigate, to ask other cultures what they know, and to find out how to keep our great tribe safe. Of those I send, these two are to be the first. They will travel South toward the human settlement to learn their ways and find more allies, for we will need friends in the coming dawn." At this Ribbitz and Perac stole a glance at each other both noting how dumbfounded the other looked before turning back towards the crowd and trying to stand up straight and look determined. "They carry the authority of my crown and are hereby to be known by a new rank, I dub thee, Eyes of the Golden."
+
+The crowd stood dumb-struck for a moment before murmurs slowly became cheers as the band began playing again. Ribbitz and Perac stood frozen trying to comprehend what had happened. The Golden's helpers added the Blue markings of royalty to each white stripe marking on Ribbitz's and Perac's eyes before leading them inside Risaberes palace and into a spa with a large heated pool. The helpers indicated the water and the two jumped in. A few moments later Risabere leaped over them and into the deeper end of the water. He swam for a moment before turning back towards them, his face beaming.
+
+He laughed at their nervous dumbfounded faces. "Friends calm yourselves, there will be plenty of time to prepare before your journey, you aren't going to have to leave tonight." He sent a splash towards them and they snapped out of it. "I know you must have questions, and I will answer what I can, but first there is a ceremony we must complete." He reached out and pressed a finger to each of their foreheads and a blinding golden light emitted from his hands. Ribbit and Perac felt a jolt of power surge through them and they fainted. 
+
+When they came to, they were alone in a lavish room filled with pillows. Perac was the first to speak trying to rub the sleep from his large sticky eyes "Well that was unexpected". 
+
+They took a moment to look at their new markings in a large ornate mirror without speaking. They each had not only the white stripes of the Rangers but a new blue marking neither had ever seen before. It was similar to the other royal markings, but theirs were reflective and seemed to glow slightly when touched. A wall opened behind them and a very excited Darako hopped into the room carrying the blue mushroom speaking quickly and excitedly. "Congratulations gentle frogs!" he said beaming "I have your first orders as Eyes of the Golden. Risabere would like you to stay as guests for the night where you will experience the power of the mushroom and come fully into your power.  Simply eat one bite of the mushroom each and you will know what you must before embarking on your trip. I will be here in the morning to give you your equipment. If there is anything you need to be done while you are working, I shall see to it that it is done. Ribbit don't even worry about your garden, it shall be seen to and herbs will be saved and ready upon your return. The Golden's helpers will be in to check on you and get you anything required." He left with a lavish wave before either could reply, placing the mushroom on a small table in the center of a small pool as he did so. 
+
+Ribbitz looked at Perac with meaning before tearing each of them a bit from the mushroom. He threw each bit up in the air and they both shot out their tongues snatching them from the air and swallowing quickly.
+
+Author Note: It's not known what Ribbitz and Perac experienced after eating the mushroom. The Frogfolk simply say "Those who have seen, have the sight". I have been unable to find a single blue mushroom to experience it myself, but from what I've gathered it's what unlocked their ability to use frog magic.
+
+Perac woke first, he was holding Ribbitz under one arm and they were buried in blankets. He looked down at Ribbitz for a moment before slowly standing and stretching. Ribbitz woke from Peracs movements groaned and clambered back under the blankets for a few moments before his head appeared again with a lit joint. He inhaled deeply as he dosed, feeling his stomach rumble meekly, still upset from the mushroom. Perac knocked on the wall they had seen open before and before his 3rd knock, the door had slid open and a food tray was being wheeled in.
+
+They ate silently thinking about what they had learned from the mushroom. After a time Risabere came in to find them still eating and smoking, their spirits rising as the weariness of the spirit world left them. "Ah my friends, it seems you are just about ready. Your first mission is to go to the human settlement to the South and see if they know anything about your mushroom. Take your time and gather as much information as you can. Give the humans no cause for grief amongst Frogfolk and honor our traditions. You represent not only me and our beloved tribe, but all frogfolk. Many of these humans will have never met a frog folk before. You should expect them to be curious, rude, or even scared in your presence. Don't hold it against them and always be the bigger frog. We will need friends in the coming days and the humans make for very powerful friends and dangerous enemies. Do not understand them." 
+
+He paused for a moment looking hard at each of them in turn. "Now off with you!" He clapped and his assistants came in carrying traveling clothes, bags, and everything they would need to get to the human settlement. They found their blowguns had been cleaned and polished with new holsters hanging from the traveling bags. Ribbitz carefully wrapped the blue mushroom in cloth before packing it. They made their way determinedly through the main path and towards the cave opening. As they marched frog folk stopped working to watch them pass, some waving, but most stood in silence contemplating what this new rank may mean.
+
+At the entrance to the cave, Darako waited for them, still beaming and speaking excitedly. He hugged Ribbitz and pushed a large bag of herbs into his hands. "This should keep you in smoke for a while. I promise I'll care for your garden and you'll be able to taste your harvest when you return." Ribbitz took the package gratefully and hugged Darako back. "Thank you friend, I'll be home as soon as I can"
+
+As Perac and Ribbitz began walking away from the mouth of the cave Darako called to them "Oh and Ribbitz, try to bring back some of the human herb. I've always wanted to try it!" Ribbitz laughed and waved in acknowledgment as they disappeared into the trees.
+
+They leapt from tree to tree in the direction of the human settlement, careful to mark their progression on a map and taking note of landmarks to find their way back home. At dusk they turned to look back towards their home and realized for the first time, they couldn't even see any sign of it. For a moment Ribbitz felt a deep pang of fear and loneliness. His face must have shown it because Perac grasped his shoulder for a moment before he pointed to a large tree they could make camp in for the night and steered him towards it.
+
+Author Note: From here not much is known about what Ribbitz and Perac found while exploring the woods between the cavern and the human settlement. We do know that Ribbitz reappears a few days later at the Umbra Academy going through the trials.
+
+— End of Backstory
+
+</details>
+
+---
+
+

@@ -72,7 +72,12 @@ const fetchInventoryValues = async () => {
 
 const parseInventoryRows = (rows) => {
   return rows
-    .filter((row) => row.A && !String(row.A).startsWith('=='))
+    .filter(
+      (row) =>
+        row.A &&
+        !String(row.A).startsWith('==') &&
+        String(row.A).toLowerCase() !== 'name',
+    )
     .map((row) => ({
       name: row.A ?? '',
       quantity: row.B ?? '',
@@ -158,6 +163,7 @@ app.post('/api/inventory', async (req, res) => {
           value: item.quantity,
           label: item.name,
           type: item.category,
+          weight: item.weight,
           outputFile: item.notes,
           extra: item.imageUrl,
         })),

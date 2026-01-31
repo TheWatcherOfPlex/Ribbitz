@@ -6,15 +6,18 @@
  * C = Type (dropdown)
  * D = Key (stable id; optional)
  * E = OutputFile (optional)
+ * F = Extra (optional, e.g. image URL)
  * 
  * REST API Endpoints (Web App):
- * GET  ?action=getValues  → Returns all A:E values as JSON
- * POST ?action=batchUpdate → Updates multiple cells by Key
+ * GET  ?action=getValues&sheet=Stats  → Returns all A:F values as JSON
+ * GET  ?action=getValues&sheet=Inventory → Returns all A:F values as JSON
+ * POST ?action=batchUpdate&sheet=Stats → Updates multiple cells by Key
+ * POST ?action=batchUpdate&sheet=Inventory → Updates multiple cells by Label (Column A)
  */
 
 const CONFIG = {
   sheetName: "Stats",
-  columns: { label: 1, value: 2, type: 3, key: 4, file: 5 },
+  columns: { label: 1, value: 2, type: 3, key: 4, file: 5, extra: 6 },
   headerRegex: /^==\s*(.+?)\s*==\s*$/,
   typeOptions: [
     "identity",
@@ -51,7 +54,7 @@ const CONFIG = {
  * - Formats header rows (only run if needed)
  */
 function setupRibbitsSheet() {
-  const sh = getSheet_();
+  const sh = getSheet_(CONFIG.sheetName);
   applyTypeDropdown_(sh);
   // Don't auto-format headers - they're already formatted from CSV import
   // Only call formatAllHeaderRows_() manually if you need to reformat
@@ -61,7 +64,7 @@ function setupRibbitsSheet() {
  * Manual function to format headers (only call if headers lost formatting)
  */
 function formatHeaders() {
-  const sh = getSheet_();
+  const sh = getSheet_(CONFIG.sheetName);
   formatAllHeaderRows_(sh);
 }
 
@@ -93,18 +96,18 @@ function onEdit(e) {
  * Returns a normalized array of row objects for non-empty labels (excluding blank separator rows).
  * Includes header rows as type: "header".
  */
-function readStatsTable() {
-  const sh = getSheet_();
+function readStatsTable(sheetName) {
+  const sh = getSheet_(sheetName);
   const lastRow = sh.getLastRow();
   if (lastRow < 1) return [];
 
-  const rng = sh.getRange(1, 1, lastRow, 5);
+  const rng = sh.getRange(1, 1, lastRow, 6);
   const values = rng.getValues();
 
   const rows = [];
   for (let i = 0; i < values.length; i++) {
     const rowIndex = i + 1;
-    const [label, value, type, key, file] = values[i].map(v => (v === null ? "" : v));
+    const [label, value, type, key, file, extra] = values[i].map(v => (v === null ? "" : v));
 
     const labelStr = String(label || "").trim();
     if (!labelStr) continue;
@@ -127,7 +130,8 @@ function readStatsTable() {
       value: value,
       type: String(type || "").trim(),
       key: String(key || "").trim(),
-      outputFile: String(file || "").trim()
+      outputFile: String(file || "").trim(),
+      extra: String(extra || "").trim()
     });
   }
   return rows;
@@ -139,13 +143,18 @@ function readStatsTable() {
  * - Only updates rows that already exist (by Key column).
  * - Extension: You can add "insert if missing" later if desired.
  */
-function updateSheetFromJson(stats) {
-  const sh = getSheet_();
+function updateSheetFromJson(stats, sheetName) {
+  const sh = getSheet_(sheetName);
   const lastRow = sh.getLastRow();
   if (lastRow < 1) return { updated: 0 };
 
   const keyCol = CONFIG.columns.key;
   const valueCol = CONFIG.columns.value;
+  const labelCol = CONFIG.columns.label;
+  const typeCol = CONFIG.columns.type;
+  const fileCol = CONFIG.columns.file;
+  const extraCol = CONFIG.columns.extra;
+  const weightCol = sheetName === 'Inventory' ? CONFIG.columns.key : null;
 
   const keys = sh.getRange(1, keyCol, lastRow, 1).getValues().flat().map(k => String(k || "").trim());
   const keyToRow = new Map();
@@ -158,7 +167,24 @@ function updateSheetFromJson(stats) {
     const row = keyToRow.get(k);
     if (!row) return;
 
-    sh.getRange(row, valueCol).setValue(s.value ?? "");
+    if (s.value !== undefined) {
+      sh.getRange(row, valueCol).setValue(s.value ?? "");
+    }
+    if (s.label !== undefined) {
+      sh.getRange(row, labelCol).setValue(s.label ?? "");
+    }
+    if (s.type !== undefined) {
+      sh.getRange(row, typeCol).setValue(s.type ?? "");
+    }
+    if (s.outputFile !== undefined) {
+      sh.getRange(row, fileCol).setValue(s.outputFile ?? "");
+    }
+    if (s.extra !== undefined) {
+      sh.getRange(row, extraCol).setValue(s.extra ?? "");
+    }
+    if (weightCol && s.weight !== undefined) {
+      sh.getRange(row, weightCol).setValue(s.weight ?? "");
+    }
     updated++;
   });
 
@@ -167,10 +193,11 @@ function updateSheetFromJson(stats) {
 
 /* ----------------- Helpers ----------------- */
 
-function getSheet_() {
+function getSheet_(sheetName) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const sh = ss.getSheetByName(CONFIG.sheetName);
-  if (!sh) throw new Error(`Sheet not found: ${CONFIG.sheetName}`);
+  const target = sheetName || CONFIG.sheetName;
+  const sh = ss.getSheetByName(target);
+  if (!sh) throw new Error(`Sheet not found: ${target}`);
   return sh;
 }
 
@@ -228,14 +255,15 @@ function styleHeaderRow_(sh, row) {
 
 /**
  * Web App GET endpoint
- * ?action=getValues → Returns all A:E row data as JSON
+ * ?action=getValues&sheet=Stats → Returns all A:F row data as JSON
  */
 function doGet(e) {
   try {
     const action = e.parameter.action;
+    const sheetName = e.parameter.sheet || CONFIG.sheetName;
     
     if (action === "getValues") {
-      return handleGetValues_();
+      return handleGetValues_(sheetName);
     }
     
     return jsonResponse_({ error: "Unknown action" }, 400);
@@ -247,15 +275,17 @@ function doGet(e) {
 
 /**
  * Web App POST endpoint
- * ?action=batchUpdate → Updates cells by Key
- * Body: JSON array of { key, value, label?, type?, outputFile? }
+ * ?action=batchUpdate&sheet=Stats → Updates cells by Key
+ * ?action=batchUpdate&sheet=Inventory → Updates/creates rows by Label (Column A)
+ * Body: JSON array of { key, value, label?, type?, outputFile?, extra?, weight? }
  */
 function doPost(e) {
   try {
     const action = e.parameter.action;
+    const sheetName = e.parameter.sheet || CONFIG.sheetName;
     
     if (action === "batchUpdate") {
-      return handleBatchUpdate_(e);
+      return handleBatchUpdate_(e, sheetName);
     }
     
     return jsonResponse_({ error: "Unknown action" }, 400);
@@ -268,15 +298,15 @@ function doPost(e) {
 /**
  * Returns all sheet values (A:E) as JSON array
  */
-function handleGetValues_() {
-  const sh = getSheet_();
+function handleGetValues_(sheetName) {
+  const sh = getSheet_(sheetName);
   const lastRow = sh.getLastRow();
   
   if (lastRow < 1) {
     return jsonResponse_({ rows: [] });
   }
   
-  const range = sh.getRange(1, 1, lastRow, 5);
+  const range = sh.getRange(1, 1, lastRow, 6);
   const values = range.getValues();
   
   const rows = [];
@@ -288,7 +318,8 @@ function handleGetValues_() {
       B: row[1] || "",
       C: row[2] || "",
       D: row[3] || "",
-      E: row[4] || ""
+      E: row[4] || "",
+      F: row[5] || ""
     });
   }
   
@@ -298,8 +329,8 @@ function handleGetValues_() {
 /**
  * Batch updates cells by Key
  */
-function handleBatchUpdate_(e) {
-  const sh = getSheet_();
+function handleBatchUpdate_(e, sheetName) {
+  const sh = getSheet_(sheetName);
   const lastRow = sh.getLastRow();
   
   if (lastRow < 1) {
@@ -320,7 +351,7 @@ function handleBatchUpdate_(e) {
   }
   
   // Build Key → Row map
-  const keyCol = CONFIG.columns.key;
+  const keyCol = sheetName === 'Inventory' ? CONFIG.columns.label : CONFIG.columns.key;
   const keys = sh.getRange(1, keyCol, lastRow, 1).getValues().flat();
   const keyToRow = new Map();
   keys.forEach((k, idx) => {
@@ -332,6 +363,7 @@ function handleBatchUpdate_(e) {
   const updates = [];
   let matched = 0;
   let notFound = 0;
+  const rowsToAppend = [];
   
   stats.forEach(stat => {
     const key = String(stat.key || "").trim();
@@ -339,7 +371,18 @@ function handleBatchUpdate_(e) {
     
     const row = keyToRow.get(key);
     if (!row) {
-      notFound++;
+      if (sheetName === 'Inventory') {
+        rowsToAppend.push([
+          stat.label || stat.key,
+          stat.value ?? '',
+          stat.type ?? '',
+          stat.weight ?? '',
+          stat.outputFile ?? '',
+          stat.extra ?? ''
+        ])
+      } else {
+        notFound++;
+      }
       return;
     }
     
@@ -376,6 +419,21 @@ function handleBatchUpdate_(e) {
         value: stat.outputFile
       });
     }
+
+    // Optionally update Extra (Column F)
+    if (stat.extra !== undefined) {
+      updates.push({
+        range: sh.getRange(row, CONFIG.columns.extra),
+        value: stat.extra
+      });
+    }
+
+    if (sheetName === 'Inventory' && stat.weight !== undefined) {
+      updates.push({
+        range: sh.getRange(row, CONFIG.columns.key),
+        value: stat.weight
+      });
+    }
   });
   
   // Apply all updates - force text format to prevent date conversion
@@ -384,11 +442,16 @@ function handleBatchUpdate_(e) {
     u.range.setValue(String(u.value));
   });
   
+  if (rowsToAppend.length) {
+    sh.getRange(lastRow + 1, 1, rowsToAppend.length, rowsToAppend[0].length).setValues(rowsToAppend);
+  }
+
   return jsonResponse_({
     success: true,
     matched: matched,
     notFound: notFound,
-    cellsUpdated: updates.length
+    cellsUpdated: updates.length,
+    rowsCreated: rowsToAppend.length
   });
 }
 

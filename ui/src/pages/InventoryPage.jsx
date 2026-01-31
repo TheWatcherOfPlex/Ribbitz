@@ -15,15 +15,62 @@ function InventoryPage() {
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
 
+  const loadSeedInventory = async () => {
+    const seedResponse = await fetch('/content/seed-inventory.csv')
+    if (!seedResponse.ok) {
+      throw new Error('Seed load failed')
+    }
+    const csvText = await seedResponse.text()
+    const [, ...lines] = csvText.split('\n')
+    const seeded = lines
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((line) => {
+        const [name, quantity, category, weight, notes, imageUrl] = line.split(',')
+        return {
+          name: name || '',
+          quantity: quantity || '',
+          category: category || '',
+          weight: weight || '',
+          notes: notes || '',
+          imageUrl: imageUrl || '',
+        }
+      })
+    if (seeded.length) {
+      console.info('Loaded seed inventory', seeded.length)
+      setRows(seeded)
+      return true
+    }
+    return false
+  }
+
   const fetchInventory = async () => {
     setIsLoading(true)
     setError('')
     try {
       const response = await fetch('/api/inventory')
+      if (!response.ok) {
+        throw new Error('Inventory API unavailable')
+      }
       const payload = await response.json()
-      setRows(payload.items || [])
+      const items = payload.items || []
+      if (items.length === 0) {
+        const loaded = await loadSeedInventory()
+        if (loaded) {
+          setIsLoading(false)
+          return
+        }
+      }
+      setRows(items)
     } catch (err) {
-      setError('Unable to load inventory from sheet.')
+      try {
+        const loaded = await loadSeedInventory()
+        if (!loaded) {
+          setError('Unable to load inventory from sheet or seed CSV.')
+        }
+      } catch (seedError) {
+        setError('Unable to load inventory from sheet or seed CSV.')
+      }
     } finally {
       setIsLoading(false)
     }
