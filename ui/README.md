@@ -40,6 +40,24 @@ Create a Google Sheet tab named **Inventory** with these columns:
 | E | Notes | Broken, single-shot |
 | F | Image URL | https://.../blowgun.png |
 
+### Inventory Sync Workflow
+To keep the Inventory sheet editable from the repo (and back), use the sync helpers:
+
+```bash
+cd "F:\Working Files\GitHub Desktop\Ribbitz\ui\server"
+npm run inventory:pull
+```
+
+- **Pull** downloads the Inventory sheet into `ui/public/content/seed-inventory.csv`.
+- Edit the CSV locally (blank Quantity values default to `1`).
+
+```bash
+cd "F:\Working Files\GitHub Desktop\Ribbitz\ui\server"
+npm run inventory:push
+```
+
+- **Push** uploads the CSV back to the Inventory sheet.
+
 ## ✅ Start the UI
 
 ```bash

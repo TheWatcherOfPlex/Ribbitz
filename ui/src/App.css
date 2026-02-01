@@ -1,6 +1,6 @@
 .app-shell {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 280px 1fr;
   min-height: 100vh;
   background: radial-gradient(circle at top, #2d2a4a, #120f1c 60%);
 }
@@ -8,10 +8,10 @@
 .sidebar {
   background: rgba(18, 16, 34, 0.95);
   border-right: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 24px 20px;
+  padding: 16px 14px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 14px;
 }
 
 .sidebar__header {
@@ -21,9 +21,9 @@
 }
 
 .portrait {
-  width: 64px;
-  height: 64px;
-  border-radius: 18px;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
   background: linear-gradient(135deg, #4b45a6, #7f66ff);
   box-shadow: 0 0 20px rgba(126, 110, 255, 0.45);
   overflow: hidden;
@@ -39,7 +39,7 @@
 }
 
 .title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -51,14 +51,14 @@
 .sidebar__nav {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .sidebar__link {
-  padding: 10px 14px;
-  border-radius: 12px;
+  padding: 8px 10px;
+  border-radius: 10px;
   background: rgba(120, 110, 255, 0.08);
-  font-size: 14px;
+  font-size: 13px;
   letter-spacing: 0.4px;
   transition: background 0.2s ease, transform 0.2s ease;
 }
@@ -80,7 +80,7 @@
 }
 
 .status-pill {
-  padding: 8px 10px;
+  padding: 7px 10px;
   font-size: 12px;
   border-radius: 999px;
   text-align: center;
@@ -100,10 +100,10 @@
 }
 
 .main-panel {
-  padding: 28px 40px 40px;
+  padding: 16px 20px 22px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 14px;
 }
 
 .topbar {
@@ -112,8 +112,8 @@
   justify-content: space-between;
   background: rgba(30, 26, 52, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 20px;
-  padding: 18px 24px;
+  border-radius: 16px;
+  padding: 12px 16px;
 }
 
 .topbar__eyebrow {
@@ -140,7 +140,7 @@
 }
 
 .topbar__title {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 600;
 }
 
@@ -151,12 +151,12 @@
 
 .ghost,
 .primary {
-  padding: 10px 18px;
-  border-radius: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
   background: rgba(120, 110, 255, 0.2);
   color: inherit;
   border: 1px solid rgba(120, 110, 255, 0.35);
-  font-size: 13px;
+  font-size: 12px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -172,20 +172,31 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: minmax(220px, auto);
-  gap: 24px;
+  grid-auto-rows: minmax(120px, auto);
+  gap: 14px;
+  align-items: start;
 }
 
 .panel {
   grid-column: span 6;
   background: rgba(26, 22, 44, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 18px;
-  padding: 16px;
+  border-radius: 14px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  min-height: 180px;
+  gap: 10px;
+  min-height: 140px;
+}
+
+.panel--tight {
+  min-height: unset;
+}
+
+.panel__footer {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .panel__header {
@@ -196,7 +207,7 @@
 
 .panel__header h2 {
   margin: 0;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .panel__tag {
@@ -207,11 +218,66 @@
 }
 
 .panel--primary {
-  grid-column: span 7;
+  grid-column: span 6;
 }
 
 .panel--compact {
-  grid-column: span 5;
+  grid-column: span 6;
+}
+
+.panel--skills {
+  grid-column: span 12;
+}
+
+.panel--features {
+  grid-column: span 4;
+}
+
+.panel--slots {
+  grid-column: span 8;
+}
+
+.panel--ammo {
+  grid-column: span 4;
+}
+
+/* Dense dashboard layout for large monitors (2560x1440 target) */
+@media (min-width: 1800px) {
+  .grid {
+    grid-auto-rows: minmax(110px, auto);
+    gap: 12px;
+  }
+
+  /* Top row: 3-up layout */
+  .panel--primary {
+    grid-column: span 4;
+  }
+
+  .panel--compact {
+    grid-column: span 4;
+  }
+
+  .panel--ammo {
+    grid-column: span 4;
+  }
+
+  .panel--slots {
+    grid-column: span 6;
+  }
+
+  .panel--resources {
+    grid-column: span 3;
+  }
+
+  .panel--features {
+    grid-column: span 3;
+  }
+
+  /* Skills: force into one wide row of many columns */
+  .skills-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+  }
 }
 
 .panel__content {
@@ -287,7 +353,7 @@
 
 .inventory-table__row {
   display: grid;
-  grid-template-columns: 2fr 0.7fr 1fr 0.7fr 2fr 2fr;
+  grid-template-columns: 2fr 0.7fr 0.8fr 2fr 2fr 1.2fr;
   gap: 10px;
   align-items: center;
 }
@@ -330,22 +396,87 @@
   color: rgba(243, 241, 255, 0.7);
 }
 
-.tracker-grid {
+.inventory-add {
+  display: grid;
+  gap: 12px;
+  background: rgba(18, 16, 34, 0.7);
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid rgba(120, 110, 255, 0.2);
+}
+
+.inventory-add__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.inventory-add input,
+.inventory-add select {
+  background: rgba(12, 10, 22, 0.9);
+  border: 1px solid rgba(120, 110, 255, 0.25);
+  border-radius: 10px;
+  color: inherit;
+  padding: 8px 10px;
+}
+
+.inventory-groups {
   display: grid;
   gap: 16px;
-  margin-bottom: 20px;
+}
+
+.inventory-group {
+  background: rgba(18, 16, 34, 0.7);
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid rgba(120, 110, 255, 0.2);
+}
+
+.inventory-group__header h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+
+.inventory-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.inventory-actions select {
+  background: rgba(12, 10, 22, 0.9);
+  border: 1px solid rgba(120, 110, 255, 0.25);
+  border-radius: 10px;
+  color: inherit;
+  padding: 6px 8px;
+}
+
+.inventory-actions input {
+  background: rgba(12, 10, 22, 0.9);
+  border: 1px solid rgba(120, 110, 255, 0.25);
+  border-radius: 10px;
+  color: inherit;
+  padding: 6px 8px;
+  min-width: 140px;
+}
+
+.tracker-grid {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 .tracker-group {
   background: rgba(18, 16, 34, 0.7);
   border-radius: 14px;
-  padding: 16px;
+  padding: 12px;
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .tracker-group__title {
-  font-size: 13px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: rgba(243, 241, 255, 0.7);
@@ -354,16 +485,16 @@
 .tracker-group__items {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .tracker-chip {
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: 999px;
   border: 1px solid rgba(120, 110, 255, 0.35);
   background: rgba(120, 110, 255, 0.15);
   color: inherit;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .tracker-chip--active {
@@ -405,17 +536,120 @@
   gap: 12px;
 }
 
-.stat-control {
-  background: rgba(120, 110, 255, 0.08);
-  border: 1px solid rgba(120, 110, 255, 0.2);
-  border-radius: 14px;
-  padding: 10px 12px;
+.panel__content--ammo {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.ammo-group {
   display: grid;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(18, 16, 34, 0.6);
+  border: 1px solid rgba(120, 110, 255, 0.15);
+}
+
+.ammo-group__title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(243, 241, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ammo-link {
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  color: #bcb5ff;
+}
+
+.ammo-link:hover {
+  color: #fff;
+}
+
+.tracker-grid--compact {
+  margin-bottom: 0;
+  gap: 12px;
+}
+
+.tracker-grid--compact .tracker-group {
+  padding: 12px;
+}
+
+.tracker-grid--compact .tracker-group__items {
+  gap: 6px;
+}
+
+/* Spell Slots panel: pack TrackerGroups into columns to eliminate empty space */
+.panel--slots .tracker-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  align-items: start;
+}
+
+.panel--slots .tracker-group {
+  padding: 9px;
   gap: 8px;
 }
 
-.stat-control__label {
+.panel--slots .tracker-group__title {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+}
+
+.panel--slots .tracker-group__items {
+  gap: 5px;
+}
+
+.panel--slots .tracker-chip {
+  padding: 5px 8px;
+  font-size: 10px;
+}
+
+.tracker-meta {
+  background: rgba(12, 10, 22, 0.6);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.tracker-meta label {
   font-size: 11px;
+  color: rgba(243, 241, 255, 0.7);
+  display: grid;
+  gap: 6px;
+}
+
+.tracker-meta select {
+  background: rgba(12, 10, 22, 0.9);
+  border: 1px solid rgba(120, 110, 255, 0.25);
+  border-radius: 8px;
+  color: inherit;
+  padding: 6px 8px;
+}
+
+.stat-control {
+  background: rgba(120, 110, 255, 0.08);
+  border: 1px solid rgba(120, 110, 255, 0.2);
+  border-radius: 12px;
+  padding: 7px 9px;
+  display: grid;
+  gap: 6px;
+}
+
+.stat-control--accent {
+  border-color: rgba(255, 205, 117, 0.55);
+  box-shadow: 0 0 12px rgba(255, 205, 117, 0.2);
+}
+
+.stat-control__label {
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: rgba(244, 239, 228, 0.7);
@@ -423,17 +657,20 @@
 
 .stat-control__field {
   display: grid;
-  grid-template-columns: 30px minmax(0, 1fr) 30px;
-  gap: 6px;
+  /* Keep the black value field compact (ammo counts are 1-3 digits) */
+  grid-template-columns: 22px minmax(3ch, 4.5ch) 22px;
+  gap: 4px;
   align-items: center;
+  justify-content: start;
 }
 
 .stat-control__btn {
   background: rgba(120, 110, 255, 0.25);
   border-radius: 10px;
   color: inherit;
-  font-size: 16px;
-  height: 30px;
+  font-size: 13px;
+  height: 22px;
+  width: 22px;
 }
 
 .stat-control__input {
@@ -441,66 +678,137 @@
   border: 1px solid rgba(120, 110, 255, 0.25);
   border-radius: 10px;
   color: inherit;
-  height: 30px;
-  padding: 0 8px;
+  height: 22px;
+  padding: 0 4px;
   text-align: center;
+  width: 100%;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Ammo counters should be extra compact (avoid tall boxes) */
+.panel--ammo .stat-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 8px;
+}
+
+.panel--ammo .stat-control__label {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.panel--ammo .stat-control__field {
+  grid-template-columns: 22px minmax(3ch, 4ch) 22px;
+  justify-content: end;
 }
 
 .stat-control__helper {
-  font-size: 11px;
+  font-size: 10px;
   color: rgba(244, 239, 228, 0.6);
 }
 
 .quick-stats {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .quick-stat {
-  padding: 8px;
+  padding: 6px 8px;
   border-radius: 12px;
   background: rgba(120, 110, 255, 0.1);
   display: grid;
-  gap: 4px;
+  gap: 2px;
 }
 
 .quick-stat__value {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
 }
 
 .quick-stat__label {
-  font-size: 11px;
+  font-size: 10px;
   color: rgba(244, 239, 228, 0.65);
 }
 
 .ability-grid {
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
 
 .ability-card {
   background: rgba(120, 110, 255, 0.1);
-  border-radius: 14px;
-  padding: 10px;
+  border-radius: 12px;
+  padding: 8px;
   text-align: center;
   display: grid;
-  gap: 4px;
+  gap: 2px;
+}
+
+.ability-card--proficient {
+  border: 1px solid rgba(255, 205, 117, 0.6);
+  box-shadow: 0 0 12px rgba(255, 205, 117, 0.2);
 }
 
 .ability-card__label {
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 1px;
   color: rgba(244, 239, 228, 0.65);
 }
 
 .ability-card__score {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
 }
 
 .ability-card__mod {
-  font-size: 12px;
+  font-size: 11px;
   color: #bcb5ff;
+}
+
+.skills-grid {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.skill-group {
+  background: rgba(18, 16, 34, 0.6);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  gap: 6px;
+}
+
+.skill-group__title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(243, 241, 255, 0.7);
+}
+
+.skill-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 10px;
+  background: rgba(12, 10, 22, 0.6);
+}
+
+.skill-row--pro {
+  border: 1px solid rgba(255, 205, 117, 0.6);
+  box-shadow: 0 0 10px rgba(255, 205, 117, 0.2);
+}
+
+.feature-row {
+  display: grid;
+  gap: 6px;
+  padding: 7px 10px;
+  background: rgba(12, 10, 22, 0.6);
+  border-radius: 10px;
+  font-size: 12px;
 }
 
 .link-grid {
@@ -570,5 +878,9 @@
 
   .ability-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .panel--features {
+    grid-column: span 6;
   }
 }

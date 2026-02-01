@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "inventory:pull": "node scripts/inventory-sync.js pull",
+    "inventory:push": "node scripts/inventory-sync.js push"
   },
   "dependencies": {
     "cors": "^2.8.5",

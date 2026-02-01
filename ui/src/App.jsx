@@ -27,26 +27,121 @@ const quickStats = [
   { label: 'Speed', key: 'speed', fallback: '25 ft' },
   { label: 'Proficiency', key: 'proficiency', fallback: '+5' },
   { label: 'Darkvision', key: 'darkvision', fallback: '90 ft' },
+  { label: 'Spell Save DC', key: 'spell-dc', fallback: '17' },
+  { label: 'Spell Attack', key: 'spell-attack', fallback: '+9' },
 ]
 
 const abilities = [
-  { label: 'STR', score: 14, mod: '+2' },
-  { label: 'DEX', score: 20, mod: '+5' },
-  { label: 'CON', score: 16, mod: '+3' },
-  { label: 'INT', score: 9, mod: '-1' },
-  { label: 'WIS', score: 18, mod: '+4' },
-  { label: 'CHA', score: 8, mod: '-1' },
+  { label: 'STR', score: 14, mod: '+2', proficient: false },
+  { label: 'DEX', score: 20, mod: '+5', proficient: true },
+  { label: 'CON', score: 16, mod: '+3', proficient: false },
+  { label: 'INT', score: 9, mod: '-1', proficient: false },
+  { label: 'WIS', score: 18, mod: '+4', proficient: true },
+  { label: 'CHA', score: 8, mod: '-1', proficient: false },
 ]
+
+const skillGroups = [
+  {
+    label: 'Strength',
+    skills: [
+      { label: 'Athletics', key: 'skill-athletics', proficient: false },
+      { label: 'Athletics (Swim/Climb)', key: 'skill-athletics-gloves', proficient: true },
+    ],
+  },
+  {
+    label: 'Dexterity',
+    skills: [
+      { label: 'Acrobatics', key: 'skill-acrobatics', proficient: true },
+      { label: 'Sleight of Hand', key: 'skill-sleight', proficient: false },
+      { label: 'Stealth', key: 'skill-stealth', proficient: true },
+    ],
+  },
+  {
+    label: 'Intelligence',
+    skills: [
+      { label: 'Arcana', key: 'skill-arcana', proficient: true },
+      { label: 'History', key: 'skill-history', proficient: false },
+      { label: 'Investigation', key: 'skill-investigation', proficient: false },
+      { label: 'Nature', key: 'skill-nature', proficient: true },
+      { label: 'Nature (Terrain)', key: 'skill-nature-terrain', proficient: true },
+      { label: 'Religion', key: 'skill-religion', proficient: false },
+    ],
+  },
+  {
+    label: 'Wisdom',
+    skills: [
+      { label: 'Animal Handling', key: 'skill-animal-handling', proficient: false },
+      { label: 'Insight', key: 'skill-insight', proficient: false },
+      { label: 'Medicine', key: 'skill-medicine', proficient: true },
+      { label: 'Medicine (Terrain)', key: 'skill-medicine-terrain', proficient: true },
+      { label: 'Perception', key: 'skill-perception', proficient: true },
+      { label: 'Perception (Terrain)', key: 'skill-perception-terrain', proficient: true },
+      { label: 'Survival', key: 'skill-survival', proficient: true },
+      { label: 'Survival (Terrain)', key: 'skill-survival-terrain', proficient: true },
+    ],
+  },
+  {
+    label: 'Charisma',
+    skills: [
+      { label: 'Deception', key: 'skill-deception', proficient: false },
+      { label: 'Intimidation', key: 'skill-intimidation', proficient: false },
+      { label: 'Performance', key: 'skill-performance', proficient: false },
+      { label: 'Persuasion', key: 'skill-persuasion', proficient: false },
+    ],
+  },
+]
+
+const restDefinitions = {
+  shortRest: {
+    label: 'Short Rest',
+    updates: [{ key: 'wild-shape', value: '2/2' }],
+  },
+  longRest: {
+    label: 'Long Rest',
+    updates: [
+      { key: 'slots-1st', value: '4/4' },
+      { key: 'slots-2nd', value: '3/3' },
+      { key: 'slots-3rd', value: '3/3' },
+      { key: 'slots-4th', value: '3/3' },
+      { key: 'slots-5th', value: '2/2' },
+      { key: 'slots-6th', value: '1/1' },
+      { key: 'wild-shape', value: '2/2' },
+      { key: 'active-camo', value: '5/5' },
+      { key: 'fungal-infestation', value: '4/4' },
+      { key: 'song-grung', value: '1/1' },
+      { key: 'fey-misty-step', value: '1/1' },
+      { key: 'fey-hunters-mark', value: '1/1' },
+      { key: 'poison-weapon', value: '5/5' },
+      { key: 'tongue-grapple', value: '5/5' },
+      { key: 'dart-sleep', value: '1/1' },
+      { key: 'dart-paralyze', value: '1/1' },
+      { key: 'dart-purple', value: '5/5' },
+      { key: 'skywarden-pierce', value: '1/1' },
+    ],
+  },
+}
+
+const timeOfDayOptions = ['Morning', 'Noon', 'Afternoon', 'Night', 'Midnight', 'Twilight']
+
+const timeOfDayMap = {
+  songGrung: 'song-grung',
+  poisonSkin: 'poison-skin',
+}
 
 const vitalKeyMap = {
   hp: 'hp-current',
   tempHp: 'temp-hp',
-  ammo: 'dart-purple',
-  arrows: 'longbow-dmg',
-  wildShape: 'wild-shape',
+  dartStandard: 'dart-standard',
+  dartFire: 'dart-fire',
+  dartWater: 'dart-water',
+  dartLava: 'dart-lava',
+  arrowStandard: 'arrow-standard',
+  arrowFire: 'arrow-fire',
+  arrowWater: 'arrow-water',
+  arrowLava: 'arrow-lava',
 }
 
-function StatControl({ label, value, helper, onChange }) {
+function StatControl({ label, value, helper, onChange, accent }) {
   const [localValue, setLocalValue] = useState(value)
 
   useEffect(() => {
@@ -68,7 +163,7 @@ function StatControl({ label, value, helper, onChange }) {
   }
 
   return (
-    <div className="stat-control">
+    <div className={`stat-control${accent ? ' stat-control--accent' : ''}`}>
       <div className="stat-control__label">{label}</div>
       <div className="stat-control__field">
         <button
@@ -105,9 +200,14 @@ function App() {
   const [vitals, setVitals] = useState({
     hp: 61,
     tempHp: 0,
-    ammo: 24,
-    arrows: 20,
-    wildShape: 2,
+    dartStandard: 59,
+    dartFire: 11,
+    dartWater: 17,
+    dartLava: 5,
+    arrowStandard: 20,
+    arrowFire: 0,
+    arrowWater: 0,
+    arrowLava: 0,
   })
   const [statMap, setStatMap] = useState({})
 
@@ -147,9 +247,14 @@ function App() {
       setVitals((prev) => ({
         hp: Number(mapped?.[vitalKeyMap.hp]) || prev.hp,
         tempHp: Number(mapped?.[vitalKeyMap.tempHp]) || prev.tempHp,
-        ammo: Number(mapped?.[vitalKeyMap.ammo]) || prev.ammo,
-        arrows: Number(mapped?.[vitalKeyMap.arrows]) || prev.arrows,
-        wildShape: Number(mapped?.[vitalKeyMap.wildShape]) || prev.wildShape,
+        dartStandard: Number(mapped?.[vitalKeyMap.dartStandard]) || prev.dartStandard,
+        dartFire: Number(mapped?.[vitalKeyMap.dartFire]) || prev.dartFire,
+        dartWater: Number(mapped?.[vitalKeyMap.dartWater]) || prev.dartWater,
+        dartLava: Number(mapped?.[vitalKeyMap.dartLava]) || prev.dartLava,
+        arrowStandard: Number(mapped?.[vitalKeyMap.arrowStandard]) || prev.arrowStandard,
+        arrowFire: Number(mapped?.[vitalKeyMap.arrowFire]) || prev.arrowFire,
+        arrowWater: Number(mapped?.[vitalKeyMap.arrowWater]) || prev.arrowWater,
+        arrowLava: Number(mapped?.[vitalKeyMap.arrowLava]) || prev.arrowLava,
       }))
     } catch (error) {
       setIsOnline(false)
@@ -181,7 +286,8 @@ function App() {
     })
   }
 
-  const parseTracker = (key, label) => {
+  const parseTracker = (key, label, options = {}) => {
+    const { compact = false } = options
     const raw = String(trackers?.[key] ?? '')
     const [current, total] = raw.split('/').map((value) => Number(value))
     if (!total) {
@@ -189,7 +295,7 @@ function App() {
     }
     return Array.from({ length: total }).map((_, index) => ({
       key,
-      label: `${label} ${index + 1}`,
+      label: compact ? String(index + 1) : `${label} ${index + 1}`,
       active: current > index,
       current,
       total,
@@ -208,6 +314,37 @@ function App() {
       body: JSON.stringify({ key, value }),
     })
   }
+
+  const applyBulkUpdates = async (updates) => {
+    if (!isOnline || !updates.length) {
+      return
+    }
+    const nextMap = updates.reduce((acc, update) => {
+      acc[update.key] = update.value
+      return acc
+    }, {})
+    setTrackers((prev) => ({ ...prev, ...nextMap }))
+    await fetch('/api/stats', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ updates }),
+    })
+  }
+
+  const handleRest = async (restKey) => {
+    const definition = restDefinitions[restKey]
+    if (!definition) {
+      return
+    }
+    await applyBulkUpdates(definition.updates)
+  }
+
+  const updateTimeOfDay = async (resourceKey, nextValue) => {
+    const sheetKey = `${resourceKey}-last-used`
+    await applyBulkUpdates([{ key: sheetKey, value: nextValue }])
+  }
+
+  const getSkillValue = (skillKey) => statMap?.[skillKey] || '—'
 
   const handleToggle = (item) => {
     const nextCurrent = item.active ? item.current - 1 : item.current + 1
@@ -275,7 +412,7 @@ function App() {
             path="/"
             element={
               <section className="grid">
-                <div className="panel panel--primary">
+                <div className="panel panel--primary panel--tight">
                   <div className="panel__header">
                     <h2>Vitality</h2>
                     <span className="panel__tag">Combat Core</span>
@@ -293,28 +430,18 @@ function App() {
                       helper="Spore Shield"
                       onChange={updateVital('tempHp')}
                     />
-                    <StatControl
-                      label="Ammo"
-                      value={vitals.ammo}
-                      helper="Blowgun Darts"
-                      onChange={updateVital('ammo')}
-                    />
-                    <StatControl
-                      label="Arrows"
-                      value={vitals.arrows}
-                      helper="Longbow"
-                      onChange={updateVital('arrows')}
-                    />
-                    <StatControl
-                      label="Wild Shape"
-                      value={vitals.wildShape}
-                      helper="Uses"
-                      onChange={updateVital('wildShape')}
-                    />
+                  </div>
+                  <div className="panel__footer">
+                    <button className="ghost" type="button" onClick={() => handleRest('shortRest')}>
+                      Short Rest
+                    </button>
+                    <button className="primary" type="button" onClick={() => handleRest('longRest')}>
+                      Long Rest
+                    </button>
                   </div>
                 </div>
 
-                <div className="panel panel--compact">
+                <div className="panel panel--compact panel--tight">
                   <div className="panel__header">
                     <h2>Quick Stats</h2>
                     <span className="panel__tag">At-a-glance</span>
@@ -331,19 +458,273 @@ function App() {
                   </div>
                 </div>
 
-                <div className="panel">
+                <div className="panel panel--tight">
                   <div className="panel__header">
                     <h2>Ability Scores</h2>
                     <span className="panel__tag">Core</span>
                   </div>
                   <div className="panel__content ability-grid">
                     {abilities.map((ability) => (
-                      <div key={ability.label} className="ability-card">
+                      <div
+                        key={ability.label}
+                        className={`ability-card${ability.proficient ? ' ability-card--proficient' : ''}`}
+                      >
                         <div className="ability-card__label">{ability.label}</div>
                         <div className="ability-card__score">{ability.score}</div>
                         <div className="ability-card__mod">{ability.mod}</div>
                       </div>
                     ))}
+                  </div>
+                </div>
+
+                <div className="panel panel--ammo panel--tight">
+                  <div className="panel__header">
+                    <h2>Ammo</h2>
+                    <span className="panel__tag">Darts & Arrows</span>
+                  </div>
+                  <div className="panel__content panel__content--ammo">
+                    <div className="ammo-group">
+                      <div className="ammo-group__title">
+                        Blowgun Darts
+                        <a className="ammo-link" href="/actions#vanguard-blowgun-1-broken---single-shot">
+                          Blowgun Stats
+                        </a>
+                      </div>
+                      <StatControl
+                        label="Standard"
+                        value={vitals.dartStandard}
+                        onChange={updateVital('dartStandard')}
+                      />
+                      <StatControl
+                        label="Fire"
+                        value={vitals.dartFire}
+                        onChange={updateVital('dartFire')}
+                      />
+                      <StatControl
+                        label="Water"
+                        value={vitals.dartWater}
+                        onChange={updateVital('dartWater')}
+                      />
+                      <StatControl
+                        label="Lava"
+                        value={vitals.dartLava}
+                        onChange={updateVital('dartLava')}
+                      />
+                    </div>
+                    <div className="ammo-group">
+                      <div className="ammo-group__title">
+                        Arrows
+                        <a className="ammo-link" href="/actions#skywardens-longbow-2">
+                          Longbow Stats
+                        </a>
+                      </div>
+                      <StatControl
+                        label="Standard"
+                        value={vitals.arrowStandard}
+                        onChange={updateVital('arrowStandard')}
+                      />
+                      <StatControl
+                        label="Fire"
+                        value={vitals.arrowFire}
+                        onChange={updateVital('arrowFire')}
+                      />
+                      <StatControl
+                        label="Water"
+                        value={vitals.arrowWater}
+                        onChange={updateVital('arrowWater')}
+                      />
+                      <StatControl
+                        label="Lava"
+                        value={vitals.arrowLava}
+                        onChange={updateVital('arrowLava')}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="panel panel--resources panel--tight">
+                  <div className="panel__header">
+                    <h2>Wild Shape</h2>
+                    <span className="panel__tag">Resource</span>
+                  </div>
+                  <div className="panel__content">
+                    <TrackerGroup
+                      title="Wild Shape"
+                      items={parseTracker('wild-shape', 'Wild Shape')}
+                      onToggle={handleToggle}
+                    />
+                  </div>
+                </div>
+
+                <div className="panel panel--slots panel--tight">
+                  <div className="panel__header">
+                    <h2>Spell Slots</h2>
+                    <span className="panel__tag">Prepared Magic</span>
+                  </div>
+                  <div className="panel__content">
+                    <div className="tracker-grid tracker-grid--compact">
+                      <TrackerGroup
+                        title="1st Level Slots"
+                        items={parseTracker('slots-1st', '1st')}
+                        onToggle={handleToggle}
+                      />
+                      <TrackerGroup
+                        title="2nd Level Slots"
+                        items={parseTracker('slots-2nd', '2nd')}
+                        onToggle={handleToggle}
+                      />
+                      <TrackerGroup
+                        title="3rd Level Slots"
+                        items={parseTracker('slots-3rd', '3rd')}
+                        onToggle={handleToggle}
+                      />
+                      <TrackerGroup
+                        title="4th Level Slots"
+                        items={parseTracker('slots-4th', '4th')}
+                        onToggle={handleToggle}
+                      />
+                      <TrackerGroup
+                        title="5th Level Slots"
+                        items={parseTracker('slots-5th', '5th')}
+                        onToggle={handleToggle}
+                      />
+                      <TrackerGroup
+                        title="6th Level Slots"
+                        items={parseTracker('slots-6th', '6th')}
+                        onToggle={handleToggle}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="panel panel--resources panel--tight">
+                  <div className="panel__header">
+                    <h2>Limited Uses</h2>
+                    <span className="panel__tag">Long Rest</span>
+                  </div>
+                  <div className="panel__content">
+                    <div className="tracker-grid tracker-grid--compact">
+                      <TrackerGroup
+                        title="Active Camo"
+                        items={parseTracker('active-camo', 'Active Camo')}
+                        onToggle={handleToggle}
+                      />
+                      <TrackerGroup
+                        title="Fungal Infestation"
+                        items={parseTracker('fungal-infestation', 'Fungal Infestation')}
+                        onToggle={handleToggle}
+                      />
+                      <TrackerGroup
+                        title="Song of the Grung"
+                        items={parseTracker('song-grung', 'Song of the Grung')}
+                        onToggle={handleToggle}
+                      />
+                      <div className="tracker-meta">
+                        <label>
+                          Song of the Grung last used
+                          <select
+                            value={trackers?.[`${timeOfDayMap.songGrung}-last-used`] || ''}
+                            onChange={(event) =>
+                              updateTimeOfDay(timeOfDayMap.songGrung, event.target.value)
+                            }
+                          >
+                            <option value="">Select time</option>
+                            {timeOfDayOptions.map((option) => (
+                              <option key={option} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+                      </div>
+                      <TrackerGroup
+                        title="Misty Step (Free)"
+                        items={parseTracker('fey-misty-step', 'Misty Step')}
+                        onToggle={handleToggle}
+                      />
+                      <TrackerGroup
+                        title="Hunter's Mark (Free)"
+                        items={parseTracker('fey-hunters-mark', "Hunter's Mark")}
+                        onToggle={handleToggle}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="panel panel--skills panel--tight">
+                  <div className="panel__header">
+                    <h2>Skills</h2>
+                    <span className="panel__tag">Proficiency</span>
+                  </div>
+                  <div className="panel__content skills-grid">
+                    {skillGroups.map((group) => (
+                      <div key={group.label} className="skill-group">
+                        <div className="skill-group__title">{group.label}</div>
+                        {group.skills.map((skill) => (
+                          <div
+                            key={skill.key}
+                            className={`skill-row${skill.proficient ? ' skill-row--pro' : ''}`}
+                          >
+                            <span>{skill.label}</span>
+                            <span>{getSkillValue(skill.key)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="panel panel--features panel--tight">
+                  <div className="panel__header">
+                    <h2>Ranger Features</h2>
+                    <span className="panel__tag">Class</span>
+                  </div>
+                  <div className="panel__content">
+                    <div className="feature-row">
+                      <strong>Favored Enemy</strong>
+                      <span>Snakes/Yuan-ti, Orcs</span>
+                    </div>
+                    <div className="feature-row">
+                      <strong>Natural Explorer</strong>
+                      <span>Swamp & Forest</span>
+                    </div>
+                    <div className="feature-row">
+                      <strong>Gloom Stalker</strong>
+                      <span>Dread Ambusher, Umbral Sight</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="panel panel--features panel--tight">
+                  <div className="panel__header">
+                    <h2>Poison Skin</h2>
+                    <span className="panel__tag">Passive</span>
+                  </div>
+                  <div className="panel__content">
+                    <div className="feature-row">
+                      <strong>Save DC</strong>
+                      <span>{statMap?.['poison-skin-dc'] ?? '17'}</span>
+                    </div>
+                    <div className="feature-row">
+                      <strong>Effect</strong>
+                      <span>Poisoned for 1 min on contact</span>
+                    </div>
+                    <div className="feature-row">
+                      <strong>Last Triggered</strong>
+                      <select
+                        value={trackers?.[`${timeOfDayMap.poisonSkin}-last-used`] || ''}
+                        onChange={(event) =>
+                          updateTimeOfDay(timeOfDayMap.poisonSkin, event.target.value)
+                        }
+                      >
+                        <option value="">Select time</option>
+                        {timeOfDayOptions.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
               </section>
@@ -369,68 +750,6 @@ function App() {
                   </div>
                 </header>
                 <div className="page-panel__content">
-                  <div className="tracker-grid">
-                    <TrackerGroup
-                      title="1st Level Slots"
-                      items={parseTracker('slots-1st', '1st')}
-                      onToggle={handleToggle}
-                    />
-                    <TrackerGroup
-                      title="2nd Level Slots"
-                      items={parseTracker('slots-2nd', '2nd')}
-                      onToggle={handleToggle}
-                    />
-                    <TrackerGroup
-                      title="3rd Level Slots"
-                      items={parseTracker('slots-3rd', '3rd')}
-                      onToggle={handleToggle}
-                    />
-                    <TrackerGroup
-                      title="4th Level Slots"
-                      items={parseTracker('slots-4th', '4th')}
-                      onToggle={handleToggle}
-                    />
-                    <TrackerGroup
-                      title="5th Level Slots"
-                      items={parseTracker('slots-5th', '5th')}
-                      onToggle={handleToggle}
-                    />
-                    <TrackerGroup
-                      title="6th Level Slots"
-                      items={parseTracker('slots-6th', '6th')}
-                      onToggle={handleToggle}
-                    />
-                    <TrackerGroup
-                      title="Wild Shape"
-                      items={parseTracker('wild-shape', 'Wild Shape')}
-                      onToggle={handleToggle}
-                    />
-                    <TrackerGroup
-                      title="Active Camo"
-                      items={parseTracker('active-camo', 'Active Camo')}
-                      onToggle={handleToggle}
-                    />
-                    <TrackerGroup
-                      title="Fungal Infestation"
-                      items={parseTracker('fungal-infestation', 'Fungal Infestation')}
-                      onToggle={handleToggle}
-                    />
-                    <TrackerGroup
-                      title="Song of the Grung"
-                      items={parseTracker('song-grung', 'Song of the Grung')}
-                      onToggle={handleToggle}
-                    />
-                    <TrackerGroup
-                      title="Misty Step"
-                      items={parseTracker('fey-misty-step', 'Misty Step')}
-                      onToggle={handleToggle}
-                    />
-                    <TrackerGroup
-                      title="Hunter's Mark"
-                      items={parseTracker('fey-hunters-mark', "Hunter's Mark")}
-                      onToggle={handleToggle}
-                    />
-                  </div>
                   <MarkdownPage
                     title=""
                     source="/content/Spells and Magic Abilities.md"

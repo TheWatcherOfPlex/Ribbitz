@@ -21,6 +21,7 @@ Primary purpose: combat reference with clear action economy.
 
 <details>
 <summary><h3>Vanguard Blowgun (+1) *(Broken - Single Shot)*</h3></summary>
+<div id="vanguard-blowgun-1-broken---single-shot"></div>
 
 #### Core Stats
 
@@ -82,6 +83,7 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 
 <details>
 <summary><h3>Skywarden's Longbow +2</h3></summary>
+<div id="skywardens-longbow-2"></div>
 
 #### Core Stats
 
@@ -297,5 +299,6 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 </details>
 
 ---
+
 
 

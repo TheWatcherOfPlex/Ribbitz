@@ -113,9 +113,17 @@ app.get('/api/stats', async (_, res) => {
 
 app.post('/api/stats', async (req, res) => {
   try {
-    const { key, value } = req.body
-    if (!key) {
-      return res.status(400).json({ message: 'key is required' })
+    const { key, value, updates } = req.body || {}
+    const updateList = Array.isArray(req.body)
+      ? req.body
+      : Array.isArray(updates)
+        ? updates
+        : key
+          ? [{ key, value }]
+          : []
+
+    if (!updateList.length) {
+      return res.status(400).json({ message: 'key or updates are required' })
     }
     if (!appsScriptUrl) {
       return res.status(400).json({ message: 'APPS_SCRIPT_WEBAPP_URL is not configured' })
@@ -123,7 +131,7 @@ app.post('/api/stats', async (req, res) => {
     const response = await fetch(`${appsScriptUrl}?action=batchUpdate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify([{ key, value }]),
+      body: JSON.stringify(updateList),
     })
     if (!response.ok) {
       return res.status(500).json({ message: 'Failed to update sheet via Apps Script' })
