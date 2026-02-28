@@ -10,7 +10,10 @@ import { slugifyHeading } from './utils/slugifyHeading.js'
 const sheetUrl =
   'https://docs.google.com/spreadsheets/d/1Vn1Xaq04AWDrrdz-RGO8m6V7SzuFyHrW31e47fnH2v0'
 const API_BASE = (import.meta.env.VITE_API_BASE || '/api').replace(/\/+$/, '')
+const CONTENT_BASE = import.meta.env.BASE_URL || '/'
 const apiFetch = (path, init) => fetch(`${API_BASE}${path}`, init)
+const contentPath = (file) => `${CONTENT_BASE}content/${file}`
+const contentImagePath = (file) => `${CONTENT_BASE}content-images/${file}`
 
 const navLinks = [
   { label: 'Dashboard', href: '/' },
@@ -557,7 +560,7 @@ function App() {
   }
 
   const loadSeedInventory = async () => {
-    const seedResponse = await fetch('/content/seed-inventory.csv')
+    const seedResponse = await fetch(contentPath('seed-inventory.csv'))
     if (!seedResponse.ok) {
       throw new Error('Seed inventory load failed')
     }
@@ -662,7 +665,7 @@ function App() {
 
   useEffect(() => {
     let cancelled = false
-    fetch('/content/Spells and Magic Abilities.md')
+    fetch(contentPath('Spells and Magic Abilities.md'))
       .then((response) => response.text())
       .then((text) => {
         if (cancelled) return
@@ -1694,11 +1697,11 @@ function App() {
           />
           <Route
             path="/stats"
-            element={<MarkdownPage title="Basic Stats" source="/content/Basic Stats.md" />}
+            element={<MarkdownPage title="Basic Stats" source={contentPath('Basic Stats.md')} />}
           />
           <Route
             path="/actions"
-            element={<MarkdownPage title="Actions" source="/content/Actions.md" />}
+            element={<MarkdownPage title="Actions" source={contentPath('Actions.md')} />}
           />
           <Route path="/inventory" element={<InventoryPage />} />
           <Route
@@ -1714,7 +1717,7 @@ function App() {
                 <div className="page-panel__content">
                   <MarkdownPage
                     title=""
-                    source="/content/Spells and Magic Abilities.md"
+                    source={contentPath('Spells and Magic Abilities.md')}
                     variant="embedded"
                   />
                 </div>
@@ -1723,19 +1726,19 @@ function App() {
           />
           <Route
             path="/features"
-            element={<MarkdownPage title="Class Features" source="/content/Class Features.md" />}
+            element={<MarkdownPage title="Class Features" source={contentPath('Class Features.md')} />}
           />
           <Route
             path="/racial-traits"
-            element={<MarkdownPage title="Racial Traits" source="/content/Racial Traits.md" />}
+            element={<MarkdownPage title="Racial Traits" source={contentPath('Racial Traits.md')} />}
           />
           <Route
             path="/backstory"
-            element={<MarkdownPage title="Backstory" source="/content/Backstory.md" />}
+            element={<MarkdownPage title="Backstory" source={contentPath('Backstory.md')} />}
           />
           <Route
             path="/misc"
-            element={<MarkdownPage title="Misc" source="/content/Misc.md" />}
+            element={<MarkdownPage title="Misc" source={contentPath('Misc.md')} />}
           />
           <Route
             path="/images"
@@ -1746,10 +1749,10 @@ function App() {
                 </header>
                 <div className="image-grid">
                   {[
-                    { src: '/content-images/1-Front.png', label: 'Front' },
-                    { src: '/content-images/2-Side.png', label: 'Side' },
-                    { src: '/content-images/3-Back.png', label: 'Back' },
-                    { src: '/content-images/4-Flying.png', label: 'Flying' },
+                    { src: contentImagePath('1-Front.png'), label: 'Front' },
+                    { src: contentImagePath('2-Side.png'), label: 'Side' },
+                    { src: contentImagePath('3-Back.png'), label: 'Back' },
+                    { src: contentImagePath('4-Flying.png'), label: 'Flying' },
                   ].map((image) => (
                     <button
                       key={image.src}

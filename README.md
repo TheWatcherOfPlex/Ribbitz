@@ -42,6 +42,8 @@ Designed for GitHub viewing.
 - For DiceKnights integration under a subpath, set build args:
   - `VITE_BASE_PATH=/ribbits-app/`
   - `VITE_API_BASE=/ribbits-app/api`
+- The React router uses the Vite base path as `BrowserRouter` basename, so `/stats`, `/spells`, etc work correctly under `/ribbits-app/*`.
+- Markdown/content fetches and image paths are resolved through the same base path for subpath-safe loading.
 - Runtime API + offline settings remain controlled by server env:
   - `APPS_SCRIPT_WEBAPP_URL`
   - `OFFLINE_SNAPSHOT_PATH`

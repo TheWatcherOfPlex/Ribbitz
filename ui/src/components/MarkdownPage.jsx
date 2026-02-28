@@ -2,8 +2,38 @@ import { useEffect, useMemo, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { createSlugger, extractText } from '../utils/slugifyHeading.js'
+
+const contentBase = import.meta.env.BASE_URL || '/'
+
+const markdownRouteMap = {
+  'readme.md': '/',
+  'basic stats.md': '/stats',
+  'actions.md': '/actions',
+  'inventory.md': '/inventory',
+  'spells and magic abilities.md': '/spells',
+  'class features.md': '/features',
+  'racial traits.md': '/racial-traits',
+  'backstory.md': '/backstory',
+  'misc.md': '/misc',
+  'images.md': '/images',
+}
+
+function resolveMarkdownLink(href = '') {
+  if (!href) return href
+  if (href.startsWith('http://') || href.startsWith('https://') || href.startsWith('#')) return href
+
+  // Route markdown links back into the SPA pages.
+  const normalized = href.replace(/^\.?\//, '').replace(/%20/g, ' ').toLowerCase()
+  if (markdownRouteMap[normalized]) return markdownRouteMap[normalized]
+
+  // Map repo image folder references to bundled content images.
+  if (normalized.startsWith('images/')) {
+    return `${contentBase}content-images/${href.replace(/^\.?\/?Images\//i, '')}`
+  }
+  return href
+}
 
 function MarkdownPage({ title, source, variant = 'panel' }) {
   const [content, setContent] = useState('')
@@ -91,6 +121,34 @@ function MarkdownPage({ title, source, variant = 'panel' }) {
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeRaw]}
           components={{
+            a: ({ href, children, ...props }) => {
+              const resolved = resolveMarkdownLink(href || '')
+              if (!resolved) return <span {...props}>{children}</span>
+              const isExternal = resolved.startsWith('http://') || resolved.startsWith('https://')
+              if (isExternal) {
+                return (
+                  <a href={resolved} target="_blank" rel="noreferrer" {...props}>
+                    {children}
+                  </a>
+                )
+              }
+              if (resolved.startsWith('/')) {
+                return (
+                  <Link to={resolved} {...props}>
+                    {children}
+                  </Link>
+                )
+              }
+              return (
+                <a href={resolved} {...props}>
+                  {children}
+                </a>
+              )
+            },
+            img: ({ src, alt, ...props }) => {
+              const resolved = resolveMarkdownLink(src || '')
+              return <img src={resolved} alt={alt || ''} {...props} />
+            },
             h1: (props) => {
               const id = slugger.slug(extractText(props.children))
               return <h1 id={id} {...props} />
