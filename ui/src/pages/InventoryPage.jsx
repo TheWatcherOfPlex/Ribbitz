@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { slugifyHeading } from '../utils/slugifyHeading.js'
 
 const defaultRow = {
   name: '',
@@ -69,13 +70,13 @@ function InventoryPage() {
         }
       }
       setRows(items)
-    } catch (err) {
+    } catch {
       try {
         const loaded = await loadSeedInventory()
         if (!loaded) {
           setError('Unable to load inventory from sheet or seed CSV.')
         }
-      } catch (seedError) {
+      } catch {
         setError('Unable to load inventory from sheet or seed CSV.')
       }
     } finally {
@@ -107,7 +108,7 @@ function InventoryPage() {
       if (!response.ok) {
         throw new Error('Save failed')
       }
-    } catch (err) {
+    } catch {
       setError('Unable to save inventory changes.')
     } finally {
       setIsSaving(false)
@@ -281,8 +282,13 @@ function InventoryPage() {
                 </div>
                 {(groupedRows[category] || []).map((row) => {
                   const index = rows.indexOf(row)
+                  const rowSlug = slugifyHeading(row.name)
                   return (
-                    <div key={`${row.name}-${index}`} className="inventory-table__row">
+                    <div
+                      key={`${row.name}-${index}`}
+                      id={rowSlug}
+                      className="inventory-table__row"
+                    >
                       <input
                         value={row.name}
                         onChange={(event) => updateRow(index, 'name', event.target.value)}

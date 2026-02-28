@@ -52,7 +52,7 @@ const readSnapshot = async () => {
   try {
     const snapshot = await fs.readFile(path.resolve(snapshotPath), 'utf-8')
     return JSON.parse(snapshot)
-  } catch (error) {
+  } catch {
     return null
   }
 }
@@ -98,7 +98,7 @@ app.get('/api/stats', async (_, res) => {
     const stats = parseRows(rows)
     await writeSnapshot(stats)
     res.json({ stats, source: 'sheet' })
-  } catch (error) {
+  } catch {
     const snapshot = await readSnapshot()
     if (snapshot) {
       res.json({ ...snapshot, source: 'snapshot' })
@@ -113,13 +113,13 @@ app.get('/api/stats', async (_, res) => {
 
 app.post('/api/stats', async (req, res) => {
   try {
-    const { key, value, updates } = req.body || {}
+    const { key, value, updates, label, type, outputFile, extra } = req.body || {}
     const updateList = Array.isArray(req.body)
       ? req.body
       : Array.isArray(updates)
         ? updates
         : key
-          ? [{ key, value }]
+          ? [{ key, value, label, type, outputFile, extra }]
           : []
 
     if (!updateList.length) {

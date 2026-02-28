@@ -3,6 +3,7 @@
   grid-template-columns: 280px 1fr;
   min-height: 100vh;
   background: radial-gradient(circle at top, #2d2a4a, #120f1c 60%);
+  color: #ffffff;
 }
 
 .sidebar {
@@ -12,6 +13,10 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+.main-panel {
+  padding-top: 10px;
 }
 
 .sidebar__header {
@@ -45,7 +50,7 @@
 
 .subtitle {
   font-size: 12px;
-  color: rgba(244, 239, 228, 0.7);
+  color: #ffffff;
 }
 
 .sidebar__nav {
@@ -60,6 +65,8 @@
   background: rgba(120, 110, 255, 0.08);
   font-size: 13px;
   letter-spacing: 0.4px;
+  color: #ffffff;
+  text-decoration: none;
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
@@ -77,6 +84,19 @@
   margin-top: auto;
   display: grid;
   gap: 10px;
+  justify-items: start;
+  align-items: start;
+}
+
+.sidebar__sync-label {
+  font-size: 11px;
+  color: #ffffff;
+}
+
+.sidebar__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .status-pill {
@@ -90,63 +110,23 @@
 .status-pill.online {
   background: rgba(73, 180, 119, 0.2);
   border-color: rgba(73, 180, 119, 0.4);
-  color: #9cf0c4;
+  color: #ffffff;
 }
 
 .status-pill.offline {
   background: rgba(196, 74, 74, 0.2);
   border-color: rgba(196, 74, 74, 0.5);
-  color: #ff9d9d;
-}
-
-.main-panel {
-  padding: 16px 20px 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(30, 26, 52, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 16px;
-  padding: 12px 16px;
-}
-
-.topbar__eyebrow {
-  font-size: 12px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: rgba(244, 239, 228, 0.5);
-}
-
-.topbar__meta {
-  font-size: 12px;
-  color: rgba(244, 239, 228, 0.6);
-  margin-top: 4px;
+  color: #ffffff;
 }
 
 .offline-banner {
   background: rgba(196, 74, 74, 0.2);
   border: 1px solid rgba(196, 74, 74, 0.5);
-  color: #ffb3b3;
+  color: #ffffff;
   padding: 12px 16px;
   border-radius: 14px;
   font-size: 13px;
   letter-spacing: 0.5px;
-}
-
-.topbar__title {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.topbar__actions {
-  display: flex;
-  gap: 12px;
 }
 
 .ghost,
@@ -172,8 +152,9 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: minmax(120px, auto);
-  gap: 14px;
+  /* Let panels collapse to content height (avoid huge empty panel backgrounds). */
+  grid-auto-rows: auto;
+  gap: 10px;
   align-items: start;
 }
 
@@ -182,11 +163,25 @@
   background: rgba(26, 22, 44, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 14px;
-  padding: 12px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
+  gap: 8px;
+  min-height: unset;
+}
+
+.panel__stack {
+  display: grid;
   gap: 10px;
-  min-height: 140px;
+}
+
+.panel__box {
+  background: rgba(18, 16, 34, 0.6);
+  border: 1px solid rgba(120, 110, 255, 0.15);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  gap: 10px;
 }
 
 .panel--tight {
@@ -207,14 +202,31 @@
 
 .panel__header h2 {
   margin: 0;
-  font-size: 14px;
+  font-size: 11px;
+  flex: 1;
+  text-align: center;
+}
+
+.panel__section-divider {
+  height: 1px;
+  width: 100%;
+  background: rgba(120, 110, 255, 0.2);
+  margin: 4px 0;
+}
+
+.panel__section-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: #ffffff;
+  text-align: center;
 }
 
 .panel__tag {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: rgba(244, 239, 228, 0.55);
+  color: #ffffff;
 }
 
 .panel--primary {
@@ -229,9 +241,6 @@
   grid-column: span 12;
 }
 
-.panel--features {
-  grid-column: span 4;
-}
 
 .panel--slots {
   grid-column: span 8;
@@ -241,48 +250,167 @@
   grid-column: span 4;
 }
 
+.panel--kit {
+  grid-column: span 3;
+}
+
+.panel--grung {
+  /* default before wide-screen rules kick in */
+  grid-column: span 12;
+}
+
 /* Dense dashboard layout for large monitors (2560x1440 target) */
 @media (min-width: 1800px) {
   .grid {
-    grid-auto-rows: minmax(110px, auto);
+    grid-auto-rows: auto;
     gap: 12px;
-  }
-
-  /* Top row: 3-up layout */
-  .panel--primary {
-    grid-column: span 4;
-  }
-
-  .panel--compact {
-    grid-column: span 4;
-  }
-
-  .panel--ammo {
-    grid-column: span 4;
-  }
-
-  .panel--slots {
-    grid-column: span 6;
-  }
-
-  .panel--resources {
-    grid-column: span 3;
-  }
-
-  .panel--features {
-    grid-column: span 3;
-  }
-
-  /* Skills: force into one wide row of many columns */
-  .skills-grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 10px;
   }
 }
 
 .panel__content {
   display: grid;
+  gap: 10px;
+}
+
+.abilities-skills {
+  display: grid;
   gap: 12px;
+}
+
+@media (min-width: 1400px) {
+  .abilities-skills {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 12px;
+  }
+}
+
+.abilities-skills__abilities,
+.abilities-skills__skills {
+  background: rgba(18, 16, 34, 0.6);
+  border: 1px solid rgba(120, 110, 255, 0.15);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.abilities-skills__abilities {
+  width: 100%;
+  justify-items: stretch;
+  align-items: start;
+}
+
+.abilities-skills__abilities .feature-row {
+  grid-template-columns: 1fr;
+  gap: 4px;
+  text-align: center;
+  justify-items: center;
+}
+
+.abilities-skills__abilities .feature-row span,
+.abilities-skills__abilities .feature-row strong {
+  justify-self: center;
+  text-align: center;
+}
+
+.abilities-skills__subtitle {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.abilities-skills__subtitle--split {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.2;
+  width: 100%;
+  justify-content: center;
+}
+
+.grung-abilities {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 1400px) {
+  .grung-abilities {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.grung-abilities__pane {
+  background: rgba(18, 16, 34, 0.6);
+  border: 1px solid rgba(120, 110, 255, 0.15);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.grung-abilities__pane-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: #ffffff;
+}
+
+.grung-abilities__dc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (max-width: 1400px) {
+  .grung-abilities__dc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grung-dc {
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(12, 10, 22, 0.6);
+  border: 1px solid rgba(120, 110, 255, 0.15);
+  display: grid;
+  gap: 4px;
+  text-align: center;
+  font-size: 11px;
+}
+
+.grung-dc__value {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.grung-dc__formula {
+  font-size: 10px;
+  color: #ffffff;
+}
+
+.grung-jumping {
+  display: grid;
+  gap: 8px;
+}
+
+.grung-jumping__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  padding: 7px 10px;
+  background: rgba(12, 10, 22, 0.6);
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.grung-jumping__row strong {
+  color: #ffffff;
 }
 
 .page-panel {
@@ -309,7 +437,7 @@
 
 .page-panel__header p {
   margin: 6px 0 0;
-  color: rgba(243, 241, 255, 0.7);
+  color: #ffffff;
 }
 
 .page-panel__actions {
@@ -325,7 +453,7 @@
 .page-panel__content h1,
 .page-panel__content h2,
 .page-panel__content h3 {
-  color: #f3f1ff;
+  color: #ffffff;
 }
 
 .page-panel__content table {
@@ -343,7 +471,7 @@
 .page-panel__loading {
   padding: 16px;
   text-align: center;
-  color: rgba(243, 241, 255, 0.7);
+  color: #ffffff;
 }
 
 .inventory-table {
@@ -374,7 +502,7 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: rgba(243, 241, 255, 0.7);
+  color: #ffffff;
   padding: 8px 10px;
   border: 1px solid transparent;
   border-radius: 8px;
@@ -393,7 +521,7 @@
 
 .inventory-table__loading {
   padding: 16px;
-  color: rgba(243, 241, 255, 0.7);
+  color: #ffffff;
 }
 
 .inventory-add {
@@ -463,39 +591,252 @@
 
 .tracker-grid {
   display: grid;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 .tracker-group {
   background: rgba(18, 16, 34, 0.7);
   border-radius: 14px;
-  padding: 12px;
+  padding: 10px;
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .tracker-group__title {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  color: rgba(243, 241, 255, 0.7);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.tracker-group__title-right {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* When we put a dropdown into the tracker header (Song), keep it compact */
+.tracker-inline {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #ffffff;
+}
+
+.tracker-inline span {
+  white-space: nowrap;
+}
+
+.tracker-inline select {
+  background: rgba(12, 10, 22, 0.9);
+  border: 1px solid rgba(120, 110, 255, 0.25);
+  border-radius: 8px;
+  color: inherit;
+  padding: 2px 6px;
+  font-size: 10px;
+  height: 22px;
+}
+
+/* If a tracker header has the dropdown, keep it from forcing the whole title to wrap weirdly */
+.tracker-group__title-right {
+  align-items: center;
+}
+
+.tracker-group__count {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #ffffff;
 }
 
 .tracker-group__items {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  align-items: center;
+}
+
+.tracker-group__addon {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.tracker-group__addon .tracker-inline {
+  align-items: center;
 }
 
 .tracker-chip {
-  padding: 6px 10px;
+  padding: 4px 8px;
   border-radius: 999px;
   border: 1px solid rgba(120, 110, 255, 0.35);
   background: rgba(120, 110, 255, 0.15);
   color: inherit;
-  font-size: 11px;
+  font-size: 10px;
 }
+
+/* Compact slot chips: small numbered pills */
+.magic-grid .tracker-chip,
+.panel--features .tracker-chip {
+  padding: 4px 7px;
+  font-size: 10px;
+}
+
+.magic-grid .tracker-group__items {
+  gap: 5px;
+}
+
+/* Magic panel layout */
+.panel--magic {
+  /* Target 3-column width for the Magic panel */
+  grid-column: span 3;
+}
+
+.magic-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 1400px) {
+  .panel--magic {
+    grid-column: span 3;
+  }
+}
+
+.magic-section {
+  display: grid;
+  gap: 10px;
+}
+
+.magic-section__title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.prepared-spells {
+  display: grid;
+  gap: 10px;
+}
+
+.prepared-spells__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.prepared-spells__group {
+  background: rgba(18, 16, 34, 0.6);
+  border: 1px solid rgba(120, 110, 255, 0.15);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.prepared-spells__level {
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-align: center;
+}
+
+.prepared-spells__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.prepared-spells__empty {
+  font-size: 10px;
+  color: #ffffff;
+  font-style: italic;
+}
+
+/*
+  Prepared spell links should always be compact “pills”.
+  Some browsers/layouts were letting the Cantrips links stretch into large circular buttons.
+*/
+.panel--magic .prepared-spells__link {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(120, 110, 255, 0.25);
+  background: rgba(120, 110, 255, 0.1);
+  color: #ffffff;
+  text-decoration: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  /* Prevent flex/grid stretching from turning short names (Cantrips) into huge circles. */
+  flex: 0 0 auto;
+  width: fit-content;
+  max-width: 100%;
+  white-space: nowrap;
+  line-height: 1.15;
+}
+
+.panel--magic .prepared-spells__link:hover {
+  background: rgba(120, 110, 255, 0.2);
+  border-color: rgba(120, 110, 255, 0.4);
+}
+
+.feature-link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.feature-link:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.magic-slots {
+  /* 3 columns, wrap into rows */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-content: start;
+  gap: 10px;
+}
+
+.magic-slots .tracker-group {
+  padding: 8px;
+  gap: 7px;
+  width: 100%;
+  justify-self: stretch;
+}
+
+.magic-resources {
+  /* 3 columns, wrap into rows */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-content: start;
+  gap: 10px;
+}
+
+.magic-resources .tracker-group {
+  padding: 8px;
+  gap: 7px;
+  width: 100%;
+  justify-self: stretch;
+}
+
+/* Remove old inline-meta styling now that Song uses headerAddon */
 
 .tracker-chip--active {
   background: rgba(120, 110, 255, 0.5);
@@ -528,16 +869,107 @@
 
 .image-tile span {
   font-size: 12px;
-  color: rgba(243, 241, 255, 0.7);
+  color: #ffffff;
 }
 
 .panel__content--vitals {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Don't stretch the HP boxes; keep them compact */
+  grid-template-columns: repeat(2, max-content) max-content;
+  justify-content: start;
   gap: 12px;
 }
 
+.vitality-healing {
+  margin-top: 6px;
+}
+
+.vitality-healing__header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.vitality-healing__title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: #ffffff;
+  text-align: center;
+  grid-column: 2;
+  justify-self: center;
+}
+
+.vitality-healing__badge {
+  grid-column: 3;
+  justify-self: end;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(196, 74, 74, 0.22);
+  border: 1px solid rgba(196, 74, 74, 0.45);
+  color: #ffb3b3;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.vitality-quickspells {
+  margin-top: 10px;
+}
+
+.healing-spells {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.healing-spell-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: rgba(12, 10, 22, 0.6);
+}
+
+.healing-spell-row__name {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.healing-spell-row__name:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.healing-spell-row__detail {
+  font-size: 11px;
+  color: #ffffff;
+  text-align: right;
+  line-height: 1.25;
+}
+
+.vitals-actions {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.vitals-actions button {
+  width: 100%;
+}
+
 .panel__content--ammo {
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  /* Don't stretch the ammo groups; keep them compact */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  justify-content: stretch;
   gap: 16px;
 }
 
@@ -548,28 +980,30 @@
   border-radius: 14px;
   background: rgba(18, 16, 34, 0.6);
   border: 1px solid rgba(120, 110, 255, 0.15);
+  width: 100%;
 }
 
 .ammo-group__title {
-  font-size: 12px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  color: rgba(243, 241, 255, 0.7);
+  color: #ffffff;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 10px;
+  text-align: center;
 }
 
 .ammo-link {
   font-size: 11px;
   text-transform: none;
   letter-spacing: 0.5px;
-  color: #bcb5ff;
+  color: #ffffff;
 }
 
 .ammo-link:hover {
-  color: #fff;
+  color: #ffffff;
 }
 
 .tracker-grid--compact {
@@ -621,7 +1055,7 @@
 
 .tracker-meta label {
   font-size: 11px;
-  color: rgba(243, 241, 255, 0.7);
+  color: #ffffff;
   display: grid;
   gap: 6px;
 }
@@ -648,11 +1082,25 @@
   box-shadow: 0 0 12px rgba(255, 205, 117, 0.2);
 }
 
+.stat-control--gold {
+  background: rgba(255, 205, 117, 0.12);
+  border-color: rgba(255, 205, 117, 0.55);
+  box-shadow: 0 0 12px rgba(255, 205, 117, 0.22);
+}
+
+.stat-control--gold .stat-control__btn {
+  background: rgba(255, 205, 117, 0.28);
+}
+
+.stat-control--gold .stat-control__input {
+  border-color: rgba(255, 205, 117, 0.35);
+}
+
 .stat-control__label {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  color: rgba(244, 239, 228, 0.7);
+  color: #ffffff;
 }
 
 .stat-control__field {
@@ -694,6 +1142,26 @@
   padding: 6px 8px;
 }
 
+/* Combat Kit Ammo should match the compact feel of Inspiration (small, tight controls). */
+.combat-kit__ammo .stat-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 8px;
+}
+
+.combat-kit__ammo .stat-control__label {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.combat-kit__ammo .stat-control__field {
+  grid-template-columns: 22px minmax(3ch, 4ch) 22px;
+  justify-content: end;
+}
+
 .panel--ammo .stat-control__label {
   margin: 0;
   font-size: 10px;
@@ -707,11 +1175,16 @@
 
 .stat-control__helper {
   font-size: 10px;
-  color: rgba(244, 239, 228, 0.6);
+  color: #ffffff;
 }
 
 .quick-stats {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* 3 columns x N rows (grows downward, not wider). */
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  grid-auto-flow: row;
+  justify-content: start;
+  gap: 8px;
 }
 
 .quick-stat {
@@ -720,6 +1193,10 @@
   background: rgba(120, 110, 255, 0.1);
   display: grid;
   gap: 2px;
+  width: fit-content;
+  min-width: 86px;
+  text-align: center;
+  justify-items: center;
 }
 
 .quick-stat__value {
@@ -729,21 +1206,31 @@
 
 .quick-stat__label {
   font-size: 10px;
-  color: rgba(244, 239, 228, 0.65);
+  color: #ffffff;
 }
 
 .ability-grid {
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 8px;
+  /* Mirror the spell-slot grid: 3 columns that wrap into rows */
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-flow: row;
+  justify-content: start;
+  justify-items: stretch;
+  align-items: start;
+  gap: 10px;
+  width: 100%;
 }
 
 .ability-card {
-  background: rgba(120, 110, 255, 0.1);
-  border-radius: 12px;
-  padding: 8px;
+  background: rgba(12, 10, 22, 0.6);
+  border-radius: 10px;
+  padding: 7px 10px;
   text-align: center;
   display: grid;
-  gap: 2px;
+  gap: 3px;
+  width: 100%;
+  min-width: 86px;
+  border: 1px solid rgba(120, 110, 255, 0.15);
 }
 
 .ability-card--proficient {
@@ -754,22 +1241,580 @@
 .ability-card__label {
   font-size: 10px;
   letter-spacing: 1px;
-  color: rgba(244, 239, 228, 0.65);
+  color: #ffffff;
+  text-transform: uppercase;
 }
 
 .ability-card__score {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
 }
 
 .ability-card__mod {
+  font-size: 10px;
+  color: #ffffff;
+}
+
+.ability-card__save {
+  font-size: 9px;
+  color: #ffffff;
+}
+
+.vitality-survival {
+  margin-top: 10px;
+}
+
+.vitality-survival__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 1400px) {
+  .vitality-survival__grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.hit-dice,
+.death-saves {
+  background: rgba(18, 16, 34, 0.6);
+  border: 1px solid rgba(120, 110, 255, 0.15);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.hit-dice__title,
+.death-saves__title {
   font-size: 11px;
-  color: #bcb5ff;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.hit-dice__detail {
+  font-size: 12px;
+  color: #ffffff;
+}
+
+.death-saves__rows {
+  display: grid;
+  gap: 8px;
+}
+
+.death-saves__row {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.death-saves__label {
+  font-size: 11px;
+  color: #ffffff;
+}
+
+.death-saves__slots {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+.death-save-slot {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(120, 110, 255, 0.08);
+}
+
+.death-save-slot.is-green {
+  background: rgba(73, 180, 119, 0.45);
+  border-color: rgba(73, 180, 119, 0.7);
+}
+
+.death-save-slot.is-red {
+  background: rgba(196, 74, 74, 0.45);
+  border-color: rgba(196, 74, 74, 0.7);
+}
+
+.panel--exhaustion {
+  grid-column: span 4;
+}
+
+.exhaustion {
+  display: grid;
+  gap: 12px;
+}
+
+.consumables-panel {
+  background: rgba(18, 16, 34, 0.6);
+  border: 1px solid rgba(120, 110, 255, 0.15);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.consumables-panel__title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.consumables-panel__list {
+  display: grid;
+  gap: 8px;
+}
+
+.consumables-panel__empty {
+  font-size: 11px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.consumable-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: rgba(12, 10, 22, 0.6);
+}
+
+.consumable-item__name {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.consumable-item__name:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.consumable-item__controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.consumable-item__input {
+  width: 3ch;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  background: rgba(12, 10, 22, 0.9);
+  border: 1px solid rgba(120, 110, 255, 0.25);
+  border-radius: 8px;
+  color: inherit;
+  height: 22px;
+  padding: 0 4px;
+}
+
+.exhaustion-panel {
+  background: rgba(18, 16, 34, 0.6);
+  border: 1px solid rgba(120, 110, 255, 0.15);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.exhaustion-panel__title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.ranger-panel {
+  background: rgba(18, 16, 34, 0.6);
+  border: 1px solid rgba(120, 110, 255, 0.15);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.ranger-panel__title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.exhaustion__effects {
+  background: rgba(18, 16, 34, 0.6);
+  border: 1px solid rgba(120, 110, 255, 0.15);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.exhaustion__effects-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.exhaustion__effects-list {
+  display: grid;
+  gap: 6px;
+}
+
+.exhaustion-effect {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: rgba(12, 10, 22, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  font-size: 12px;
+}
+
+.exhaustion-effect__level {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  background: rgba(120, 110, 255, 0.12);
+  border: 1px solid rgba(120, 110, 255, 0.25);
+  color: #ffffff;
+}
+
+.exhaustion-effect__text {
+  line-height: 1.25;
+}
+
+.exhaustion-effect--active {
+  background: rgba(196, 74, 74, 0.18);
+  border-color: rgba(196, 74, 74, 0.35);
+  color: #ffffff;
+}
+
+.exhaustion-effect--active .exhaustion-effect__level {
+  background: rgba(196, 74, 74, 0.32);
+  border-color: rgba(196, 74, 74, 0.55);
+  color: #ffffff;
+}
+
+.exhaustion__slots {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+
+.exhaustion__slot {
+  background: rgba(12, 10, 22, 0.7);
+  border: 1px solid rgba(120, 110, 255, 0.2);
+  border-radius: 10px;
+  padding: 8px 0;
+  color: #ffffff;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.exhaustion__slot--active {
+  background: rgba(196, 74, 74, 0.22);
+  border-color: rgba(196, 74, 74, 0.5);
+  color: #ffffff;
+}
+
+.conditions {
+  background: rgba(18, 16, 34, 0.6);
+  border: 1px solid rgba(120, 110, 255, 0.15);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.conditions__title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.conditions__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+
+.drugs-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.drugs-panel__item {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: rgba(12, 10, 22, 0.55);
+}
+
+.drugs-panel__item input {
+  width: 14px;
+  height: 14px;
+}
+
+.drugs-panel__item--active {
+  border: 1px solid rgba(196, 74, 74, 0.6);
+  background: rgba(196, 74, 74, 0.18);
+  box-shadow: 0 0 12px rgba(196, 74, 74, 0.35);
+}
+
+.drugs-panel__name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.drugs-panel__empty {
+  font-size: 11px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.conditions__item {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: rgba(12, 10, 22, 0.55);
+}
+
+.conditions__item input {
+  width: 14px;
+  height: 14px;
+}
+
+
+.conditions__item--active {
+  border: 1px solid rgba(196, 74, 74, 0.6);
+  background: rgba(196, 74, 74, 0.18);
+  box-shadow: 0 0 12px rgba(196, 74, 74, 0.35);
+}
+
+.conditions__link {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.conditions__link:hover {
+  color: #ffffff;
+  text-decoration: underline;
 }
 
 .skills-grid {
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  gap: 10px;
+}
+
+/* Wide-screen dashboard layout (kick in earlier so we don't get a single-column dashboard) */
+@media (min-width: 1180px) {
+  /* Row 1: Quick Stats/Healing | Ability Scores/Skills | Magic | Combat Kit | Exhaustion */
+  .panel--primary {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+  }
+
+  .panel--skills {
+    grid-column: 3 / span 2;
+    grid-row: 1;
+  }
+
+  /* Row 3: Magic next to Ammo */
+  .panel--magic {
+    grid-column: 5 / span 3;
+    grid-row: 1;
+  }
+
+  .panel--ammo {
+    grid-column: span 3;
+    grid-row: 2;
+  }
+
+  .panel--kit {
+    grid-column: 8 / span 3;
+    grid-row: 1;
+  }
+
+  .panel--exhaustion {
+    grid-column: 11 / span 2;
+    grid-row: 1;
+  }
+
+  /* Ranger section is now inside Ability Scores: stack label/value to avoid wraps */
+}
+
+.combat-kit {
+  display: grid;
   gap: 12px;
+}
+
+@media (min-width: 1180px) {
+  .combat-kit {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+.combat-kit__section {
+  display: grid;
+  gap: 10px;
+  background: rgba(18, 16, 34, 0.6);
+  border: 1px solid rgba(120, 110, 255, 0.15);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.combat-kit__section .combat-kit__weapon + .combat-kit__weapon {
+  border-top: 1px solid rgba(120, 110, 255, 0.15);
+  padding-top: 8px;
+}
+
+.combat-kit__section--grung {
+  grid-column: 1 / -1;
+}
+
+.combat-kit__section--wide {
+  grid-column: 1 / -1;
+}
+
+.combat-kit__title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.combat-kit__weapon {
+  display: grid;
+  gap: 3px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(12, 10, 22, 0.6);
+}
+.combat-kit__weapon-name {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.combat-kit__weapon-name:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.combat-kit__weapon-meta {
+  font-size: 11px;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+.combat-kit__weapon-submeta {
+  color: #ffffff;
+  margin-left: 6px;
+}
+
+.combat-kit__notice {
+  font-size: 11px;
+  color: #ffffff;
+  background: rgba(196, 74, 74, 0.18);
+  border: 1px solid rgba(196, 74, 74, 0.35);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+.combat-kit__potions {
+  display: grid;
+  gap: 6px;
+}
+
+.counter-row {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: rgba(12, 10, 22, 0.6);
+}
+
+.counter-row__meta {
+  display: grid;
+  gap: 2px;
+}
+
+.counter-row__label {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.counter-row__detail {
+  font-size: 10px;
+  color: #ffffff;
+}
+
+.counter-row__controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.counter-row__btn {
+  background: rgba(120, 110, 255, 0.25);
+  border-radius: 10px;
+  color: inherit;
+  font-size: 13px;
+  height: 22px;
+  width: 22px;
+}
+
+.counter-row__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.counter-row__value {
+  width: 3ch;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
 }
 
 .skill-group {
@@ -781,14 +1826,16 @@
 }
 
 .skill-group__title {
-  font-size: 12px;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  color: rgba(243, 241, 255, 0.7);
+  text-align: center;
+  color: #ffffff;
 }
 
 .skill-row {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 8px;
   font-size: 12px;
@@ -804,16 +1851,20 @@
 
 .feature-row {
   display: grid;
-  gap: 6px;
+  /* Put value close to label (avoid huge blank middle space) */
+  grid-template-columns: max-content 1fr;
+  align-items: baseline;
+  gap: 10px;
   padding: 7px 10px;
   background: rgba(12, 10, 22, 0.6);
   border-radius: 10px;
   font-size: 12px;
 }
 
-.link-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+.feature-row span {
+  text-align: left;
+  justify-self: start;
+  color: #ffffff;
 }
 
 .tile {
@@ -857,7 +1908,7 @@
 .page-panel__content summary h3::after {
   content: '▾';
   font-size: 14px;
-  color: rgba(243, 241, 255, 0.7);
+  color: #ffffff;
   margin-left: 6px;
 }
 
@@ -873,14 +1924,21 @@
 
   .panel--primary,
   .panel--compact {
-    grid-column: span 12;
+    /* 3 columns wide */
+    grid-column: span 3;
   }
 
   .ability-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
 
-  .panel--features {
-    grid-column: span 6;
+/* Mid-size dashboards: keep multi-column layout, but slightly larger ability grid */
+@media (max-width: 1180px) {
+  .panel--primary,
+  .panel--compact,
+  .panel--skills,
+  .panel--magic {
+    grid-column: span 12;
   }
 }

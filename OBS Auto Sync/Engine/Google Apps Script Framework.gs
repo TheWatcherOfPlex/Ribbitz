@@ -371,6 +371,9 @@ function handleBatchUpdate_(e, sheetName) {
     
     const row = keyToRow.get(key);
     if (!row) {
+      // Allow insert-if-missing for both Inventory and Stats.
+      // Inventory uses Column A as the "key" (Label).
+      // Stats uses Column D as the "key" (Key).
       if (sheetName === 'Inventory') {
         rowsToAppend.push([
           stat.label || stat.key,
@@ -381,7 +384,14 @@ function handleBatchUpdate_(e, sheetName) {
           stat.extra ?? ''
         ])
       } else {
-        notFound++;
+        rowsToAppend.push([
+          stat.label || stat.key,
+          stat.value ?? '',
+          stat.type ?? '',
+          stat.key,
+          stat.outputFile ?? '',
+          stat.extra ?? ''
+        ])
       }
       return;
     }
@@ -443,7 +453,9 @@ function handleBatchUpdate_(e, sheetName) {
   });
   
   if (rowsToAppend.length) {
-    sh.getRange(lastRow + 1, 1, rowsToAppend.length, rowsToAppend[0].length).setValues(rowsToAppend);
+    const appendRange = sh.getRange(lastRow + 1, 1, rowsToAppend.length, rowsToAppend[0].length)
+    appendRange.setNumberFormat('@')
+    appendRange.setValues(rowsToAppend);
   }
 
   return jsonResponse_({

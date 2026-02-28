@@ -27,6 +27,15 @@ Designed for GitHub viewing.
 - 🎒 **Inventory:** [Inventory.md](./Inventory.md)
 - ✨ **Spells & Magic Abilities:** [Spells and Magic Abilities.md](./Spells%20and%20Magic%20Abilities.md)
 
+### 🖥️ UI Launcher & Dashboard Layout
+
+- Use `Launch Ribbitz Program.bat` in the repo root to start the full local stack:
+  - Express sync server (`http://127.0.0.1:5175`)
+  - React/Vite UI (`http://127.0.0.1:5174`)
+  - OBS stat watcher script
+- The UI dashboard layout is tuned for wide screens: the Combat Kit grid uses two columns, and full-width sections (Grung Abilities + Drugs & Herbs) span across both columns.
+- Combat Kit weapon blocks follow the same format: **Hit** (Std/Pwr), **Std**, **Pwr**, **Elem**, **Gloom** lines for quick in-session reading.
+
 ### 📚 Reference
 
 - ✨ **Class Features:** [Class Features.md](./Class%20Features.md)
