@@ -8,9 +8,10 @@ import path from 'path'
 dotenv.config()
 
 const app = express()
-const port = process.env.PORT || 5174
+const port = process.env.PORT || 5175
 const appsScriptUrl = process.env.APPS_SCRIPT_WEBAPP_URL
 const snapshotPath = process.env.OFFLINE_SNAPSHOT_PATH || './snapshot.json'
+const uiDistPath = process.env.UI_DIST_PATH || path.resolve(process.cwd(), '../dist')
 
 app.use(cors())
 app.use(express.json())
@@ -194,6 +195,18 @@ cron.schedule('*/10 * * * *', async () => {
     await writeSnapshot(stats)
   } catch (error) {
     console.error('[snapshot] Failed to refresh snapshot:', error.message)
+  }
+})
+
+app.use(express.static(uiDistPath))
+app.get(/^\/(?!api\/).*/, async (_req, res) => {
+  try {
+    await fs.access(path.join(uiDistPath, 'index.html'))
+    res.sendFile(path.join(uiDistPath, 'index.html'))
+  } catch {
+    res
+      .status(503)
+      .send('Ribbitz UI build not found. Run the frontend build before starting the server.')
   }
 })
 

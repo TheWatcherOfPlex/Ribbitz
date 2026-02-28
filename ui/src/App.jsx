@@ -9,6 +9,8 @@ import { slugifyHeading } from './utils/slugifyHeading.js'
 
 const sheetUrl =
   'https://docs.google.com/spreadsheets/d/1Vn1Xaq04AWDrrdz-RGO8m6V7SzuFyHrW31e47fnH2v0'
+const API_BASE = (import.meta.env.VITE_API_BASE || '/api').replace(/\/+$/, '')
+const apiFetch = (path, init) => fetch(`${API_BASE}${path}`, init)
 
 const navLinks = [
   { label: 'Dashboard', href: '/' },
@@ -524,7 +526,7 @@ function App() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/api/stats')
+      const response = await apiFetch('/stats')
       const payload = await response.json()
       const mapped = payload.stats?.reduce((acc, stat) => {
         if (stat.key) {
@@ -582,7 +584,7 @@ function App() {
   const fetchInventory = async () => {
     setInventoryError('')
     try {
-      const response = await fetch('/api/inventory')
+      const response = await apiFetch('/inventory')
       if (!response.ok) {
         throw new Error('Inventory API unavailable')
       }
@@ -610,7 +612,7 @@ function App() {
       return
     }
     try {
-      await fetch('/api/inventory', {
+      await apiFetch('/inventory', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ items }),
@@ -688,7 +690,7 @@ function App() {
     if (!sheetKey) {
       return
     }
-    fetch('/api/stats', {
+    apiFetch('/stats', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ key: sheetKey, value: nextValue }),
@@ -706,7 +708,7 @@ function App() {
       [key]: nextValue,
     }))
     const metadata = statUpdateMetadata[key]
-    fetch('/api/stats', {
+    apiFetch('/stats', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -741,7 +743,7 @@ function App() {
     }
     const value = `${nextCurrent}/${total}`
     setTrackers((prev) => ({ ...prev, [key]: value }))
-    await fetch('/api/stats', {
+    await apiFetch('/stats', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ key, value }),
@@ -757,7 +759,7 @@ function App() {
       return acc
     }, {})
     setTrackers((prev) => ({ ...prev, ...nextMap }))
-    await fetch('/api/stats', {
+    await apiFetch('/stats', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ updates }),

@@ -36,6 +36,17 @@ Designed for GitHub viewing.
 - The UI dashboard layout is tuned for wide screens: the Combat Kit grid uses two columns, and full-width sections (Grung Abilities + Drugs & Herbs) span across both columns.
 - Combat Kit weapon blocks follow the same format: **Hit** (Std/Pwr), **Std**, **Pwr**, **Elem**, **Gloom** lines for quick in-session reading.
 
+### 🐳 Docker + Subpath Hosting
+
+- This repo now includes a production Dockerfile that builds the Vite UI and serves it through the Express server.
+- For DiceKnights integration under a subpath, set build args:
+  - `VITE_BASE_PATH=/ribbits-app/`
+  - `VITE_API_BASE=/ribbits-app/api`
+- Runtime API + offline settings remain controlled by server env:
+  - `APPS_SCRIPT_WEBAPP_URL`
+  - `OFFLINE_SNAPSHOT_PATH`
+  - `FILE_STORAGE_DIR`
+
 ### 📚 Reference
 
 - ✨ **Class Features:** [Class Features.md](./Class%20Features.md)

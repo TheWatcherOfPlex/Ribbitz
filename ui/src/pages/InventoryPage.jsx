@@ -9,6 +9,9 @@ const defaultRow = {
   notes: '',
   imageUrl: '',
 }
+const API_BASE = (import.meta.env.VITE_API_BASE || '/api').replace(/\/+$/, '')
+const apiFetch = (path, init) => fetch(`${API_BASE}${path}`, init)
+const CONTENT_BASE = import.meta.env.BASE_URL || '/'
 
 const formatCategoryLabel = (category) => (category ? category : 'Uncategorized')
 
@@ -23,7 +26,7 @@ function InventoryPage() {
   const [editNewCategory, setEditNewCategory] = useState({})
 
   const loadSeedInventory = async () => {
-    const seedResponse = await fetch('/content/seed-inventory.csv')
+    const seedResponse = await fetch(`${CONTENT_BASE}content/seed-inventory.csv`)
     if (!seedResponse.ok) {
       throw new Error('Seed load failed')
     }
@@ -56,7 +59,7 @@ function InventoryPage() {
     setIsLoading(true)
     setError('')
     try {
-      const response = await fetch('/api/inventory')
+      const response = await apiFetch('/inventory')
       if (!response.ok) {
         throw new Error('Inventory API unavailable')
       }
@@ -100,7 +103,7 @@ function InventoryPage() {
     setIsSaving(true)
     setError('')
     try {
-      const response = await fetch('/api/inventory', {
+      const response = await apiFetch('/inventory', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ items: nextRows }),
