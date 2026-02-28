@@ -204,6 +204,7 @@ The UI reads/writes these keys from the Google Sheet. This is critical for debug
 | STR | `str` | `str-mod` | `save-str` |
 | DEX | `dex` | `dex-mod` | `save-dex` |
 | CON | `con` | `con-mod` | `save-con` |
+> **Note:** On Windows, the file `con.txt` cannot be tracked by Git because `CON` is a reserved device name. The OBS stats file was renamed to `con-ability.txt` as a workaround.
 | INT | `int` | `int-mod` | `save-int` |
 | WIS | `wis` | `wis-mod` | `save-wis` |
 | CHA | `cha` | `cha-mod` | `save-cha` |
