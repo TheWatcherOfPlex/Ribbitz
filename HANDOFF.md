@@ -106,12 +106,14 @@ User opens UI in browser (127.0.0.1:5174)
 | Read inventory | `GET /api/inventory` | Returns items array |
 | Write inventory | `POST /api/inventory` | `{ items: [...] }` |
 | Health check | `GET /api/health` | Returns `{ status: 'ok' }` |
-| Sophie roll list | `GET /api/sophie/rolls` | Returns the Ribbitz skill-to-hotkey map |
-| Sophie roll trigger | `POST /api/sophie/roll` | Sends a skill roll to the Stealth bridge |
+| Sophie roll list | `GET /api/sophie/rolls` | Legacy/reference roll metadata; no hotkeys |
+| Sophie roll trigger | `POST /api/sophie/roll` | Legacy endpoint; dashboard UI does not call it |
 
-### Sophie’s Dice Skill Roll Integration
+### Sophie’s Dice Roll Buttons Removed
 
-Ribbitz has `Roll` buttons on the Skills, Ability Scores, and Healing cards. These call the Ribbitz server, which forwards to a small bridge running on Stealth. The bridge focuses or launches Sophie’s Dice, verifies Sophie is the foreground window, and sends the hotkey assigned to the matching Sophie custom roll.
+As of 2026-06-13, the Ribbitz dashboard no longer shows Sophie `Roll` buttons and no longer stores Sophie hotkey fields in the server roll metadata. The hotkey workflow caused issues during live play, so future instances should not reintroduce dashboard roll buttons, Sophie hotkey fields, or automatic Sophie keypress behavior without an explicit user request.
+
+The legacy server endpoints may remain for compatibility/reference while the UI is disconnected from them.
 
 Important paths:
 
@@ -134,18 +136,8 @@ Safe checks:
 
 ```bash
 curl -fsS http://10.0.0.42:5195/health
-docker exec diceknights-ribbitz wget --header='Content-Type: application/json' --post-data='{"key":"skill-acrobatics","dryRun":true}' -qO- http://127.0.0.1:5175/api/sophie/roll
+docker exec diceknights-ribbitz wget -qO- http://127.0.0.1:5175/api/sophie/rolls
 ```
-
-The bridge dry-run confirms the route from Docker to Stealth. Sophie supports function-key hotkeys only through `F15`; use `Alpha1`, `Alpha2`, keypad keys, etc. after that. Do not use `F16` or higher in Sophie XML files.
-
-Current website-triggered roll groups:
-
-- Skills
-- Ability checks
-- Ability saving throws
-- Standard healing potions: common, greater, superior, supreme
-- Circle of Spores: Halo of Spores, Symbiotic Halo of Spores, Spreading Spores
 
 ---
 

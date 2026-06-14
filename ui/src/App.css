@@ -369,35 +369,24 @@
   justify-content: end;
 }
 
-.skill-roll-btn {
-  border: 1px solid rgba(147, 255, 112, 0.45);
-  border-radius: 999px;
-  background: rgba(147, 255, 112, 0.14);
-  color: #eaffde;
-  cursor: pointer;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  line-height: 1;
-  padding: 5px 8px;
-  text-transform: uppercase;
-}
-
-.skill-roll-btn:hover,
-.skill-roll-btn:focus-visible {
-  background: rgba(147, 255, 112, 0.28);
-  border-color: rgba(147, 255, 112, 0.75);
-  outline: none;
-}
-
 .ability-card__actions {
   display: grid;
   gap: 6px;
   margin-top: 6px;
 }
 
-.ability-card__actions .skill-roll-btn {
+.ability-card__roll-stat {
   width: 100%;
+  border: 1px solid rgba(147, 255, 112, 0.32);
+  border-radius: 999px;
+  background: rgba(147, 255, 112, 0.1);
+  color: #eaffde;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  padding: 5px 8px;
+  text-transform: uppercase;
 }
 
 .grung-abilities {
@@ -1230,6 +1219,17 @@
 
 .spores-panel__roll {
   width: 100%;
+  border: 1px solid rgba(147, 255, 112, 0.32);
+  border-radius: 999px;
+  background: rgba(147, 255, 112, 0.1);
+  color: #eaffde;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  padding: 7px 8px;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .spores-panel__roll--wide {

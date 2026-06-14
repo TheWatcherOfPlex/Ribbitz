@@ -1,6 +1,6 @@
 # Ribbitz AI Handoff
 
-Last updated: 2026-05-23
+Last updated: 2026-06-13
 
 ## Purpose
 
@@ -33,13 +33,11 @@ Read this file first for routing, then open the detailed handoff only for the ar
 
 ## Sophie’s Dice Bridge
 
-- Ribbitz UI calls `POST /ribbits-app/api/sophie/roll`.
-- `diceknights-ribbitz` forwards to the bridge at `SOPHIES_DICE_BRIDGE_URL`.
-- Default bridge URL: `http://10.0.0.42:5195`.
-- Stealth bridge path: `C:\Users\Drachen\Documents\SophiesDice\RibbitzBridge`.
-- For safe testing, use a dry run payload such as `{ "key": "skill-acrobatics", "dryRun": true }`.
-- Sophie’s Dice supports function-key hotkeys only through `F15`; do not use `F16` or higher in Sophie XML files.
-- Current Circle of Spores Sophie roll keys: `halo-spores` (`1d8`), `halo-spores-symbiotic` (`2d8`), and `spreading-spores` (`2d8`).
+- As of 2026-06-13, Ribbitz dashboard roll buttons were removed because Sophie hotkey triggering caused issues during play.
+- Do not re-add UI roll buttons or Sophie hotkey metadata without an explicit user request.
+- `diceknights-ribbitz` may still expose legacy Sophie roll endpoints for compatibility/reference, but the dashboard UI does not call them.
+- `sophieRolls` in `ui/server/server.js` must not include `hotkey` fields.
+- Stealth bridge path, if future bridge work is needed: `C:\Users\Drachen\Documents\SophiesDice\RibbitzBridge`.
 
 ## Safety Notes
 

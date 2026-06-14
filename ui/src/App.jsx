@@ -204,51 +204,6 @@ const skillGroups = [
   },
 ]
 
-const sophieRollLabels = {
-  'skill-athletics': 'Skill - Athletics (+2)',
-  'skill-athletics-gloves': 'Skill - Athletics (Swim/Climb) with Gloves (d20 + Athl + GloveBonus = +7)',
-  'skill-acrobatics': 'Skill - Acrobatics (+10)',
-  'skill-sleight': 'Skill - Sleight of Hand (+5)',
-  'skill-stealth': 'Skill - Stealth (+10)',
-  'skill-arcana': 'Skill - Arcana (+4)',
-  'skill-history': 'Skill - History (-1)',
-  'skill-investigation': 'Skill - Investigation (-1)',
-  'skill-nature': 'Skill - Nature (+4)',
-  'skill-nature-terrain': 'Skill - Nature (Natural Explorer) (d20 + Nature + Prof = +9)',
-  'skill-religion': 'Skill - Religion (-1)',
-  'skill-animal-handling': 'Skill - Animal Handling (+4)',
-  'skill-insight': 'Skill - Insight (+4)',
-  'skill-medicine': 'Skill - Medicine (+9)',
-  'skill-medicine-terrain': 'Skill - Medicine (Natural Explorer) (d20 + Medicine + Prof = +14)',
-  'skill-perception': 'Skill - Perception (+9)',
-  'skill-perception-terrain': 'Skill - Perception (Natural Explorer) (d20 + Perception + Prof = +14)',
-  'skill-survival': 'Skill - Survival (+9)',
-  'skill-survival-terrain': 'Skill - Survival (Natural Explorer) (d20 + Surv + Prof = +14)',
-  'skill-deception': 'Skill - Deception (-1)',
-  'skill-intimidation': 'Skill - Intimidation (-1)',
-  'skill-performance': 'Skill - Performance (-1)',
-  'skill-persuasion': 'Skill - Persuasion (-1)',
-  'ability-str-check': 'Strength Check +2',
-  'ability-str-save': 'Str Save +2',
-  'ability-dex-check': 'Dexterity Check +5',
-  'ability-dex-save': 'Dex Save +10',
-  'ability-con-check': 'Constitution Check +3',
-  'ability-con-save': 'Con Save +3',
-  'ability-int-check': 'Intelligence Check -1',
-  'ability-int-save': 'Int Save -1',
-  'ability-wis-check': 'Wisdom Check +4',
-  'ability-wis-save': 'Wis Save +9',
-  'ability-cha-check': 'Charisma Check -1',
-  'ability-cha-save': 'Cha Save -1',
-  'healing-potion-common': 'Healing Potion - Common (2d4+2)',
-  'healing-potion-greater': 'Healing Potion - Greater (4d4+4)',
-  'healing-potion-superior': 'Healing Potion - Superior (8d4+8)',
-  'healing-potion-supreme': 'Healing Potion - Supreme (10d4+20)',
-  'halo-spores': 'Halo of Spores - DC 17 CON save or 1d8 necrotic',
-  'halo-spores-symbiotic': 'Halo of Spores - Symbiotic Entity - DC 17 CON save or 2d8 necrotic',
-  'spreading-spores': 'Spreading Spores - DC 17 CON save or 2d8 necrotic',
-}
-
 const restDefinitions = {
   shortRest: {
     label: 'Short Rest',
@@ -311,11 +266,10 @@ const potionDefinitions = [
     name: 'Healing Potion (Common/Standard)',
     label: 'Common',
     detail: '2d4+2',
-    rollKey: 'healing-potion-common',
   },
-  { name: 'Healing Potion (Greater)', label: 'Greater', detail: '4d4+4', rollKey: 'healing-potion-greater' },
-  { name: 'Healing Potion (Superior)', label: 'Superior', detail: '8d4+8', rollKey: 'healing-potion-superior' },
-  { name: 'Healing Potion (Supreme)', label: 'Supreme', detail: '10d4+20', rollKey: 'healing-potion-supreme' },
+  { name: 'Healing Potion (Greater)', label: 'Greater', detail: '4d4+4' },
+  { name: 'Healing Potion (Superior)', label: 'Superior', detail: '8d4+8' },
+  { name: 'Healing Potion (Supreme)', label: 'Supreme', detail: '10d4+20' },
   { name: 'Golden Elixir', label: 'Golden', detail: 'Full +10 temp' },
   { name: 'Frog Salve Meds', label: 'Frog Salve', detail: 'Grung heal' },
 ]
@@ -465,7 +419,7 @@ function parsePreparedSpellsIndex(markdownText) {
   return index
 }
 
-function CounterRow({ label, value, detail, onStep, disabled, rollKey, onRoll }) {
+function CounterRow({ label, value, detail, onStep, disabled }) {
   return (
     <div className="counter-row">
       <div className="counter-row__meta">
@@ -473,16 +427,6 @@ function CounterRow({ label, value, detail, onStep, disabled, rollKey, onRoll })
         {detail && <div className="counter-row__detail">{detail}</div>}
       </div>
       <div className="counter-row__controls">
-        {rollKey ? (
-          <button
-            className="skill-roll-btn"
-            type="button"
-            onClick={() => onRoll?.(rollKey, label)}
-            title={`Roll ${label} in Sophie's Dice`}
-          >
-            Roll
-          </button>
-        ) : null}
         <button
           className="counter-row__btn"
           type="button"
@@ -635,7 +579,6 @@ function App() {
   })
   const [inventoryOnline, setInventoryOnline] = useState(true)
   const [inventoryError, setInventoryError] = useState('')
-  const [sophieRollStatus, setSophieRollStatus] = useState('')
   const inventorySaveTimers = useRef({})
   const [vitals, setVitals] = useState({
     hp: 61,
@@ -1081,25 +1024,6 @@ function App() {
     })
   }
 
-  const rollSophieRoll = async (key, fallbackLabel) => {
-    const label = sophieRollLabels[key] || fallbackLabel || key
-    setSophieRollStatus(`Rolling ${label} in Sophie's Dice...`)
-    try {
-      const response = await apiFetch('/sophie/roll', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ key }),
-      })
-      const payload = await response.json().catch(() => ({}))
-      if (!response.ok) {
-        throw new Error(payload.message || 'Sophie bridge did not accept the roll')
-      }
-      setSophieRollStatus(`Rolled ${label}`)
-    } catch (error) {
-      setSophieRollStatus(`Sophie roll failed: ${error.message}`)
-    }
-  }
-
   const applyBulkUpdates = async (updates) => {
     if (!isOnline || !updates.length) {
       return
@@ -1460,8 +1384,6 @@ function App() {
                               value={getInventoryQuantity(potion.name, 0)}
                               disabled={!inventoryOnline}
                               onStep={(delta) => stepInventoryItem(potion.name, delta)}
-                              rollKey={potion.rollKey}
-                              onRoll={rollSophieRoll}
                             />
                           ))}
                         </div>
@@ -1546,26 +1468,12 @@ function App() {
                             <div className="ability-card__label">{ability.label}</div>
                             <div className="ability-card__score">{statMap?.[ability.key] ?? '—'}</div>
                             <div className="ability-card__actions">
-                              <button
-                                className="skill-roll-btn"
-                                type="button"
-                                onClick={() =>
-                                  rollSophieRoll(`ability-${ability.label.toLowerCase()}-check`, `${ability.label} check`)
-                                }
-                                title={`Roll ${ability.label} check in Sophie's Dice`}
-                              >
+                              <div className="ability-card__roll-stat">
                                 Check {statMap?.[ability.modKey] ?? '—'}
-                              </button>
-                              <button
-                                className="skill-roll-btn"
-                                type="button"
-                                onClick={() =>
-                                  rollSophieRoll(`ability-${ability.label.toLowerCase()}-save`, `${ability.label} save`)
-                                }
-                                title={`Roll ${ability.label} save in Sophie's Dice`}
-                              >
+                              </div>
+                              <div className="ability-card__roll-stat">
                                 Save {statMap?.[ability.saveKey] ?? '—'}
-                              </button>
+                              </div>
                             </div>
                           </div>
                         ))}
@@ -1574,11 +1482,6 @@ function App() {
 
                     <div className="abilities-skills__skills">
                       <div className="abilities-skills__subtitle">Skills</div>
-                      {sophieRollStatus ? (
-                        <div className="sophie-roll-status" role="status">
-                          {sophieRollStatus}
-                        </div>
-                      ) : null}
                       <div className="skills-grid">
                         {skillGroups.map((group) => (
                           <div key={group.label} className="skill-group">
@@ -1591,16 +1494,6 @@ function App() {
                                 <span>{skill.label}</span>
                                 <span className="skill-row__controls">
                                   <span>{getSkillValue(skill.key)}</span>
-                                  {sophieRollLabels[skill.key] ? (
-                                    <button
-                                      className="skill-roll-btn"
-                                      type="button"
-                                      onClick={() => rollSophieRoll(skill.key, skill.label)}
-                                      title={`Roll ${skill.label} in Sophie's Dice`}
-                                    >
-                                      Roll
-                                    </button>
-                                  ) : null}
                                 </span>
                               </div>
                             ))}
@@ -1902,29 +1795,15 @@ function App() {
                               : 'Activate Symbiotic Entity (+40 HP)'}
                           </button>
                           <div className="spores-panel__grid">
-                            <button
-                              className="skill-roll-btn spores-panel__roll"
-                              type="button"
-                              onClick={() => rollSophieRoll('halo-spores', 'Halo of Spores')}
-                            >
+                            <div className="spores-panel__roll">
                               Halo {statMap?.['halo-damage'] ?? haloDamage}
-                            </button>
-                            <button
-                              className="skill-roll-btn spores-panel__roll"
-                              type="button"
-                              onClick={() =>
-                                rollSophieRoll('halo-spores-symbiotic', 'Halo of Spores - Symbiotic')
-                              }
-                            >
+                            </div>
+                            <div className="spores-panel__roll">
                               Symbiotic {statMap?.['halo-damage-symbiotic'] ?? haloSymbioticDamage}
-                            </button>
-                            <button
-                              className="skill-roll-btn spores-panel__roll spores-panel__roll--wide"
-                              type="button"
-                              onClick={() => rollSophieRoll('spreading-spores', 'Spreading Spores')}
-                            >
+                            </div>
+                            <div className="spores-panel__roll spores-panel__roll--wide">
                               Spreading Spores
-                            </button>
+                            </div>
                           </div>
                           <div className="spores-panel__note">
                             DC {statMap?.['spell-dc'] ?? '17'} CON save. Spreading Spores is a
