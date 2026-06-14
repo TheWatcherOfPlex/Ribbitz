@@ -922,9 +922,8 @@
 }
 
 .panel__content--vitals {
-  /* Don't stretch the HP boxes; keep them compact */
-  grid-template-columns: repeat(2, max-content) max-content;
-  justify-content: start;
+  grid-template-columns: repeat(auto-fit, minmax(126px, 1fr));
+  align-items: stretch;
   gap: 12px;
 }
 
@@ -1003,12 +1002,11 @@
 }
 
 .vitals-actions {
-  grid-column: 3;
-  grid-row: 1 / span 2;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
   align-items: stretch;
   gap: 8px;
+  grid-column: 1 / -1;
 }
 
 .vitals-actions button {
@@ -1016,9 +1014,7 @@
 }
 
 .symbiotic-hp-control {
-  grid-column: 2;
-  grid-row: 2;
-  min-width: 126px;
+  min-width: 0;
   display: grid;
   gap: 6px;
   padding: 8px;
