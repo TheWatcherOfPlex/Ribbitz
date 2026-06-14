@@ -15,11 +15,12 @@ Do not publish/distribute.
 - [Reset / Usage Trackers](#-reset--usage-trackers)
 - [Spell Slots Tracker](#-spell-slots-tracker-multiclass-caster-level-12)
 - [Casting Math](#-ribbitz-casting-math-quick)
-- [Cantrips](#-cantrips-5-known)
+- [Cantrips](#-cantrips-6-known)
 - [1st Level](#-1st-level-spells-11-prepared)
 - [2nd Level](#-2nd-level-spells-10-prepared)
 - [3rd Level](#-3rd-level-spells-4-prepared)
 - [4th Level](#-4th-level-spells-3-prepared)
+- [5th Level](#-5th-level-spells-1-prepared)
 - [Magic Abilities (Non-Spell)](#-magic-abilities-non-spell-7-abilities)
 
 > 💡 **Tip:** Click spell level to see list → Click spell name to see full details.
@@ -85,7 +86,7 @@ Do not publish/distribute.
 ---
 
 <details>
-<summary><h2>🌿 Cantrips (4 known)</h2></summary>
+<summary><h2>🌿 Cantrips (6 known)</h2></summary>
 
 <details>
 <summary><h3>🙏 Guidance</h3></summary>
@@ -199,6 +200,32 @@ You seize the air and compel it to create one of the following effects at a poin
 
 #### Ribbitz Notes
 - <span style="color: #8a2be2;"><b>Save DC = 17</b></span> (for push effect)
+
+</details>
+
+<details>
+<summary><h3>🔔 Toll the Dead</h3></summary>
+
+**Level:** Necromancy cantrip  
+**Casting Time:** 1 action  
+**Range:** 60 feet  
+**Components:** V, S  
+**Duration:** Instantaneous
+
+**Source:** *Xanathar's Guide to Everything*
+
+#### Official Text
+
+You point at one creature you can see within range, and the sound of a dolorous bell fills the air around it for a moment. The target must succeed on a Wisdom saving throw or take 1d8 necrotic damage. If the target is missing any of its hit points, it instead takes 1d12 necrotic damage.
+
+**At Higher Levels:** The spell's damage increases by one die when you reach 5th level (2d8 or 2d12), 11th level (3d8 or 3d12), and 17th level (4d8 or 4d12).
+
+**Spell Lists:** Cleric, Warlock, Wizard
+
+#### Ribbitz Notes
+- <span style="color: #8a2be2;"><b>Save DC = 17</b></span> Wisdom
+- <span style="color: #8a2be2;"><b>Damage at Level 16 = 3d8</b></span> necrotic if target is uninjured
+- <span style="color: #8a2be2;"><b>Damage at Level 16 = 3d12</b></span> necrotic if target is missing any hit points
 
 </details>
 
@@ -886,9 +913,33 @@ At the end of its turns, an affected target can make a Wisdom saving throw. If i
 ---
 
 <details>
-<summary><h2>⚡ 5th and 6th Level Spells</h2></summary>
+<summary><h2>✨ 5th Level Spells (1 prepared)</h2></summary>
 
-**Ribbitz has not learned any 5th or 6th level spells yet, but can upcast lower level spells at these levels.**
+<details>
+<summary><h3>💚 Mass Cure Wounds</h3></summary>
+
+**Level:** 5th-level evocation  
+**Casting Time:** 1 action  
+**Range:** 60 feet  
+**Components:** V, S  
+**Duration:** Instantaneous
+
+**Source:** *Player's Handbook*
+
+#### Official Text
+
+A wave of healing energy washes out from a point of your choice within range. Choose up to six creatures in a 30-foot-radius sphere centered on that point. Each target regains hit points equal to 3d8 + your spellcasting ability modifier. This spell has no effect on undead or constructs.
+
+**At Higher Levels:** When you cast this spell using a spell slot of 6th level or higher, the healing increases by 1d8 for each slot level above 5th.
+
+**Spell Lists:** Bard, Cleric, Druid
+
+#### Ribbitz Notes
+- <span style="color: #8a2be2;"><b>Healing = 3d8 + 4</b></span> to up to six creatures
+- Choose targets in a <span style="color: #8a2be2;"><b>30-foot-radius sphere</b></span> centered on a point within 60 feet
+- Does not affect undead or constructs
+
+</details>
 
 </details>
 
