@@ -271,6 +271,40 @@ app.post('/api/inventory', async (req, res) => {
   }
 })
 
+app.post('/api/inventory/item', async (req, res) => {
+  try {
+    const { item } = req.body || {}
+    if (!item?.name) {
+      return res.status(400).json({ message: 'item.name is required' })
+    }
+    if (!appsScriptUrl) {
+      return res.status(400).json({ message: 'APPS_SCRIPT_WEBAPP_URL is not configured' })
+    }
+    const response = await fetch(`${appsScriptUrl}?action=batchUpdate&sheet=Inventory`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify([
+        {
+          key: item.name,
+          value: item.quantity,
+          label: item.name,
+          type: item.category,
+          weight: item.weight,
+          outputFile: item.notes,
+          extra: item.imageUrl,
+        },
+      ]),
+    })
+    if (!response.ok) {
+      return res.status(500).json({ message: 'Failed to update inventory item' })
+    }
+    const payload = await response.json()
+    res.json({ success: true, payload })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
 cron.schedule('*/10 * * * *', async () => {
   try {
     const rows = await fetchSheetValues()

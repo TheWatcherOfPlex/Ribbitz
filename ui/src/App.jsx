@@ -1,5 +1,5 @@
 import { Link, NavLink, Route, Routes } from 'react-router-dom'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
 import ribbitzPortrait from './assets/ribbitz-flying.png'
 import MarkdownPage from './components/MarkdownPage.jsx'
@@ -14,6 +14,40 @@ const CONTENT_BASE = import.meta.env.BASE_URL || '/'
 const apiFetch = (path, init) => fetch(`${API_BASE}${path}`, init)
 const contentPath = (file) => `${CONTENT_BASE}content/${file}`
 const contentImagePath = (file) => `${CONTENT_BASE}content-images/${file}`
+const inventoryCacheKey = 'ribbitz.inventoryCache'
+const pendingInventoryKey = 'ribbitz.inventoryPending'
+const syncModeKey = 'ribbitz.syncMode'
+const syncOnDurationMs = 6 * 60 * 60 * 1000
+const syncOffIntervalMs = 6 * 60 * 60 * 1000
+const syncOnIntervalMs = 30 * 1000
+const inventorySaveDebounceMs = 300
+
+function readJsonStorage(key, fallback) {
+  try {
+    const saved = window.localStorage.getItem(key)
+    if (!saved) return fallback
+    return JSON.parse(saved) ?? fallback
+  } catch {
+    return fallback
+  }
+}
+
+function writeJsonStorage(key, value) {
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value))
+  } catch {
+    // ignore
+  }
+}
+
+function readSyncMode() {
+  const saved = readJsonStorage(syncModeKey, {})
+  const expiresAt = Number(saved?.expiresAt) || 0
+  return {
+    enabled: expiresAt > Date.now(),
+    expiresAt,
+  }
+}
 
 const navLinks = [
   { label: 'Dashboard', href: '/' },
@@ -487,10 +521,15 @@ function App() {
   const [isOnline, setIsOnline] = useState(true)
   const [lastSync, setLastSync] = useState(null)
   const [trackers, setTrackers] = useState({})
-  const [inventoryItems, setInventoryItems] = useState([])
+  const [syncMode, setSyncMode] = useState(() => readSyncMode())
+  const [inventoryItems, setInventoryItems] = useState(() => {
+    const cached = readJsonStorage(inventoryCacheKey, {})
+    return Array.isArray(cached?.items) ? cached.items : []
+  })
   const [inventoryOnline, setInventoryOnline] = useState(true)
   const [inventoryError, setInventoryError] = useState('')
   const [sophieRollStatus, setSophieRollStatus] = useState('')
+  const inventorySaveTimers = useRef({})
   const [vitals, setVitals] = useState({
     hp: 61,
     tempHp: 0,
@@ -591,11 +630,17 @@ function App() {
   }, [statMap])
 
   const statusLabel = useMemo(
-    () => (isOnline ? 'ONLINE • Synced' : 'OFFLINE • Changes not saved'),
-    [isOnline],
+    () =>
+      isOnline
+        ? `ONLINE • Sync ${syncMode.enabled ? 'ON' : 'OFF'}`
+        : 'OFFLINE • Changes not saved',
+    [isOnline, syncMode.enabled],
   )
 
   const syncLabel = useMemo(() => {
+    if (syncMode.enabled) {
+      return `Game sync on until ${new Date(syncMode.expiresAt).toLocaleTimeString()}`
+    }
     if (!lastSync && isOnline) {
       return 'Waiting for sheet data...'
     }
@@ -605,8 +650,8 @@ function App() {
     if (!isOnline) {
       return `Offline • Snapshot from ${new Date(lastSync).toLocaleTimeString()}`
     }
-    return `Last sync: ${new Date(lastSync).toLocaleTimeString()}`
-  }, [isOnline, lastSync])
+    return `Last sync: ${new Date(lastSync).toLocaleTimeString()} • auto every 6h`
+  }, [isOnline, lastSync, syncMode])
 
   const fetchStats = async () => {
     try {
@@ -681,7 +726,10 @@ function App() {
         throw new Error('Inventory API unavailable')
       }
       const payload = await response.json()
-      const items = payload.items || []
+      const pending = readJsonStorage(pendingInventoryKey, {})
+      const pendingByName = pending && typeof pending === 'object' ? pending : {}
+      const remoteItems = payload.items || []
+      const items = remoteItems.map((item) => pendingByName[item.name] || item)
       setInventoryItems(items)
       setInventoryOnline(true)
       return
@@ -699,26 +747,85 @@ function App() {
     }
   }
 
-  const saveInventory = async (items) => {
-    if (!inventoryOnline) {
+  const saveInventoryItem = async (item) => {
+    if (!inventoryOnline || !item?.name) {
       return
     }
     try {
-      await apiFetch('/inventory', {
+      await apiFetch('/inventory/item', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items }),
+        body: JSON.stringify({ item }),
       })
+      const pending = readJsonStorage(pendingInventoryKey, {})
+      if (pending?.[item.name]) {
+        delete pending[item.name]
+        writeJsonStorage(pendingInventoryKey, pending)
+      }
     } catch {
       setInventoryOnline(false)
-      setInventoryError('Inventory update failed: backend offline (changes not saved).')
+      setInventoryError('Inventory update failed: saved locally and will retry on next sync.')
     }
+  }
+
+  const queueInventoryItemSave = (item) => {
+    if (!item?.name) return
+    const pending = readJsonStorage(pendingInventoryKey, {})
+    pending[item.name] = item
+    writeJsonStorage(pendingInventoryKey, pending)
+    window.clearTimeout(inventorySaveTimers.current[item.name])
+    inventorySaveTimers.current[item.name] = window.setTimeout(() => {
+      saveInventoryItem(item)
+    }, inventorySaveDebounceMs)
+  }
+
+  const flushPendingInventorySaves = async () => {
+    const pending = readJsonStorage(pendingInventoryKey, {})
+    const items = Object.values(pending || {})
+    if (!items.length) return
+    await Promise.all(items.map((item) => saveInventoryItem(item)))
   }
 
   useEffect(() => {
     fetchStats()
-    fetchInventory()
+    flushPendingInventorySaves().finally(fetchInventory)
   }, [])
+
+  useEffect(() => {
+    if (inventoryItems.length) {
+      writeJsonStorage(inventoryCacheKey, {
+        items: inventoryItems,
+        updatedAt: new Date().toISOString(),
+      })
+    }
+  }, [inventoryItems])
+
+  useEffect(() => {
+    const nextMode = readSyncMode()
+    if (nextMode.enabled !== syncMode.enabled || nextMode.expiresAt !== syncMode.expiresAt) {
+      setSyncMode(nextMode)
+    }
+
+    const interval = window.setInterval(() => {
+      const currentMode = readSyncMode()
+      setSyncMode(currentMode)
+      fetchStats()
+      flushPendingInventorySaves().finally(fetchInventory)
+    }, syncMode.enabled ? syncOnIntervalMs : syncOffIntervalMs)
+
+    let expiryTimer
+    if (syncMode.enabled) {
+      expiryTimer = window.setTimeout(() => {
+        writeJsonStorage(syncModeKey, { expiresAt: 0 })
+        setSyncMode({ enabled: false, expiresAt: 0 })
+      }, Math.max(0, syncMode.expiresAt - Date.now()))
+    }
+
+    return () => {
+      window.clearInterval(interval)
+      window.clearTimeout(expiryTimer)
+    }
+  }, [syncMode.enabled, syncMode.expiresAt])
 
   useEffect(() => {
     try {
@@ -957,7 +1064,7 @@ function App() {
       const current = Number.isNaN(numeric) ? 0 : numeric
       const updated = Math.max(0, current + delta)
       next[index].quantity = String(updated)
-      saveInventory(next)
+      queueInventoryItemSave(next[index])
       return next
     })
   }
@@ -974,7 +1081,7 @@ function App() {
         return prev
       }
       next[index].quantity = String(Math.max(0, numeric))
-      saveInventory(next)
+      queueInventoryItemSave(next[index])
       return next
     })
   }
@@ -1046,6 +1153,26 @@ function App() {
   const standardBlowgunDartsQuantity = getInventoryQuantity(standardBlowgunDartsName, 60)
   const standardArrowsQuantity = getInventoryQuantity(standardArrowsName, 60)
 
+  const toggleSyncMode = () => {
+    if (syncMode.enabled) {
+      const nextMode = { enabled: false, expiresAt: 0 }
+      writeJsonStorage(syncModeKey, { expiresAt: 0 })
+      setSyncMode(nextMode)
+      return
+    }
+    const expiresAt = Date.now() + syncOnDurationMs
+    const nextMode = { enabled: true, expiresAt }
+    writeJsonStorage(syncModeKey, { expiresAt })
+    setSyncMode(nextMode)
+    fetchStats()
+    flushPendingInventorySaves().finally(fetchInventory)
+  }
+
+  const syncNow = () => {
+    fetchStats()
+    flushPendingInventorySaves().finally(fetchInventory)
+  }
+
   return (
     <div className="app-shell">
       <aside className="sidebar">
@@ -1077,13 +1204,20 @@ function App() {
           </span>
           <div className="sidebar__sync-label">{syncLabel}</div>
           <div className="sidebar__actions">
-            <button className="ghost" onClick={fetchStats}>
+            <button className="ghost" onClick={syncNow}>
               Sync Now
             </button>
             <a className="primary" href={sheetUrl} target="_blank" rel="noreferrer">
               Open Sheet
             </a>
           </div>
+          <button
+            className={`sync-toggle ${syncMode.enabled ? 'sync-toggle--on' : ''}`}
+            type="button"
+            onClick={toggleSyncMode}
+          >
+            Sync {syncMode.enabled ? 'ON' : 'OFF'}
+          </button>
         </div>
       </aside>
 
