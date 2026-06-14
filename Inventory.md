@@ -6,7 +6,7 @@ Primary purpose: full inventory reference.
 # 🎒 Inventory (Ribbitz)
 
 **Nav:**
-[Home](./README.md) | [Stats](./Basic%20Stats.md) | [Actions](./Actions.md) | [Inventory](./Inventory.md) | [Features](./Class%20Features.md) | [Racial Traits](./Racial%20Traits.md) | [Spells/Magic](./Spells%20and%20Magic%20Abilities.md) | [Backstory](./Backstory.md) | [Images](./Images.md) | [Refs](./Reference%20Materials/)
+[Home](./README.md) | [Stats](./Basic%20Stats.md) | [Actions](./Actions.md) | [Inventory](./Inventory.md) | [Features](./Class%20Features.md) | [Racial Traits](./Racial%20Traits.md) | [Spells/Magic](./Spells%20and%20Magic%20Abilities.md) | [Backstory](./Backstory.md) | [Notes](./Notes.md) | [Images](./Images.md) | [Refs](./Reference%20Materials/)
 
 **On this page:**
 - [Major Magic Items & Attunement](#-major-magic-items--attunement)
@@ -358,9 +358,16 @@ Primary purpose: full inventory reference.
 </details>
 
 <details>
-<summary><h3>🎯 Standard Darts (x59)</h3></summary>
+<summary><h3>🎯 Blowgun Darts (x60)</h3></summary>
 
-**Damage:** 1d8 Piercing
+**Use:** Standard ammunition for the Vanguard Blowgun.
+
+</details>
+
+<details>
+<summary><h3>🏹 Arrows (x60)</h3></summary>
+
+**Use:** Standard ammunition for Skywarden's Longbow.
 
 </details>
 
@@ -615,6 +622,12 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 - 2 days worth (2 meals per day)
 - Tea for entire party
 
+**Assorted Edible Mushrooms:**
+- General food supply
+
+**Frog Folk Food Supplies:**
+- Food supplies suitable for frog folk
+
 </details>
 
 </details>
@@ -650,7 +663,7 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 ---
 
 <details>
-<summary><h2>🍄 Drugs & Herbs (16 items)</h2></summary>
+<summary><h2>🍄 Drugs & Herbs</h2></summary>
 
 <details>
 <summary><h3>🌿 Grung Weed</h3></summary>
@@ -758,6 +771,121 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 
 </details>
 
+<details>
+<summary><h3>⛰️ Zenith Mountain-Touched Morsel (x1)</h3></summary>
+
+**Value:** 250 gp  
+**Duration:** 8 hours
+
+**Effect:**
+- After failing a saving throw, add `2d4` to the result.
+- You may decide to use it after seeing the failed roll.
+
+</details>
+
+<details>
+<summary><h3>🕷️ Zenith Widow Cap (x1)</h3></summary>
+
+**Value:** 200 gp  
+**Risk:** Very dangerous flat fungus
+
+**Effect:**
+- Advantage on Wisdom checks and Wisdom saving throws for 1 hour.
+- When the effect ends, gain 1 level of exhaustion.
+
+</details>
+
+<details>
+<summary><h3>🌙 Dream Root (x1)</h3></summary>
+
+**Value:** 100 gp  
+**Legality:** Illegal  
+**Rarity:** Rare
+
+**Effect:** Consume and roll `1d4` on its effect table. All known effects are positive.
+
+</details>
+
+<details>
+<summary><h3>🫧 Whisper Rot (x1)</h3></summary>
+
+**Value:** 175 gp
+
+**Effect:**
+- Target makes a **DC 15 CON save**.
+- On failure, subtract `1d4` from the target's attack rolls for 1 minute.
+
+</details>
+
+<details>
+<summary><h3>👑 King's Regret (x1)</h3></summary>
+
+**Value:** 350 gp  
+**Legality:** Illegal everywhere
+
+**Effect:**
+- On a failed save, target takes `4d6` poison damage.
+- Target cannot take reactions for 1 minute.
+- Target repeats a **DC 15 CON save** each turn to end the reaction lockout.
+
+</details>
+
+<details>
+<summary><h3>🍄 Grow Mushroom (x1)</h3></summary>
+
+**Value:** Unknown  
+**Uses:** 1
+
+**Effect:** Grows the user 10 to 15 feet tall.
+
+</details>
+
+<details>
+<summary><h3>⭐ Starcap Mushroom (x3)</h3></summary>
+
+**Value:** 25 gp each  
+**Appearance:** Yellow mushroom found by Star
+
+**Effect:**
+- Advantage on Survival checks made for navigation.
+- You always know which direction is north.
+- Constellations are always visible to you.
+
+</details>
+
+<details>
+<summary><h3>❄️ Frost Breath Puffball (x3)</h3></summary>
+
+**Value:** 40 gp each  
+**Use:** Frost grenade
+
+**Effect:**
+- 20-foot radius burst.
+- Creatures in the area make a **DC 16 CON save**.
+- Failure: `4d6` cold damage and slowed for 1 round.
+- Success: half damage and no slow.
+
+</details>
+
+<details>
+<summary><h3>😂 Laughing Zenith (x3)</h3></summary>
+
+**Value:** 50 gp each  
+**Duration:** 1 hour
+
+**Effect:** Immunity to fear.
+
+</details>
+
+<details>
+<summary><h3>🧽 Sponge Mushrooms (x4)</h3></summary>
+
+**Value:** Unknown
+
+**Effect:** Advantage on Medicine checks.
+
+</details>
+
 </details>
 
 ---
@@ -766,9 +894,17 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 <summary><h2>💰 Currency & Valuables</h2></summary>
 
 <details>
-<summary><h3>💰 Gold Pieces: 1,098 gp</h3></summary>
+<summary><h3>💰 Gold Pieces: 252 gp</h3></summary>
 
 Current gold total
+
+</details>
+
+<details>
+<summary><h3>🪲 100 Golden Beetles</h3></summary>
+
+**Type:** Currency  
+**Location:** Tracked under gold
 
 </details>
 
@@ -837,13 +973,6 @@ Current gold total
 <summary><h3>🏺 Ash Jar</h3></summary>
 
 **Source:** Filled at the Fire Genasi border
-
-</details>
-
-<details>
-<summary><h3>🪟 Dragon Glass (Crate)</h3></summary>
-
-**Contents:** Assorted pieces up to 1ft × 5in
 
 </details>
 

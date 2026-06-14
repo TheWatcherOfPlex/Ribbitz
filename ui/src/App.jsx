@@ -24,6 +24,7 @@ const navLinks = [
   { label: 'Features', href: '/features' },
   { label: 'Racial Traits', href: '/racial-traits' },
   { label: 'Backstory', href: '/backstory' },
+  { label: 'Notes', href: '/notes' },
   { label: 'Misc', href: '/misc' },
   { label: 'Images', href: '/images' },
 ]
@@ -267,7 +268,7 @@ const statUpdateMetadata = {
 const potionPoisonPattern = /(potion|poison|venom)/i
 const extraPotionPoisonNames = new Set(['Frog Oil (Jar)'])
 const combatConsumablesCategory = 'Combat Consumables'
-const drugsHerbsCategory = 'Drugs & Herbs (16 items)'
+const drugsHerbsCategory = 'Drugs & Herbs'
 const healingConsumables = new Set([
   'Healing Potion (Common/Standard)',
   'Healing Potion (Greater)',
@@ -1752,7 +1753,12 @@ function App() {
                                   onChange={() => toggleDrugHerb(itemName)}
                                   aria-label={`Toggle ${itemName}`}
                                 />
-                                <span className="drugs-panel__name">{itemName}</span>
+                                <Link
+                                  className="drugs-panel__name"
+                                  to={`/inventory#${slug}`}
+                                >
+                                  {itemName}
+                                </Link>
                               </div>
                             )
                           })
@@ -1879,6 +1885,10 @@ function App() {
           <Route
             path="/backstory"
             element={<MarkdownPage title="Backstory" source={contentPath('Backstory.md')} />}
+          />
+          <Route
+            path="/notes"
+            element={<MarkdownPage title="Notes" source={contentPath('Notes.md')} />}
           />
           <Route
             path="/misc"
