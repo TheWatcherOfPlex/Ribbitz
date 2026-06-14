@@ -196,8 +196,10 @@ const restDefinitions = {
   longRest: {
     label: 'Long Rest',
     updates: [
-      { key: 'hp-current', value: '102' },
+      { key: 'hp-current', value: '112' },
       { key: 'temp-hp', value: '0' },
+      { key: 'symbiotic-active', value: 'No' },
+      { key: 'symbiotic-temp-hp', value: '0' },
       { key: 'slots-1st', value: '4/4' },
       { key: 'slots-2nd', value: '3/3' },
       { key: 'slots-3rd', value: '3/3' },
@@ -262,6 +264,16 @@ const statUpdateMetadata = {
     label: 'Inspiration',
     type: 'resource',
     outputFile: 'inspiration.txt',
+  },
+  'symbiotic-active': {
+    label: 'Symbiotic Entity Active',
+    type: 'features',
+    outputFile: 'symbiotic-active.txt',
+  },
+  'symbiotic-temp-hp': {
+    label: 'Symbiotic Entity Temp HP',
+    type: 'features',
+    outputFile: 'symbiotic-temp-hp.txt',
   },
 }
 
@@ -490,6 +502,15 @@ function App() {
     arrowLava: 0,
   })
   const [statMap, setStatMap] = useState({})
+  const [localInspiration, setLocalInspiration] = useState(() => {
+    try {
+      const saved = window.localStorage.getItem('ribbitz.inspiration')
+      const parsed = Number(saved)
+      return Number.isFinite(parsed) ? parsed : 0
+    } catch {
+      return 0
+    }
+  })
   const [preparedSpells, setPreparedSpells] = useState({})
 
   const [deathSaves, setDeathSaves] = useState(() => {
@@ -595,6 +616,14 @@ function App() {
         }
         return acc
       }, {})
+      const nextInspiration =
+        mapped?.inspiration == null || mapped.inspiration === ''
+          ? localInspiration
+          : Number(mapped.inspiration) || 0
+      if (mapped) {
+        mapped.inspiration = nextInspiration
+      }
+      setLocalInspiration(nextInspiration)
       setStatMap(mapped || {})
       setTrackers(mapped || {})
       const online = payload.source === 'sheet'
@@ -722,6 +751,14 @@ function App() {
   }, [drugStatuses])
 
   useEffect(() => {
+    try {
+      window.localStorage.setItem('ribbitz.inspiration', String(localInspiration))
+    } catch {
+      // ignore
+    }
+  }, [localInspiration])
+
+  useEffect(() => {
     let cancelled = false
     fetch(contentPath('Spells and Magic Abilities.md'))
       .then((response) => response.text())
@@ -761,13 +798,16 @@ function App() {
   }
 
   const updateStat = (key) => (nextValue) => {
-    if (!isOnline) {
-      return
-    }
     setStatMap((prev) => ({
       ...(prev || {}),
       [key]: nextValue,
     }))
+    if (key === 'inspiration') {
+      setLocalInspiration(Number(nextValue) || 0)
+    }
+    if (!isOnline) {
+      return
+    }
     const metadata = statUpdateMetadata[key]
     apiFetch('/stats', {
       method: 'POST',
@@ -839,10 +879,16 @@ function App() {
       return acc
     }, {})
     setTrackers((prev) => ({ ...prev, ...nextMap }))
+    setStatMap((prev) => ({ ...(prev || {}), ...nextMap }))
     await apiFetch('/stats', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ updates }),
+      body: JSON.stringify({
+        updates: updates.map((update) => ({
+          ...update,
+          ...(statUpdateMetadata[update.key] || {}),
+        })),
+      }),
     })
   }
 
@@ -854,11 +900,29 @@ function App() {
     if (restKey === 'longRest') {
       setVitals((prev) => ({
         ...prev,
-        hp: 102,
+        hp: 112,
         tempHp: 0,
       }))
     }
     await applyBulkUpdates(definition.updates)
+  }
+
+  const symbioticActive = String(statMap?.['symbiotic-active'] || 'No').toLowerCase() === 'yes'
+  const symbioticTempHp = Number(statMap?.['symbiotic-temp-hp']) || 0
+
+  const updateSymbioticEntity = async (active, tempHp = active ? 40 : 0) => {
+    await applyBulkUpdates([
+      { key: 'symbiotic-active', value: active ? 'Yes' : 'No' },
+      { key: 'symbiotic-temp-hp', value: String(Math.max(0, tempHp)) },
+    ])
+  }
+
+  const stepSymbioticTempHp = async (delta) => {
+    if (!symbioticActive) {
+      return
+    }
+    const nextTempHp = Math.max(0, symbioticTempHp + delta)
+    await updateSymbioticEntity(nextTempHp > 0, nextTempHp)
   }
 
   const updateTimeOfDay = async (resourceKey, nextValue) => {
@@ -920,8 +984,8 @@ function App() {
   }
 
   const inspirationValue = useMemo(
-    () => Number(statMap?.inspiration ?? statMap?.['inspiration'] ?? 0) || 0,
-    [statMap],
+    () => Number(statMap?.inspiration ?? localInspiration ?? 0) || 0,
+    [localInspiration, statMap],
   )
 
   const toggleDeathSave = (slotIndex) => {
@@ -1060,15 +1124,41 @@ function App() {
                         <StatControl
                           label="HP"
                           value={vitals.hp}
-                          helper="Max 102"
+                          helper={`Max ${statMap?.['hp-max'] ?? 112}`}
                           onChange={updateVital('hp')}
                         />
                         <StatControl
                           label="Temp HP"
                           value={vitals.tempHp}
-                          helper="Spore Shield"
                           onChange={updateVital('tempHp')}
                         />
+                        <div className="symbiotic-hp-control">
+                          <div className="symbiotic-hp-control__topline">
+                            <span>Symbiotic HP</span>
+                            <span>{symbioticActive ? 'Active' : 'Inactive'}</span>
+                          </div>
+                          <div className="symbiotic-hp-control__field">
+                            <button
+                              className="stat-control__btn"
+                              type="button"
+                              onClick={() => stepSymbioticTempHp(-1)}
+                              disabled={!symbioticActive}
+                              aria-label="Decrease Symbiotic HP"
+                            >
+                              −
+                            </button>
+                            <div className="symbiotic-hp-control__value">{symbioticTempHp}</div>
+                            <button
+                              className="stat-control__btn"
+                              type="button"
+                              onClick={() => stepSymbioticTempHp(1)}
+                              disabled={!symbioticActive}
+                              aria-label="Increase Symbiotic HP"
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
 
                         <div className="vitals-actions">
                           <button
@@ -1510,6 +1600,17 @@ function App() {
 
                         <div className="spores-panel">
                           <div className="spores-panel__title">Circle of Spores</div>
+                          <button
+                            className={`spores-panel__entity-btn${
+                              symbioticActive ? ' spores-panel__entity-btn--active' : ''
+                            }`}
+                            type="button"
+                            onClick={() => updateSymbioticEntity(!symbioticActive)}
+                          >
+                            {symbioticActive
+                              ? `End Symbiotic Entity (${symbioticTempHp} HP)`
+                              : 'Activate Symbiotic Entity (+40 HP)'}
+                          </button>
                           <div className="spores-panel__grid">
                             <button
                               className="skill-roll-btn spores-panel__roll"
