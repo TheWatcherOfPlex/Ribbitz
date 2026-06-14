@@ -101,6 +101,33 @@ const conditionsList = [
   'Unconscious',
 ]
 
+const conditionDetails = {
+  Blinded:
+    "Can't see; automatically fails sight-based ability checks. Attacks against it have advantage, and its attacks have disadvantage.",
+  Charmed:
+    "Can't attack the charmer or target the charmer with harmful abilities. The charmer has advantage on social checks against it.",
+  Deafened: "Can't hear and automatically fails hearing-based ability checks.",
+  Frightened:
+    "Disadvantage on ability checks and attacks while the source is in sight; can't willingly move closer to the source.",
+  Grappled: "Speed becomes 0. Ends if the grappler is incapacitated or the target is moved out of reach.",
+  Incapacitated: "Can't take actions or reactions.",
+  Invisible:
+    "Can't be seen without special senses or magic. Attacks against it have disadvantage, and its attacks have advantage.",
+  Paralyzed:
+    'Incapacitated, cannot move or speak, fails STR/DEX saves. Attacks against it have advantage; hits within 5 ft are critical hits.',
+  Petrified:
+    'Transformed into solid material, incapacitated, unaware, resistant to all damage, immune to poison/disease, and fails STR/DEX saves.',
+  Poisoned: 'Disadvantage on attack rolls and ability checks.',
+  Prone:
+    'Can crawl or stand by spending half movement. Attacks within 5 ft have advantage; ranged attacks against it have disadvantage.',
+  Restrained:
+    "Speed becomes 0. Attacks against it have advantage, its attacks have disadvantage, and it has disadvantage on DEX saves.",
+  Stunned:
+    "Incapacitated, can't move, can speak only falteringly, fails STR/DEX saves, and attacks against it have advantage.",
+  Unconscious:
+    'Incapacitated, prone, unaware, drops held items, fails STR/DEX saves. Attacks within 5 ft are critical hits.',
+}
+
 const exhaustionEffects = [
   { level: 1, effect: 'Disadvantage on ability checks' },
   { level: 2, effect: 'Speed halved' },
@@ -341,6 +368,36 @@ function stripHtml(text) {
     .trim()
 }
 
+function extractField(block, label) {
+  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const match = block.match(new RegExp(`\\*\\*${escaped}:\\*\\*\\s*([^\\n]+)`, 'i'))
+  return match ? stripHtml(match[1]) : ''
+}
+
+function extractSection(block, heading) {
+  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const match = block.match(new RegExp(`#### ${escaped}\\n+([\\s\\S]*?)(?=\\n#### |\\n</details>|$)`, 'i'))
+  return match ? match[1].trim() : ''
+}
+
+function summarizeMarkdownBlock(markdownText) {
+  const cleaned = stripHtml(
+    String(markdownText || '')
+      .replace(/\*\*At Higher Levels:\*\*[\s\S]*/i, '')
+      .replace(/\*\*Spell Lists:\*\*[\s\S]*/i, '')
+      .replace(/\*\*/g, ''),
+  )
+  if (!cleaned) return ''
+  return cleaned.length > 360 ? `${cleaned.slice(0, 357).trim()}...` : cleaned
+}
+
+function extractBulletNotes(markdownText) {
+  return String(markdownText || '')
+    .split('\n')
+    .map((line) => stripHtml(line.replace(/^[-*]\s*/, '').replace(/\*\*/g, '')))
+    .filter(Boolean)
+}
+
 function parsePreparedSpellsIndex(markdownText) {
   const normalized = String(markdownText || '').replace(/\r\n/g, '\n')
   const index = {}
@@ -378,9 +435,25 @@ function parsePreparedSpellsIndex(markdownText) {
     while ((spellMatch = spellRegex.exec(block))) {
       const spellName = stripHtml(spellMatch[1])
       if (!spellName) continue
+      const spellBlockStart = spellRegex.lastIndex
+      const spellBlockEnd = (() => {
+        const nextMatch = block.slice(spellBlockStart).match(/<summary><h3>[\s\S]*?<\/h3><\/summary>/)
+        return nextMatch ? spellBlockStart + nextMatch.index : block.length
+      })()
+      const spellBlock = block.slice(spellBlockStart, spellBlockEnd)
+      const officialText = extractSection(spellBlock, 'Official Text')
+      const ribbitzNotes = extractSection(spellBlock, 'Ribbitz Notes')
       spells.push({
         name: spellName,
         slug: slugifyHeading(spellName),
+        level: extractField(spellBlock, 'Level'),
+        castingTime: extractField(spellBlock, 'Casting Time'),
+        range: extractField(spellBlock, 'Range'),
+        components: extractField(spellBlock, 'Components'),
+        duration: extractField(spellBlock, 'Duration'),
+        source: extractField(spellBlock, 'Source'),
+        summary: summarizeMarkdownBlock(officialText),
+        notes: extractBulletNotes(ribbitzNotes),
       })
     }
 
@@ -506,6 +579,40 @@ function StatControl({ label, value, helper, onChange, accent }) {
   )
 }
 
+function SpellInlineDetails({ spell }) {
+  if (!spell) return null
+  const facts = [
+    ['Level', spell.level],
+    ['Cast', spell.castingTime],
+    ['Range', spell.range],
+    ['Duration', spell.duration],
+    ['Components', spell.components],
+  ].filter(([, value]) => value)
+
+  return (
+    <div className="inline-detail spell-inline-detail">
+      {facts.length ? (
+        <div className="inline-detail__facts">
+          {facts.map(([label, value]) => (
+            <div key={label} className="inline-detail__fact">
+              <span>{label}</span>
+              <strong>{value}</strong>
+            </div>
+          ))}
+        </div>
+      ) : null}
+      {spell.summary ? <div className="inline-detail__summary">{spell.summary}</div> : null}
+      {spell.notes?.length ? (
+        <ul className="inline-detail__notes">
+          {spell.notes.map((note) => (
+            <li key={note}>{note}</li>
+          ))}
+        </ul>
+      ) : null}
+    </div>
+  )
+}
+
 function triStateClass(value) {
   if (value === 1) return 'is-green'
   if (value === 2) return 'is-red'
@@ -543,6 +650,9 @@ function App() {
     arrowLava: 0,
   })
   const [statMap, setStatMap] = useState({})
+  const [expandedSpellKey, setExpandedSpellKey] = useState('')
+  const [expandedDrugKey, setExpandedDrugKey] = useState('')
+  const [expandedConditionKey, setExpandedConditionKey] = useState('')
   const [localInspiration, setLocalInspiration] = useState(() => {
     try {
       const saved = window.localStorage.getItem('ribbitz.inspiration')
@@ -600,6 +710,8 @@ function App() {
   const healingQuickLinks = useMemo(() => {
     const wisMod = parseSignedInt(statMap?.['wis-mod'], 4)
     const symbioticTemp = statMap?.['symbiotic-temp-hp'] || '40'
+    const spongeMushrooms =
+      Number(inventoryItems.find((item) => item.name === 'Sponge Mushrooms')?.quantity) || 0
 
     return [
       {
@@ -619,15 +731,24 @@ function App() {
         detail: 'Ends 1 disease or condition (blind/deaf/paralyze/poison)',
       },
       {
+        name: 'Mass Cure Wounds',
+        detail: '3d8 + 4 to up to 6 creatures in a 30-ft sphere',
+      },
+      {
         name: 'Revivify',
         detail: 'Return to life with 1 HP (300gp diamonds)',
+      },
+      {
+        name: 'Sponge Mushrooms',
+        detail: `${spongeMushrooms} carried • advantage on Medicine checks`,
+        href: '/inventory#sponge-mushrooms',
       },
       {
         name: 'Symbiotic Entity',
         detail: `${symbioticTemp} temp HP (4 × druid level)`,
       },
     ]
-  }, [statMap])
+  }, [inventoryItems, statMap])
 
   const statusLabel = useMemo(
     () =>
@@ -1142,11 +1263,15 @@ function App() {
   )
 
   const drugsHerbsList = useMemo(() => {
-    const names = inventoryItems
+    const itemsByName = new Map()
+    inventoryItems
       .filter((item) => item.category === drugsHerbsCategory)
-      .map((item) => item.name)
-      .filter(Boolean)
-    return Array.from(new Set(names)).sort((a, b) => a.localeCompare(b))
+      .forEach((item) => {
+        if (item.name && !itemsByName.has(item.name)) {
+          itemsByName.set(item.name, item)
+        }
+      })
+    return Array.from(itemsByName.values()).sort((a, b) => a.name.localeCompare(b.name))
   }, [inventoryItems])
 
   const pondPoppersQuantity = getInventoryQuantity(pondPoppersName, 0)
@@ -1345,7 +1470,7 @@ function App() {
                             <div key={entry.name} className="healing-spell-row">
                               <Link
                                 className="healing-spell-row__name"
-                                to={`/spells#${slugifyHeading(entry.name)}`}
+                                to={entry.href || `/spells#${slugifyHeading(entry.name)}`}
                               >
                                 {entry.name}
                               </Link>
@@ -1600,9 +1725,22 @@ function App() {
                                 onChange={() => toggleCondition(condition)}
                                 aria-label={`Toggle ${condition}`}
                               />
-                              <Link className="conditions__link" to={`/misc#${slug}`}>
+                              <button
+                                className="conditions__link"
+                                type="button"
+                                onClick={() =>
+                                  setExpandedConditionKey(
+                                    expandedConditionKey === slug ? '' : slug,
+                                  )
+                                }
+                              >
                                 {condition}
-                              </Link>
+                              </button>
+                              {expandedConditionKey === slug ? (
+                                <div className="conditions__detail">
+                                  {conditionDetails[condition]}
+                                </div>
+                              ) : null}
                             </div>
                           )
                         })}
@@ -1703,15 +1841,29 @@ function App() {
                               <div className="prepared-spells__level">{level}</div>
                               <div className="prepared-spells__list">
                                 {spellsForLevel.length ? (
-                                  spellsForLevel.map((spell) => (
-                                    <Link
-                                      key={`${level}-${spell.slug}`}
-                                      className="prepared-spells__link"
-                                      to={`/spells#${spell.slug}`}
-                                    >
-                                      {spell.name}
-                                    </Link>
-                                  ))
+                                  spellsForLevel.map((spell) => {
+                                    const spellKey = `${level}-${spell.slug}`
+                                    const expanded = expandedSpellKey === spellKey
+                                    return (
+                                      <div
+                                        key={spellKey}
+                                        className={`prepared-spells__item${
+                                          expanded ? ' prepared-spells__item--expanded' : ''
+                                        }`}
+                                      >
+                                        <button
+                                          className="prepared-spells__link"
+                                          type="button"
+                                          onClick={() =>
+                                            setExpandedSpellKey(expanded ? '' : spellKey)
+                                          }
+                                        >
+                                          {spell.name}
+                                        </button>
+                                        {expanded ? <SpellInlineDetails spell={spell} /> : null}
+                                      </div>
+                                    )
+                                  })
                                 ) : (
                                   <span className="prepared-spells__empty">None prepared</span>
                                 )}
@@ -1981,27 +2133,35 @@ function App() {
                       <div className="combat-kit__title">Drugs &amp; Herbs</div>
                       <div className="panel__content drugs-panel">
                         {drugsHerbsList.length ? (
-                          drugsHerbsList.map((itemName) => {
-                            const slug = slugifyHeading(itemName)
+                          drugsHerbsList.map((item) => {
+                            const slug = slugifyHeading(item.name)
+                            const expanded = expandedDrugKey === slug
                             return (
                               <div
-                                key={itemName}
+                                key={item.name}
                                 className={`drugs-panel__item${
                                   drugStatuses?.[slug] ? ' drugs-panel__item--active' : ''
-                                }`}
+                                }${expanded ? ' drugs-panel__item--expanded' : ''}`}
                               >
                                 <input
                                   type="checkbox"
                                   checked={Boolean(drugStatuses?.[slug])}
-                                  onChange={() => toggleDrugHerb(itemName)}
-                                  aria-label={`Toggle ${itemName}`}
+                                  onChange={() => toggleDrugHerb(item.name)}
+                                  aria-label={`Toggle ${item.name}`}
                                 />
-                                <Link
+                                <button
                                   className="drugs-panel__name"
-                                  to={`/inventory#${slug}`}
+                                  type="button"
+                                  onClick={() => setExpandedDrugKey(expanded ? '' : slug)}
                                 >
-                                  {itemName}
-                                </Link>
+                                  <span>{item.name}</span>
+                                  <span className="drugs-panel__count">x{item.quantity || 0}</span>
+                                </button>
+                                {expanded ? (
+                                  <div className="drugs-panel__detail">
+                                    {item.notes || 'No effect notes loaded.'}
+                                  </div>
+                                ) : null}
                               </div>
                             )
                           })
