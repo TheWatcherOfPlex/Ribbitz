@@ -1,7 +1,7 @@
 Label,Value,Type,Key,OutputFile
 == Health & Combat ==,,,header-health,
 HP Current,61,health,hp-current,hp-current.txt
-HP Maximum,102,health,hp-max,hp-max.txt
+HP Maximum,112,health,hp-max,hp-max.txt
 Temp HP,0,health,temp-hp,temp-hp.txt
 AC,19,combat,ac,ac.txt
 Initiative Bonus,+5,combat,initiative,initiative.txt

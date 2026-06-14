@@ -17,7 +17,7 @@
     },
     {
       "label": "HP Maximum",
-      "value": 102,
+      "value": "112",
       "type": "health",
       "key": "hp-max",
       "outputFile": "hp-max.txt"

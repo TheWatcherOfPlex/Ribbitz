@@ -227,7 +227,7 @@ The UI reads/writes these keys from the Google Sheet. This is critical for debug
 | Key | Description |
 |---|---|
 | `hp-current` | Current HP |
-| `hp-max` | Max HP (102) |
+| `hp-max` | Max HP (112) |
 | `temp-hp` | Temporary HP (spore shield) |
 | `ac` | Armor Class (19) |
 | `initiative` | Initiative bonus (+5) |
@@ -378,7 +378,7 @@ This is the **live character state** as of the last session:
 | **Alignment** | Neutral Good |
 | **Age** | 3.5 years |
 | **Size** | Small (4' 0", 55 lbs) |
-| **HP Max** | 102 |
+| **HP Max** | 112 |
 | **AC** | 19 |
 | **Initiative** | +5 (+8 with Dread Ambusher) |
 | **Speed** | 25 ft (hop/climb/swim) |
