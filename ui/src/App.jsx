@@ -290,6 +290,8 @@ const healingConsumables = new Set([
   'Frog Salve Meds',
 ])
 const pondPoppersName = 'Pond Poppers (x5)'
+const standardBlowgunDartsName = 'Blowgun Darts'
+const standardArrowsName = 'Arrows'
 
 function parseSignedInt(value, fallback = 0) {
   if (value == null) return fallback
@@ -492,11 +494,11 @@ function App() {
   const [vitals, setVitals] = useState({
     hp: 61,
     tempHp: 0,
-    dartStandard: 59,
+    dartStandard: 60,
     dartFire: 11,
     dartWater: 17,
     dartLava: 5,
-    arrowStandard: 20,
+    arrowStandard: 60,
     arrowFire: 0,
     arrowWater: 0,
     arrowLava: 0,
@@ -1041,6 +1043,8 @@ function App() {
   }, [inventoryItems])
 
   const pondPoppersQuantity = getInventoryQuantity(pondPoppersName, 0)
+  const standardBlowgunDartsQuantity = getInventoryQuantity(standardBlowgunDartsName, 60)
+  const standardArrowsQuantity = getInventoryQuantity(standardArrowsName, 60)
 
   return (
     <div className="app-shell">
@@ -1781,8 +1785,10 @@ function App() {
                           <div className="ammo-group__title">Blowgun Darts</div>
                           <StatControl
                             label="Standard"
-                            value={vitals.dartStandard}
-                            onChange={updateVital('dartStandard')}
+                            value={standardBlowgunDartsQuantity}
+                            onChange={(nextValue) =>
+                              setInventoryItemValue(standardBlowgunDartsName, nextValue)
+                            }
                           />
                           <StatControl
                             label="Fire"
@@ -1804,8 +1810,10 @@ function App() {
                           <div className="ammo-group__title">Arrows</div>
                           <StatControl
                             label="Standard"
-                            value={vitals.arrowStandard}
-                            onChange={updateVital('arrowStandard')}
+                            value={standardArrowsQuantity}
+                            onChange={(nextValue) =>
+                              setInventoryItemValue(standardArrowsName, nextValue)
+                            }
                           />
                           <StatControl
                             label="Fire"
