@@ -15,7 +15,7 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 - [Racial / Homebrew (Need-to-Know)](#-racial--homebrew-need-to-know)
 - [Ability Scores & Skills](#-ability-scores--skills)
 
-> **Ribbitz** is a **Level 15** Grung (Homebrew): **Ranger 6 (Gloom Stalker)** / **Druid 9 (Circle of Spores)**.
+> **Ribbitz** is a **Level 16** Grung (Homebrew): **Ranger 6 (Gloom Stalker)** / **Druid 10 (Circle of Spores)**.
 
 ## 🪪 Identity
 
@@ -24,7 +24,7 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 | **Race** | Grung (Homebrew v4) |
 | **Background** | Vanguard of the Great Golden Risabere |
 | **Alignment** | Neutral Good |
-| **Level** | 15 (Ranger 6 / Druid 9) |
+| **Level** | 16 (Ranger 6 / Druid 10) |
 | **Age** | 3.5 years |
 | **Size** | Small (4' 0", 55 lbs) |
 

@@ -12,7 +12,6 @@ Initiative (First Combat),+8,combat,initiative-first,initiative-first.txt
 3rd Level Slots,'3/3,slots,slots-3rd,slots-3rd.txt
 4th Level Slots,'3/3,slots,slots-4th,slots-4th.txt
 5th Level Slots,'2/2,slots,slots-5th,slots-5th.txt
-6th Level Slots,'1/1,slots,slots-6th,slots-6th.txt
 == Resources (Short Rest) ==,,,header-short-rest,
 Wild Shape Uses,'2/2,resource,wild-shape,wild-shape.txt
 == Resources (Long Rest) ==,,,header-long-rest,
@@ -41,9 +40,9 @@ Passive Investigation,9,senses,passive-investigation,passive-investigation.txt
 == Identity ==,,,header-identity,
 Name,Ribbitz,identity,name,name.txt
 Race,Grung (Homebrew v4),identity,race,race.txt
-Class,Ranger 6 / Druid 9,identity,class,class.txt
+Class,Ranger 6 / Druid 10,identity,class,class.txt
 Subclass,Gloom Stalker / Circle of Spores,identity,subclass,subclass.txt
-Level,15,identity,level,level.txt
+Level,16,identity,level,level.txt
 Background,Vanguard of the Great Golden Risabere,identity,background,background.txt
 Alignment,Neutral Good,identity,alignment,alignment.txt
 Age,3.5 years,identity,age,age.txt
@@ -124,8 +123,8 @@ Primal Savagery Damage,3d10,spellcasting,primal-savagery-dmg,primal-savagery-dmg
 Chill Touch Damage,3d8,spellcasting,chill-touch-dmg,chill-touch-dmg.txt
 == Class Features (Active) ==,,,header-features,
 Symbiotic Entity Active,No,features,symbiotic-active,symbiotic-active.txt
-Symbiotic Entity Temp HP,36,features,symbiotic-temp-hp,symbiotic-temp-hp.txt
-Halo of Spores Damage,1d6,features,halo-damage,halo-damage.txt
-Halo of Spores (Symbiotic),2d6,features,halo-damage-symbiotic,halo-damage-symbiotic.txt
-Wild Shape Duration,4.5 hours,features,wild-shape-duration,wild-shape-duration.txt
+Symbiotic Entity Temp HP,40,features,symbiotic-temp-hp,symbiotic-temp-hp.txt
+Halo of Spores Damage,1d8,features,halo-damage,halo-damage.txt
+Halo of Spores (Symbiotic),2d8,features,halo-damage-symbiotic,halo-damage-symbiotic.txt
+Wild Shape Duration,5 hours,features,wild-shape-duration,wild-shape-duration.txt
 Wild Shape Max CR,1,features,wild-shape-cr,wild-shape-cr.txt

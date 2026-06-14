@@ -10,7 +10,7 @@ Primary purpose: Class + feat rules reference + level-scaled trackers.
 
 **On this page:**
 - [Ranger 6 (Gloom Stalker)](#-ranger-6-gloom-stalker)
-- [Druid 9 (Circle of Spores)](#-druid-9-circle-of-spores)
+- [Druid 10 (Circle of Spores)](#-druid-10-circle-of-spores)
 - [Feats](#-feats)
 
 > 💡 **Tip:** Click on feature names to expand full official rules text.
@@ -118,7 +118,7 @@ You are also adept at evading creatures that rely on darkvision. While in darkne
 
 ---
 
-## 🍄 Druid 9 (Circle of Spores)
+## 🍄 Druid 10 (Circle of Spores)
 
 > **Full Reference:** [Quick Reference - Druid Class](./Reference%20Materials/Quick%20Reference%20-%20Druid%20Class.md)  
 > **Circle Reference:** [Quick Reference - Circle of Spores](./Reference%20Materials/Quick%20Reference%20-%20Druid%20Class%20-%20Circle%20of%20Spores.md)
@@ -137,7 +137,7 @@ You know Druidic, the secret language of druids. You can speak the language and 
 **Ribbitz's Wild Shape:**
 - Uses: 2/Short Rest
 - Max CR: 1
-- Duration: 4.5 hours (= Druid level 9 / 2)
+- Duration: 5 hours (= Druid level 10 / 2)
 
 **Official Text (PHB 66):**
 Starting at 2nd level, you can use your action to magically assume the shape of a beast that you have seen before. You can use this feature twice. You regain expended uses when you finish a short or long rest.
@@ -168,7 +168,7 @@ When you cast the spell in this way, the familiar is a fey instead of a beast, a
 <summary><h3>☠️ Halo of Spores (Circle of Spores 2nd Level)</h3></summary>
 
 **Ribbitz's Halo:**
-- Damage: 1d6 necrotic (2d6 with Symbiotic Entity)
+- Damage: 1d8 necrotic (2d8 with Symbiotic Entity)
 - Range: 10 feet
 - Save DC: 17
 
@@ -188,9 +188,9 @@ Starting at 2nd level, you are surrounded by invisible, necrotic spores that are
 <summary><h3>🦠 Symbiotic Entity (Circle of Spores 2nd Level)</h3></summary>
 
 **Ribbitz's Symbiotic Entity:**
-- Temp HP: 36 (= 4 × Druid level 9)
+- Temp HP: 40 (= 4 × Druid level 10)
 - Duration: 10 minutes
-- Effects: Halo damage doubled (2d6), melee attacks +1d6 necrotic
+- Effects: Halo damage doubled (2d8), melee attacks +1d6 necrotic
 
 **Official Text (Tasha's Cauldron of Everything 37):**
 Also at 2nd level, you gain the ability to channel magic into your spores. As an action, you can expend a use of your Wild Shape feature to awaken those spores, rather than transforming into a beast form, and you gain 4 temporary hit points for each level you have in this class. While this feature is active, you gain the following benefits:
@@ -217,6 +217,26 @@ At 6th level, your spores gain the ability to infest a corpse and animate it. If
 In combat, the zombie's turn comes immediately after yours. It obeys your mental commands, and the only action it can take is the Attack action, making one melee attack.
 
 You can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses of it when you finish a long rest.
+
+</details>
+
+<details>
+<summary><h3>🍄 Spreading Spores (Circle of Spores 10th Level)</h3></summary>
+
+**Ribbitz's Spreading Spores:**
+- Bonus action while Symbiotic Entity is active
+- Range: hurl spores up to 30 feet
+- Area: 10-foot cube
+- Duration: 1 minute
+- Damage: Halo of Spores damage (1d8; 2d8 while Symbiotic Entity is active)
+- Save DC: 17 CON
+
+**Official Text (Tasha's Cauldron of Everything 37):**
+At 10th level, you gain the ability to seed an area with deadly spores. As a bonus action while your Symbiotic Entity feature is active, you can hurl spores up to 30 feet away, where they swirl in a 10-foot cube for 1 minute. The spores disappear early if you use this feature again, if you dismiss them as a bonus action, or if your Symbiotic Entity feature is no longer active.
+
+Whenever a creature moves into the cube or starts its turn there, that creature takes your Halo of Spores damage, unless the creature succeeds on a Constitution saving throw against your spell save DC. A creature can take this damage no more than once per turn.
+
+While the cube of spores persists, you can't use your Halo of Spores reaction.
 
 </details>
 

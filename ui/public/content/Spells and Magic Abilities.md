@@ -62,7 +62,7 @@ Do not publish/distribute.
 
 ---
 
-## 🧙 Spell Slots Tracker (Multiclass Caster Level 12)
+## 🧙 Spell Slots Tracker
 
 > Mark off as used. Reset on **Long Rest**.
 
@@ -73,7 +73,6 @@ Do not publish/distribute.
 | 3rd | 3 | 🟩🟩🟩 |
 | 4th | 3 | 🟩🟩🟩 |
 | 5th | 2 | 🟩🟩 |
-| 6th | 1 | 🟩 |
 
 ---
 
@@ -86,7 +85,7 @@ Do not publish/distribute.
 ---
 
 <details>
-<summary><h2>🌿 Cantrips (5 known)</h2></summary>
+<summary><h2>🌿 Cantrips (4 known)</h2></summary>
 
 <details>
 <summary><h3>🙏 Guidance</h3></summary>
@@ -127,7 +126,7 @@ You extend your hand toward a creature you can see within range and project a pu
 
 #### Ribbitz Notes
 - <span style="color: #8a2be2;"><b>Save DC = 17</b></span>
-- <span style="color: #8a2be2;"><b>Damage at Level 15 = 3d12</b></span> poison
+- <span style="color: #8a2be2;"><b>Damage at Level 16 = 3d12</b></span> poison
 
 </details>
 
@@ -150,7 +149,7 @@ You channel primal magic to cause your teeth or fingernails to sharpen, ready to
 
 #### Ribbitz Notes
 - <span style="color: #8a2be2;"><b>Spell Attack = +9</b></span>
-- <span style="color: #8a2be2;"><b>Damage at Level 15 = 3d10</b></span> acid
+- <span style="color: #8a2be2;"><b>Damage at Level 16 = 3d10</b></span> acid
 
 </details>
 
@@ -175,7 +174,7 @@ If you hit an undead target, it also has disadvantage on attack rolls against yo
 
 #### Ribbitz Notes
 - <span style="color: #8a2be2;"><b>Spell Attack = +9</b></span>
-- <span style="color: #8a2be2;"><b>Damage at Level 15 = 3d8</b></span> necrotic
+- <span style="color: #8a2be2;"><b>Damage at Level 16 = 3d8</b></span> necrotic
 
 </details>
 
@@ -918,8 +917,8 @@ You are surrounded by invisible, necrotic spores that are harmless until you unl
 
 #### Ribbitz Notes
 - <span style="color: #8a2be2;"><b>Save DC = 17</b></span>
-- <span style="color: #8a2be2;"><b>Damage at Druid Level 9 = 1d6</b></span> necrotic
-- <span style="color: #8a2be2;"><b>With Symbiotic Entity active = 2d6</b></span> (roll damage die twice)
+- <span style="color: #8a2be2;"><b>Damage at Druid Level 10 = 1d8</b></span> necrotic
+- <span style="color: #8a2be2;"><b>With Symbiotic Entity active = 2d8</b></span> (roll damage die twice)
 
 </details>
 
@@ -940,7 +939,7 @@ You gain the ability to channel magic into your spores. As an action, you can ex
 These benefits last for 10 minutes, until you lose all these temporary hit points, or until you use your Wild Shape again.
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Temp HP = 36</b></span> (4 × Druid level 9)
+- <span style="color: #8a2be2;"><b>Temp HP = 40</b></span> (4 × Druid level 10)
 - Duration: **10 minutes** (or until temp HP depleted or Wild Shape used again)
 - While active: Halo damage die rolled **twice**; melee attacks gain **+1d6 necrotic**
 
@@ -967,6 +966,31 @@ You can use this feature a number of times equal to your Wisdom modifier (minimu
 - Duration: **1 hour**
 - Zombie has **1 HP** and uses Zombie stat block
 - Tracker: see Long Rest Resets section
+
+</details>
+
+<details>
+<summary><h3>🍄 Spreading Spores</h3></summary>
+
+**Circle of Spores Feature (10th level)**
+
+**Source:** *Tasha's Cauldron of Everything* (2020) — p. 37
+
+#### Official Text
+
+At 10th level, you gain the ability to seed an area with deadly spores. As a bonus action while your Symbiotic Entity feature is active, you can hurl spores up to 30 feet away, where they swirl in a 10-foot cube for 1 minute. The spores disappear early if you use this feature again, if you dismiss them as a bonus action, or if your Symbiotic Entity feature is no longer active.
+
+Whenever a creature moves into the cube or starts its turn there, that creature takes your Halo of Spores damage, unless the creature succeeds on a Constitution saving throw against your spell save DC. A creature can take this damage no more than once per turn.
+
+While the cube of spores persists, you can't use your Halo of Spores reaction.
+
+#### Ribbitz Notes
+- <span style="color: #8a2be2;"><b>Bonus action</b></span> while Symbiotic Entity is active
+- <span style="color: #8a2be2;"><b>Range = 30 ft</b></span>; creates a **10-foot cube**
+- <span style="color: #8a2be2;"><b>Duration = 1 minute</b></span>
+- <span style="color: #8a2be2;"><b>Save DC = 17 CON</b></span>
+- <span style="color: #8a2be2;"><b>Damage = Halo damage</b></span> (currently **2d8** while Symbiotic Entity is active)
+- While the cube persists, Ribbitz cannot use Halo of Spores as a reaction.
 
 </details>
 

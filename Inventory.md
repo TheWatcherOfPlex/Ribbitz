@@ -670,7 +670,10 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 <details>
 <summary><h3>🤍 White Powder</h3></summary>
 
-**Effect:** Unknown / cannot remember
+**Effect:**
+- Gains the **Haste** condition
+- Can **speak and read any language**
+- **Duration:** 1 hour per dose
 
 </details>
 

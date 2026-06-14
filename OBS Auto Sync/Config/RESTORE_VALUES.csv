@@ -10,7 +10,6 @@ slots-2nd,3/3
 slots-3rd,3/3
 slots-4th,3/3
 slots-5th,2/2
-slots-6th,1/1
 wild-shape,2/2
 active-camo,5/5
 fungal-infestation,4/4
@@ -33,9 +32,9 @@ passive-insight,14
 passive-investigation,9
 name,Ribbitz
 race,Grung (Homebrew v4)
-class,Ranger 6 / Druid 9
+class,Ranger 6 / Druid 10
 subclass,Gloom Stalker / Circle of Spores
-level,15
+level,16
 background,Vanguard of the Great Golden Risabere
 alignment,Neutral Good
 age,3.5 years
@@ -107,8 +106,8 @@ poison-spray-dmg,3d12
 primal-savagery-dmg,3d10
 chill-touch-dmg,3d8
 symbiotic-active,No
-symbiotic-temp-hp,36
-halo-damage,1d6
-halo-damage-symbiotic,2d6
-wild-shape-duration,4.5 hours
+symbiotic-temp-hp,40
+halo-damage,1d8
+halo-damage-symbiotic,2d8
+wild-shape-duration,5 hours
 wild-shape-cr,1

@@ -92,13 +92,6 @@
       "outputFile": "slots-5th.txt"
     },
     {
-      "label": "6th Level Slots",
-      "value": "1/1",
-      "type": "slots",
-      "key": "slots-6th",
-      "outputFile": "slots-6th.txt"
-    },
-    {
       "label": "== Resources (Short Rest) ==",
       "value": "",
       "type": "header",
@@ -296,7 +289,7 @@
     },
     {
       "label": "Class",
-      "value": "Ranger 6 / Druid 9",
+      "value": "Ranger 6 / Druid 10",
       "type": "identity",
       "key": "class",
       "outputFile": "class.txt"
@@ -310,7 +303,7 @@
     },
     {
       "label": "Level",
-      "value": "15",
+      "value": "16",
       "type": "identity",
       "key": "level",
       "outputFile": "level.txt"
@@ -877,28 +870,28 @@
     },
     {
       "label": "Symbiotic Entity Temp HP",
-      "value": "36",
+      "value": "40",
       "type": "features",
       "key": "symbiotic-temp-hp",
       "outputFile": "symbiotic-temp-hp.txt"
     },
     {
       "label": "Halo of Spores Damage",
-      "value": "1d6",
+      "value": "1d8",
       "type": "features",
       "key": "halo-damage",
       "outputFile": "halo-damage.txt"
     },
     {
       "label": "Halo of Spores (Symbiotic)",
-      "value": "2d6",
+      "value": "2d8",
       "type": "features",
       "key": "halo-damage-symbiotic",
       "outputFile": "halo-damage-symbiotic.txt"
     },
     {
       "label": "Wild Shape Duration",
-      "value": "4.5 hours",
+      "value": "5 hours",
       "type": "features",
       "key": "wild-shape-duration",
       "outputFile": "wild-shape-duration.txt"

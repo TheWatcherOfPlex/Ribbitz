@@ -12,6 +12,54 @@ const port = process.env.PORT || 5175
 const appsScriptUrl = process.env.APPS_SCRIPT_WEBAPP_URL
 const snapshotPath = process.env.OFFLINE_SNAPSHOT_PATH || './snapshot.json'
 const uiDistPath = process.env.UI_DIST_PATH || path.resolve(process.cwd(), '../dist')
+const sophiesDiceBridgeUrl = (
+  process.env.SOPHIES_DICE_BRIDGE_URL || 'http://10.0.0.42:5195'
+).replace(/\/+$/, '')
+
+const sophieRolls = {
+  'skill-athletics': { label: 'Skill - Athletics (+2)', expression: 'd20 + Athletics', hotkey: 'F1' },
+  'skill-athletics-gloves': { label: 'Skill - Athletics (Swim/Climb) with Gloves (d20 + Athl + GloveBonus = +7)', expression: 'd20 + Athletics + ProficiencyBonus', hotkey: 'F2' },
+  'skill-acrobatics': { label: 'Skill - Acrobatics (+10)', expression: 'd20 + Acrobatics', hotkey: 'F3' },
+  'skill-sleight': { label: 'Skill - Sleight of Hand (+5)', expression: 'd20 + Sleight', hotkey: 'F4' },
+  'skill-stealth': { label: 'Skill - Stealth (+10)', expression: 'd20 + Stealth', hotkey: 'F5' },
+  'skill-arcana': { label: 'Skill - Arcana (+4)', expression: 'd20 + Arcana', hotkey: 'F6' },
+  'skill-history': { label: 'Skill - History (-1)', expression: 'd20 + History', hotkey: 'F7' },
+  'skill-investigation': { label: 'Skill - Investigation (-1)', expression: 'd20 + Investigation', hotkey: 'F8' },
+  'skill-nature': { label: 'Skill - Nature (+4)', expression: 'd20 + Nature', hotkey: 'F9' },
+  'skill-nature-terrain': { label: 'Skill - Nature (Natural Explorer) (d20 + Nature + Prof = +9)', expression: 'd20 + Nature + ProficiencyBonus', hotkey: 'F10' },
+  'skill-religion': { label: 'Skill - Religion (-1)', expression: 'd20 + Religion', hotkey: 'F11' },
+  'skill-animal-handling': { label: 'Skill - Animal Handling (+4)', expression: 'd20 + AnimalHandling', hotkey: 'F12' },
+  'skill-insight': { label: 'Skill - Insight (+4)', expression: 'd20 + Insight', hotkey: 'F13' },
+  'skill-medicine': { label: 'Skill - Medicine (+9)', expression: 'd20 + Medicine', hotkey: 'F14' },
+  'skill-medicine-terrain': { label: 'Skill - Medicine (Natural Explorer) (d20 + Medicine + Prof = +14)', expression: 'd20 + Medicine + ProficiencyBonus', hotkey: 'F15' },
+  'skill-perception': { label: 'Skill - Perception (+9)', expression: 'd20 + Perception', hotkey: 'Alpha1' },
+  'skill-perception-terrain': { label: 'Skill - Perception (Natural Explorer) (d20 + Perception + Prof = +14)', expression: 'd20 + Perception + ProficiencyBonus', hotkey: 'Alpha2' },
+  'skill-survival': { label: 'Skill - Survival (+9)', expression: 'd20 + Survival', hotkey: 'Alpha3' },
+  'skill-survival-terrain': { label: 'Skill - Survival (Natural Explorer) (d20 + Surv + Prof = +14)', expression: 'd20 + Survival + ProficiencyBonus', hotkey: 'Alpha4' },
+  'skill-deception': { label: 'Skill - Deception (-1)', expression: 'd20 + Deception', hotkey: 'Alpha5' },
+  'skill-intimidation': { label: 'Skill - Intimidation (-1)', expression: 'd20 + Intimidation', hotkey: 'Alpha6' },
+  'skill-performance': { label: 'Skill - Performance (-1)', expression: 'd20 + Performance', hotkey: 'Alpha7' },
+  'skill-persuasion': { label: 'Skill - Persuasion (-1)', expression: 'd20 + Persuasion', hotkey: 'Alpha8' },
+  'ability-str-check': { label: 'Strength Check +2', expression: 'd20 + Strength', hotkey: 'Keypad0' },
+  'ability-str-save': { label: 'Str Save +2', expression: 'd20 + Strength', hotkey: 'Keypad1' },
+  'ability-dex-check': { label: 'Dexterity Check +5', expression: 'd20 + Dexterity', hotkey: 'Keypad2' },
+  'ability-dex-save': { label: 'Dex Save +10', expression: 'd20 + Dexterity + ProficiencyBonus', hotkey: 'Keypad3' },
+  'ability-con-check': { label: 'Constitution Check +3', expression: 'd20 + Constitution', hotkey: 'Keypad4' },
+  'ability-con-save': { label: 'Con Save +3', expression: 'd20 + Constitution', hotkey: 'Keypad5' },
+  'ability-int-check': { label: 'Intelligence Check -1', expression: 'd20 + Intelligence', hotkey: 'Keypad6' },
+  'ability-int-save': { label: 'Int Save -1', expression: 'd20 + Intelligence', hotkey: 'Keypad7' },
+  'ability-wis-check': { label: 'Wisdom Check +4', expression: 'd20 + Wisdom', hotkey: 'Keypad8' },
+  'ability-wis-save': { label: 'Wis Save +9', expression: 'd20 + Wisdom + ProficiencyBonus', hotkey: 'Keypad9' },
+  'ability-cha-check': { label: 'Charisma Check -1', expression: 'd20 + Charisma', hotkey: 'KeypadPeriod' },
+  'ability-cha-save': { label: 'Cha Save -1', expression: 'd20 + Charisma', hotkey: 'KeypadDivide' },
+  'healing-potion-common': { label: 'Healing Potion - Common (2d4+2)', expression: '2d4 + 2', hotkey: 'KeypadMultiply' },
+  'healing-potion-greater': { label: 'Healing Potion - Greater (4d4+4)', expression: '4d4 + 4', hotkey: 'KeypadMinus' },
+  'healing-potion-superior': { label: 'Healing Potion - Superior (8d4+8)', expression: '8d4 + 8', hotkey: 'KeypadPlus' },
+  'healing-potion-supreme': { label: 'Healing Potion - Supreme (10d4+20)', expression: '10d4 + 20', hotkey: 'KeypadEnter' },
+  'halo-spores': { label: 'Halo of Spores - DC 17 CON save or 1d8 necrotic', expression: '1d8 necrotic', hotkey: 'Home' },
+  'halo-spores-symbiotic': { label: 'Halo of Spores - Symbiotic Entity - DC 17 CON save or 2d8 necrotic', expression: '2d8 necrotic', hotkey: 'End' },
+  'spreading-spores': { label: 'Spreading Spores - DC 17 CON save or 2d8 necrotic', expression: '2d8 necrotic', hotkey: 'PageUp' },
+}
 
 app.use(cors())
 app.use(express.json())
@@ -91,6 +139,41 @@ const parseInventoryRows = (rows) => {
 
 app.get('/api/health', (_, res) => {
   res.json({ status: 'ok' })
+})
+
+app.get('/api/sophie/rolls', (_, res) => {
+  res.json({ rolls: sophieRolls })
+})
+
+app.post('/api/sophie/roll', async (req, res) => {
+  try {
+    const { key, dryRun = false } = req.body || {}
+    const roll = sophieRolls[key]
+    if (!roll) {
+      return res.status(400).json({ message: 'Unknown Sophie roll key' })
+    }
+
+    const response = await fetch(`${sophiesDiceBridgeUrl}/roll`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key, dryRun: Boolean(dryRun), ...roll }),
+      signal: AbortSignal.timeout(3500),
+    })
+
+    if (!response.ok) {
+      const message = await response.text().catch(() => '')
+      return res.status(502).json({
+        message: message || `Sophie bridge returned ${response.status}`,
+      })
+    }
+
+    const payload = await response.json().catch(() => ({ success: true }))
+    res.json({ success: true, roll, bridge: payload })
+  } catch (error) {
+    res.status(502).json({
+      message: `Unable to reach Sophie bridge at ${sophiesDiceBridgeUrl}: ${error.message}`,
+    })
+  }
 })
 
 app.get('/api/stats', async (_, res) => {

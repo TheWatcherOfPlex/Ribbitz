@@ -332,6 +332,55 @@
   justify-content: center;
 }
 
+.sophie-roll-status {
+  border: 1px solid rgba(147, 255, 112, 0.28);
+  border-radius: 10px;
+  background: rgba(28, 90, 42, 0.22);
+  color: #eaffde;
+  font-size: 11px;
+  line-height: 1.3;
+  padding: 7px 8px;
+  text-align: center;
+}
+
+.skill-row__controls {
+  align-items: center;
+  display: inline-flex;
+  gap: 8px;
+  justify-content: end;
+}
+
+.skill-roll-btn {
+  border: 1px solid rgba(147, 255, 112, 0.45);
+  border-radius: 999px;
+  background: rgba(147, 255, 112, 0.14);
+  color: #eaffde;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  padding: 5px 8px;
+  text-transform: uppercase;
+}
+
+.skill-roll-btn:hover,
+.skill-roll-btn:focus-visible {
+  background: rgba(147, 255, 112, 0.28);
+  border-color: rgba(147, 255, 112, 0.75);
+  outline: none;
+}
+
+.ability-card__actions {
+  display: grid;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.ability-card__actions .skill-roll-btn {
+  width: 100%;
+}
+
 .grung-abilities {
   display: grid;
   gap: 12px;
@@ -1017,6 +1066,45 @@
 
 .tracker-grid--compact .tracker-group__items {
   gap: 6px;
+}
+
+.spores-panel {
+  background: rgba(18, 16, 34, 0.6);
+  border: 1px solid rgba(147, 255, 112, 0.22);
+  border-radius: 12px;
+  display: grid;
+  gap: 9px;
+  padding: 12px;
+}
+
+.spores-panel__title {
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.spores-panel__grid {
+  display: grid;
+  gap: 7px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.spores-panel__roll {
+  width: 100%;
+}
+
+.spores-panel__roll--wide {
+  grid-column: 1 / -1;
+}
+
+.spores-panel__note {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 11px;
+  line-height: 1.35;
+  text-align: center;
 }
 
 /* Spell Slots panel: pack TrackerGroups into columns to eliminate empty space */

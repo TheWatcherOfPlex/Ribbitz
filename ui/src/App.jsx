@@ -142,6 +142,51 @@ const skillGroups = [
   },
 ]
 
+const sophieRollLabels = {
+  'skill-athletics': 'Skill - Athletics (+2)',
+  'skill-athletics-gloves': 'Skill - Athletics (Swim/Climb) with Gloves (d20 + Athl + GloveBonus = +7)',
+  'skill-acrobatics': 'Skill - Acrobatics (+10)',
+  'skill-sleight': 'Skill - Sleight of Hand (+5)',
+  'skill-stealth': 'Skill - Stealth (+10)',
+  'skill-arcana': 'Skill - Arcana (+4)',
+  'skill-history': 'Skill - History (-1)',
+  'skill-investigation': 'Skill - Investigation (-1)',
+  'skill-nature': 'Skill - Nature (+4)',
+  'skill-nature-terrain': 'Skill - Nature (Natural Explorer) (d20 + Nature + Prof = +9)',
+  'skill-religion': 'Skill - Religion (-1)',
+  'skill-animal-handling': 'Skill - Animal Handling (+4)',
+  'skill-insight': 'Skill - Insight (+4)',
+  'skill-medicine': 'Skill - Medicine (+9)',
+  'skill-medicine-terrain': 'Skill - Medicine (Natural Explorer) (d20 + Medicine + Prof = +14)',
+  'skill-perception': 'Skill - Perception (+9)',
+  'skill-perception-terrain': 'Skill - Perception (Natural Explorer) (d20 + Perception + Prof = +14)',
+  'skill-survival': 'Skill - Survival (+9)',
+  'skill-survival-terrain': 'Skill - Survival (Natural Explorer) (d20 + Surv + Prof = +14)',
+  'skill-deception': 'Skill - Deception (-1)',
+  'skill-intimidation': 'Skill - Intimidation (-1)',
+  'skill-performance': 'Skill - Performance (-1)',
+  'skill-persuasion': 'Skill - Persuasion (-1)',
+  'ability-str-check': 'Strength Check +2',
+  'ability-str-save': 'Str Save +2',
+  'ability-dex-check': 'Dexterity Check +5',
+  'ability-dex-save': 'Dex Save +10',
+  'ability-con-check': 'Constitution Check +3',
+  'ability-con-save': 'Con Save +3',
+  'ability-int-check': 'Intelligence Check -1',
+  'ability-int-save': 'Int Save -1',
+  'ability-wis-check': 'Wisdom Check +4',
+  'ability-wis-save': 'Wis Save +9',
+  'ability-cha-check': 'Charisma Check -1',
+  'ability-cha-save': 'Cha Save -1',
+  'healing-potion-common': 'Healing Potion - Common (2d4+2)',
+  'healing-potion-greater': 'Healing Potion - Greater (4d4+4)',
+  'healing-potion-superior': 'Healing Potion - Superior (8d4+8)',
+  'healing-potion-supreme': 'Healing Potion - Supreme (10d4+20)',
+  'halo-spores': 'Halo of Spores - DC 17 CON save or 1d8 necrotic',
+  'halo-spores-symbiotic': 'Halo of Spores - Symbiotic Entity - DC 17 CON save or 2d8 necrotic',
+  'spreading-spores': 'Spreading Spores - DC 17 CON save or 2d8 necrotic',
+}
+
 const restDefinitions = {
   shortRest: {
     label: 'Short Rest',
@@ -157,7 +202,6 @@ const restDefinitions = {
       { key: 'slots-3rd', value: '3/3' },
       { key: 'slots-4th', value: '3/3' },
       { key: 'slots-5th', value: '2/2' },
-      { key: 'slots-6th', value: '1/1' },
       { key: 'wild-shape', value: '2/2' },
       { key: 'active-camo', value: '5/5' },
       { key: 'fungal-infestation', value: '4/4' },
@@ -175,6 +219,8 @@ const restDefinitions = {
 }
 
 const timeOfDayOptions = ['Morning', 'Noon', 'Afternoon', 'Night', 'Midnight', 'Twilight']
+const haloDamage = '1d8'
+const haloSymbioticDamage = '2d8'
 
 const timeOfDayMap = {
   songGrung: 'song-grung',
@@ -201,10 +247,11 @@ const potionDefinitions = [
     name: 'Healing Potion (Common/Standard)',
     label: 'Common',
     detail: '2d4+2',
+    rollKey: 'healing-potion-common',
   },
-  { name: 'Healing Potion (Greater)', label: 'Greater', detail: '4d4+4' },
-  { name: 'Healing Potion (Superior)', label: 'Superior', detail: '8d4+8' },
-  { name: 'Healing Potion (Supreme)', label: 'Supreme', detail: '10d4+20' },
+  { name: 'Healing Potion (Greater)', label: 'Greater', detail: '4d4+4', rollKey: 'healing-potion-greater' },
+  { name: 'Healing Potion (Superior)', label: 'Superior', detail: '8d4+8', rollKey: 'healing-potion-superior' },
+  { name: 'Healing Potion (Supreme)', label: 'Supreme', detail: '10d4+20', rollKey: 'healing-potion-supreme' },
   { name: 'Golden Elixir', label: 'Golden', detail: 'Full +10 temp' },
   { name: 'Frog Salve Meds', label: 'Frog Salve', detail: 'Grung heal' },
 ]
@@ -230,7 +277,6 @@ const healingConsumables = new Set([
   'Frog Salve Meds',
 ])
 const pondPoppersName = 'Pond Poppers (x5)'
-const pondPoppersSlug = slugifyHeading(pondPoppersName)
 
 function parseSignedInt(value, fallback = 0) {
   if (value == null) return fallback
@@ -297,7 +343,7 @@ function parsePreparedSpellsIndex(markdownText) {
   return index
 }
 
-function CounterRow({ label, value, detail, onStep, disabled }) {
+function CounterRow({ label, value, detail, onStep, disabled, rollKey, onRoll }) {
   return (
     <div className="counter-row">
       <div className="counter-row__meta">
@@ -305,6 +351,16 @@ function CounterRow({ label, value, detail, onStep, disabled }) {
         {detail && <div className="counter-row__detail">{detail}</div>}
       </div>
       <div className="counter-row__controls">
+        {rollKey ? (
+          <button
+            className="skill-roll-btn"
+            type="button"
+            onClick={() => onRoll?.(rollKey, label)}
+            title={`Roll ${label} in Sophie's Dice`}
+          >
+            Roll
+          </button>
+        ) : null}
         <button
           className="counter-row__btn"
           type="button"
@@ -419,6 +475,7 @@ function App() {
   const [inventoryItems, setInventoryItems] = useState([])
   const [inventoryOnline, setInventoryOnline] = useState(true)
   const [inventoryError, setInventoryError] = useState('')
+  const [sophieRollStatus, setSophieRollStatus] = useState('')
   const [vitals, setVitals] = useState({
     hp: 61,
     tempHp: 0,
@@ -479,7 +536,7 @@ function App() {
 
   const healingQuickLinks = useMemo(() => {
     const wisMod = parseSignedInt(statMap?.['wis-mod'], 4)
-    const symbioticTemp = statMap?.['symbiotic-temp-hp'] || '36'
+    const symbioticTemp = statMap?.['symbiotic-temp-hp'] || '40'
 
     return [
       {
@@ -753,6 +810,25 @@ function App() {
     })
   }
 
+  const rollSophieRoll = async (key, fallbackLabel) => {
+    const label = sophieRollLabels[key] || fallbackLabel || key
+    setSophieRollStatus(`Rolling ${label} in Sophie's Dice...`)
+    try {
+      const response = await apiFetch('/sophie/roll', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key }),
+      })
+      const payload = await response.json().catch(() => ({}))
+      if (!response.ok) {
+        throw new Error(payload.message || 'Sophie bridge did not accept the roll')
+      }
+      setSophieRollStatus(`Rolled ${label}`)
+    } catch (error) {
+      setSophieRollStatus(`Sophie roll failed: ${error.message}`)
+    }
+  }
+
   const applyBulkUpdates = async (updates) => {
     if (!isOnline || !updates.length) {
       return
@@ -910,7 +986,7 @@ function App() {
           </div>
           <div>
             <div className="title">Vanguard Ribbitz</div>
-            <div className="subtitle">Ranger 6 / Druid 9 • Level 15</div>
+            <div className="subtitle">Ranger 6 / Druid 10 • Level 16</div>
           </div>
         </div>
         <nav className="sidebar__nav">
@@ -1030,6 +1106,8 @@ function App() {
                               value={getInventoryQuantity(potion.name, 0)}
                               disabled={!inventoryOnline}
                               onStep={(delta) => stepInventoryItem(potion.name, delta)}
+                              rollKey={potion.rollKey}
+                              onRoll={rollSophieRoll}
                             />
                           ))}
                         </div>
@@ -1052,7 +1130,7 @@ function App() {
                         <div className="vitality-survival__grid">
                           <div className="hit-dice">
                             <div className="hit-dice__title">Hit Dice</div>
-                            <div className="hit-dice__detail">Ranger 6d10 • Druid 9d8</div>
+                            <div className="hit-dice__detail">Ranger 6d10 • Druid 10d8</div>
                           </div>
 
                           <div className="death-saves">
@@ -1113,8 +1191,28 @@ function App() {
                           >
                             <div className="ability-card__label">{ability.label}</div>
                             <div className="ability-card__score">{statMap?.[ability.key] ?? '—'}</div>
-                            <div className="ability-card__mod">{statMap?.[ability.modKey] ?? '—'}</div>
-                            <div className="ability-card__save">Save {statMap?.[ability.saveKey] ?? '—'}</div>
+                            <div className="ability-card__actions">
+                              <button
+                                className="skill-roll-btn"
+                                type="button"
+                                onClick={() =>
+                                  rollSophieRoll(`ability-${ability.label.toLowerCase()}-check`, `${ability.label} check`)
+                                }
+                                title={`Roll ${ability.label} check in Sophie's Dice`}
+                              >
+                                Check {statMap?.[ability.modKey] ?? '—'}
+                              </button>
+                              <button
+                                className="skill-roll-btn"
+                                type="button"
+                                onClick={() =>
+                                  rollSophieRoll(`ability-${ability.label.toLowerCase()}-save`, `${ability.label} save`)
+                                }
+                                title={`Roll ${ability.label} save in Sophie's Dice`}
+                              >
+                                Save {statMap?.[ability.saveKey] ?? '—'}
+                              </button>
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -1122,6 +1220,11 @@ function App() {
 
                     <div className="abilities-skills__skills">
                       <div className="abilities-skills__subtitle">Skills</div>
+                      {sophieRollStatus ? (
+                        <div className="sophie-roll-status" role="status">
+                          {sophieRollStatus}
+                        </div>
+                      ) : null}
                       <div className="skills-grid">
                         {skillGroups.map((group) => (
                           <div key={group.label} className="skill-group">
@@ -1132,7 +1235,19 @@ function App() {
                                 className={`skill-row${skill.proficient ? ' skill-row--pro' : ''}`}
                               >
                                 <span>{skill.label}</span>
-                                <span>{getSkillValue(skill.key)}</span>
+                                <span className="skill-row__controls">
+                                  <span>{getSkillValue(skill.key)}</span>
+                                  {sophieRollLabels[skill.key] ? (
+                                    <button
+                                      className="skill-roll-btn"
+                                      type="button"
+                                      onClick={() => rollSophieRoll(skill.key, skill.label)}
+                                      title={`Roll ${skill.label} in Sophie's Dice`}
+                                    >
+                                      Roll
+                                    </button>
+                                  ) : null}
+                                </span>
                               </div>
                             ))}
                           </div>
@@ -1346,11 +1461,6 @@ function App() {
                           items={parseTracker('slots-5th', '5th', { compact: true })}
                           onToggle={handleToggle}
                         />
-                        <TrackerGroup
-                          title="6th"
-                          items={parseTracker('slots-6th', '6th', { compact: true })}
-                          onToggle={handleToggle}
-                        />
                       </div>
                     </div>
 
@@ -1396,6 +1506,40 @@ function App() {
                           items={parseTracker('fungal-infestation', 'Fungal', { compact: true })}
                           onToggle={handleToggle}
                         />
+
+                        <div className="spores-panel">
+                          <div className="spores-panel__title">Circle of Spores</div>
+                          <div className="spores-panel__grid">
+                            <button
+                              className="skill-roll-btn spores-panel__roll"
+                              type="button"
+                              onClick={() => rollSophieRoll('halo-spores', 'Halo of Spores')}
+                            >
+                              Halo {statMap?.['halo-damage'] ?? haloDamage}
+                            </button>
+                            <button
+                              className="skill-roll-btn spores-panel__roll"
+                              type="button"
+                              onClick={() =>
+                                rollSophieRoll('halo-spores-symbiotic', 'Halo of Spores - Symbiotic')
+                              }
+                            >
+                              Symbiotic {statMap?.['halo-damage-symbiotic'] ?? haloSymbioticDamage}
+                            </button>
+                            <button
+                              className="skill-roll-btn spores-panel__roll spores-panel__roll--wide"
+                              type="button"
+                              onClick={() => rollSophieRoll('spreading-spores', 'Spreading Spores')}
+                            >
+                              Spreading Spores
+                            </button>
+                          </div>
+                          <div className="spores-panel__note">
+                            DC {statMap?.['spell-dc'] ?? '17'} CON save. Spreading Spores is a
+                            bonus action while Symbiotic Entity is active; while the cube persists,
+                            Halo cannot be used as a reaction.
+                          </div>
+                        </div>
 
                         <TrackerGroup
                           title="Song of the Grung"

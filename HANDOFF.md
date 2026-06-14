@@ -1,7 +1,7 @@
 # HANDOFF.md — Ribbitz Project Complete Technical Handoff
 
 > **For AI agents or engineers taking over this project.**
-> **Last updated: 2026-02-28**
+> **Last updated: 2026-05-21**
 
 ---
 
@@ -15,6 +15,7 @@
 | **Interactive UI** | React/Vite dashboard for in-session use | `ui/` |
 | **Live Sync Proxy** | Express server that proxies Google Apps Script | `ui/server/` |
 | **OBS Stat Output** | PowerShell scripts generating `.txt` files for OBS overlays | `OBS Auto Sync/` |
+| **Sophie’s Dice Bridge** | Sends Ribbitz skill rolls to Sophie’s Dice on Stealth | `C:\Users\Drachen\Documents\SophiesDice\RibbitzBridge` |
 
 The system is designed for **in-session use**: quick stat checks, tracker toggles, consumable updates, inventory editing, and fast navigation to rules/details via internal hash links.
 
@@ -105,6 +106,46 @@ User opens UI in browser (127.0.0.1:5174)
 | Read inventory | `GET /api/inventory` | Returns items array |
 | Write inventory | `POST /api/inventory` | `{ items: [...] }` |
 | Health check | `GET /api/health` | Returns `{ status: 'ok' }` |
+| Sophie roll list | `GET /api/sophie/rolls` | Returns the Ribbitz skill-to-hotkey map |
+| Sophie roll trigger | `POST /api/sophie/roll` | Sends a skill roll to the Stealth bridge |
+
+### Sophie’s Dice Skill Roll Integration
+
+Ribbitz has `Roll` buttons on the Skills, Ability Scores, and Healing cards. These call the Ribbitz server, which forwards to a small bridge running on Stealth. The bridge focuses or launches Sophie’s Dice, verifies Sophie is the foreground window, and sends the hotkey assigned to the matching Sophie custom roll.
+
+Important paths:
+
+| Item | Path / Value |
+|---|---|
+| Stealth host | `10.0.0.42` |
+| Bridge URL | `http://10.0.0.42:5195` |
+| Runtime env override | `SOPHIES_DICE_BRIDGE_URL` |
+| Bridge folder | `C:\Users\Drachen\Documents\SophiesDice\RibbitzBridge` |
+| Bridge script | `ribbitz_sophie_bridge.py` |
+| Bridge scheduled task | `Ribbitz Sophie Dice Bridge` |
+| Sophie’s Dice install | `C:\Program Files (x86)\Steam\steamapps\common\Sophies Dice` |
+| Sophie Ribbitz rolls | `C:\Users\Drachen\Documents\SophiesDice\CustomDice\Ribbitz` |
+| Sophie local handoff | `C:\Users\Drachen\Documents\SophiesDice\HANDOFF.md` |
+| Sophie roll inventory | `C:\Users\Drachen\Documents\SophiesDice\ROLL_INVENTORY.md` |
+| XML backup made before hotkey edits | `C:\Users\Drachen\Documents\SophiesDice\Archive\RibbitzSkillHotkeyBackup-20260521-234157` |
+| Hotkey repair backup | `C:\Users\Drachen\Documents\SophiesDice\Archive\RibbitzHotkeyRepair-20260522-001740` |
+
+Safe checks:
+
+```bash
+curl -fsS http://10.0.0.42:5195/health
+docker exec diceknights-ribbitz wget --header='Content-Type: application/json' --post-data='{"key":"skill-acrobatics","dryRun":true}' -qO- http://127.0.0.1:5175/api/sophie/roll
+```
+
+The bridge dry-run confirms the route from Docker to Stealth. Sophie supports function-key hotkeys only through `F15`; use `Alpha1`, `Alpha2`, keypad keys, etc. after that. Do not use `F16` or higher in Sophie XML files.
+
+Current website-triggered roll groups:
+
+- Skills
+- Ability checks
+- Ability saving throws
+- Standard healing potions: common, greater, superior, supreme
+- Circle of Spores: Halo of Spores, Symbiotic Halo of Spores, Spreading Spores
 
 ---
 
@@ -244,7 +285,6 @@ The UI reads/writes these keys from the Google Sheet. This is critical for debug
 | `slots-3rd` | 3 |
 | `slots-4th` | 3 |
 | `slots-5th` | 2 |
-| `slots-6th` | 1 |
 
 ### Class Resources
 | Key | Max | Notes |
@@ -305,9 +345,10 @@ The UI reads/writes these keys from the Google Sheet. This is critical for debug
 | Key | Description |
 |---|---|
 | `symbiotic-active` | Is Symbiotic Entity active? |
-| `symbiotic-temp-hp` | Symbiotic temp HP (36) |
-| `halo-damage` | Halo of Spores damage (1d6) |
-| `halo-damage-symbiotic` | Halo damage while Symbiotic (2d6) |
+| `symbiotic-temp-hp` | Symbiotic temp HP (40) |
+| `halo-damage` | Halo of Spores damage (1d8) |
+| `halo-damage-symbiotic` | Halo damage while Symbiotic (2d8) |
+| `spreading-spores` | Spreading Spores uses Halo damage in a 10-foot cube while Symbiotic Entity is active |
 
 ---
 
@@ -332,7 +373,7 @@ This is the **live character state** as of the last session:
 |---|---|
 | **Name** | Ribbitz |
 | **Race** | Grung (Homebrew v4) |
-| **Class** | Ranger 6 / Druid 9 (Level 15) |
+| **Class** | Ranger 6 / Druid 10 (Level 16) |
 | **Background** | Vanguard of the Great Golden Risabere |
 | **Alignment** | Neutral Good |
 | **Age** | 3.5 years |
@@ -405,13 +446,13 @@ PORT=5175
 
 ## 12. Important Notes for a New AI
 
-### Sophie’s Dice is SEPARATE
+### Sophie’s Dice Integration
 There is a **completely separate tool** called "Sophie's Dice" that lives in:
 ```
 C:\Users\Drachen\Documents\SophiesDice\
 ```
 
-This is **NOT part of this repo**. It is a Windows desktop dice-rolling app with custom dice for Ribbitz. It does **NOT** integrate with this web app. The web app doesn't use Sophie's Dice — it uses Google Sheets.
+It is a Windows desktop dice-rolling app with custom dice for Ribbitz. The web app still uses Google Sheets for character state, but the Skills card can now trigger Sophie’s Dice rolls through the Stealth bridge. If working on this integration, read `C:\Users\Drachen\Documents\SophiesDice\HANDOFF.md` and `C:\Users\Drachen\Documents\SophiesDice\ROLL_INVENTORY.md`.
 
 ### If Something Breaks
 

@@ -290,12 +290,24 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 
 - **Trigger:** enemy within 10 ft
 - **Save:** CON vs Spell Save DC **17**
-- **Damage:** `1d6` necrotic *(roll twice = `2d6` while Symbiotic Entity is active)*
+- **Damage:** `1d8` necrotic *(roll twice = `2d8` while Symbiotic Entity is active)*
+
+</details>
+
+<details>
+<summary><h3>Spreading Spores (Bonus Action)</h3></summary>
+
+- **Requirement:** Symbiotic Entity must be active
+- **Range:** hurl spores up to 30 ft
+- **Area:** 10-foot cube
+- **Duration:** 1 minute
+- **Save:** CON vs Spell Save DC **17**
+- **Damage:** Halo of Spores damage, currently `2d8` necrotic while Symbiotic Entity is active
+- **Limit:** a creature can take this damage no more than once per turn
+- **Tradeoff:** while the cube persists, Ribbitz cannot use Halo of Spores as a reaction
 
 </details>
 
 </details>
 
 ---
-
-

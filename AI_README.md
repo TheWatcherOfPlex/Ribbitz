@@ -2,6 +2,13 @@
 
 This file is written for another AI agent that needs to understand, extend, or integrate this repo into a larger D&D website.
 
+Cross-project lookup index:
+- `/srv/docker/dice-knights-git/docs/ribbits-ai-index.md`
+- Use that file when you need the full map across:
+  - this Ribbitz repo
+  - the Dice Knights integration/proxy layer
+  - common question -> file lookups for stats, inventory, spells, items, and references
+
 ---
 
 ## 1) What this project is
