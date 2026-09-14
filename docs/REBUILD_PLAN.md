@@ -607,6 +607,29 @@ For **every** category migrated:
 
 ---
 
+## 5.1 Extraction/deletion safety rule (added after a real incident, 2026-09-14)
+
+When extracting a chunk of `App.jsx` into its own file (or deleting a range
+for any reason), **read the entire range being deleted first, not just its
+start and end.** A quick skim of the boundaries is not enough — something
+unrelated can be sitting in the middle. This happened for real: deleting
+what looked like just `abilities`+`skillGroups` also silently deleted
+`conditionsList`/`conditionDetails`/`exhaustionEffects`, which sat between
+them. `npm run build` did **not** catch it — referencing an undefined
+variable is a runtime `ReferenceError` in JS, not a build-time error.
+
+**Before considering any extraction/deletion done, run this check:**
+```bash
+cd /srv/docker/ribbitz
+git show pre-rebuild-2026-09-14:ui/src/App.jsx | grep -oE "^(const|function) [A-Za-z_][A-Za-z0-9_]*" | sort -u > /tmp/before.txt
+grep -oE "^(const|function) [A-Za-z_][A-Za-z0-9_]*" ui/src/App.jsx | sort -u > /tmp/after.txt
+comm -23 /tmp/before.txt /tmp/after.txt   # anything listed here must be an INTENTIONAL relocation — verify each one
+```
+If the app ever fails to load and the cause isn't obvious, run this check
+**first**, before investigating anything else (library versions, caching,
+infra) — it takes under a minute and would have caught the real incident
+immediately instead of several rounds of guessing.
+
 ## 6. Handoff & Notes Protocol — READ THIS EVERY SESSION
 
 This project is being worked across **multiple AI instances and sessions**

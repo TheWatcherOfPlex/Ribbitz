@@ -6,6 +6,60 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-14 (6) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- **Real bug #2, found via the owner's browser console (I asked, they
+  provided it — this is exactly why that ask matters, see below)**:
+  `Uncaught ReferenceError: exhaustionEffects is not defined`. The
+  react-grid-layout v1/v2 fix (previous log entry) did NOT fix the actual
+  problem the owner was hitting — it was a real, separate bug, present on
+  the plain `/` Dashboard route too (blank page, not just `/canvas-preview`).
+- Root cause: during the Phase 2 correction (`abilities`/`skillGroups`
+  extraction into `SkillsPanel.jsx`), I deleted App.jsx lines by a line
+  range (`sed -i '87,232d'`) based on having viewed the *start* of
+  `abilities` and the *end* of `skillGroups`, but **never read what was in
+  between them** (lines ~94–148). Three unrelated consts were sitting in
+  that gap — `conditionsList`, `conditionDetails`, `exhaustionEffects` —
+  and got silently deleted as collateral damage. `npm run build` did not
+  catch this because referencing an undefined variable is a **runtime**
+  ReferenceError in JS, not a build-time error — Vite/esbuild don't do
+  full reference-checking by default. I only checked for stray references
+  to the two names I *meant* to delete, not for what else might have been
+  in the deleted range.
+- Fix: restored all three consts verbatim from git history
+  (`git show 49b2617:ui/src/App.jsx`, the commit right before the
+  deletion) into their own spot near the top of `App.jsx`. Then, instead
+  of trusting my own judgment again, ran a **systematic check**: diffed
+  every top-level `const`/`function` declaration between the
+  `pre-rebuild-2026-09-14` tag and current `HEAD` (`grep -oE
+  "^(const|function) [A-Za-z_][A-Za-z0-9_]*"` on both, `comm -23`) to
+  confirm nothing else was silently dropped. Only the 6 intentional
+  relocations showed up (abilities/skillGroups → SkillsPanel.jsx;
+  DICE_API_BASE/parseStatNumber/rollDice/rollFlatDice → diceRoller.js).
+  No further collateral damage found.
+- `npm run build` passes, deployed, confirmed the restored content
+  (`'Disadvantage on ability checks'` etc — a string literal, survives
+  minification unlike variable names) is present in the deployed bundle.
+- **Process lesson, more important than the bug itself**: when
+  bulk-deleting a line range from a large file to "extract" a piece of it,
+  **read the entire range first**, not just its start and end. A
+  quick skim of the boundaries is not enough to assume the middle only
+  contains what you're looking for. This cost the owner a fully broken app
+  for multiple exchanges. If this happens again, the **first** diagnostic
+  step should be exactly the `comm`-based declaration diff above, not
+  guessing at library versions or caching — it would have caught this
+  bug in under a minute instead of several back-and-forth messages.
+- Also: the owner's browser console screenshot was the thing that actually
+  broke this open, after two rounds of guessing (dice overlay sizing
+  confusion, then the real-but-insufficient react-grid-layout fix). Ask
+  for the console error **immediately** next time the app fails to load,
+  rather than trying other theories first.
+- Committed + pushed.
+- Next AI should: get explicit owner confirmation the app loads correctly
+  again (root Dashboard AND `/canvas-preview`) before touching anything
+  else. Given two real bugs shipped back-to-back in this same session, it
+  would be reasonable for the owner to want a pause/breather here before
+  continuing Phase 3 — don't assume "continue" without checking.
+
 ## 2026-09-14 (5) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - **Bug, found and fixed**: owner reported "the app will not seem to load
   anymore" right after the Phase 2 revision. Root cause: `npm install
