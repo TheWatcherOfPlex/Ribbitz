@@ -1,10 +1,28 @@
 # Ribbitz Dashboard Rebuild — Master Plan
 
-**Status:** 🚧 IN PROGRESS — Phase 2 done, ready for Phase 3.
+**Status:** 🚧 IN PROGRESS — Phase 2 corrected + re-verified, ready to continue Phase 3.
 **Last updated:** 2026-09-14 by Claude (session `session_01HxUfGH7xyRjP9JoeBgPrJH`).
-**Current phase:** Phase 2 complete — live at `/canvas-preview` on the deployed
-site, separate from the real Dashboard. Next up: Phase 3 (migrate the
-remaining categories one at a time — Ability Scores next, then Actions).
+**Current phase:** Phase 2's *first* version (28 individually-draggable
+skill cards) was wrong — see the correction below and in
+`docs/PROGRESS_LOG.md`. Rebuilt at **whole-panel granularity** instead
+(drag the whole Skills panel as one block, its internal content unchanged
+from the original rich layout). Live at `/canvas-preview`. Next: Phase 3,
+extract + wrap the remaining panels (Combat Kit, Magic/Spell Slots,
+Exhaustion/Potions, etc.) the same way.
+
+> ⚠️ **Important correction (2026-09-14), read before continuing Phase 3:**
+> §3.1–§3.2 below describe an atomized "one Element per skill/spell/item"
+> data model. **That is not what drag/resize granularity should be.** The
+> owner clarified: dragging happens at the **category/panel level**
+> ("drag my spell list up, move my skills next to it, drag all my features
+> around") — panels keep their full existing rich internal content (e.g.
+> Skills still shows every row with both Check *and* Save buttons and the
+> ability-score grid, exactly like the original hand-coded version), they
+> just become draggable/resizable *as whole blocks*. The per-element
+> Element/schema.js model isn't dead — it's still the right shape for the
+> separate "toggle an individual long-form item onto the dashboard" ask —
+> but it is **not** what drives drag placement. See the corrected §3.3 and
+> the Phase 2 section in §4 for what was actually built.
 
 > **If you are an AI picking this up:** read this whole file before touching
 > code. Read the "Handoff & Notes Protocol" section (near the bottom) *first*
@@ -207,6 +225,17 @@ renderer in its own file.
 
 ### 3.3 Canvas / drag / resize / reflow library
 
+**Grid item = one whole panel/category (Skills, Combat Kit, Spells, Magic
+Abilities, Features, ...), not one item per skill/spell/inventory row.**
+Each panel is a real React component with its full original content and
+behavior (extracted from the old monolithic `App.jsx` into
+`ui/src/panels/<Name>Panel.jsx` — see `panels/SkillsPanel.jsx` as the
+built example), rendered inside a `DashboardCanvas` grid item. The panel's
+*internal* layout (e.g. Skills' ability-score grid + per-row Check/Save
+buttons) is unchanged from the original design — only whether the whole
+panel can be dragged/resized/repositioned is new.
+
+
 Recommendation: **[react-grid-layout](https://github.com/react-grid-layout/react-grid-layout)**.
 
 Why (evaluated, not guessed):
@@ -405,10 +434,67 @@ site, so ship small.
       browser** — the next session (or the owner directly) should open
       `/canvas-preview` and confirm drag/resize/roll all actually work
       before Phase 3 builds more on top of this foundation.
-- **Deliverable**: `/canvas-preview` exists on the live site with all 28
-  Skills elements draggable/resizable, each with a working 🎲 Roll button
-  wired to the same dice tool the real Dashboard already uses. The real
-  Dashboard (`/`) is byte-for-byte unchanged.
+- **Deliverable (superseded, see revision immediately below — kept for
+  history, not current state)**: `/canvas-preview` existed with all 28
+  Skills elements individually draggable/resizable.
+
+#### Phase 2 REVISION — owner correction, same day (2026-09-14)
+
+The above (28 individually-draggable skill cards, each showing only a
+single Roll button and a bare modifier) was **wrong**. Owner feedback,
+verbatim: *"We dont want to have everything be individual on the layout,
+we still want to group things by type. I just wanted to be able to drag
+the types around a bit... I want all of the skills grouped back up like
+they were in our first version."*
+
+What changed:
+- [x] `DashboardCanvas.jsx` rewritten: takes a `panels` prop (`[{id, title,
+      component, layout}]`), one grid item per **whole panel**, not per
+      element. Drag handle is now a dedicated `⠿ <Panel Title>` bar at the
+      top of each panel card, not the content itself — content stays fully
+      interactive/clickable.
+- [x] `ui/src/panels/SkillsPanel.jsx` created — the **exact original**
+      Ability Scores + Skills JSX (every row has both a Check *and* a Save
+      button, ability score grid included) extracted verbatim out of
+      `App.jsx` into its own component, taking `statMap` as a prop. The
+      real `/` Dashboard route now renders `<SkillsPanel statMap={statMap}
+      />` instead of ~90 lines of inline JSX — this is a real net
+      reduction in `App.jsx` size (file-splitting win), not just a
+      refactor for its own sake.
+- [x] `characters/ribbitz/elements/skills.json` / `character.json` (the
+      per-skill atomized JSON from the original Phase 1/2) are **no longer
+      used by the canvas** — `CanvasPreviewPage.jsx` now builds its
+      `panels` array directly from `<SkillsPanel />`. Those JSON files are
+      left in place, not deleted — the Element/schema.js shape is still
+      the planned approach for the separate "toggle an individual
+      long-form item onto the dashboard" feature, just not for drag
+      placement. Revisit whether they need updating when that feature is
+      actually built.
+- [x] `ui/src/elements/RollTopic.jsx` (the per-skill card renderer) is
+      **no longer wired into anything** — DashboardCanvas no longer
+      imports it. Left in place rather than deleted; it may still be
+      useful for the "individual item toggle" feature later, and it does
+      still work standalone if something needs a single expandable
+      roll-button card. Don't treat its presence as meaning it's in use.
+- [x] `ui/src/lib/api.js` created (`apiFetch`/`contentPath`/`fetchStatMap`
+      extracted from `App.jsx`) so `CanvasPreviewPage.jsx` can fetch live
+      stats independently without duplicating `App.jsx`'s full
+      `fetchStats()` (which has vitals/trackers/inspiration side effects
+      the canvas page doesn't need). **`App.jsx` still has its own
+      separate, larger `fetchStats()`/`apiFetch` — this is duplication,
+      not yet cleaned up.** Low priority, but note it for a future
+      cleanup pass rather than being surprised two copies exist.
+- [x] `npm run build` verified passing (366 modules), deployed.
+- **Deliverable (current, correct)**: `/canvas-preview` has ONE draggable/
+  resizable panel — the full Skills panel, byte-identical in content/
+  behavior to what's on the real Dashboard — proving the whole-panel
+  drag pattern. **Not yet owner-verified in a real browser after this
+  revision.** Next real step (start of Phase 3 proper): extract the
+  remaining panels (`panels/AbilityScoresPanel.jsx` is actually already
+  *inside* `SkillsPanel.jsx` — consider whether it should be its own
+  separately-draggable panel or stay bundled with Skills; ask the owner
+  rather than assuming) — then Combat Kit, Magic/Spell Slots, Exhaustion,
+  the same extract-and-wrap way.
 
 ### Phase 3 — Content migration, category by category
 Order (roughly easiest/highest-value first, adjust based on what Phase 2

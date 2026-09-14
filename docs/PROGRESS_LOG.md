@@ -6,6 +6,54 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-14 (4) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- Did: corrected Phase 2 based on direct owner feedback after they tried
+  `/canvas-preview`. Two separate issues reported, both fixed:
+  1. Dice overlay size — owner wanted it 2x bigger, hitbox 1920 wide ×
+     ~900 tall anchored from the bottom. Set `#dice-box` in
+     `stream-commander/templates/dice_overlay.html` to
+     `left:0; top:180px; width:1920px; height:900px` (max possible area
+     below the text block, which ends around y=460). Deployed + restarted
+     `jukebox` container, test-rolled to confirm no server error.
+  2. **The bigger one**: the 28-individual-skill-cards approach from the
+     first Phase 2 was architecturally wrong. Owner: "We dont want to have
+     everything be individual on the layout, we still want to group things
+     by type... I want all of the skills grouped back up like they were in
+     our first version." Full correction detail in REBUILD_PLAN.md's
+     "Phase 2 REVISION" subsection — don't duplicate it here, read that.
+     Short version: rebuilt `DashboardCanvas.jsx` to take whole-panel grid
+     items instead of per-element ones; extracted the *exact* original
+     Ability-Scores-and-Skills JSX (Check+Save per row, not the stripped-
+     down version) into `panels/SkillsPanel.jsx`, reused by both the real
+     Dashboard and the canvas preview.
+- Verified: `npm run build` passes (366 modules), deployed both the
+  Ribbitz and Stream Commander changes.
+- **Not verified**: real-browser check of the corrected `/canvas-preview`
+  (whole-panel drag/resize) — the previous per-element version WAS
+  confirmed working by the owner before this correction, but this is a
+  different enough rewrite (drag handle moved to a header bar, content
+  structure changed) that it needs its own fresh confirmation. Also not
+  verified: whether the new dice overlay size is actually "2x" as asked —
+  I maximized the available area (can't go bigger without overlapping
+  text), but dice-box's own `scale` config was already at its library-
+  imposed cap (9) before this change, so box-area was the only lever left.
+  If it's still not big enough after this, that's a real ceiling, not
+  something to keep nudging blindly — flag it back to the owner rather
+  than guessing a 4th time.
+- Open question I raised in the plan doc rather than deciding myself:
+  should Ability Scores be its own separately-draggable panel from Skills,
+  or stay bundled together as they are now? Ask the owner before Phase 3
+  extracts the next panel, since the same question will recur for
+  Spells/Magic Abilities (currently also share one panel).
+- Committed + pushed.
+- Next AI should: get owner confirmation on `/canvas-preview` (whole-panel
+  drag/resize) and the dice overlay size before extracting more panels.
+  If both are good, continue Phase 3: resolve the Ability-Scores-bundling
+  question above, then extract Combat Kit / Magic / Exhaustion into their
+  own `panels/*.jsx` files the same way `SkillsPanel.jsx` was done —
+  extract verbatim first, don't redesign content while extracting,
+  keep it a mechanical move.
+
 ## 2026-09-14 (3) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - Did: Phase 2 complete. Owner said "continue" after Phase 1.
 - Built: `dashboard/DashboardCanvas.jsx` (react-grid-layout wrapper,

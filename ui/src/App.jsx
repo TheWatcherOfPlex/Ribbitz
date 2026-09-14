@@ -5,7 +5,8 @@ import ribbitzPortrait from './assets/ribbitz-flying.png'
 import MarkdownPage from './components/MarkdownPage.jsx'
 import InventoryPage from './pages/InventoryPage.jsx'
 import CanvasPreviewPage from './pages/CanvasPreviewPage.jsx'
-import { rollDice, rollFlatDice, parseStatNumber } from './lib/diceRoller.js'
+import { rollFlatDice } from './lib/diceRoller.js'
+import SkillsPanel from './panels/SkillsPanel.jsx'
 import TrackerGroup from './components/TrackerGroup.jsx'
 import { slugifyHeading } from './utils/slugifyHeading.js'
 
@@ -82,152 +83,6 @@ const quickStats = [
 const currencyItems = [
   { label: 'Gold', inventoryName: 'Gold Pieces: 252 gp', fallback: 7223, suffix: 'gp' },
   { label: 'Golden Beetles', inventoryName: '100 Golden Beetles', fallback: 100, suffix: 'beetles' },
-]
-
-const abilities = [
-  { label: 'STR', key: 'str', modKey: 'str-mod', saveKey: 'save-str', proficient: false },
-  { label: 'DEX', key: 'dex', modKey: 'dex-mod', saveKey: 'save-dex', proficient: true },
-  { label: 'CON', key: 'con', modKey: 'con-mod', saveKey: 'save-con', proficient: false },
-  { label: 'INT', key: 'int', modKey: 'int-mod', saveKey: 'save-int', proficient: false },
-  { label: 'WIS', key: 'wis', modKey: 'wis-mod', saveKey: 'save-wis', proficient: true },
-  { label: 'CHA', key: 'cha', modKey: 'cha-mod', saveKey: 'save-cha', proficient: false },
-]
-
-const conditionsList = [
-  'Blinded',
-  'Charmed',
-  'Deafened',
-  'Frightened',
-  'Grappled',
-  'Incapacitated',
-  'Invisible',
-  'Paralyzed',
-  'Petrified',
-  'Poisoned',
-  'Prone',
-  'Restrained',
-  'Stunned',
-  'Unconscious',
-]
-
-const conditionDetails = {
-  Blinded:
-    "Can't see; automatically fails sight-based ability checks. Attacks against it have advantage, and its attacks have disadvantage.",
-  Charmed:
-    "Can't attack the charmer or target the charmer with harmful abilities. The charmer has advantage on social checks against it.",
-  Deafened: "Can't hear and automatically fails hearing-based ability checks.",
-  Frightened:
-    "Disadvantage on ability checks and attacks while the source is in sight; can't willingly move closer to the source.",
-  Grappled: "Speed becomes 0. Ends if the grappler is incapacitated or the target is moved out of reach.",
-  Incapacitated: "Can't take actions or reactions.",
-  Invisible:
-    "Can't be seen without special senses or magic. Attacks against it have disadvantage, and its attacks have advantage.",
-  Paralyzed:
-    'Incapacitated, cannot move or speak, fails STR/DEX saves. Attacks against it have advantage; hits within 5 ft are critical hits.',
-  Petrified:
-    'Transformed into solid material, incapacitated, unaware, resistant to all damage, immune to poison/disease, and fails STR/DEX saves.',
-  Poisoned: 'Disadvantage on attack rolls and ability checks.',
-  Prone:
-    'Can crawl or stand by spending half movement. Attacks within 5 ft have advantage; ranged attacks against it have disadvantage.',
-  Restrained:
-    "Speed becomes 0. Attacks against it have advantage, its attacks have disadvantage, and it has disadvantage on DEX saves.",
-  Stunned:
-    "Incapacitated, can't move, can speak only falteringly, fails STR/DEX saves, and attacks against it have advantage.",
-  Unconscious:
-    'Incapacitated, prone, unaware, drops held items, fails STR/DEX saves. Attacks within 5 ft are critical hits.',
-}
-
-const exhaustionEffects = [
-  { level: 1, effect: 'Disadvantage on ability checks' },
-  { level: 2, effect: 'Speed halved' },
-  { level: 3, effect: 'Disadvantage on attack rolls and saving throws' },
-  { level: 4, effect: 'Hit point maximum halved' },
-  { level: 5, effect: 'Speed reduced to 0' },
-  { level: 6, effect: 'Death' },
-]
-
-const skillGroups = [
-  {
-    label: 'Strength',
-    abilityKey: 'str',
-    skills: [
-      { label: 'Athletics', key: 'skill-athletics', proficient: false },
-      {
-        label: 'Athletics (Swim/Climb)',
-        key: 'skill-athletics-gloves',
-        proficient: true,
-        // Base Athletics isn't proficient — the glove is the only proficiency
-        // source here, so don't ALSO add a separate generic proficiency term.
-        extraBonusReplacesProficiency: true,
-        extraBonus: { label: 'Gloves of Swimming & Climbing', statKey: 'proficiency' },
-      },
-    ],
-  },
-  {
-    label: 'Dexterity',
-    abilityKey: 'dex',
-    skills: [
-      { label: 'Acrobatics', key: 'skill-acrobatics', proficient: true },
-      { label: 'Sleight of Hand', key: 'skill-sleight', proficient: false },
-      { label: 'Stealth', key: 'skill-stealth', proficient: true },
-    ],
-  },
-  {
-    label: 'Intelligence',
-    abilityKey: 'int',
-    skills: [
-      { label: 'Arcana', key: 'skill-arcana', proficient: true },
-      { label: 'History', key: 'skill-history', proficient: false },
-      { label: 'Investigation', key: 'skill-investigation', proficient: false },
-      { label: 'Nature', key: 'skill-nature', proficient: true },
-      {
-        label: 'Nature (Preferred Terrain)',
-        key: 'skill-nature-terrain',
-        proficient: true,
-      extraBonus: { label: 'Natural Explorer Bonus', statKey: 'proficiency' },
-      },
-      { label: 'Religion', key: 'skill-religion', proficient: false },
-    ],
-  },
-  {
-    label: 'Wisdom',
-    abilityKey: 'wis',
-    skills: [
-      { label: 'Animal Handling', key: 'skill-animal-handling', proficient: false },
-      { label: 'Insight', key: 'skill-insight', proficient: false },
-      { label: 'Medicine', key: 'skill-medicine', proficient: true },
-      {
-        label: 'Medicine (Preferred Terrain)',
-        key: 'skill-medicine-terrain',
-        proficient: true,
-      extraBonus: { label: 'Natural Explorer Bonus', statKey: 'proficiency' },
-      },
-      { label: 'Perception', key: 'skill-perception', proficient: true },
-      {
-        label: 'Perception (Preferred Terrain)',
-        key: 'skill-perception-terrain',
-        proficient: true,
-      extraBonus: { label: 'Natural Explorer Bonus', statKey: 'proficiency' },
-      },
-      { label: 'Survival', key: 'skill-survival', proficient: true },
-      {
-        label: 'Survival (Preferred Terrain)',
-        key: 'skill-survival-terrain',
-        proficient: true,
-      extraBonus: { label: 'Natural Explorer Bonus', statKey: 'proficiency' },
-      },
-    ],
-  },
-  {
-    label: 'Charisma',
-    abilityKey: 'cha',
-    skills: [
-      { label: 'Deception', key: 'skill-deception', proficient: false },
-      { label: 'Intimidation', key: 'skill-intimidation', proficient: false },
-      { label: 'Performance', key: 'skill-performance', proficient: false },
-      { label: 'Persuasion', key: 'skill-persuasion', proficient: false },
-    ],
-  },
 ]
 
 const restDefinitions = {
@@ -1201,8 +1056,6 @@ function App() {
     await applyBulkUpdates([{ key: sheetKey, value: nextValue }])
   }
 
-  const getSkillValue = (skillKey) => statMap?.[skillKey] || '—'
-
   const getInventoryQuantity = (itemName, fallback = 0) => {
     const item = inventoryItems.find((row) => row.name === itemName)
     if (!item) {
@@ -1587,97 +1440,7 @@ function App() {
                 </div>
 
                 <div className="panel panel--skills panel--tight">
-                  <div className="panel__content abilities-skills">
-                    <div className="abilities-skills__abilities">
-                      <div className="abilities-skills__subtitle abilities-skills__subtitle--split">
-                        Ability Scores
-                      </div>
-                      <div className="ability-grid">
-                        {abilities.map((ability) => (
-                          <div
-                            key={ability.label}
-                            className={`ability-card${
-                              ability.proficient ? ' ability-card--proficient' : ''
-                            }`}
-                          >
-                            <div className="ability-card__label">{ability.label}</div>
-                            <div className="ability-card__score">{statMap?.[ability.key] ?? '—'}</div>
-                            <div className="ability-card__actions">
-                              <div className="ability-card__roll-stat">
-                                Check {statMap?.[ability.modKey] ?? '—'}
-                              </div>
-                              <div className="ability-card__roll-stat">
-                                Save {statMap?.[ability.saveKey] ?? '—'}
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="abilities-skills__skills">
-                      <div className="abilities-skills__subtitle">Skills</div>
-                      <div className="skills-grid">
-                        {skillGroups.map((group) => {
-                          const groupAbility = abilities.find((a) => a.key === group.abilityKey)
-                          const abilityModValue = groupAbility ? parseStatNumber(statMap?.[groupAbility.modKey]) : null
-                          const proficiencyValue = parseStatNumber(statMap?.['proficiency'])
-                          const saveValue = groupAbility ? statMap?.[groupAbility.saveKey] ?? '—' : '—'
-                          const saveParts = [{ label: `${group.label} Modifier`, value: abilityModValue }]
-                          if (groupAbility?.proficient) {
-                            saveParts.push({ label: 'Proficiency Bonus', value: proficiencyValue })
-                          }
-                          return (
-                            <div key={group.label} className="skill-group">
-                              <div className="skill-group__title">{group.label}</div>
-                              {group.skills.map((skill) => {
-                                const checkValue = getSkillValue(skill.key)
-                                const checkParts = [{ label: `${group.label} Modifier`, value: abilityModValue }]
-                                if (skill.proficient && !skill.extraBonusReplacesProficiency) {
-                                  checkParts.push({ label: 'Proficiency Bonus', value: proficiencyValue })
-                                }
-                                if (skill.extraBonus) {
-                                  checkParts.push({
-                                    label: skill.extraBonus.label,
-                                    value: parseStatNumber(statMap?.[skill.extraBonus.statKey]),
-                                  })
-                                }
-                                return (
-                                  <div
-                                    key={skill.key}
-                                    className={`skill-row${skill.proficient ? ' skill-row--pro' : ''}`}
-                                  >
-                                    <span>{skill.label}</span>
-                                    <span className="skill-row__controls">
-                                      <span>{checkValue}</span>
-                                      <button
-                                        type="button"
-                                        className="skill-row__roll-btn"
-                                        disabled={checkValue === '—'}
-                                        onClick={() => rollDice(`${skill.label} Check`, checkParts)}
-                                        title={`${skill.label} Check`}
-                                      >
-                                        Check
-                                      </button>
-                                      <button
-                                        type="button"
-                                        className="skill-row__roll-btn"
-                                        disabled={saveValue === '—'}
-                                        onClick={() => rollDice(`${group.label} Save`, saveParts)}
-                                        title={`${group.label} Save`}
-                                      >
-                                        Save
-                                      </button>
-                                    </span>
-                                  </div>
-                                )
-                              })}
-                            </div>
-                          )
-                        })}
-                      </div>
-                    </div>
-                  </div>
+                  <SkillsPanel statMap={statMap} />
                 </div>
 
                 <div className="panel panel--exhaustion panel--tight">

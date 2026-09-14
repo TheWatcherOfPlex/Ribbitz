@@ -1,18 +1,22 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import GridLayout from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
-import RollTopic from '../elements/RollTopic.jsx'
 
-// Renderer-by-type lookup — add to this when a new element type (see
-// characters/schema.js ELEMENT_TYPES) gets its own component.
-const RENDERERS = {
-  'roll-topic': RollTopic,
-}
+// Owner correction (2026-09-14, see docs/PROGRESS_LOG.md): dragging happens
+// at the whole-category/panel level ("drag my spell list up, move my
+// skills next to it"), NOT per individual skill/spell/item. Each grid item
+// here is one whole panel component (e.g. the full Skills panel with every
+// row's Check/Save buttons intact) — panels are NOT atomized into their
+// contents. The per-element Element/schema.js model from Phase 1/2 is still
+// useful for a *different* future ask (toggling individual long-form items
+// onto the dashboard), but it is not what drives drag/resize placement.
+//
+// `panels` prop: [{ id, title, component: <ReactNode>, layout: {x,y,w,h} }]
 
 const COLS = 12
-const ROW_HEIGHT = 90
-const GRID_WIDTH = 1180 // matches the app-shell content width closely enough for Phase 2; revisit with WidthProvider in Phase 3 if this needs to be truly responsive
+const ROW_HEIGHT = 30
+const GRID_WIDTH = 1180 // TODO Phase 3: swap for react-grid-layout's WidthProvider for real responsiveness
 
 function layoutStorageKey(characterId) {
   return `ribbitz.canvasLayout.${characterId}`
@@ -35,26 +39,18 @@ function saveStoredLayout(characterId, layout) {
   }
 }
 
-/**
- * @param {{ character: import('../characters/schema.js').Character, elements: import('../characters/schema.js').Element[] }} props
- */
-export default function DashboardCanvas({ character, elements }) {
-  const visibleElements = useMemo(
-    () => elements.filter((el) => el.dashboardVisible !== false),
-    [elements],
-  )
-
+export default function DashboardCanvas({ characterId, panels }) {
   const [layout, setLayout] = useState(() => {
-    const stored = loadStoredLayout(character.id)
-    if (stored) return stored
-    return visibleElements.map((el) => ({ i: el.id, ...el.layout }))
+    const stored = loadStoredLayout(characterId)
+    if (stored && stored.length === panels.length) return stored
+    return panels.map((p) => ({ i: p.id, ...p.layout }))
   })
 
-  const byId = useMemo(() => Object.fromEntries(visibleElements.map((el) => [el.id, el])), [visibleElements])
+  const byId = Object.fromEntries(panels.map((p) => [p.id, p]))
 
   const handleLayoutChange = (nextLayout) => {
     setLayout(nextLayout)
-    saveStoredLayout(character.id, nextLayout)
+    saveStoredLayout(characterId, nextLayout)
   }
 
   return (
@@ -66,23 +62,17 @@ export default function DashboardCanvas({ character, elements }) {
         rowHeight={ROW_HEIGHT}
         width={GRID_WIDTH}
         onLayoutChange={handleLayoutChange}
-        draggableHandle=".rt-element__title"
+        draggableHandle=".dashboard-canvas__drag-handle"
         compactType="vertical"
       >
         {layout
           .filter((item) => byId[item.i])
           .map((item) => {
-            const element = byId[item.i]
-            const Renderer = RENDERERS[element.type]
+            const panel = byId[item.i]
             return (
               <div key={item.i} className="dashboard-canvas__item">
-                {Renderer ? (
-                  <Renderer element={element} />
-                ) : (
-                  <div className="dashboard-canvas__unknown-type">
-                    Unknown element type "{element.type}" ({element.title})
-                  </div>
-                )}
+                <div className="dashboard-canvas__drag-handle">⠿ {panel.title}</div>
+                <div className="dashboard-canvas__item-body">{panel.component}</div>
               </div>
             )
           })}
