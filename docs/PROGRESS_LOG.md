@@ -6,6 +6,43 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-14 (12) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- Owner tested (11): "huge blank spots at the bottom of each panel." Root
+  cause: the fixed `h` estimates baked into each panel's default layout
+  (52/46/46/80/46 rows) were guesses made for the old single-column
+  full-width layout, and (11) made the box literally `height: 100%` of
+  whatever `h` says — so with real content shorter than the guess, the box
+  just sat there with empty space at the bottom instead of shrinking.
+- Fix: panels now **auto-fit their own height to their real rendered
+  content** via a `ResizeObserver` on each panel's `item-body` (measuring
+  `scrollHeight`, which reports true content height even while visually
+  clipped) plus the handle's real height, converted to grid rows with
+  `pxToRows()` (inverts react-grid-layout's own px-per-row formula, given
+  `ROW_HEIGHT=30` and `MARGIN=[10,10]`, which is now passed explicitly to
+  `<GridLayout margin={...}>` instead of relying on its default). This
+  replaces guessed `h` values entirely for any panel the owner hasn't
+  manually resized.
+- A panel opts OUT of auto-fit only when the owner actually drags its
+  resize handle (`onResizeStop` marks that panel id as "manually sized").
+  That set is tracked in its own localStorage key
+  (`ribbitz.canvasManualSized.v2.<id>`), separate from the layout-position
+  key — **important distinction**: react-grid-layout fires
+  `onLayoutChange` (which we persist as the layout) on mount too, not just
+  on real drags, so "a layout got saved" does NOT mean "the owner chose
+  this height." Only `onResizeStop` counts. Get this wrong and you
+  reintroduce the exact bug just fixed, permanently locking in the guessed
+  defaults as if they were manual choices.
+- `npm run build` passed (383 modules). Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed `canvasManualSized` string present in
+  the deployed bundle.
+- **Not yet done**: owner has not yet re-tested. If a panel still shows a
+  gap or clips content, check whether that panel id is already in
+  `ribbitz.canvasManualSized.v2.ribbitz` in the browser's localStorage
+  (devtools → Application → Local Storage) — if so it's intentionally
+  frozen at whatever size it was dragged to and won't auto-fit; clear that
+  one key (not the whole layout key) to let it resume auto-fitting.
+
 ## 2026-09-14 (11) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - Owner tested the (10) canvas swap: drag works, but reported "each panel
   is so big that there's really not much room to maneuver anything" — root
