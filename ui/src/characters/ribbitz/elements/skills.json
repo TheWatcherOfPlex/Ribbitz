@@ -1,19 +1,171 @@
 [
   {
+    "id": "save-str",
+    "category": "skills",
+    "subcategory": "Strength",
+    "title": "Strength Save",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 0,
+      "y": 0,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Strength Modifier",
+          "value": 2
+        }
+      ],
+      "notation": "1d20+2",
+      "rollLabel": "Strength Save"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "str"
+  },
+  {
     "id": "skill-athletics",
     "category": "skills",
     "subcategory": "Strength",
     "title": "Athletics",
     "type": "roll-topic",
     "dashboardVisible": true,
-    "layout": { "x": 0, "y": 0, "w": 2, "h": 1 },
+    "layout": {
+      "x": 2,
+      "y": 0,
+      "w": 2,
+      "h": 1
+    },
     "data": {
-      "parts": [{ "label": "Strength Modifier", "value": 2 }],
+      "parts": [
+        {
+          "label": "Strength Modifier",
+          "value": 2
+        }
+      ],
       "notation": "1d20+2",
       "rollLabel": "Athletics Check"
     },
     "sourceDoc": "Basic Stats.md",
     "sourceAnchor": "athletics"
+  },
+  {
+    "id": "skill-athletics-gloves",
+    "category": "skills",
+    "subcategory": "Strength",
+    "title": "Athletics (Swim/Climb)",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 4,
+      "y": 0,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Strength Modifier",
+          "value": 2
+        },
+        {
+          "label": "Gloves of Swimming & Climbing",
+          "value": 6
+        }
+      ],
+      "notation": "1d20+8",
+      "rollLabel": "Athletics (Swim/Climb) Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "athletics-gloves"
+  },
+  {
+    "id": "save-dex",
+    "category": "skills",
+    "subcategory": "Dexterity",
+    "title": "Dexterity Save",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 6,
+      "y": 0,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Dexterity Modifier",
+          "value": 5
+        },
+        {
+          "label": "Proficiency Bonus",
+          "value": 6
+        }
+      ],
+      "notation": "1d20+11",
+      "rollLabel": "Dexterity Save"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "dex"
+  },
+  {
+    "id": "skill-acrobatics",
+    "category": "skills",
+    "subcategory": "Dexterity",
+    "title": "Acrobatics",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 8,
+      "y": 0,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Dexterity Modifier",
+          "value": 5
+        },
+        {
+          "label": "Proficiency Bonus",
+          "value": 6
+        }
+      ],
+      "notation": "1d20+11",
+      "rollLabel": "Acrobatics Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "acrobatics"
+  },
+  {
+    "id": "skill-sleight",
+    "category": "skills",
+    "subcategory": "Dexterity",
+    "title": "Sleight of Hand",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 10,
+      "y": 0,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Dexterity Modifier",
+          "value": 5
+        }
+      ],
+      "notation": "1d20+5",
+      "rollLabel": "Sleight of Hand Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "sleight"
   },
   {
     "id": "skill-stealth",
@@ -22,16 +174,629 @@
     "title": "Stealth",
     "type": "roll-topic",
     "dashboardVisible": true,
-    "layout": { "x": 2, "y": 0, "w": 2, "h": 1 },
+    "layout": {
+      "x": 0,
+      "y": 1,
+      "w": 2,
+      "h": 1
+    },
     "data": {
       "parts": [
-        { "label": "Dexterity Modifier", "value": 5 },
-        { "label": "Proficiency Bonus", "value": 6 }
+        {
+          "label": "Dexterity Modifier",
+          "value": 5
+        },
+        {
+          "label": "Proficiency Bonus",
+          "value": 6
+        }
       ],
       "notation": "1d20+11",
       "rollLabel": "Stealth Check"
     },
     "sourceDoc": "Basic Stats.md",
     "sourceAnchor": "stealth"
+  },
+  {
+    "id": "save-int",
+    "category": "skills",
+    "subcategory": "Intelligence",
+    "title": "Intelligence Save",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 2,
+      "y": 1,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Intelligence Modifier",
+          "value": -1
+        }
+      ],
+      "notation": "1d20-1",
+      "rollLabel": "Intelligence Save"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "int"
+  },
+  {
+    "id": "skill-arcana",
+    "category": "skills",
+    "subcategory": "Intelligence",
+    "title": "Arcana",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 4,
+      "y": 1,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Intelligence Modifier",
+          "value": -1
+        },
+        {
+          "label": "Proficiency Bonus",
+          "value": 6
+        }
+      ],
+      "notation": "1d20+5",
+      "rollLabel": "Arcana Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "arcana"
+  },
+  {
+    "id": "skill-history",
+    "category": "skills",
+    "subcategory": "Intelligence",
+    "title": "History",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 6,
+      "y": 1,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Intelligence Modifier",
+          "value": -1
+        }
+      ],
+      "notation": "1d20-1",
+      "rollLabel": "History Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "history"
+  },
+  {
+    "id": "skill-investigation",
+    "category": "skills",
+    "subcategory": "Intelligence",
+    "title": "Investigation",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 8,
+      "y": 1,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Intelligence Modifier",
+          "value": -1
+        }
+      ],
+      "notation": "1d20-1",
+      "rollLabel": "Investigation Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "investigation"
+  },
+  {
+    "id": "skill-nature",
+    "category": "skills",
+    "subcategory": "Intelligence",
+    "title": "Nature",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 10,
+      "y": 1,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Intelligence Modifier",
+          "value": -1
+        },
+        {
+          "label": "Proficiency Bonus",
+          "value": 6
+        }
+      ],
+      "notation": "1d20+5",
+      "rollLabel": "Nature Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "nature"
+  },
+  {
+    "id": "skill-nature-terrain",
+    "category": "skills",
+    "subcategory": "Intelligence",
+    "title": "Nature (Preferred Terrain)",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 0,
+      "y": 2,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Intelligence Modifier",
+          "value": -1
+        },
+        {
+          "label": "Proficiency Bonus",
+          "value": 6
+        },
+        {
+          "label": "Natural Explorer Bonus",
+          "value": 6
+        }
+      ],
+      "notation": "1d20+11",
+      "rollLabel": "Nature (Preferred Terrain) Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "nature-terrain"
+  },
+  {
+    "id": "skill-religion",
+    "category": "skills",
+    "subcategory": "Intelligence",
+    "title": "Religion",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 2,
+      "y": 2,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Intelligence Modifier",
+          "value": -1
+        }
+      ],
+      "notation": "1d20-1",
+      "rollLabel": "Religion Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "religion"
+  },
+  {
+    "id": "save-wis",
+    "category": "skills",
+    "subcategory": "Wisdom",
+    "title": "Wisdom Save",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 4,
+      "y": 2,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Wisdom Modifier",
+          "value": 4
+        },
+        {
+          "label": "Proficiency Bonus",
+          "value": 6
+        }
+      ],
+      "notation": "1d20+10",
+      "rollLabel": "Wisdom Save"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "wis"
+  },
+  {
+    "id": "skill-animal-handling",
+    "category": "skills",
+    "subcategory": "Wisdom",
+    "title": "Animal Handling",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 6,
+      "y": 2,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Wisdom Modifier",
+          "value": 4
+        }
+      ],
+      "notation": "1d20+4",
+      "rollLabel": "Animal Handling Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "animal-handling"
+  },
+  {
+    "id": "skill-insight",
+    "category": "skills",
+    "subcategory": "Wisdom",
+    "title": "Insight",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 8,
+      "y": 2,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Wisdom Modifier",
+          "value": 4
+        }
+      ],
+      "notation": "1d20+4",
+      "rollLabel": "Insight Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "insight"
+  },
+  {
+    "id": "skill-medicine",
+    "category": "skills",
+    "subcategory": "Wisdom",
+    "title": "Medicine",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 10,
+      "y": 2,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Wisdom Modifier",
+          "value": 4
+        },
+        {
+          "label": "Proficiency Bonus",
+          "value": 6
+        }
+      ],
+      "notation": "1d20+10",
+      "rollLabel": "Medicine Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "medicine"
+  },
+  {
+    "id": "skill-medicine-terrain",
+    "category": "skills",
+    "subcategory": "Wisdom",
+    "title": "Medicine (Preferred Terrain)",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 0,
+      "y": 3,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Wisdom Modifier",
+          "value": 4
+        },
+        {
+          "label": "Proficiency Bonus",
+          "value": 6
+        },
+        {
+          "label": "Natural Explorer Bonus",
+          "value": 6
+        }
+      ],
+      "notation": "1d20+16",
+      "rollLabel": "Medicine (Preferred Terrain) Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "medicine-terrain"
+  },
+  {
+    "id": "skill-perception",
+    "category": "skills",
+    "subcategory": "Wisdom",
+    "title": "Perception",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 2,
+      "y": 3,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Wisdom Modifier",
+          "value": 4
+        },
+        {
+          "label": "Proficiency Bonus",
+          "value": 6
+        }
+      ],
+      "notation": "1d20+10",
+      "rollLabel": "Perception Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "perception"
+  },
+  {
+    "id": "skill-perception-terrain",
+    "category": "skills",
+    "subcategory": "Wisdom",
+    "title": "Perception (Preferred Terrain)",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 4,
+      "y": 3,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Wisdom Modifier",
+          "value": 4
+        },
+        {
+          "label": "Proficiency Bonus",
+          "value": 6
+        },
+        {
+          "label": "Natural Explorer Bonus",
+          "value": 6
+        }
+      ],
+      "notation": "1d20+16",
+      "rollLabel": "Perception (Preferred Terrain) Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "perception-terrain"
+  },
+  {
+    "id": "skill-survival",
+    "category": "skills",
+    "subcategory": "Wisdom",
+    "title": "Survival",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 6,
+      "y": 3,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Wisdom Modifier",
+          "value": 4
+        },
+        {
+          "label": "Proficiency Bonus",
+          "value": 6
+        }
+      ],
+      "notation": "1d20+10",
+      "rollLabel": "Survival Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "survival"
+  },
+  {
+    "id": "skill-survival-terrain",
+    "category": "skills",
+    "subcategory": "Wisdom",
+    "title": "Survival (Preferred Terrain)",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 8,
+      "y": 3,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Wisdom Modifier",
+          "value": 4
+        },
+        {
+          "label": "Proficiency Bonus",
+          "value": 6
+        },
+        {
+          "label": "Natural Explorer Bonus",
+          "value": 6
+        }
+      ],
+      "notation": "1d20+16",
+      "rollLabel": "Survival (Preferred Terrain) Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "survival-terrain"
+  },
+  {
+    "id": "save-cha",
+    "category": "skills",
+    "subcategory": "Charisma",
+    "title": "Charisma Save",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 10,
+      "y": 3,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Charisma Modifier",
+          "value": -1
+        }
+      ],
+      "notation": "1d20-1",
+      "rollLabel": "Charisma Save"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "cha"
+  },
+  {
+    "id": "skill-deception",
+    "category": "skills",
+    "subcategory": "Charisma",
+    "title": "Deception",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 0,
+      "y": 4,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Charisma Modifier",
+          "value": -1
+        }
+      ],
+      "notation": "1d20-1",
+      "rollLabel": "Deception Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "deception"
+  },
+  {
+    "id": "skill-intimidation",
+    "category": "skills",
+    "subcategory": "Charisma",
+    "title": "Intimidation",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 2,
+      "y": 4,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Charisma Modifier",
+          "value": -1
+        }
+      ],
+      "notation": "1d20-1",
+      "rollLabel": "Intimidation Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "intimidation"
+  },
+  {
+    "id": "skill-performance",
+    "category": "skills",
+    "subcategory": "Charisma",
+    "title": "Performance",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 4,
+      "y": 4,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Charisma Modifier",
+          "value": -1
+        }
+      ],
+      "notation": "1d20-1",
+      "rollLabel": "Performance Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "performance"
+  },
+  {
+    "id": "skill-persuasion",
+    "category": "skills",
+    "subcategory": "Charisma",
+    "title": "Persuasion",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": {
+      "x": 6,
+      "y": 4,
+      "w": 2,
+      "h": 1
+    },
+    "data": {
+      "parts": [
+        {
+          "label": "Charisma Modifier",
+          "value": -1
+        }
+      ],
+      "notation": "1d20-1",
+      "rollLabel": "Persuasion Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "persuasion"
   }
 ]

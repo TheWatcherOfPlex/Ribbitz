@@ -1,8 +1,10 @@
 # Ribbitz Dashboard Rebuild — Master Plan
 
-**Status:** 🚧 IN PROGRESS — Phase 1 done, ready for Phase 2.
+**Status:** 🚧 IN PROGRESS — Phase 2 done, ready for Phase 3.
 **Last updated:** 2026-09-14 by Claude (session `session_01HxUfGH7xyRjP9JoeBgPrJH`).
-**Current phase:** Phase 1 complete. Next up: Phase 2 (proof of concept — DashboardCanvas.jsx + real drag/resize/roll working on the Skills category).
+**Current phase:** Phase 2 complete — live at `/canvas-preview` on the deployed
+site, separate from the real Dashboard. Next up: Phase 3 (migrate the
+remaining categories one at a time — Ability Scores next, then Actions).
 
 > **If you are an AI picking this up:** read this whole file before touching
 > code. Read the "Handoff & Notes Protocol" section (near the bottom) *first*
@@ -360,18 +362,53 @@ site, so ship small.
       (328 modules) — confirms zero behavior change to the live dashboard,
       as required for this phase.
 
-### Phase 2 — Proof of concept: empty canvas + a handful of real elements
-- Build `DashboardCanvas.jsx` + 2–3 element renderers (`roll-topic` and
-  `tracker` first, since those cover the most existing content).
-- Migrate **one** existing category end-to-end (recommend: Skills, since
-  it's already the most "element-ified" thing on the dashboard — the
-  Check/Save buttons already exist, just need to become draggable cards)
-  to prove the whole pipeline: JSON → renderer → drag/resize → persisted
-  layout → dice roll trigger still works.
-- **Deliverable**: owner can drag/resize/regroup the Skills panel's
-  contents live, and rolling still works exactly as it does today.
-  Everything else on the dashboard is untouched (old hardcoded JSX still
-  renders normally alongside the new canvas section).
+### Phase 2 — Proof of concept: empty canvas + a handful of real elements ✅ DONE 2026-09-14
+- [x] `ui/src/dashboard/DashboardCanvas.jsx` — wraps `react-grid-layout`,
+      loads a character + its elements, persists layout to
+      `localStorage` (`ribbitz.canvasLayout.<characterId>`), drag handle is
+      the title text specifically (not the whole card) so the Roll button
+      stays reliably clickable without fighting drag gesture detection.
+  - **Known limitation, not yet solved**: `GRID_WIDTH` is a hardcoded
+    `1180` constant, not responsive. React-grid-layout's `WidthProvider`
+    HOC is the standard fix — do that in Phase 3 once there's more real
+    content to test reflow against, don't guess at it now.
+- [x] `ui/src/elements/RollTopic.jsx` — the only renderer built so far
+      (`roll-topic` type). Title click rolls immediately for elements with
+      no detail text (bare skill checks); for elements that *do* carry
+      `data.summary`/`data.notes` (future Magic Abilities/Spells
+      migration), title click instead toggles an inline expand and rolling
+      gets its own explicit 🎲 button — mirrors the
+      `AbilityTopicRow`/`SpellInlineDetails` pattern already on the old
+      dashboard, not a new interaction to learn.
+  - **Advantage/disadvantage is a documented TODO in this file's own
+    comments, not yet built.** Don't add it piecemeal per-element when it
+    comes up in Phase 3 — design the mechanism once and update this plan.
+- [x] `ui/src/lib/diceRoller.js` — `rollDice`/`rollFlatDice`/
+      `parseStatNumber`/`DICE_API_BASE` extracted from `App.jsx` verbatim
+      (logic unchanged), `App.jsx` now imports from here. First real step
+      of the §3.6 file-splitting plan.
+- [x] Migrated Skills **as a parallel preview, not a replacement**: new
+      route `/canvas-preview` (`ui/src/pages/CanvasPreviewPage.jsx`), linked
+      from the sidebar nav. The **real** `/` Dashboard route and its
+      hardcoded Skills UI are completely untouched — both exist side by
+      side right now. `characters/ribbitz/elements/skills.json` was
+      regenerated (Phase 1's file only had 2 example elements) to cover
+      **all 28** real Skills elements (22 skill checks + 6 ability saves),
+      generated programmatically from the live `skillGroups`/`abilities`
+      data already in `App.jsx` (script, not hand-typed, to avoid
+      transcription error) — verify the math still matches if
+      `skillGroups` changes before this script's source is deleted.
+- [x] Deployed and verified: `npm run build` passes (367 modules, up from
+      328 — confirms the new code actually compiled in, not silently
+      dead), confirmed `canvas-preview`/`dashboard-canvas` strings present
+      in the deployed JS bundle. **Not yet owner-verified in an actual
+      browser** — the next session (or the owner directly) should open
+      `/canvas-preview` and confirm drag/resize/roll all actually work
+      before Phase 3 builds more on top of this foundation.
+- **Deliverable**: `/canvas-preview` exists on the live site with all 28
+  Skills elements draggable/resizable, each with a working 🎲 Roll button
+  wired to the same dice tool the real Dashboard already uses. The real
+  Dashboard (`/`) is byte-for-byte unchanged.
 
 ### Phase 3 — Content migration, category by category
 Order (roughly easiest/highest-value first, adjust based on what Phase 2

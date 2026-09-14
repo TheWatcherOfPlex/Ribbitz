@@ -6,6 +6,48 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-14 (3) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- Did: Phase 2 complete. Owner said "continue" after Phase 1.
+- Built: `dashboard/DashboardCanvas.jsx` (react-grid-layout wrapper,
+  localStorage-persisted layout), `elements/RollTopic.jsx` (first element
+  renderer — roll on click, or expand-then-roll if the element carries
+  detail text), `lib/diceRoller.js` (extracted from App.jsx, logic
+  unchanged), `pages/CanvasPreviewPage.jsx` + new `/canvas-preview` route
+  and nav link.
+- Regenerated `characters/ribbitz/elements/skills.json` from 2 example
+  elements (Phase 1) to all 28 real ones (22 skills + 6 saves) —
+  programmatically generated from the live `skillGroups`/`abilities` data
+  in `App.jsx` via a throwaway script, not hand-typed, specifically to
+  avoid transcription errors across 28 entries.
+- Deliberately did NOT touch the real `/` Dashboard route or its existing
+  Skills UI — `/canvas-preview` is fully parallel. This was a plan
+  requirement (§4 Phase 2/3), not my own caution alone.
+- Verified: `npm run build` passes (367 modules, up from 328), confirmed
+  new code present in the deployed bundle via grep. Deployed to the live
+  container.
+- **Not verified**: I have no browser access, so I could not confirm
+  drag/resize/roll actually work correctly for a real person clicking
+  around. This is the most important thing for the next session (AI or the
+  owner) to check before Phase 3 builds more categories on this foundation
+  — if the interaction model has a problem, better to find out now with 28
+  elements than after Actions/Spells/Magic Abilities are also on it.
+- Known gaps, intentionally deferred (see REBUILD_PLAN.md Phase 2 section
+  for full detail, don't rediscover these from scratch): canvas width is a
+  hardcoded 1180px constant, not actually responsive yet (needs
+  react-grid-layout's `WidthProvider`); advantage/disadvantage roll
+  variants are not built; RollTopic's expand-content path is untested
+  since no Skills element currently has `data.summary`/`data.notes` (first
+  real test of that path will be Magic Abilities or Spells in Phase 3).
+- Committed + pushed.
+- Blocked on: owner (or next AI) confirming `/canvas-preview` actually
+  works in a real browser.
+- Next AI should: **first**, if the owner hasn't already, ask them to open
+  `/canvas-preview` and try dragging/resizing/rolling a couple of Skills
+  cards before writing more code — don't assume Phase 2 is solid just
+  because it built and deployed. Once confirmed, start Phase 3 per
+  REBUILD_PLAN.md §4: Ability Scores next (smallest remaining category,
+  good second data point for the pattern), then Actions/Attacks.
+
 ## 2026-09-14 (2) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - Did: Phase 1 complete. Owner said "proceed" to the plan.
 - Did: installed `react-grid-layout` (confirmed still active/maintained
