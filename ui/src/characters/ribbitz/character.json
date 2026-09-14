@@ -1,0 +1,15 @@
+{
+  "id": "ribbitz",
+  "name": "Vanguard Ribbitz",
+  "theme": "ribbitz-purple",
+  "_themeNote": "Placeholder id only — Phase 4 hasn't built the theme system yet, this isn't loadable.",
+  "currentLevel": 17,
+  "levelPresets": {
+    "_note": "Empty on purpose — Phase 5. Ribbitz doesn't need presets (not a one-shot character), but the shape must still validate against schema.js for characters that do.",
+    "17": { "statOverrides": {} }
+  },
+  "categories": [
+    { "id": "skills", "label": "Skills", "icon": "🎯" }
+  ],
+  "_status": "Phase 1 example only — see characters/README.md. Not loaded by the running app yet."
+}

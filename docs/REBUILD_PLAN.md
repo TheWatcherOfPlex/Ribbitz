@@ -1,8 +1,8 @@
 # Ribbitz Dashboard Rebuild — Master Plan
 
-**Status:** 📋 PLANNED — awaiting owner approval to begin Phase 1.
+**Status:** 🚧 IN PROGRESS — Phase 1 done, ready for Phase 2.
 **Last updated:** 2026-09-14 by Claude (session `session_01HxUfGH7xyRjP9JoeBgPrJH`).
-**Current phase:** Phase 0 (foundations) — backup done, this doc written, awaiting go-ahead.
+**Current phase:** Phase 1 complete. Next up: Phase 2 (proof of concept — DashboardCanvas.jsx + real drag/resize/roll working on the Skills category).
 
 > **If you are an AI picking this up:** read this whole file before touching
 > code. Read the "Handoff & Notes Protocol" section (near the bottom) *first*
@@ -236,9 +236,14 @@ re-litigates them from scratch) were:
 
 ### 3.4 Theming
 
-CSS custom properties (`:root { --accent: ...; }` etc.) already exist in
-`App.css` in some form — audit exactly which variables exist first (Phase
-1), then:
+**Correction (Phase 1 audit, 2026-09-14):** `App.css` has **zero** CSS
+custom properties today — every color is a hardcoded `rgba()`/hex literal
+(79 distinct values counted). The plan below still holds, but "extract
+existing tokens" is wrong — this is a from-scratch token system, not an
+extraction. Scope this fully in Phase 4, not before; don't let it creep
+into earlier phases.
+
+Once Phase 4 starts:
 - Formalize a fixed set of theme tokens (accent, background layers, text,
   success/warning/danger, proficient-glow color, etc.).
 - Each theme = one small JSON/CSS-vars file. Ribbitz's current dark-purple
@@ -330,17 +335,30 @@ site, so ship small.
       too, since it's also under active multi-session AI development and
       currently has zero version control.
 
-### Phase 1 — Data model + conventions (no visible behavior change)
-- Resolve the "where does element JSON live" question (§3.1) with the owner
-  if genuinely ambiguous, otherwise proceed with the file-based
-  recommendation.
-- Write the actual JSON Schema (or TS types, if the project wants type
-  safety) for Character/Element, formalize the type catalog (§3.2).
-- Confirm react-grid-layout is still the right call (§3.3), install it.
-- Audit existing CSS variables for the theming groundwork (§3.4).
-- **Deliverable**: schema documented in this file (update §3.1/§3.2 if
-  reality diverges from the draft above), `react-grid-layout` installed,
-  nothing about the live dashboard has changed yet.
+### Phase 1 — Data model + conventions (no visible behavior change) ✅ DONE 2026-09-14
+- [x] Resolved storage question: proceeded with file-based per-character
+      JSON (§3.1 recommendation) — owner said "proceed" without objecting
+      to the default, no pushback received.
+- [x] `react-grid-layout` confirmed still active/maintained (v2.2.4,
+      2.8M weekly downloads, MIT, checked 2026-09-14) and installed in
+      `ui/package.json`. **Not yet imported/used anywhere** — that's Phase 2.
+- [x] Schema formalized as JSDoc typedefs (not TS — project is plain JS):
+      `ui/src/characters/schema.js`. Exports `ELEMENT_TYPES` (single source
+      of truth for valid type strings) and typedefs for `Character`,
+      `Category`, `Element`, `LevelPreset`, `GridPosition`, `DicePart`.
+- [x] File convention scaffolded: `ui/src/characters/README.md` documents
+      the `characters/<id>/character.json` + `characters/<id>/elements/
+      <category>.json` layout. `characters/ribbitz/character.json` +
+      `characters/ribbitz/elements/skills.json` are a small **hand-written
+      example** (2 real Skills elements — Athletics, Stealth, with correct
+      current math) proving the shape holds up, **not** a real migration
+      and **not yet loaded by the app**.
+- [x] Theming audit done — see the correction now in §3.4: there were no
+      existing CSS variables to extract, contrary to this doc's original
+      draft. Corrected in place, theming work itself still scoped to Phase 4.
+- [x] Verified `npm run build` still passes, same output shape as before
+      (328 modules) — confirms zero behavior change to the live dashboard,
+      as required for this phase.
 
 ### Phase 2 — Proof of concept: empty canvas + a handful of real elements
 - Build `DashboardCanvas.jsx` + 2–3 element renderers (`roll-topic` and

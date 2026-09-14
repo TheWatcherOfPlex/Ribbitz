@@ -1,0 +1,37 @@
+[
+  {
+    "id": "skill-athletics",
+    "category": "skills",
+    "subcategory": "Strength",
+    "title": "Athletics",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": { "x": 0, "y": 0, "w": 2, "h": 1 },
+    "data": {
+      "parts": [{ "label": "Strength Modifier", "value": 2 }],
+      "notation": "1d20+2",
+      "rollLabel": "Athletics Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "athletics"
+  },
+  {
+    "id": "skill-stealth",
+    "category": "skills",
+    "subcategory": "Dexterity",
+    "title": "Stealth",
+    "type": "roll-topic",
+    "dashboardVisible": true,
+    "layout": { "x": 2, "y": 0, "w": 2, "h": 1 },
+    "data": {
+      "parts": [
+        { "label": "Dexterity Modifier", "value": 5 },
+        { "label": "Proficiency Bonus", "value": 6 }
+      ],
+      "notation": "1d20+11",
+      "rollLabel": "Stealth Check"
+    },
+    "sourceDoc": "Basic Stats.md",
+    "sourceAnchor": "stealth"
+  }
+]
