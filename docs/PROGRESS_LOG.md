@@ -6,6 +6,48 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-14 (11) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- Owner tested the (10) canvas swap: drag works, but reported "each panel
+  is so big that there's really not much room to maneuver anything" — root
+  cause was two-fold: (a) `.dashboard-canvas__item` had
+  `height: auto !important`, which made the CSS ignore the grid's computed
+  height entirely, so the resize handle was dead — you could drag it but
+  the box always snapped back to full content height; (b) every panel
+  defaulted to `w: 12` (full canvas width), so panels could only ever
+  stack in one column, never sit side by side, without the owner manually
+  shrinking each one first (which didn't even work, per (a)).
+- Fix: removed the `height: auto !important` override — `.dashboard-canvas__item`
+  now just fills its grid-computed box (`height: 100%`), so drag-resize
+  actually works. `.dashboard-canvas__item-body` changed from
+  `overflow: visible` to `overflow-y: auto` so a panel deliberately resized
+  smaller than its content gets its own internal scrollbar — this is fine
+  now because it only happens on a deliberate owner resize, not as the
+  default state (default `h` values are still generous enough to fit each
+  panel's content with no scrollbar needed at default size).
+- Changed the default layout from single-column full-width (`w:12` for
+  all 5) to a 2-column arrangement (`w:6` each): Primary+Skills side by
+  side on row 1, Exhaustion+Magic on row 2, Kit alone on row 3 — gives
+  usable side-by-side room out of the box instead of one giant stacked
+  column.
+- Bumped `DashboardCanvas.jsx`'s localStorage key from
+  `ribbitz.canvasLayout.<id>` to `ribbitz.canvasLayout.v2.<id>` — otherwise
+  the owner's already-saved single-column layout would silently override
+  the new 2-column defaults and none of this would visibly change for
+  them. Precedent: bump this key again any time the *default* layout
+  changes in a way that should reach owners who already have a saved
+  layout.
+- `npm run build` passed (383 modules). Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed the new `canvasLayout.v2` string is in
+  the deployed bundle.
+- **Not yet done**: owner has not yet re-tested in a live browser to
+  confirm resize now actually works and the 2-column default gives enough
+  room to rearrange comfortably. If panels still feel cramped, the fix is
+  either smaller default `h`/`w` per panel or the still-open
+  `GRID_WIDTH` → `WidthProvider` TODO (canvas width is hardcoded 1180px,
+  not responsive to actual window width) — worth revisiting together if
+  narrow-window use is common.
+
 ## 2026-09-14 (10) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - Did: extracted `panels/KitPanel.jsx` (Weapons, Ammo, Drugs & Herbs, Grung
   Abilities) — 14 props, moved the local `GrungDcBlock` sub-component and

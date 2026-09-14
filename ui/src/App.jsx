@@ -1048,7 +1048,7 @@ function App() {
                   {
                     id: 'primary',
                     title: 'Currency / Quick Stats / Vitality',
-                    layout: { x: 0, y: 0, w: 12, h: 52 },
+                    layout: { x: 0, y: 0, w: 6, h: 52 },
                     component: (
                       <PrimaryPanel
                         statMap={statMap}
@@ -1074,13 +1074,13 @@ function App() {
                   {
                     id: 'skills',
                     title: 'Skills',
-                    layout: { x: 0, y: 52, w: 12, h: 46 },
+                    layout: { x: 6, y: 0, w: 6, h: 46 },
                     component: <SkillsPanel statMap={statMap} />,
                   },
                   {
                     id: 'exhaustion',
                     title: 'Potions & Poisons / Exhaustion / Conditions / Ranger Features',
-                    layout: { x: 0, y: 98, w: 12, h: 46 },
+                    layout: { x: 0, y: 52, w: 6, h: 46 },
                     component: (
                       <ExhaustionPanel
                         potionPoisonItems={potionPoisonItems}
@@ -1099,7 +1099,7 @@ function App() {
                   {
                     id: 'magic',
                     title: 'Spell Slots / Prepared Spells / Other Magical Abilities',
-                    layout: { x: 0, y: 144, w: 12, h: 80 },
+                    layout: { x: 6, y: 46, w: 6, h: 80 },
                     component: (
                       <MagicPanel
                         statMap={statMap}
@@ -1124,7 +1124,7 @@ function App() {
                   {
                     id: 'kit',
                     title: 'Weapons / Ammo / Drugs & Herbs / Grung Abilities',
-                    layout: { x: 0, y: 224, w: 12, h: 46 },
+                    layout: { x: 0, y: 98, w: 6, h: 46 },
                     component: (
                       <KitPanel
                         statMap={statMap}

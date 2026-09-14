@@ -18,8 +18,12 @@ const COLS = 12
 const ROW_HEIGHT = 30
 const GRID_WIDTH = 1180 // TODO Phase 3: swap for react-grid-layout's WidthProvider for real responsiveness
 
+// v2: bumped 2026-09-14 when the default layout moved from single-column
+// full-width panels to a 2-column arrangement + real resizing — bumping
+// the key means owners with an old saved single-column layout get the new
+// defaults once, instead of the old layout silently overriding them.
 function layoutStorageKey(characterId) {
-  return `ribbitz.canvasLayout.${characterId}`
+  return `ribbitz.canvasLayout.v2.${characterId}`
 }
 
 function loadStoredLayout(characterId) {

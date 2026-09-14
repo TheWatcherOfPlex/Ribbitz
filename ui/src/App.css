@@ -2285,11 +2285,13 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  /* Panels don't scroll internally — the whole page scrolls instead, so a
-     panel taller than its grid box just grows downward rather than getting
-     its own trapped scrollbar. */
-  height: auto !important;
-  min-height: 100%;
+  /* Default sizes are generous enough that content fits without scrolling —
+     but the box now honors whatever height the owner actually drags it to,
+     so resize handles work. Shrink a panel below its content's natural
+     height and it gets its own internal scrollbar (see item-body below);
+     that's an intentional result of a deliberate resize, not the old
+     "everything is trapped in a tiny box by default" problem. */
+  height: 100%;
 }
 
 .dashboard-canvas__drag-handle {
@@ -2307,7 +2309,8 @@
 
 .dashboard-canvas__item-body {
   flex: 1;
-  overflow: visible;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 10px;
 }
 
