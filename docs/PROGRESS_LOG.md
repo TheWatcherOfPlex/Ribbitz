@@ -6,6 +6,46 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-14 (10) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- Did: extracted `panels/KitPanel.jsx` (Weapons, Ammo, Drugs & Herbs, Grung
+  Abilities) — 14 props, moved the local `GrungDcBlock` sub-component and
+  the 3 ammo-name consts (`pondPoppersName`, `standardBlowgunDartsName`,
+  `standardArrowsName`) that are exclusive to this panel. Note:
+  `App.jsx` still keeps its own copies of those 3 name consts since it
+  needs them to compute the `*Quantity` values passed down as props —
+  this is intentional duplication, not a bug.
+- Preserved the known pre-existing "+7 hit" bug on Tongue Slap/Bite
+  verbatim (math audit says it should be +8) — out of scope for an
+  extraction, left a code comment pointing at the audit.
+- This was the last of the 5 panels. Then did the **Phase 3 final swap**:
+  replaced the old static `<section className="grid">` Dashboard route in
+  `App.jsx` with `<DashboardCanvas>` rendering all 5 panels
+  (Primary/Skills/Exhaustion/Magic/Kit) as a single-column stack
+  (`x:0, w:12` for every panel; `y` 0/52/98/144/224; `h` estimates
+  52/46/46/80/46) — single-column chosen specifically to avoid the
+  left-right overlap risk noted for `height:auto!important` panels;
+  vertical overlap is still only mitigated (not eliminated) by generous
+  `h` estimates, since react-grid-layout doesn't know real rendered height.
+- Deleted `/canvas-preview`: removed the route, nav link, and import from
+  `App.jsx`, deleted `ui/src/pages/CanvasPreviewPage.jsx` entirely, fixed
+  a stale comment in `lib/api.js` that referenced it.
+- Ran the §5.1 declaration-diff safety check (21 removed declarations,
+  all accounted for) and a separate grep for stray `CanvasPreviewPage`
+  references (found only the one comment, now fixed).
+- `npm run build` passed (383 modules, 692KB bundle). Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; spot-checked the deployed bundle for 5 distinctive
+  strings, one per panel ("Grung Abilities", "Prepared Spells", "Circle of
+  Spores", "Death Saves", "Ability Scores") — all present.
+- **Not yet done**: owner has not yet opened the live `/` dashboard to
+  confirm there's no visual panel overlap and that drag/resize/scroll work
+  correctly across all 5 panels together. This is the first real multi-panel
+  test of the `height:auto!important` CSS — do this check before starting
+  Phase 4.
+- Committed (not yet pushed at log-write time — see git log for actual
+  push status) and updated `REBUILD_PLAN.md` (Phase 3 marked complete,
+  current phase → Phase 4 theming).
+
 ## 2026-09-14 (9) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - Did: extracted `panels/MagicPanel.jsx` (Spell Slots trackers, Prepared
   Spells click-to-expand list, Other Magical Abilities incl. the Circle

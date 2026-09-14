@@ -1,14 +1,23 @@
 # Ribbitz Dashboard Rebuild — Master Plan
 
-**Status:** 🚧 IN PROGRESS — Phase 2 corrected + re-verified, ready to continue Phase 3.
+**Status:** 🚧 IN PROGRESS — Phase 3 complete (all 5 panels extracted + live
+on the real `/` dashboard via DashboardCanvas). Ready to start Phase 4
+(theming).
 **Last updated:** 2026-09-14 by Claude (session `session_01HxUfGH7xyRjP9JoeBgPrJH`).
-**Current phase:** Phase 2's *first* version (28 individually-draggable
-skill cards) was wrong — see the correction below and in
-`docs/PROGRESS_LOG.md`. Rebuilt at **whole-panel granularity** instead
-(drag the whole Skills panel as one block, its internal content unchanged
-from the original rich layout). Live at `/canvas-preview`. Next: Phase 3,
-extract + wrap the remaining panels (Combat Kit, Magic/Spell Slots,
-Exhaustion/Potions, etc.) the same way.
+**Current phase:** Phase 3 is done. All 5 panels — PrimaryPanel, SkillsPanel,
+ExhaustionPanel, MagicPanel, KitPanel — are extracted into
+`ui/src/panels/*.jsx` and the real `/` Dashboard route now renders them
+through `DashboardCanvas` (single-column default layout, x:0/w:12 for all
+five, generous per-panel `h` estimates to avoid overlap — see the
+"Phase 3 final swap" note below). The old `/canvas-preview` route and
+`CanvasPreviewPage.jsx` have been deleted — canvas *is* the dashboard now.
+Deployed + build-verified (all 5 panels' distinctive strings confirmed in
+the compiled bundle), but **not yet owner-verified in a live browser** —
+next session (or the owner) should open the real dashboard, confirm no
+panel overlap and that drag/resize/scroll work across all 5 panels
+together, before Phase 4 (theming) builds on top of this. Next: Phase 4 —
+theming (App.css currently has zero CSS custom properties, confirmed by
+audit — this is a from-scratch build, not a refactor).
 
 > ⚠️ **Important correction (2026-09-14), read before continuing Phase 3:**
 > §3.1–§3.2 below describe an atomized "one Element per skill/spell/item"
@@ -553,6 +562,26 @@ Magical Abilities), then Combat Kit (Weapons / Ammo / Drugs & Herbs).
    sequencing decision above — that happens all at once at the end.
 
 ### Phase 3 — Content migration, category by category
+
+> ✅ **Phase 3 actually completed (2026-09-14) — simpler than this section
+> originally planned.** The per-element migration below (step-by-step
+> Skills/Abilities/Actions/Spells/etc. as individual dashboard elements) was
+> superseded by the whole-panel correction: instead, the entire original
+> Dashboard route was split into 5 whole panels — `PrimaryPanel` (Currency,
+> Quick Stats, Vitality/HP/Symbiotic HP, Healing, Hit Dice, Death Saves),
+> `SkillsPanel` (Ability Scores + full Skills list w/ Check+Save buttons),
+> `ExhaustionPanel` (Potions & Poisons, Exhaustion, Conditions, Ranger
+> Features), `MagicPanel` (Spell Slots, Prepared Spells, Other Magical
+> Abilities incl. Circle of Spores), `KitPanel` (Weapons, Ammo, Drugs &
+> Herbs, Grung Abilities) — each moved verbatim (content unchanged) into
+> `ui/src/panels/*.jsx`, then all 5 wired into `DashboardCanvas` on the
+> real `/` route. `/canvas-preview` and `CanvasPreviewPage.jsx` are deleted.
+> The individual-element/toggle-onto-dashboard idea (steps below) is
+> **not done** and remains a real future ask — it's just not what Phase 3
+> ended up being. See `docs/PROGRESS_LOG.md` entries from 2026-09-14 for
+> the full step-by-step history (extraction order, the collateral-damage
+> bug + fix, the safety-check process used each time).
+
 Order (roughly easiest/highest-value first, adjust based on what Phase 2
 teaches you):
 1. Skills (if not already done as the Phase 2 proof of concept)

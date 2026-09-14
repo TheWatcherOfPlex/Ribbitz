@@ -4,12 +4,13 @@ import './App.css'
 import ribbitzPortrait from './assets/ribbitz-flying.png'
 import MarkdownPage from './components/MarkdownPage.jsx'
 import InventoryPage from './pages/InventoryPage.jsx'
-import CanvasPreviewPage from './pages/CanvasPreviewPage.jsx'
+import DashboardCanvas from './dashboard/DashboardCanvas.jsx'
 import { rollFlatDice } from './lib/diceRoller.js'
 import SkillsPanel from './panels/SkillsPanel.jsx'
 import PrimaryPanel from './panels/PrimaryPanel.jsx'
 import ExhaustionPanel from './panels/ExhaustionPanel.jsx'
 import MagicPanel from './panels/MagicPanel.jsx'
+import KitPanel from './panels/KitPanel.jsx'
 import TrackerGroup from './components/TrackerGroup.jsx'
 import StatControl from './components/StatControl.jsx'
 import { slugifyHeading } from './utils/slugifyHeading.js'
@@ -60,7 +61,6 @@ function readSyncMode() {
 
 const navLinks = [
   { label: 'Dashboard', href: '/' },
-  { label: '🧩 Canvas Preview', href: '/canvas-preview' },
   { label: 'Basic Stats', href: '/stats' },
   { label: 'Actions', href: '/actions' },
   { label: 'Inventory', href: '/inventory' },
@@ -325,18 +325,6 @@ function parseMagicAbilitiesIndex(markdownText) {
 
 // Compact "topic" row: name + optional roll button, click to expand full
 // text/notes inline below — same interaction as the Prepared Spells list.
-function GrungDcBlock({ label, value, formula, linkTo }) {
-  return (
-    <div className="grung-dc">
-      <Link className="feature-link" to={linkTo}>
-        <strong>{label}</strong>
-      </Link>
-      <div className="grung-dc__value">{value}</div>
-      <div className="grung-dc__formula">{formula}</div>
-    </div>
-  )
-}
-
 function App() {
   const [isOnline, setIsOnline] = useState(true)
   const [lastSync, setLastSync] = useState(null)
@@ -1054,337 +1042,110 @@ function App() {
           <Route
             path="/"
             element={
-              <section className="grid">
-                <div className="panel panel--primary panel--tight">
-                  <PrimaryPanel
-                    statMap={statMap}
-                    vitals={vitals}
-                    symbioticActive={symbioticActive}
-                    symbioticTempHp={symbioticTempHp}
-                    inspirationValue={inspirationValue}
-                    inventoryOnline={inventoryOnline}
-                    inventoryError={inventoryError}
-                    healingQuickLinks={healingQuickLinks}
-                    deathSaves={deathSaves}
-                    getInventoryQuantity={getInventoryQuantity}
-                    setInventoryItemValue={setInventoryItemValue}
-                    stepInventoryItem={stepInventoryItem}
-                    updateStat={updateStat}
-                    updateVital={updateVital}
-                    stepSymbioticTempHp={stepSymbioticTempHp}
-                    handleRest={handleRest}
-                    toggleDeathSave={toggleDeathSave}
-                  />
-                </div>
-
-                <div className="panel panel--skills panel--tight">
-                  <SkillsPanel statMap={statMap} />
-                </div>
-
-                <div className="panel panel--exhaustion panel--tight">
-                  <ExhaustionPanel
-                    potionPoisonItems={potionPoisonItems}
-                    inventoryOnline={inventoryOnline}
-                    stepInventoryItem={stepInventoryItem}
-                    setInventoryItemValue={setInventoryItemValue}
-                    exhaustionLevel={exhaustionLevel}
-                    setExhaustionFromSlot={setExhaustionFromSlot}
-                    conditions={conditions}
-                    toggleCondition={toggleCondition}
-                    expandedConditionKey={expandedConditionKey}
-                    setExpandedConditionKey={setExpandedConditionKey}
-                  />
-                </div>
-
-                <div className="panel panel--magic panel--tight">
-                  <MagicPanel
-                    statMap={statMap}
-                    trackers={trackers}
-                    parseTracker={parseTracker}
-                    handleToggle={handleToggle}
-                    preparedSpells={preparedSpells}
-                    expandedSpellKey={expandedSpellKey}
-                    setExpandedSpellKey={setExpandedSpellKey}
-                    magicAbilities={magicAbilities}
-                    expandedAbilityKey={expandedAbilityKey}
-                    toggleAbility={toggleAbility}
-                    symbioticActive={symbioticActive}
-                    symbioticTempHp={symbioticTempHp}
-                    updateSymbioticEntity={updateSymbioticEntity}
-                    timeOfDayMap={timeOfDayMap}
-                    timeOfDayOptions={timeOfDayOptions}
-                    updateTimeOfDay={updateTimeOfDay}
-                  />
-                </div>
-
-                <div className="panel panel--kit panel--tight">
-                  <div className="panel__content combat-kit">
-                    <div className="combat-kit__section">
-                      <div className="combat-kit__title">Weapons</div>
-
-                      <div className="combat-kit__weapon">
-                        <Link
-                          className="combat-kit__weapon-name"
-                          to="/actions#vanguard-blowgun-1-broken---single-shot"
-                        >
-                          Blowgun +1
-                        </Link>
-                        <div className="combat-kit__weapon-meta">
-                          Hit {statMap?.['blowgun-hit'] ?? '+14'} (Std) •{' '}
-                          {statMap?.['blowgun-hit-ss'] ?? '+9'} (Pwr)
-                        </div>
-                        <div className="combat-kit__weapon-meta">
-                          Std {statMap?.['blowgun-dmg'] ?? '1d8'}
-                        </div>
-                        <div className="combat-kit__weapon-meta">
-                          Pwr {statMap?.['blowgun-dmg-ss'] ?? '1d8+10'}
-                        </div>
-                        <div className="combat-kit__weapon-meta">
-                          Elem + {statMap?.['blowgun-elem-dmg'] ?? '1d6'}
-                        </div>
-                        <div className="combat-kit__weapon-meta">
-                          Gloom + {statMap?.['blowgun-gloom-dmg'] ?? '1d8'}
-                        </div>
-                      </div>
-
-                      <div className="combat-kit__weapon">
-                        <Link className="combat-kit__weapon-name" to="/actions#skywardens-longbow-2">
-                          Longbow +2
-                        </Link>
-                        <div className="combat-kit__weapon-meta">
-                          Hit {statMap?.['longbow-hit'] ?? '+15'} (Std) •{' '}
-                          {statMap?.['longbow-hit-ss'] ?? '+10'} (Pwr)
-                        </div>
-                        <div className="combat-kit__weapon-meta">
-                          Std {statMap?.['longbow-dmg'] ?? '1d10+7'}
-                        </div>
-                        <div className="combat-kit__weapon-meta">
-                          Pwr {statMap?.['longbow-dmg-ss'] ?? '1d10+17'}
-                        </div>
-                        <div className="combat-kit__weapon-meta">
-                          Elem + {statMap?.['longbow-elem-dmg'] ?? '1d6'}
-                        </div>
-                        <div className="combat-kit__weapon-meta">
-                          Gloom + {statMap?.['longbow-gloom-dmg'] ?? '1d8'}
-                        </div>
-                      </div>
-
-                      <div className="combat-kit__weapon">
-                        <Link className="combat-kit__weapon-name" to="/actions#dagger-1-fey-blessing">
-                          Dagger +1 - Fey Blessed
-                        </Link>
-                        <div className="combat-kit__weapon-meta">
-                          Hit {statMap?.['dagger-hit'] ?? '+12'}
-                        </div>
-                        <div className="combat-kit__weapon-meta">
-                          Std {statMap?.['dagger-dmg'] ?? '1d4+6'}
-                        </div>
-                        <div className="combat-kit__weapon-meta">
-                          Gloom {statMap?.['dagger-gloom-dmg'] ?? '1d4+6+1d8'}
-                        </div>
-                      </div>
-
-                      <div className="combat-kit__weapon">
-                        <Link
-                          className="combat-kit__weapon-name"
-                          to="/actions#dagger-non-magical-poison-dipped"
-                        >
-                          Dagger - Poison Dipped
-                        </Link>
-                        <div className="combat-kit__weapon-meta">
-                          Hit {statMap?.['dagger-poison-hit'] ?? statMap?.['poison-dagger-hit'] ?? '+11'}
-                        </div>
-                        <div className="combat-kit__weapon-meta">
-                          Std {statMap?.['poison-dagger-dmg'] ?? '1d4+5'}
-                        </div>
-                        <div className="combat-kit__weapon-meta">
-                          Gloom {statMap?.['poison-dagger-gloom-dmg'] ?? '1d4+5+1d8'}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="combat-kit__section">
-                      <div className="combat-kit__title">Ammo</div>
-                      <div className="panel__content--ammo combat-kit__ammo">
-                        <div className="ammo-group">
-                          <div className="ammo-group__title">Blowgun Darts</div>
-                          <StatControl
-                            label="Standard"
-                            value={standardBlowgunDartsQuantity}
-                            onChange={(nextValue) =>
-                              setInventoryItemValue(standardBlowgunDartsName, nextValue)
-                            }
-                          />
-                          <StatControl
-                            label="Fire"
-                            value={vitals.dartFire}
-                            onChange={updateVital('dartFire')}
-                          />
-                          <StatControl
-                            label="Water"
-                            value={vitals.dartWater}
-                            onChange={updateVital('dartWater')}
-                          />
-                          <StatControl
-                            label="Lava"
-                            value={vitals.dartLava}
-                            onChange={updateVital('dartLava')}
-                          />
-                        </div>
-                        <div className="ammo-group">
-                          <div className="ammo-group__title">Arrows</div>
-                          <StatControl
-                            label="Standard"
-                            value={standardArrowsQuantity}
-                            onChange={(nextValue) =>
-                              setInventoryItemValue(standardArrowsName, nextValue)
-                            }
-                          />
-                          <StatControl
-                            label="Fire"
-                            value={vitals.arrowFire}
-                            onChange={updateVital('arrowFire')}
-                          />
-                          <StatControl
-                            label="Water"
-                            value={vitals.arrowWater}
-                            onChange={updateVital('arrowWater')}
-                          />
-                          <StatControl
-                            label="Lava"
-                            value={vitals.arrowLava}
-                            onChange={updateVital('arrowLava')}
-                          />
-                        </div>
-                        <div className="ammo-group ammo-group--single">
-                          <StatControl
-                            label="Pond Poppers"
-                            value={pondPoppersQuantity}
-                            onChange={(nextValue) =>
-                              setInventoryItemValue(pondPoppersName, nextValue)
-                            }
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="combat-kit__section combat-kit__section--wide">
-                      <div className="combat-kit__title">Drugs &amp; Herbs</div>
-                      <div className="panel__content drugs-panel">
-                        {drugsHerbsList.length ? (
-                          drugsHerbsList.map((item) => {
-                            const slug = slugifyHeading(item.name)
-                            const expanded = expandedDrugKey === slug
-                            return (
-                              <div
-                                key={item.name}
-                                className={`drugs-panel__item${
-                                  drugStatuses?.[slug] ? ' drugs-panel__item--active' : ''
-                                }${expanded ? ' drugs-panel__item--expanded' : ''}`}
-                              >
-                                <input
-                                  type="checkbox"
-                                  checked={Boolean(drugStatuses?.[slug])}
-                                  onChange={() => toggleDrugHerb(item.name)}
-                                  aria-label={`Toggle ${item.name}`}
-                                />
-                                <button
-                                  className="drugs-panel__name"
-                                  type="button"
-                                  onClick={() => setExpandedDrugKey(expanded ? '' : slug)}
-                                >
-                                  <span>{item.name}</span>
-                                  <span className="drugs-panel__count">x{item.quantity || 0}</span>
-                                </button>
-                                {expanded ? (
-                                  <div className="drugs-panel__detail">
-                                    {item.notes || 'No effect notes loaded.'}
-                                  </div>
-                                ) : null}
-                              </div>
-                            )
-                          })
-                        ) : (
-                          <div className="drugs-panel__empty">No drugs or herbs loaded.</div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="combat-kit__section combat-kit__section--grung">
-                      <div className="combat-kit__title">Grung Abilities</div>
-                      <div className="panel__content grung-abilities">
-                        <div className="grung-abilities__pane">
-                          <div className="grung-abilities__dc-grid">
-                            <GrungDcBlock
-                              label={
-                                <>
-                                  Poison
-                                  <br />
-                                  Skin
-                                  <br />
-                                  DC
-                                </>
-                              }
-                              value={statMap?.['poison-skin-dc'] ?? '18'}
-                              formula="12 + PB (6)"
-                              linkTo="/stats#dcs-saves-and-passives"
-                            />
-                            <GrungDcBlock
-                              label="Poison Weapon DC"
-                              value={statMap?.['poison-weapon-dc'] ?? '18'}
-                              formula="9 + PB (6) + CON mod (3)"
-                              linkTo="/stats#dcs-saves-and-passives"
-                            />
-                          </div>
-
-                          <div className="feature-row">
-                            <strong>Effect</strong>
-                            <span>
-                              CON save
-                              <br />
-                              1 min
-                              <br />
-                              Repeat save end of each turn.
-                            </span>
-                          </div>
-                          <TrackerGroup
-                            title="Uses"
-                            items={parseTracker('poison-skin', 'Poison', { compact: true, fallback: '6/6' })}
-                            onToggle={handleToggle}
-                          />
-                        </div>
-
-                        <div className="grung-abilities__pane">
-                          <div className="grung-jumping">
-                            <div className="grung-jumping__row">
-                              <strong>Long Jump - Running Start</strong>
-                              <span>D20 + (Str. or Dex.) + Proficiency</span>
-                            </div>
-
-                            <div className="grung-jumping__row">
-                              <strong>Standing Jump</strong>
-                              <span>(D20 + (Str. or Dex.) + Proficiency) / 2</span>
-                            </div>
-                            <div className="grung-jumping__row">
-                              <strong>Tongue Slap</strong>
-                              <span>+7 hit • 1d6+2 pierce</span>
-                            </div>
-                            <div className="grung-jumping__row">
-                              <strong>Bite</strong>
-                              <span>+7 hit • 1d6+2 pierce</span>
-                            </div>
-                            <div className="grung-jumping__row">
-                              <strong>Tongue Grapple</strong>
-                              <span>10/15 ft • Dex save vs STR (Athletics)</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </section>
+              <DashboardCanvas
+                characterId="ribbitz"
+                panels={[
+                  {
+                    id: 'primary',
+                    title: 'Currency / Quick Stats / Vitality',
+                    layout: { x: 0, y: 0, w: 12, h: 52 },
+                    component: (
+                      <PrimaryPanel
+                        statMap={statMap}
+                        vitals={vitals}
+                        symbioticActive={symbioticActive}
+                        symbioticTempHp={symbioticTempHp}
+                        inspirationValue={inspirationValue}
+                        inventoryOnline={inventoryOnline}
+                        inventoryError={inventoryError}
+                        healingQuickLinks={healingQuickLinks}
+                        deathSaves={deathSaves}
+                        getInventoryQuantity={getInventoryQuantity}
+                        setInventoryItemValue={setInventoryItemValue}
+                        stepInventoryItem={stepInventoryItem}
+                        updateStat={updateStat}
+                        updateVital={updateVital}
+                        stepSymbioticTempHp={stepSymbioticTempHp}
+                        handleRest={handleRest}
+                        toggleDeathSave={toggleDeathSave}
+                      />
+                    ),
+                  },
+                  {
+                    id: 'skills',
+                    title: 'Skills',
+                    layout: { x: 0, y: 52, w: 12, h: 46 },
+                    component: <SkillsPanel statMap={statMap} />,
+                  },
+                  {
+                    id: 'exhaustion',
+                    title: 'Potions & Poisons / Exhaustion / Conditions / Ranger Features',
+                    layout: { x: 0, y: 98, w: 12, h: 46 },
+                    component: (
+                      <ExhaustionPanel
+                        potionPoisonItems={potionPoisonItems}
+                        inventoryOnline={inventoryOnline}
+                        stepInventoryItem={stepInventoryItem}
+                        setInventoryItemValue={setInventoryItemValue}
+                        exhaustionLevel={exhaustionLevel}
+                        setExhaustionFromSlot={setExhaustionFromSlot}
+                        conditions={conditions}
+                        toggleCondition={toggleCondition}
+                        expandedConditionKey={expandedConditionKey}
+                        setExpandedConditionKey={setExpandedConditionKey}
+                      />
+                    ),
+                  },
+                  {
+                    id: 'magic',
+                    title: 'Spell Slots / Prepared Spells / Other Magical Abilities',
+                    layout: { x: 0, y: 144, w: 12, h: 80 },
+                    component: (
+                      <MagicPanel
+                        statMap={statMap}
+                        trackers={trackers}
+                        parseTracker={parseTracker}
+                        handleToggle={handleToggle}
+                        preparedSpells={preparedSpells}
+                        expandedSpellKey={expandedSpellKey}
+                        setExpandedSpellKey={setExpandedSpellKey}
+                        magicAbilities={magicAbilities}
+                        expandedAbilityKey={expandedAbilityKey}
+                        toggleAbility={toggleAbility}
+                        symbioticActive={symbioticActive}
+                        symbioticTempHp={symbioticTempHp}
+                        updateSymbioticEntity={updateSymbioticEntity}
+                        timeOfDayMap={timeOfDayMap}
+                        timeOfDayOptions={timeOfDayOptions}
+                        updateTimeOfDay={updateTimeOfDay}
+                      />
+                    ),
+                  },
+                  {
+                    id: 'kit',
+                    title: 'Weapons / Ammo / Drugs & Herbs / Grung Abilities',
+                    layout: { x: 0, y: 224, w: 12, h: 46 },
+                    component: (
+                      <KitPanel
+                        statMap={statMap}
+                        vitals={vitals}
+                        updateVital={updateVital}
+                        setInventoryItemValue={setInventoryItemValue}
+                        standardBlowgunDartsQuantity={standardBlowgunDartsQuantity}
+                        standardArrowsQuantity={standardArrowsQuantity}
+                        pondPoppersQuantity={pondPoppersQuantity}
+                        drugsHerbsList={drugsHerbsList}
+                        expandedDrugKey={expandedDrugKey}
+                        setExpandedDrugKey={setExpandedDrugKey}
+                        drugStatuses={drugStatuses}
+                        toggleDrugHerb={toggleDrugHerb}
+                        parseTracker={parseTracker}
+                        handleToggle={handleToggle}
+                      />
+                    ),
+                  },
+                ]}
+              />
             }
           />
           <Route
@@ -1396,7 +1157,6 @@ function App() {
             element={<MarkdownPage title="Actions" source={contentPath('Actions.md')} />}
           />
           <Route path="/inventory" element={<InventoryPage />} />
-          <Route path="/canvas-preview" element={<CanvasPreviewPage />} />
           <Route
             path="/spells"
             element={

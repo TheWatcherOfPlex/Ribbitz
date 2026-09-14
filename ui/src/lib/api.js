@@ -1,6 +1,6 @@
 // Small shared API helpers — extracted from App.jsx during the rebuild
-// (Phase 3) so other entry points (e.g. CanvasPreviewPage) can fetch live
-// stats without duplicating the base-URL logic. Logic unchanged.
+// (Phase 3) so other entry points can fetch live stats without duplicating
+// the base-URL logic. Logic unchanged.
 
 export const API_BASE = (import.meta.env.VITE_API_BASE || '/api').replace(/\/+$/, '')
 export const CONTENT_BASE = import.meta.env.BASE_URL || '/'
