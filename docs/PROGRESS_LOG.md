@@ -6,6 +6,35 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-14 (9) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- Did: extracted `panels/MagicPanel.jsx` (Spell Slots trackers, Prepared
+  Spells click-to-expand list, Other Magical Abilities incl. the Circle
+  of Spores roll buttons built in an earlier session) — 16 props, plus
+  moved two small sub-components (`AbilityTopicRow`, `SpellInlineDetails`)
+  and 3 small consts (`spellLevelOrder`, `haloDamage`,
+  `haloSymbioticDamage`) into the panel file since they're exclusively
+  used there.
+- Followed the same §5.1 process (full-range read, then declaration-diff
+  safety check) — 20 removed declarations total now, all accounted for as
+  intentional relocations (5 new ones this round).
+- `npm run build` passes (384 modules), deployed, spot-checked deployed
+  bundle for "Prepared Spells"/"Circle of Spores" content.
+- 3 of 5 panels done: Skills, Primary, Exhaustion, Magic. **Only Combat
+  Kit remains** (Weapons / Ammo / Drugs & Herbs).
+- Not added to `/canvas-preview` — per the sequencing decision, that's
+  the final step once Combat Kit is also done.
+- Committed + pushed.
+- Next AI should: extract `panels/KitPanel.jsx` (or similar name) for the
+  Combat Kit panel — same exact process, one more time. It already uses
+  `StatControl` (shared import, no new relocation needed for that) and
+  `parseTracker`/`timeOfDayMap` (already props-ready patterns from Magic/
+  Exhaustion). Once that's done and verified, all 5 panels exist as
+  standalone files — that's the trigger to do the final step: swap `/`
+  itself to render through `DashboardCanvas` with all 5 panels, and
+  retire `/canvas-preview`. Don't do the final swap in the same sitting
+  as the Kit extraction — verify Kit on the real Dashboard first, exactly
+  like the previous 3.
+
 ## 2026-09-14 (8) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - Owner confirmed the scroll fix and whole-panel drag pattern are exactly
   right, and wants the same treatment "for the whole character sheet."
