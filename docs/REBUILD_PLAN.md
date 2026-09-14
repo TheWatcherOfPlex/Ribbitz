@@ -225,6 +225,22 @@ renderer in its own file.
 
 ### 3.3 Canvas / drag / resize / reflow library
 
+> ⚠️ **Pin `react-grid-layout` to the `1.x` line explicitly
+> (`"react-grid-layout": "^1.5.4"` in `ui/package.json`), not `latest`.**
+> `npm install react-grid-layout` installs **2.x** by default, which is a
+> complete API rewrite (hooks-based; `cols`/`rowHeight`/`draggableHandle`
+> top-level props don't exist any more, replaced by nested `gridConfig`/
+> `dragConfig` objects) — none of the widely-documented v1 examples/API
+> (including everything in this plan and `DashboardCanvas.jsx`) work
+> against it, and the app **fails to load entirely** if it's installed.
+> This actually happened once (2026-09-14) — checking "still
+> maintained/popular" (weekly downloads, recent release) is **not enough**
+> to catch a breaking major-version rewrite; check the changelog/major
+> version specifically before trusting a library recommendation, including
+> ones in this very document. The maintainers publish the old API under
+> the `legacy` dist-tag too (`npm install react-grid-layout@legacy`) if
+> `1.5.4` ever stops resolving.
+
 **Grid item = one whole panel/category (Skills, Combat Kit, Spells, Magic
 Abilities, Features, ...), not one item per skill/spell/inventory row.**
 Each panel is a real React component with its full original content and

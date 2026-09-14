@@ -6,6 +6,38 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-14 (5) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- **Bug, found and fixed**: owner reported "the app will not seem to load
+  anymore" right after the Phase 2 revision. Root cause: `npm install
+  react-grid-layout` (no version pin) installed **2.2.4**, which turned
+  out to be a complete API rewrite from the classic v1 API every example/
+  tutorial (and this plan, and `DashboardCanvas.jsx`) was written against
+  — v2 has no `cols`/`rowHeight`/`draggableHandle` top-level props, uses
+  nested `gridConfig`/`dragConfig` objects instead. The app failed to
+  mount at all as a result.
+- Fix: pinned `react-grid-layout` to `^1.5.4` (the maintainers publish
+  this under the `legacy` dist-tag too, `npm install
+  react-grid-layout@legacy`, if 1.5.4 stops resolving someday) — this is
+  the version the actual v1-style code in `DashboardCanvas.jsx` was always
+  written against, no code changes needed, just the correct package
+  version. `npm run build` passes (378 modules), deployed.
+- **Lesson written into REBUILD_PLAN.md §3.3 as a permanent warning**: I
+  had "confirmed react-grid-layout is still maintained" before installing
+  it in Phase 1 (checked weekly downloads + recent release date) and
+  considered that sufficient diligence. It wasn't — that check catches
+  abandonment, not a breaking major-version rewrite. Should have checked
+  the changelog/major version number specifically, or pinned a version
+  from a known-good tutorial rather than taking `npm install`'s default
+  `latest`. Apply this lesson to every future dependency this rebuild
+  adds, not just this one.
+- Not yet re-verified in a real browser after this fix (should now load —
+  the previous failure was a hard mount-time crash, not a subtle one, so
+  low risk, but still unconfirmed).
+- Committed + pushed.
+- Next AI should: confirm with the owner that the app loads again and
+  `/canvas-preview` still works as expected (whole-panel drag from the
+  previous session's revision) before doing anything else.
+
 ## 2026-09-14 (4) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - Did: corrected Phase 2 based on direct owner feedback after they tried
   `/canvas-preview`. Two separate issues reported, both fixed:
