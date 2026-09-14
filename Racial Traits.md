@@ -54,7 +54,7 @@ Primary purpose: Grung (Homebrew v4) rules reference.
 <details>
 <summary><h3>🦘 Jumping</h3></summary>
 
-**Ribbitz's Jump Bonus:** d20 + DEX(5) or STR(2) + Prof(5)
+**Ribbitz's Jump Bonus:** d20 + DEX(5) or STR(2) + Prof(6)
 
 **Official Text:**
 Your jump total includes both vertical and horizontal movement.
@@ -105,7 +105,7 @@ Your tongue is a powerful natural weapon, allowing you to make unarmed strikes t
 <details>
 <summary><h3>🪢 Tongue Grapple</h3></summary>
 
-**Ribbitz's Uses:** 5/Long Rest (= Proficiency Bonus)
+**Ribbitz's Uses:** 6/Long Rest (= Proficiency Bonus)
 
 **Official Text:**
 You can use your tongue to grapple enemies and pull them up to **10 feet**. The enemy must make a Dexterity saving throw against your Strength (Athletics) check. You can use this action a number of times equal to your proficiency bonus, regaining uses after a long rest.
@@ -125,19 +125,19 @@ Your skin adapts to match your surroundings, granting you proficiency in the **S
 <details>
 <summary><h3>🎭 Active Camo (Ribbitz-only Homebrew)</h3></summary>
 
-**Ribbitz's Uses:** 5/Long Rest (= Proficiency Bonus)
+**Ribbitz's Uses:** 6/Long Rest (= Proficiency Bonus)
 
 **Effect:**
 As a **Bonus Action**, you can activate your camouflage to gain **Advantage on Stealth checks** for up to **1 hour**.
 
-You can use this ability a number of times equal to your **Proficiency Bonus** (currently 5), regaining all expended uses after a **Long Rest**.
+You can use this ability a number of times equal to your **Proficiency Bonus** (currently 6), regaining all expended uses after a **Long Rest**.
 
 </details>
 
 <details>
 <summary><h3>☠️ Poison Contact (Skin/Saliva)</h3></summary>
 
-**Ribbitz's DC:** 17 (= 9 + Prof 5 + CON 3)
+**Ribbitz's DC:** 18 (= 9 + Prof 6 + CON 3)
 
 **Official Text:**
 Any creature that grapples you or comes into direct contact with your skin or saliva must succeed on a Constitution saving throw of **DC = 9 + your proficiency bonus + CON modifier** or become poisoned for **1 minute**. A poisoned creature no longer in contact with you can repeat the saving throw at the end of each of its turns, ending the effect on a success.
@@ -173,8 +173,8 @@ You are immune to poison damage and the poisoned condition.
 <details>
 <summary><h3>🗡️ Poison Weapon</h3></summary>
 
-**Ribbitz's DC:** 17 (= 9 + Prof 5 + CON 3)  
-**Ribbitz's Uses:** 5/day (= Proficiency Bonus)
+**Ribbitz's DC:** 18 (= 9 + Prof 6 + CON 3)<br>
+**Ribbitz's Uses:** 6/day (= Proficiency Bonus)
 
 **Official Text:**
 You can apply your Grung color-based poison to any weapon as a bonus action. The target must succeed on a saving throw with a **DC of 9 + your proficiency bonus + your CON** to take poison's effect. This ability can be used equal to your proficiency bonus per day, and only if you have submerged in water or moistened your skin within the last 24 hours.

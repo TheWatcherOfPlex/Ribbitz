@@ -35,8 +35,8 @@ Primary purpose: combat reference with clear action economy.
 #### Attack Roll Breakdown
 
 **To Hit Calculation:**
-- **Standard:** DEX (5) + Proficiency (5) + Archery Fighting Style (2) + Magic Weapon (1) = **+13**
-- **Sharpshooter:** DEX (5) + Proficiency (5) + Archery (2) + Magic (1) - Sharpshooter Penalty (5) = **+8**
+- **Standard:** DEX (5) + Proficiency (6) + Archery Fighting Style (2) + Magic Weapon (1) = **+14**
+- **Sharpshooter:** DEX (5) + Proficiency (6) + Archery (2) + Magic (1) - Sharpshooter Penalty (5) = **+9**
 
 #### Damage Ranges (Per Shot)
 
@@ -60,14 +60,14 @@ Primary purpose: combat reference with clear action economy.
 
 | Dart | Uses | Save | Effect |
 |---|---:|---:|---|
-| **Sleep** | 1/day | CON 17 | Unconscious 1 min |
-| **Paralyze** | 1/day | CON 17 | Paralyzed 1 min |
-| **Purple Grung** | 5/day | CON 17 | Seek water 1 min |
+| **Sleep** | 1/day | CON 18 | Unconscious 1 min |
+| **Paralyze** | 1/day | CON 18 | Paralyzed 1 min |
+| **Purple Grung** | 6/day | CON 18 | Seek water 1 min |
 
 #### Song of the Grung (1/day)
 - **Action:** 1 action (croak into blowgun)
 - **Range:** 30 ft line
-- **Save:** CON vs Spell Save DC **17**
+- **Save:** CON vs Spell Save DC **18**
 - **Damage:** `2d8` thunder (half on success)
 - **On failed save:** push 10 ft away from caster; deafened + rider effects
 
@@ -95,8 +95,8 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 #### Attack Roll Breakdown
 
 **To Hit Calculation:**
-- **Standard:** DEX (5) + Proficiency (5) + Archery Fighting Style (2) + Magic Weapon (2) = **+14**
-- **Sharpshooter:** DEX (5) + Proficiency (5) + Archery (2) + Magic (2) - Sharpshooter Penalty (5) = **+9**
+- **Standard:** DEX (5) + Proficiency (6) + Archery Fighting Style (2) + Magic Weapon (2) = **+15**
+- **Sharpshooter:** DEX (5) + Proficiency (6) + Archery (2) + Magic (2) - Sharpshooter Penalty (5) = **+10**
 
 #### Damage Ranges (Per Shot)
 
@@ -130,7 +130,7 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 #### Attack Roll Breakdown
 
 **To Hit Calculation:**
-- **Melee/Thrown:** DEX (5) + Proficiency (5) + Fey Blessing (1) = **+11**
+- **Melee/Thrown:** DEX (5) + Proficiency (6) + Fey Blessing (1) = **+12**
 
 #### Damage Ranges
 
@@ -158,7 +158,7 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 #### Attack Roll Breakdown
 
 **To Hit Calculation:**
-- **Melee/Thrown:** DEX (5) + Proficiency (5) = **+10**
+- **Melee/Thrown:** DEX (5) + Proficiency (6) = **+11**
 
 #### Damage Ranges
 
@@ -184,7 +184,7 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 #### Attack Roll Breakdown
 
 **To Hit Calculation:**
-- **Melee:** STR (2) + Proficiency (5) = **+7**
+- **Melee:** STR (2) + Proficiency (6) = **+8**
 
 #### Damage Ranges
 
@@ -210,7 +210,7 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 #### Attack Roll Breakdown
 
 **To Hit Calculation:**
-- **Melee:** STR (2) + Proficiency (5) = **+7**
+- **Melee:** STR (2) + Proficiency (6) = **+8**
 
 #### Damage Ranges
 
@@ -236,7 +236,7 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 #### Attack Roll Breakdown
 
 **To Hit Calculation:**
-- **Melee (Reach):** STR (2) + Proficiency (5) = **+7**
+- **Melee (Reach):** STR (2) + Proficiency (6) = **+8**
 
 #### Damage Ranges
 
@@ -261,7 +261,7 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 - **Range:** 10/15
 - **Effect:** grapple / pull up to **10 ft**
 - **Check:** target DEX save vs your STR (Athletics)
-- **Uses:** PB per Long Rest *(PB=5)*
+- **Uses:** PB per Long Rest *(PB=6)*
 
 </details>
 
@@ -269,7 +269,7 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 <summary><h3>Poison Skin (Passive)</h3></summary>
 
 - **Trigger:** any creature grapples you or directly contacts your skin/saliva
-- **Save:** CON **DC 17** = `9 + PB (5) + CON mod (3)`
+- **Save:** CON **DC 18** = `9 + PB (6) + CON mod (3)`
 - **Duration:** 1 minute
 - **Repeat save:** if no longer in contact, target repeats save at end of turn
 
@@ -279,8 +279,8 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 <summary><h3>Poison Weapon (Bonus Action)</h3></summary>
 
 - **Apply:** Grung poison to a weapon
-- **Save:** CON **DC 17** = `9 + PB (5) + CON mod (3)`
-- **Uses:** PB per day *(PB=5)*
+- **Save:** CON **DC 18** = `9 + PB (6) + CON mod (3)`
+- **Uses:** PB per day *(PB=6)*
 - **Requirement:** must have moistened/submerged within last 24h
 
 </details>

@@ -141,6 +141,160 @@ app.get('/api/health', (_, res) => {
   res.json({ status: 'ok' })
 })
 
+// --- Structured content export (spells/actions) for external consumers, e.g. Stream Commander ---
+// Parses the same canonical Markdown the dashboard reads, so there is one source of truth.
+
+function stripHtml(text) {
+  return String(text)
+    .replace(/<[^>]*>/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function slugifyHeading(text) {
+  return String(text)
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+}
+
+function extractField(block, label) {
+  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const match = block.match(new RegExp(`\\*\\*${escaped}:\\*\\*\\s*([^\\n]+)`, 'i'))
+  return match ? stripHtml(match[1]) : ''
+}
+
+function extractSection(block, heading) {
+  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const match = block.match(new RegExp(`#### ${escaped}\\n+([\\s\\S]*?)(?=\\n#### |\\n</details>|$)`, 'i'))
+  return match ? match[1].trim() : ''
+}
+
+function extractAllSections(block) {
+  const sections = {}
+  const regex = /#### ([^\n]+)\n+([\s\S]*?)(?=\n#### |\n<\/details>|$)/g
+  let match
+  while ((match = regex.exec(block))) {
+    sections[stripHtml(match[1]).trim()] = match[2].trim()
+  }
+  return sections
+}
+
+function summarizeMarkdownBlock(markdownText) {
+  const cleaned = stripHtml(
+    String(markdownText || '')
+      .replace(/\*\*At Higher Levels:\*\*[\s\S]*/i, '')
+      .replace(/\*\*Spell Lists:\*\*[\s\S]*/i, '')
+      .replace(/\*\*/g, ''),
+  )
+  if (!cleaned) return ''
+  return cleaned.length > 360 ? `${cleaned.slice(0, 357).trim()}...` : cleaned
+}
+
+function extractBulletNotes(markdownText) {
+  return String(markdownText || '')
+    .split('\n')
+    .map((line) => stripHtml(line.replace(/^[-*]\s*/, '').replace(/\*\*/g, '')))
+    .filter(Boolean)
+}
+
+// Walks <summary><h2>Section</h2></summary> ... <summary><h3>Item</h3></summary> ... </details>
+// blocks (the format every root content .md file uses) and returns a flat list of items.
+function parseMarkdownCatalog(markdownText, kind) {
+  const normalized = String(markdownText || '').replace(/\r\n/g, '\n')
+  const items = []
+
+  const sectionRegex = /<summary><h2>([\s\S]*?)<\/h2><\/summary>/g
+  const sections = []
+  let match
+  while ((match = sectionRegex.exec(normalized))) {
+    sections.push({ titleHtml: match[1], start: match.index, end: sectionRegex.lastIndex })
+  }
+
+  for (let i = 0; i < sections.length; i += 1) {
+    const current = sections[i]
+    const next = sections[i + 1]
+    const block = normalized.slice(current.end, next?.start ?? normalized.length)
+    const sectionTitle = stripHtml(current.titleHtml)
+
+    const itemRegex = /<summary><h3>([\s\S]*?)<\/h3><\/summary>/g
+    let itemMatch
+    while ((itemMatch = itemRegex.exec(block))) {
+      const rawName = stripHtml(itemMatch[1])
+      if (!rawName) continue
+      const itemStart = itemRegex.lastIndex
+      const nextItemMatch = block.slice(itemStart).match(/<summary><h3>[\s\S]*?<\/h3><\/summary>/)
+      const itemEnd = nextItemMatch ? itemStart + nextItemMatch.index : block.length
+      const itemBlock = block.slice(itemStart, itemEnd)
+
+      const officialText = extractSection(itemBlock, 'Official Text')
+      const ribbitzNotes = extractSection(itemBlock, 'Ribbitz Notes')
+      const headings = extractAllSections(itemBlock)
+
+      items.push({
+        kind,
+        section: sectionTitle,
+        name: rawName,
+        slug: slugifyHeading(rawName),
+        level: extractField(itemBlock, 'Level'),
+        castingTime: extractField(itemBlock, 'Casting Time'),
+        range: extractField(itemBlock, 'Range'),
+        components: extractField(itemBlock, 'Components'),
+        duration: extractField(itemBlock, 'Duration'),
+        source: extractField(itemBlock, 'Source'),
+        summary: summarizeMarkdownBlock(officialText) || summarizeMarkdownBlock(itemBlock),
+        notes: extractBulletNotes(ribbitzNotes),
+        sections: headings,
+        fullText: itemBlock.trim(),
+      })
+    }
+  }
+
+  return items
+}
+
+async function readContentMarkdown(filename) {
+  const filePath = path.join(uiDistPath, 'content', filename)
+  return fs.readFile(filePath, 'utf-8')
+}
+
+app.get('/api/export/spells', async (_req, res) => {
+  try {
+    const text = await readContentMarkdown('Spells and Magic Abilities.md')
+    const items = parseMarkdownCatalog(text, 'spell')
+    res.json({ items })
+  } catch (error) {
+    res.status(500).json({ message: `Unable to read spell content: ${error.message}` })
+  }
+})
+
+app.get('/api/export/actions', async (_req, res) => {
+  try {
+    const text = await readContentMarkdown('Actions.md')
+    const items = parseMarkdownCatalog(text, 'action')
+    res.json({ items })
+  } catch (error) {
+    res.status(500).json({ message: `Unable to read actions content: ${error.message}` })
+  }
+})
+
+app.get('/api/export/catalog', async (_req, res) => {
+  try {
+    const [spellsText, actionsText] = await Promise.all([
+      readContentMarkdown('Spells and Magic Abilities.md'),
+      readContentMarkdown('Actions.md'),
+    ])
+    const items = [
+      ...parseMarkdownCatalog(spellsText, 'spell'),
+      ...parseMarkdownCatalog(actionsText, 'action'),
+    ]
+    res.json({ items, updatedAt: new Date().toISOString() })
+  } catch (error) {
+    res.status(500).json({ message: `Unable to build catalog: ${error.message}` })
+  }
+})
+
 app.get('/api/sophie/rolls', (_, res) => {
   res.json({ rolls: sophieRolls })
 })

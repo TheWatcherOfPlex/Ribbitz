@@ -15,7 +15,7 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 - [Racial / Homebrew (Need-to-Know)](#-racial--homebrew-need-to-know)
 - [Ability Scores & Skills](#-ability-scores--skills)
 
-> **Ribbitz** is a **Level 16** Grung (Homebrew): **Ranger 6 (Gloom Stalker)** / **Druid 10 (Circle of Spores)**.
+> **Ribbitz** is a **Level 17** Grung (Homebrew): **Ranger 6 (Gloom Stalker)** / **Druid 11 (Circle of Spores)**.
 
 ## 🪪 Identity
 
@@ -24,7 +24,7 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 | **Race** | Grung (Homebrew v4) |
 | **Background** | Vanguard of the Great Golden Risabere |
 | **Alignment** | Neutral Good |
-| **Level** | 16 (Ranger 6 / Druid 10) |
+| **Level** | 17 (Ranger 6 / Druid 11) |
 | **Age** | 3.5 years |
 | **Size** | Small (4' 0", 55 lbs) |
 
@@ -39,7 +39,7 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 | **Initiative** | **+5** *(+8 entering combat)* |
 | **Speed** | 25 ft *(hop/climb/swim)* |
 | **Darkvision** | **90 ft** = `60 ft (Frog Eyes)` + `30 ft (Umbral Sight)` |
-| **Proficiency Bonus** | **+5** |
+| **Proficiency Bonus** | **+6** |
 
 > **More info:** armor/clothing breakdown → [Inventory](./Inventory.md)
 
@@ -47,15 +47,15 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 
 | Thing | Value | Notes |
 |---|---:|---|
-| **Spell Save DC** | **17** | `8 + PB (5) + WIS mod (4)` |
-| **Spell Attack** | **+9** | `PB (5) + WIS mod (4)` |
-| **Poison Skin DC** | **17** | `12 + PB (5)` |
-| **Poison Weapon DC** | **17** | `9 + PB (5) + CON mod (3)` |
-| **Song of the Grung DC** | **17** | uses Spell Save DC |
+| **Spell Save DC** | **18** | `8 + PB (6) + WIS mod (4)` |
+| **Spell Attack** | **+10** | `PB (6) + WIS mod (4)` |
+| **Poison Skin DC** | **18** | `12 + PB (6)` |
+| **Poison Weapon DC** | **18** | `9 + PB (6) + CON mod (3)` |
+| **Song of the Grung DC** | **18** | uses Spell Save DC |
 
 | Passive | Value |
 |---|---:|
-| **Perception** | 19 |
+| **Perception** | 20 |
 | **Insight** | 14 |
 | **Investigation** | 9 |
 
@@ -84,10 +84,10 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 | Stat | Score | Mod | Save |
 | :--- | :---: | :---: | :---: |
 | **STR** | 14 | +2 | +2 |
-| **DEX** | 20 | +5 | ⭐ +10 |
+| **DEX** | 20 | +5 | ⭐ +11 |
 | **CON** | 16 | +3 | +3 |
 | **INT** | 9 | -1 | -1 |
-| **WIS** | 18 | +4 | ⭐ +9 |
+| **WIS** | 18 | +4 | ⭐ +10 |
 | **CHA** | 8 | -1 | -1 |
 
 ### Skills
@@ -97,9 +97,9 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 **Saving Throws:** ⭐ DEX, ⭐ WIS  \
 **Skills:** ⭐ Acrobatics, ⭐ Arcana, ⭐ Medicine, ⭐ Nature, ⭐ Perception, ⭐ Stealth, ⭐ Survival
 
-- ⭐ **Acrobatics:** +5 (DEX)
+- ⭐ **Acrobatics:** +11 (DEX 5 + Prof 6)
 - **Animal Handling:** +4 (WIS)
-- ⭐ **Arcana:** +4 (INT -1 + Prof 5)
+- ⭐ **Arcana:** +5 (INT -1 + Prof 6)
 - **Athletics:** +2 (STR)
   - *Gloves of Swimming and Climbing:* **Add +5** (+7 Total) and no extra movement cost for Swimming or Climbing.
 - **Deception:** -1 (CHA)
@@ -107,19 +107,19 @@ Primary purpose: quick-to-scan character core numbers + pointers to detail pages
 - **Insight:** +4 (WIS)
 - **Intimidation:** -1 (CHA)
 - **Investigation:** -1 (INT)
-- ⭐ **Medicine:** +9 (WIS 4 + Prof 5)
-  - *Natural Explorer:* **Add +5** (+14 Total) in Swamp/Forest
-- ⭐ **Nature:** +4 (INT -1 + Prof 5)
-  - *Natural Explorer:* **Add +5** (+9 Total) in Swamp/Forest
-- ⭐ **Perception:** +9 (WIS 4 + Prof 5)
-  - *Natural Explorer:* **Add +5** (+14 Total) in Swamp/Forest
+- ⭐ **Medicine:** +10 (WIS 4 + Prof 6)
+  - *Natural Explorer:* **Add +6** (+16 Total) in Swamp/Forest
+- ⭐ **Nature:** +5 (INT -1 + Prof 6)
+  - *Natural Explorer:* **Add +6** (+11 Total) in Swamp/Forest
+- ⭐ **Perception:** +10 (WIS 4 + Prof 6)
+  - *Natural Explorer:* **Add +6** (+16 Total) in Swamp/Forest
 - **Performance:** -1 (CHA)
 - **Persuasion:** -1 (CHA)
 - **Religion:** -1 (INT)
 - **Sleight of Hand:** +5 (DEX)
-- ⭐ **Stealth:** +10 (DEX 5 + Prof 5)
-- ⭐ **Survival:** +9 (WIS 4 + Prof 5)
-  - *Natural Explorer:* **Add +5** (+14 Total) in Swamp/Forest
+- ⭐ **Stealth:** +11 (DEX 5 + Prof 6)
+- ⭐ **Survival:** +10 (WIS 4 + Prof 6)
+  - *Natural Explorer:* **Add +6** (+16 Total) in Swamp/Forest
 
 ### Languages
 

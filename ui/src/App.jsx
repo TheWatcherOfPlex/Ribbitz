@@ -14,6 +14,46 @@ const CONTENT_BASE = import.meta.env.BASE_URL || '/'
 const apiFetch = (path, init) => fetch(`${API_BASE}${path}`, init)
 const contentPath = (file) => `${CONTENT_BASE}content/${file}`
 const contentImagePath = (file) => `${CONTENT_BASE}content-images/${file}`
+
+// Stream Commander's self-hosted 3D dice overlay — a different service/origin
+// entirely (LAN, CORS-enabled just for these endpoints). Best-effort: if it's
+// unreachable, rolling from here silently no-ops rather than breaking the UI.
+const DICE_API_BASE = (import.meta.env.VITE_DICE_API_BASE || 'http://10.0.0.54:4035').replace(/\/+$/, '')
+
+// `parts` is the labeled breakdown of everything besides the die itself —
+// e.g. [{ label: 'Dexterity Modifier', value: 5 }, { label: 'Proficiency Bonus', value: 6 }] —
+// so the on-stream overlay can spell out exactly what went into the roll
+// instead of just showing a flat modifier.
+// For abilities that just roll a flat damage die (e.g. Halo of Spores'
+// "1d8") — no d20/component breakdown to build, just roll what's given.
+const rollFlatDice = (notation, label) => {
+  if (!notation || notation.includes('—')) return
+  fetch(`${DICE_API_BASE}/api/dice/roll`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ notation, label, parts: [] }),
+  }).catch(() => {})
+}
+
+const rollDice = (label, parts = []) => {
+  // If any expected component is unavailable ('—' / not yet loaded), don't
+  // roll with silently-wrong math — the whole point here is transparency.
+  if (parts.some((p) => !Number.isFinite(p.value))) return
+  const total = parts.reduce((sum, p) => sum + p.value, 0)
+  const notation = `1d20${total >= 0 ? '+' : ''}${total}`
+  fetch(`${DICE_API_BASE}/api/dice/roll`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ notation, label, parts }),
+  }).catch(() => {})
+}
+
+// Parses a signed stat-sheet string like "+5" or "-1" into a number, or
+// null if it's not available yet ('—').
+const parseStatNumber = (value) => {
+  const n = parseInt(String(value ?? '').replace(/\s+/g, ''), 10)
+  return Number.isFinite(n) ? n : null
+}
 const inventoryCacheKey = 'ribbitz.inventoryCache'
 const pendingInventoryKey = 'ribbitz.inventoryPending'
 const syncModeKey = 'ribbitz.syncMode'
@@ -67,12 +107,17 @@ const quickStats = [
   { label: 'AC', key: 'ac', fallback: '19' },
   { label: 'Initiative', key: 'initiative', fallback: '+5' },
   { label: 'Speed', key: 'speed', fallback: '25 ft' },
-  { label: 'Proficiency', key: 'proficiency', fallback: '+5' },
+  { label: 'Proficiency', key: 'proficiency', fallback: '+6' },
   { label: 'Darkvision', key: 'darkvision', fallback: '90 ft' },
-  { label: 'Passive Perception', key: 'passive-perception', fallback: '19' },
-  { label: 'Spell Save DC', key: 'spell-dc', fallback: '17' },
-  { label: 'Spell Attack', key: 'spell-attack', fallback: '+9' },
+  { label: 'Passive Perception', key: 'passive-perception', fallback: '20' },
+  { label: 'Spell Save DC', key: 'spell-dc', fallback: '18' },
+  { label: 'Spell Attack', key: 'spell-attack', fallback: '+10' },
   { label: 'Size', key: 'size', fallback: `Small (4' 0", 55 lbs)` },
+]
+
+const currencyItems = [
+  { label: 'Gold', inventoryName: 'Gold Pieces: 252 gp', fallback: 7223, suffix: 'gp' },
+  { label: 'Golden Beetles', inventoryName: '100 Golden Beetles', fallback: 100, suffix: 'beetles' },
 ]
 
 const abilities = [
@@ -140,13 +185,23 @@ const exhaustionEffects = [
 const skillGroups = [
   {
     label: 'Strength',
+    abilityKey: 'str',
     skills: [
       { label: 'Athletics', key: 'skill-athletics', proficient: false },
-      { label: 'Athletics (Swim/Climb)', key: 'skill-athletics-gloves', proficient: true },
+      {
+        label: 'Athletics (Swim/Climb)',
+        key: 'skill-athletics-gloves',
+        proficient: true,
+        // Base Athletics isn't proficient — the glove is the only proficiency
+        // source here, so don't ALSO add a separate generic proficiency term.
+        extraBonusReplacesProficiency: true,
+        extraBonus: { label: 'Gloves of Swimming & Climbing', statKey: 'proficiency' },
+      },
     ],
   },
   {
     label: 'Dexterity',
+    abilityKey: 'dex',
     skills: [
       { label: 'Acrobatics', key: 'skill-acrobatics', proficient: true },
       { label: 'Sleight of Hand', key: 'skill-sleight', proficient: false },
@@ -155,6 +210,7 @@ const skillGroups = [
   },
   {
     label: 'Intelligence',
+    abilityKey: 'int',
     skills: [
       { label: 'Arcana', key: 'skill-arcana', proficient: true },
       { label: 'History', key: 'skill-history', proficient: false },
@@ -164,12 +220,14 @@ const skillGroups = [
         label: 'Nature (Preferred Terrain)',
         key: 'skill-nature-terrain',
         proficient: true,
+      extraBonus: { label: 'Natural Explorer Bonus', statKey: 'proficiency' },
       },
       { label: 'Religion', key: 'skill-religion', proficient: false },
     ],
   },
   {
     label: 'Wisdom',
+    abilityKey: 'wis',
     skills: [
       { label: 'Animal Handling', key: 'skill-animal-handling', proficient: false },
       { label: 'Insight', key: 'skill-insight', proficient: false },
@@ -178,23 +236,27 @@ const skillGroups = [
         label: 'Medicine (Preferred Terrain)',
         key: 'skill-medicine-terrain',
         proficient: true,
+      extraBonus: { label: 'Natural Explorer Bonus', statKey: 'proficiency' },
       },
       { label: 'Perception', key: 'skill-perception', proficient: true },
       {
         label: 'Perception (Preferred Terrain)',
         key: 'skill-perception-terrain',
         proficient: true,
+      extraBonus: { label: 'Natural Explorer Bonus', statKey: 'proficiency' },
       },
       { label: 'Survival', key: 'skill-survival', proficient: true },
       {
         label: 'Survival (Preferred Terrain)',
         key: 'skill-survival-terrain',
         proficient: true,
+      extraBonus: { label: 'Natural Explorer Bonus', statKey: 'proficiency' },
       },
     ],
   },
   {
     label: 'Charisma',
+    abilityKey: 'cha',
     skills: [
       { label: 'Deception', key: 'skill-deception', proficient: false },
       { label: 'Intimidation', key: 'skill-intimidation', proficient: false },
@@ -221,17 +283,18 @@ const restDefinitions = {
       { key: 'slots-3rd', value: '3/3' },
       { key: 'slots-4th', value: '3/3' },
       { key: 'slots-5th', value: '2/2' },
+      { key: 'slots-6th', value: '1/1' },
       { key: 'wild-shape', value: '2/2' },
-      { key: 'active-camo', value: '5/5' },
+      { key: 'active-camo', value: '6/6' },
       { key: 'fungal-infestation', value: '4/4' },
       { key: 'song-grung', value: '1/1' },
       { key: 'fey-misty-step', value: '1/1' },
       { key: 'fey-hunters-mark', value: '1/1' },
-      { key: 'poison-weapon', value: '5/5' },
-      { key: 'tongue-grapple', value: '5/5' },
+      { key: 'poison-weapon', value: '6/6' },
+      { key: 'tongue-grapple', value: '6/6' },
       { key: 'dart-sleep', value: '1/1' },
       { key: 'dart-paralyze', value: '1/1' },
-      { key: 'dart-purple', value: '5/5' },
+      { key: 'dart-purple', value: '6/6' },
       { key: 'skywarden-pierce', value: '1/1' },
     ],
   },
@@ -419,6 +482,90 @@ function parsePreparedSpellsIndex(markdownText) {
   return index
 }
 
+// Same shape/parsing approach as parsePreparedSpellsIndex, but for the flat
+// "Magic Abilities (Non-Spell)" section (Halo of Spores, Symbiotic Entity,
+// etc.) — no per-level grouping, just name -> { summary, notes, subtitle }.
+function parseMagicAbilitiesIndex(markdownText) {
+  const normalized = String(markdownText || '').replace(/\r\n/g, '\n')
+  const index = {}
+
+  const sectionRegex = /<summary><h2>([\s\S]*?)<\/h2><\/summary>/g
+  const sections = []
+  let match
+  while ((match = sectionRegex.exec(normalized))) {
+    sections.push({ titleHtml: match[1], start: match.index, end: sectionRegex.lastIndex })
+  }
+
+  const magicSection = sections.find((s) => /magic abilities/i.test(stripHtml(s.titleHtml)))
+  if (!magicSection) return index
+
+  const sectionIndex = sections.indexOf(magicSection)
+  const next = sections[sectionIndex + 1]
+  const block = normalized.slice(magicSection.end, next?.start ?? normalized.length)
+
+  const abilityRegex = /<summary><h3>([\s\S]*?)<\/h3><\/summary>/g
+  let abilityMatch
+  while ((abilityMatch = abilityRegex.exec(block))) {
+    const name = stripHtml(abilityMatch[1])
+    if (!name) continue
+    const blockStart = abilityRegex.lastIndex
+    const blockEnd = (() => {
+      const nextMatch = block.slice(blockStart).match(/<summary><h3>[\s\S]*?<\/h3><\/summary>/)
+      return nextMatch ? blockStart + nextMatch.index : block.length
+    })()
+    const abilityBlock = block.slice(blockStart, blockEnd)
+    const officialText = extractSection(abilityBlock, 'Official Text')
+    const ribbitzNotes = extractSection(abilityBlock, 'Ribbitz Notes')
+    // The "**Circle of Spores Feature (Nth level)**" style line right under
+    // the heading, if present — shown as a small subtitle.
+    const subtitleMatch = abilityBlock.match(/^\s*\*\*([^*]+)\*\*\s*$/m)
+    const slug = slugifyHeading(name)
+    index[slug] = {
+      name,
+      slug,
+      subtitle: subtitleMatch ? stripHtml(subtitleMatch[1]) : '',
+      source: extractField(abilityBlock, 'Source'),
+      summary: summarizeMarkdownBlock(officialText),
+      notes: extractBulletNotes(ribbitzNotes),
+    }
+  }
+
+  return index
+}
+
+// Compact "topic" row: name + optional roll button, click to expand full
+// text/notes inline below — same interaction as the Prepared Spells list.
+function AbilityTopicRow({ ability, expanded, onToggle, onRoll, rollLabel }) {
+  if (!ability) return null
+  return (
+    <div className="ability-topic">
+      <div className="ability-topic__row">
+        <button type="button" className="ability-topic__name" onClick={onToggle}>
+          {expanded ? '▾' : '▸'} {ability.name}
+        </button>
+        {onRoll ? (
+          <button type="button" className="skill-row__roll-btn" onClick={onRoll}>
+            {rollLabel || 'Roll'}
+          </button>
+        ) : null}
+      </div>
+      {expanded ? (
+        <div className="inline-detail">
+          {ability.subtitle ? <div className="inline-detail__summary"><strong>{ability.subtitle}</strong></div> : null}
+          {ability.summary ? <div className="inline-detail__summary">{ability.summary}</div> : null}
+          {ability.notes?.length ? (
+            <ul className="inline-detail__notes">
+              {ability.notes.map((note) => (
+                <li key={note}>{note}</li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
 function CounterRow({ label, value, detail, onStep, disabled }) {
   return (
     <div className="counter-row">
@@ -600,12 +747,16 @@ function App() {
     try {
       const saved = window.localStorage.getItem('ribbitz.inspiration')
       const parsed = Number(saved)
-      return Number.isFinite(parsed) ? parsed : 0
+      return Number.isFinite(parsed) ? parsed : 1
     } catch {
-      return 0
+      return 1
     }
   })
   const [preparedSpells, setPreparedSpells] = useState({})
+  const [magicAbilities, setMagicAbilities] = useState({})
+  const [expandedAbilityKey, setExpandedAbilityKey] = useState('')
+  const toggleAbility = (slug) =>
+    setExpandedAbilityKey((current) => (current === slug ? '' : slug))
 
   const [deathSaves, setDeathSaves] = useState(() => {
     try {
@@ -652,7 +803,7 @@ function App() {
 
   const healingQuickLinks = useMemo(() => {
     const wisMod = parseSignedInt(statMap?.['wis-mod'], 4)
-    const symbioticTemp = statMap?.['symbiotic-temp-hp'] || '40'
+    const symbioticTemp = statMap?.['symbiotic-temp-hp'] || '44'
     const spongeMushrooms =
       Number(inventoryItems.find((item) => item.name === 'Sponge Mushrooms')?.quantity) || 0
 
@@ -729,7 +880,7 @@ function App() {
       }, {})
       const nextInspiration =
         mapped?.inspiration == null || mapped.inspiration === ''
-          ? localInspiration
+          ? 1
           : Number(mapped.inspiration) || 0
       if (mapped) {
         mapped.inspiration = nextInspiration
@@ -938,10 +1089,12 @@ function App() {
       .then((text) => {
         if (cancelled) return
         setPreparedSpells(parsePreparedSpellsIndex(text))
+        setMagicAbilities(parseMagicAbilitiesIndex(text))
       })
       .catch(() => {
         if (cancelled) return
         setPreparedSpells({})
+        setMagicAbilities({})
       })
 
     return () => {
@@ -1064,7 +1217,7 @@ function App() {
   const symbioticActive = String(statMap?.['symbiotic-active'] || 'No').toLowerCase() === 'yes'
   const symbioticTempHp = Number(statMap?.['symbiotic-temp-hp']) || 0
 
-  const updateSymbioticEntity = async (active, tempHp = active ? 40 : 0) => {
+  const updateSymbioticEntity = async (active, tempHp = active ? 44 : 0) => {
     await applyBulkUpdates([
       { key: 'symbiotic-active', value: active ? 'Yes' : 'No' },
       { key: 'symbiotic-temp-hp', value: String(Math.max(0, tempHp)) },
@@ -1231,7 +1384,7 @@ function App() {
           </div>
           <div>
             <div className="title">Vanguard Ribbitz</div>
-            <div className="subtitle">Ranger 6 / Druid 10 • Level 16</div>
+            <div className="subtitle">Ranger 6 / Druid 11 • Level 17</div>
           </div>
         </div>
         <nav className="sidebar__nav">
@@ -1284,6 +1437,24 @@ function App() {
               <section className="grid">
                 <div className="panel panel--primary panel--tight">
                   <div className="panel__stack">
+                    <div className="panel__box currency-box">
+                      <div className="panel__section-title">Currency</div>
+                      <div className="panel__content currency-list">
+                        {currencyItems.map((item) => (
+                          <StatControl
+                            key={item.label}
+                            label={item.label}
+                            value={getInventoryQuantity(item.inventoryName, item.fallback)}
+                            helper={item.suffix}
+                            onChange={(nextValue) =>
+                              setInventoryItemValue(item.inventoryName, nextValue)
+                            }
+                            accent="gold"
+                          />
+                        ))}
+                      </div>
+                    </div>
+
                     <div className="panel__box">
                       <div className="panel__section-title">Quick Stats</div>
                       <div className="panel__content quick-stats">
@@ -1406,7 +1577,7 @@ function App() {
                         <div className="vitality-survival__grid">
                           <div className="hit-dice">
                             <div className="hit-dice__title">Hit Dice</div>
-                            <div className="hit-dice__detail">Ranger 6d10 • Druid 10d8</div>
+                            <div className="hit-dice__detail">Ranger 6d10 • Druid 11d8</div>
                           </div>
 
                           <div className="death-saves">
@@ -1483,22 +1654,63 @@ function App() {
                     <div className="abilities-skills__skills">
                       <div className="abilities-skills__subtitle">Skills</div>
                       <div className="skills-grid">
-                        {skillGroups.map((group) => (
-                          <div key={group.label} className="skill-group">
-                            <div className="skill-group__title">{group.label}</div>
-                            {group.skills.map((skill) => (
-                              <div
-                                key={skill.key}
-                                className={`skill-row${skill.proficient ? ' skill-row--pro' : ''}`}
-                              >
-                                <span>{skill.label}</span>
-                                <span className="skill-row__controls">
-                                  <span>{getSkillValue(skill.key)}</span>
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        ))}
+                        {skillGroups.map((group) => {
+                          const groupAbility = abilities.find((a) => a.key === group.abilityKey)
+                          const abilityModValue = groupAbility ? parseStatNumber(statMap?.[groupAbility.modKey]) : null
+                          const proficiencyValue = parseStatNumber(statMap?.['proficiency'])
+                          const saveValue = groupAbility ? statMap?.[groupAbility.saveKey] ?? '—' : '—'
+                          const saveParts = [{ label: `${group.label} Modifier`, value: abilityModValue }]
+                          if (groupAbility?.proficient) {
+                            saveParts.push({ label: 'Proficiency Bonus', value: proficiencyValue })
+                          }
+                          return (
+                            <div key={group.label} className="skill-group">
+                              <div className="skill-group__title">{group.label}</div>
+                              {group.skills.map((skill) => {
+                                const checkValue = getSkillValue(skill.key)
+                                const checkParts = [{ label: `${group.label} Modifier`, value: abilityModValue }]
+                                if (skill.proficient && !skill.extraBonusReplacesProficiency) {
+                                  checkParts.push({ label: 'Proficiency Bonus', value: proficiencyValue })
+                                }
+                                if (skill.extraBonus) {
+                                  checkParts.push({
+                                    label: skill.extraBonus.label,
+                                    value: parseStatNumber(statMap?.[skill.extraBonus.statKey]),
+                                  })
+                                }
+                                return (
+                                  <div
+                                    key={skill.key}
+                                    className={`skill-row${skill.proficient ? ' skill-row--pro' : ''}`}
+                                  >
+                                    <span>{skill.label}</span>
+                                    <span className="skill-row__controls">
+                                      <span>{checkValue}</span>
+                                      <button
+                                        type="button"
+                                        className="skill-row__roll-btn"
+                                        disabled={checkValue === '—'}
+                                        onClick={() => rollDice(`${skill.label} Check`, checkParts)}
+                                        title={`${skill.label} Check`}
+                                      >
+                                        Check
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className="skill-row__roll-btn"
+                                        disabled={saveValue === '—'}
+                                        onClick={() => rollDice(`${group.label} Save`, saveParts)}
+                                        title={`${group.label} Save`}
+                                      >
+                                        Save
+                                      </button>
+                                    </span>
+                                  </div>
+                                )
+                              })}
+                            </div>
+                          )
+                        })}
                       </div>
                     </div>
                   </div>
@@ -1721,6 +1933,11 @@ function App() {
                           items={parseTracker('slots-5th', '5th', { compact: true })}
                           onToggle={handleToggle}
                         />
+                        <TrackerGroup
+                          title="6th"
+                          items={parseTracker('slots-6th', '6th', { compact: true })}
+                          onToggle={handleToggle}
+                        />
                       </div>
                     </div>
 
@@ -1780,6 +1997,11 @@ function App() {
                           items={parseTracker('fungal-infestation', 'Fungal', { compact: true })}
                           onToggle={handleToggle}
                         />
+                        <AbilityTopicRow
+                          ability={magicAbilities['fungal-infestation']}
+                          expanded={expandedAbilityKey === 'fungal-infestation'}
+                          onToggle={() => toggleAbility('fungal-infestation')}
+                        />
 
                         <div className="spores-panel">
                           <div className="spores-panel__title">Circle of Spores</div>
@@ -1792,24 +2014,54 @@ function App() {
                           >
                             {symbioticActive
                               ? `End Symbiotic Entity (${symbioticTempHp} HP)`
-                              : 'Activate Symbiotic Entity (+40 HP)'}
+                              : 'Activate Symbiotic Entity (+44 HP)'}
                           </button>
                           <div className="spores-panel__grid">
-                            <div className="spores-panel__roll">
+                            <button
+                              type="button"
+                              className="spores-panel__roll spores-panel__roll--btn"
+                              onClick={() =>
+                                rollFlatDice(statMap?.['halo-damage'] ?? haloDamage, 'Halo of Spores')
+                              }
+                            >
                               Halo {statMap?.['halo-damage'] ?? haloDamage}
-                            </div>
-                            <div className="spores-panel__roll">
+                            </button>
+                            <button
+                              type="button"
+                              className="spores-panel__roll spores-panel__roll--btn"
+                              onClick={() =>
+                                rollFlatDice(
+                                  statMap?.['halo-damage-symbiotic'] ?? haloSymbioticDamage,
+                                  'Halo of Spores (Symbiotic Entity)',
+                                )
+                              }
+                            >
                               Symbiotic {statMap?.['halo-damage-symbiotic'] ?? haloSymbioticDamage}
-                            </div>
+                            </button>
                             <div className="spores-panel__roll spores-panel__roll--wide">
                               Spreading Spores
                             </div>
                           </div>
                           <div className="spores-panel__note">
-                            DC {statMap?.['spell-dc'] ?? '17'} CON save. Spreading Spores is a
+                            DC {statMap?.['spell-dc'] ?? '18'} CON save. Spreading Spores is a
                             bonus action while Symbiotic Entity is active; while the cube persists,
                             Halo cannot be used as a reaction.
                           </div>
+                          <AbilityTopicRow
+                            ability={magicAbilities['symbiotic-entity']}
+                            expanded={expandedAbilityKey === 'symbiotic-entity'}
+                            onToggle={() => toggleAbility('symbiotic-entity')}
+                          />
+                          <AbilityTopicRow
+                            ability={magicAbilities['halo-of-spores-reaction']}
+                            expanded={expandedAbilityKey === 'halo-of-spores-reaction'}
+                            onToggle={() => toggleAbility('halo-of-spores-reaction')}
+                          />
+                          <AbilityTopicRow
+                            ability={magicAbilities['spreading-spores']}
+                            expanded={expandedAbilityKey === 'spreading-spores'}
+                            onToggle={() => toggleAbility('spreading-spores')}
+                          />
                         </div>
 
                         <TrackerGroup
@@ -1834,6 +2086,11 @@ function App() {
                               </select>
                             </label>
                           }
+                        />
+                        <AbilityTopicRow
+                          ability={magicAbilities['song-of-the-grung']}
+                          expanded={expandedAbilityKey === 'song-of-the-grung'}
+                          onToggle={() => toggleAbility('song-of-the-grung')}
                         />
 
                         <TrackerGroup
@@ -1870,8 +2127,8 @@ function App() {
                           Blowgun +1
                         </Link>
                         <div className="combat-kit__weapon-meta">
-                          Hit {statMap?.['blowgun-hit'] ?? '+13'} (Std) •{' '}
-                          {statMap?.['blowgun-hit-ss'] ?? '+8'} (Pwr)
+                          Hit {statMap?.['blowgun-hit'] ?? '+14'} (Std) •{' '}
+                          {statMap?.['blowgun-hit-ss'] ?? '+9'} (Pwr)
                         </div>
                         <div className="combat-kit__weapon-meta">
                           Std {statMap?.['blowgun-dmg'] ?? '1d8'}
@@ -1892,8 +2149,8 @@ function App() {
                           Longbow +2
                         </Link>
                         <div className="combat-kit__weapon-meta">
-                          Hit {statMap?.['longbow-hit'] ?? '+14'} (Std) •{' '}
-                          {statMap?.['longbow-hit-ss'] ?? '+9'} (Pwr)
+                          Hit {statMap?.['longbow-hit'] ?? '+15'} (Std) •{' '}
+                          {statMap?.['longbow-hit-ss'] ?? '+10'} (Pwr)
                         </div>
                         <div className="combat-kit__weapon-meta">
                           Std {statMap?.['longbow-dmg'] ?? '1d10+7'}
@@ -1914,7 +2171,7 @@ function App() {
                           Dagger +1 - Fey Blessed
                         </Link>
                         <div className="combat-kit__weapon-meta">
-                          Hit {statMap?.['dagger-hit'] ?? '+11'}
+                          Hit {statMap?.['dagger-hit'] ?? '+12'}
                         </div>
                         <div className="combat-kit__weapon-meta">
                           Std {statMap?.['dagger-dmg'] ?? '1d4+6'}
@@ -1932,7 +2189,7 @@ function App() {
                           Dagger - Poison Dipped
                         </Link>
                         <div className="combat-kit__weapon-meta">
-                          Hit {statMap?.['poison-dagger-hit'] ?? '+10'}
+                          Hit {statMap?.['dagger-poison-hit'] ?? statMap?.['poison-dagger-hit'] ?? '+11'}
                         </div>
                         <div className="combat-kit__weapon-meta">
                           Std {statMap?.['poison-dagger-dmg'] ?? '1d4+5'}
@@ -2065,14 +2322,14 @@ function App() {
                                   DC
                                 </>
                               }
-                              value={statMap?.['poison-skin-dc'] ?? '17'}
-                              formula="12 + PB (5)"
+                              value={statMap?.['poison-skin-dc'] ?? '18'}
+                              formula="12 + PB (6)"
                               linkTo="/stats#dcs-saves-and-passives"
                             />
                             <GrungDcBlock
                               label="Poison Weapon DC"
-                              value={statMap?.['poison-weapon-dc'] ?? '17'}
-                              formula="9 + PB (5) + CON mod (3)"
+                              value={statMap?.['poison-weapon-dc'] ?? '18'}
+                              formula="9 + PB (6) + CON mod (3)"
                               linkTo="/stats#dcs-saves-and-passives"
                             />
                           </div>
@@ -2089,7 +2346,7 @@ function App() {
                           </div>
                           <TrackerGroup
                             title="Uses"
-                            items={parseTracker('poison-skin', 'Poison', { compact: true, fallback: '5/5' })}
+                            items={parseTracker('poison-skin', 'Poison', { compact: true, fallback: '6/6' })}
                             onToggle={handleToggle}
                           />
                         </div>

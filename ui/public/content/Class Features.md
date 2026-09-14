@@ -10,7 +10,7 @@ Primary purpose: Class + feat rules reference + level-scaled trackers.
 
 **On this page:**
 - [Ranger 6 (Gloom Stalker)](#-ranger-6-gloom-stalker)
-- [Druid 10 (Circle of Spores)](#-druid-10-circle-of-spores)
+- [Druid 11 (Circle of Spores)](#-druid-11-circle-of-spores)
 - [Feats](#-feats)
 
 > 💡 **Tip:** Click on feature names to expand full official rules text.
@@ -118,7 +118,7 @@ You are also adept at evading creatures that rely on darkvision. While in darkne
 
 ---
 
-## 🍄 Druid 10 (Circle of Spores)
+## 🍄 Druid 11 (Circle of Spores)
 
 > **Full Reference:** [Quick Reference - Druid Class](./Reference%20Materials/Quick%20Reference%20-%20Druid%20Class.md)  
 > **Circle Reference:** [Quick Reference - Circle of Spores](./Reference%20Materials/Quick%20Reference%20-%20Druid%20Class%20-%20Circle%20of%20Spores.md)
@@ -137,7 +137,7 @@ You know Druidic, the secret language of druids. You can speak the language and 
 **Ribbitz's Wild Shape:**
 - Uses: 2/Short Rest
 - Max CR: 1
-- Duration: 5 hours (= Druid level 10 / 2)
+- Duration: 5 hours (= Druid level 11 / 2, rounded down)
 
 **Official Text (PHB 66):**
 Starting at 2nd level, you can use your action to magically assume the shape of a beast that you have seen before. You can use this feature twice. You regain expended uses when you finish a short or long rest.
@@ -170,7 +170,7 @@ When you cast the spell in this way, the familiar is a fey instead of a beast, a
 **Ribbitz's Halo:**
 - Damage: 1d8 necrotic (2d8 with Symbiotic Entity)
 - Range: 10 feet
-- Save DC: 17
+- Save DC: 18
 
 **Official Text (Tasha's Cauldron of Everything 36):**
 Starting at 2nd level, you are surrounded by invisible, necrotic spores that are harmless until you unleash them on a creature nearby. When a creature you can see moves into a space within 10 feet of you or starts its turn there, you can use your reaction to deal 1d4 necrotic damage to that creature unless it succeeds on a Constitution saving throw against your spell save DC. The necrotic damage increases to 1d6 at 6th level, 1d8 at 10th level, and 1d10 at 14th level.
@@ -188,7 +188,7 @@ Starting at 2nd level, you are surrounded by invisible, necrotic spores that are
 <summary><h3>🦠 Symbiotic Entity (Circle of Spores 2nd Level)</h3></summary>
 
 **Ribbitz's Symbiotic Entity:**
-- Temp HP: 40 (= 4 × Druid level 10)
+- Temp HP: 44 (= 4 × Druid level 11)
 - Duration: 10 minutes
 - Effects: Halo damage doubled (2d8), melee attacks +1d6 necrotic
 
@@ -229,7 +229,7 @@ You can use this feature a number of times equal to your Wisdom modifier (minimu
 - Area: 10-foot cube
 - Duration: 1 minute
 - Damage: Halo of Spores damage (1d8; 2d8 while Symbiotic Entity is active)
-- Save DC: 17 CON
+- Save DC: 18 CON
 
 **Official Text (Tasha's Cauldron of Everything 37):**
 At 10th level, you gain the ability to seed an area with deadly spores. As a bonus action while your Symbiotic Entity feature is active, you can hurl spores up to 30 feet away, where they swirl in a 10-foot cube for 1 minute. The spores disappear early if you use this feature again, if you dismiss them as a bonus action, or if your Symbiotic Entity feature is no longer active.

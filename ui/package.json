@@ -15,7 +15,8 @@
     "react-markdown": "^10.1.0",
     "react-router-dom": "^6.30.3",
     "rehype-raw": "^7.0.0",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "sortablejs": "^1.15.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

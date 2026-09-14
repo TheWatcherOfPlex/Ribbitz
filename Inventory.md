@@ -282,7 +282,7 @@ Primary purpose: full inventory reference.
 <summary><h3>☠️ Poisons & Toxins</h3></summary>
 
 **Ink Cap Poison (3 doses):**
-- **Save:** CON DC 17
+- **Save:** CON DC 18
 - **Effect:** 3d6 poison damage and poisoned condition
 - **Note:** Can dose with all 3 simultaneously to auto-win the DC
 
@@ -296,7 +296,7 @@ Primary purpose: full inventory reference.
 
 **Zibbit Basic Poison (x4):**
 - **Damage:** 1d4 poison damage on hit
-- **Save:** CON DC 17 or poisoned
+- **Save:** CON DC 18 or poisoned
 - **Note:** Standard poison with higher DC
 
 </details>
@@ -315,6 +315,26 @@ Primary purpose: full inventory reference.
 <summary><h3>🎊 Pond Poppers (x5)</h3></summary>
 
 **Effect:** Explode with confetti and deal psychic damage
+
+</details>
+
+<details>
+<summary><h3>🧨 Cherry Bomb Fireworks (x3 clusters)</h3></summary>
+
+**Quantity:** 3 clusters
+
+**Effect:** Fireworks that set fire to anything they touch, explode, and make loud noises.
+
+</details>
+
+<details>
+<summary><h3>🥪 Packed Lunches (x2)</h3></summary>
+
+**Quantity:** 2
+
+**Effect:** Each packed lunch grants **+15 temp HP**.
+
+**Made By:** Rune's Mom
 
 </details>
 
@@ -395,7 +415,7 @@ Primary purpose: full inventory reference.
 #### Attack Roll Breakdown
 
 **To Hit Calculation:**
-- **Melee/Thrown:** DEX (5) + Proficiency (5) + Fey Blessing (1) = **+11**
+- **Melee/Thrown:** DEX (5) + Proficiency (6) + Fey Blessing (1) = **+12**
 
 #### Damage Ranges
 
@@ -423,7 +443,7 @@ Primary purpose: full inventory reference.
 #### Attack Roll Breakdown
 
 **To Hit Calculation:**
-- **Melee/Thrown:** DEX (5) + Proficiency (5) = **+10**
+- **Melee/Thrown:** DEX (5) + Proficiency (6) = **+11**
 
 #### Damage Ranges
 
@@ -452,8 +472,8 @@ Primary purpose: full inventory reference.
 #### Attack Roll Breakdown
 
 **To Hit Calculation:**
-- **Standard:** DEX (5) + Proficiency (5) + Archery Fighting Style (2) + Magic Weapon (1) = **+13**
-- **Sharpshooter:** DEX (5) + Proficiency (5) + Archery (2) + Magic (1) - Sharpshooter Penalty (5) = **+8**
+- **Standard:** DEX (5) + Proficiency (6) + Archery Fighting Style (2) + Magic Weapon (1) = **+14**
+- **Sharpshooter:** DEX (5) + Proficiency (6) + Archery (2) + Magic (1) - Sharpshooter Penalty (5) = **+9**
 
 #### Damage Ranges (Per Shot)
 
@@ -475,14 +495,14 @@ Primary purpose: full inventory reference.
 
 | Dart Type | Uses | Save DC | Effect |
 |-----------|------|---------|--------|
-| **Sleep** | 1/day | CON 17 | Unconscious 1 min |
-| **Paralyze** | 1/day | CON 17 | Paralyzed 1 min |
-| **Purple Grung** | 5/day | CON 17 | Seek water 1 min |
+| **Sleep** | 1/day | CON 18 | Unconscious 1 min |
+| **Paralyze** | 1/day | CON 18 | Paralyzed 1 min |
+| **Purple Grung** | 6/day | CON 18 | Seek water 1 min |
 
 #### Song of the Grung (1/day)
 - **Action:** 1 action (croak into blowgun)
 - **Range:** 30 ft line
-- **Save:** CON vs Spell Save DC **17**
+- **Save:** CON vs Spell Save DC **18**
 - **Damage:** `2d8` thunder (half on success)
 - **On failed save:** push 10 ft away from caster; deafened + rider effects
 
@@ -513,8 +533,8 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 #### Attack Roll Breakdown
 
 **To Hit Calculation:**
-- **Standard:** DEX (5) + Proficiency (5) + Archery Fighting Style (2) + Magic Weapon (2) = **+14**
-- **Sharpshooter:** DEX (5) + Proficiency (5) + Archery (2) + Magic (2) - Sharpshooter Penalty (5) = **+9**
+- **Standard:** DEX (5) + Proficiency (6) + Archery Fighting Style (2) + Magic Weapon (2) = **+15**
+- **Sharpshooter:** DEX (5) + Proficiency (6) + Archery (2) + Magic (2) - Sharpshooter Penalty (5) = **+10**
 
 #### Damage Ranges (Per Shot)
 
@@ -586,6 +606,16 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 <summary><h3>🧪 Balthazar Lab Supplies</h3></summary>
 
 **Contents:** Lab-grade glassware, stirring spoons, and basic lab equipment
+
+</details>
+
+<details>
+<summary><h3>🧪 Apothecary Kits (x2)</h3></summary>
+
+Each kit includes:
+- 10 Bottles
+- 10 Vials
+- Filler ingredients for a lot of potions
 
 </details>
 
@@ -894,7 +924,7 @@ That flat 10 damage was too strong, so the DM converted it to **1d8**.
 <summary><h2>💰 Currency & Valuables</h2></summary>
 
 <details>
-<summary><h3>💰 Gold Pieces: 252 gp</h3></summary>
+<summary><h3>💰 Gold Pieces: 7223 gp</h3></summary>
 
 Current gold total
 

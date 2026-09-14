@@ -20,7 +20,8 @@ Do not publish/distribute.
 - [2nd Level](#-2nd-level-spells-10-prepared)
 - [3rd Level](#-3rd-level-spells-4-prepared)
 - [4th Level](#-4th-level-spells-3-prepared)
-- [5th Level](#-5th-level-spells-1-prepared)
+- [5th Level](#-5th-level-spells-3-prepared)
+- [6th Level](#-6th-level-spells-1-prepared)
 - [Magic Abilities (Non-Spell)](#-magic-abilities-non-spell-7-abilities)
 
 > 💡 **Tip:** Click spell level to see list → Click spell name to see full details.
@@ -46,8 +47,8 @@ Do not publish/distribute.
 ### 🟨 Long Rest Resets
 
 **Active Camo (Grung Homebrew)**
-- Uses: **5** per long rest (= Proficiency Bonus)
-- Tracker: 🟩🟩🟩🟩🟩
+- Uses: **6** per long rest (= Proficiency Bonus)
+- Tracker: 🟩🟩🟩🟩🟩🟩
 
 **Fungal Infestation (Circle of Spores)**
 - Uses: **4** per long rest (= WIS modifier)
@@ -74,13 +75,14 @@ Do not publish/distribute.
 | 3rd | 3 | 🟩🟩🟩 |
 | 4th | 3 | 🟩🟩🟩 |
 | 5th | 2 | 🟩🟩 |
+| 6th | 1 | 🟩 |
 
 ---
 
 ## 🧮 Ribbitz Casting Math (Quick)
 
-- <span style="color: #8a2be2;"><b>Spell Save DC = 17</b></span> = `8 + PB (5) + WIS mod (4)`
-- <span style="color: #8a2be2;"><b>Spell Attack = +9</b></span> = `PB (5) + WIS mod (4)`
+- <span style="color: #8a2be2;"><b>Spell Save DC = 18</b></span> = `8 + PB (6) + WIS mod (4)`
+- <span style="color: #8a2be2;"><b>Spell Attack = +10</b></span> = `PB (6) + WIS mod (4)`
 - <span style="color: #8a2be2;"><b>Concentration check</b></span>: `d20 + CON save (+3)`
 
 ---
@@ -126,8 +128,8 @@ You extend your hand toward a creature you can see within range and project a pu
 **At Higher Levels:** This spell's damage increases by 1d12 when you reach 5th level (2d12), 11th level (3d12), and 17th level (4d12).
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span>
-- <span style="color: #8a2be2;"><b>Damage at Level 16 = 3d12</b></span> poison
+- <span style="color: #8a2be2;"><b>Save DC = 18</b></span>
+- <span style="color: #8a2be2;"><b>Damage at Level 17 = 4d12</b></span> poison
 
 </details>
 
@@ -149,8 +151,8 @@ You channel primal magic to cause your teeth or fingernails to sharpen, ready to
 **At Higher Levels:** The spell's damage increases by 1d10 when you reach 5th level (2d10), 11th level (3d10), and 17th level (4d10).
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Spell Attack = +9</b></span>
-- <span style="color: #8a2be2;"><b>Damage at Level 16 = 3d10</b></span> acid
+- <span style="color: #8a2be2;"><b>Spell Attack = +10</b></span>
+- <span style="color: #8a2be2;"><b>Damage at Level 17 = 4d10</b></span> acid
 
 </details>
 
@@ -174,8 +176,8 @@ If you hit an undead target, it also has disadvantage on attack rolls against yo
 **At Higher Levels:** This spell's damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Spell Attack = +9</b></span>
-- <span style="color: #8a2be2;"><b>Damage at Level 16 = 3d8</b></span> necrotic
+- <span style="color: #8a2be2;"><b>Spell Attack = +10</b></span>
+- <span style="color: #8a2be2;"><b>Damage at Level 17 = 4d8</b></span> necrotic
 
 </details>
 
@@ -199,7 +201,7 @@ You seize the air and compel it to create one of the following effects at a poin
 - You create a harmless sensory affect using air, such as causing leaves to rustle, wind to slam shutters shut, or your clothing to ripple in a breeze.
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span> (for push effect)
+- <span style="color: #8a2be2;"><b>Save DC = 18</b></span> (for push effect)
 
 </details>
 
@@ -223,9 +225,9 @@ You point at one creature you can see within range, and the sound of a dolorous 
 **Spell Lists:** Cleric, Warlock, Wizard
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span> Wisdom
-- <span style="color: #8a2be2;"><b>Damage at Level 16 = 3d8</b></span> necrotic if target is uninjured
-- <span style="color: #8a2be2;"><b>Damage at Level 16 = 3d12</b></span> necrotic if target is missing any hit points
+- <span style="color: #8a2be2;"><b>Save DC = 18</b></span> Wisdom
+- <span style="color: #8a2be2;"><b>Damage at Level 17 = 4d8</b></span> necrotic if target is uninjured
+- <span style="color: #8a2be2;"><b>Damage at Level 17 = 4d12</b></span> necrotic if target is missing any hit points
 
 </details>
 
@@ -350,7 +352,7 @@ Any creature in the area when the spell is cast is also outlined in light if it 
 Any attack roll against an affected creature or object has advantage if the attacker can see it, and the affected creature or object can't benefit from being invisible.
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span> (DEX save)
+- <span style="color: #8a2be2;"><b>Save DC = 18</b></span> (DEX save)
 - <span style="color: #8a2be2;"><b>Area: 20-foot cube</b></span>
 
 </details>
@@ -465,7 +467,7 @@ The changes wrought by this spell fail to hold up to physical inspection. For ex
 To discern that you are disguised, a creature can use its action to inspect your appearance and must succeed on an Intelligence (Investigation) check against your spell save DC.
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Investigation check vs DC 17</b></span> to see through disguise
+- <span style="color: #8a2be2;"><b>Investigation check vs DC 18</b></span> to see through disguise
 
 </details>
 
@@ -555,7 +557,7 @@ On each of your turns after you cast this spell, you can use an action to move t
 **At Higher Levels:** When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d10 for each slot level above 2nd.
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span>
+- <span style="color: #8a2be2;"><b>Save DC = 18</b></span>
 - <span style="color: #8a2be2;"><b>2nd level: 2d10 radiant (half on success)</b></span>
 - <span style="color: #8a2be2;"><b>3rd level: 3d10 radiant</b></span>
 
@@ -583,7 +585,7 @@ The gust disperses gas or vapor, and it extinguishes candles, torches, and simil
 As a bonus action on each of your turns before the spell ends, you can change the direction in which the line blasts from you.
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span> (STR save)
+- <span style="color: #8a2be2;"><b>Save DC = 18</b></span> (STR save)
 
 </details>
 
@@ -689,7 +691,7 @@ You can blind or deafen a foe. Choose one creature that you can see within range
 **At Higher Levels:** When you cast this spell using a spell slot of 3rd level or higher, you can target one additional creature for each slot level above 2nd.
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span>
+- <span style="color: #8a2be2;"><b>Save DC = 18</b></span>
 - <span style="color: #8a2be2;"><b>3rd level: 2 creatures</b></span>
 
 </details>
@@ -741,7 +743,7 @@ Choose any creature, object, or magical effect within range. Any spell of 3rd le
 **At Higher Levels:** When you cast this spell using a spell slot of 4th level or higher, you automatically end the effects of a spell on the target if the spell's level is equal to or less than the level of the spell slot you used.
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Ability check: +9 (WIS)</b></span>
+- <span style="color: #8a2be2;"><b>Ability check: +10 (WIS)</b></span>
 
 </details>
 
@@ -840,7 +842,7 @@ The creature is limited in the actions it can perform by the nature of its new f
 The target's gear melds into the new form. The creature can't activate, use, wield, or otherwise benefit from any of its equipment. This spell can't affect a target that has 0 hit points.
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span> (WIS save, unwilling creatures only)
+- <span style="color: #8a2be2;"><b>Save DC = 18</b></span> (WIS save, unwilling creatures only)
 - <span style="color: #8a2be2;"><b>Max CR = 1</b></span> (based on character level 15)
 
 </details>
@@ -865,7 +867,7 @@ If you target a plant creature or a magical plant, it makes the saving throw wit
 **At Higher Levels:** When you cast this spell using a spell slot of 5th level or higher, the damage increases by 1d8 for each slot level above 4th.
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span>
+- <span style="color: #8a2be2;"><b>Save DC = 18</b></span>
 - <span style="color: #8a2be2;"><b>4th level: 8d8 necrotic (half on success)</b></span>
 - <span style="color: #8a2be2;"><b>5th level: 9d8 necrotic</b></span>
 
@@ -902,7 +904,7 @@ At the end of its turns, an affected target can make a Wisdom saving throw. If i
 **At Higher Levels:** When you cast this spell using a spell slot of 5th level or higher, the radius of the sphere increases by 5 feet for each slot level above 4th.
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span> (WIS save)
+- <span style="color: #8a2be2;"><b>Save DC = 18</b></span> (WIS save)
 - <span style="color: #8a2be2;"><b>4th level: 10-foot radius</b></span>
 - <span style="color: #8a2be2;"><b>5th level: 15-foot radius</b></span>
 
@@ -913,7 +915,7 @@ At the end of its turns, an affected target can make a Wisdom saving throw. If i
 ---
 
 <details>
-<summary><h2>✨ 5th Level Spells (1 prepared)</h2></summary>
+<summary><h2>✨ 5th Level Spells (3 prepared)</h2></summary>
 
 <details>
 <summary><h3>💚 Mass Cure Wounds</h3></summary>
@@ -938,6 +940,100 @@ A wave of healing energy washes out from a point of your choice within range. Ch
 - <span style="color: #8a2be2;"><b>Healing = 3d8 + 4</b></span> to up to six creatures
 - Choose targets in a <span style="color: #8a2be2;"><b>30-foot-radius sphere</b></span> centered on a point within 60 feet
 - Does not affect undead or constructs
+
+</details>
+
+<details>
+<summary><h3>☠️ Cloudkill</h3></summary>
+
+**Level:** 5th-level conjuration  
+**Casting Time:** 1 action  
+**Range:** 120 feet  
+**Components:** V, S  
+**Duration:** Concentration, up to 10 minutes
+
+**Source:** *Player's Handbook* (2014) — p. 222
+
+#### Official Text
+
+You create a 20-foot-radius sphere of poisonous, yellow-green fog centered on a point you choose within range. The fog spreads around corners. It lasts for the duration or until strong wind disperses the fog, ending the spell. Its area is heavily obscured.
+
+When a creature enters the spell's area for the first time on a turn or starts its turn there, that creature must make a Constitution saving throw. The creature takes 5d8 poison damage on a failed save, or half as much damage on a successful one. Creatures are immune to this damage while they remain in the Ethereal Plane or in the Astral Plane, or in any other place that is inaccessible from the spell's area.
+
+The fog moves 10 feet away from you at the start of each of your turns, rolling downhill if possible, moving toward the lowest point within its range in a direction you choose. If the spell is cast in an area that isn't large enough for the fully expanded fog, the gas fills the whole area and stretches to the closest opening if there's one large enough to accommodate it.
+
+**At Higher Levels:** When you cast this spell using a spell slot of 6th level or higher, the damage increases by 1d8 for each slot level above 5th.
+
+**Spell Lists:** Sorcerer, Warlock, Wizard — granted as a Circle of Spores bonus spell (see below)
+
+#### Ribbitz Notes
+- <span style="color: #8a2be2;"><b>5d8 poison damage</b></span>, DC <span style="color: #8a2be2;"><b>18</b></span> CON save (half on success)
+- Circle of Spores 9th-level bonus spell — <b>always prepared</b>, doesn't count against prepared spells
+- Not on the standard Druid spell list, but is a druid spell for Ribbitz per the Circle of Spores feature
+
+</details>
+
+<details>
+<summary><h3>🦠 Contagion</h3></summary>
+
+**Level:** 5th-level necromancy  
+**Casting Time:** 1 action  
+**Range:** Touch  
+**Components:** V, S  
+**Duration:** 7 days
+
+**Source:** *Player's Handbook* (2014) — p. 221
+
+#### Official Text
+
+Your touch inflicts disease. Make a melee spell attack against a creature within your reach. On a hit, you afflict the creature with a disease of your choice from any of the ones described below.
+
+At the end of each of the creature's turns, it must make a Constitution saving throw. After failing three of these saving throws, the disease's effects last for the duration, and the creature stops making these saves. After succeeding on three of these saving throws, the creature recovers from the disease, and the spell ends.
+
+Since this spell distinguishes between success and failure by counting to 3 rather than a single success or failure, it doesn't end early. The DM chooses the disease or determines it randomly.
+
+- **Blinding Sickness:** Disadvantage on Wisdom checks and Wisdom saving throws; blinded in bright light. Lasts until cured.
+- **Filth Fever:** Disadvantage on Strength checks, Strength saving throws, and Strength-based attack rolls. Lasts until cured.
+- **Flesh Rot:** Disadvantage on Charisma checks; vulnerability to all damage. Lasts until cured.
+- **Mindfire:** Disadvantage on Intelligence checks and saves; whenever it takes damage, roll a d6 — on a 1, confused until the end of its next turn. Lasts until cured.
+- **Seizure:** Disadvantage on Dexterity checks, saves, and Dexterity-based attack rolls; must succeed on a DC 10 Constitution check to cast a spell with a somatic component without holy water/a healer's kit/similar. Lasts until cured.
+- **Slimy Doom:** Disadvantage on Constitution checks and saves; whenever it takes damage, stunned until the end of its next turn. Lasts until cured.
+
+**Spell Lists:** Cleric, Druid, Warlock, Wizard — granted as a Circle of Spores bonus spell (see below)
+
+#### Ribbitz Notes
+- Melee spell attack: <span style="color: #8a2be2;"><b>+10</b></span> to hit
+- Ongoing CON saves against Ribbitz's Spell Save DC <span style="color: #8a2be2;"><b>18</b></span>
+- Circle of Spores 9th-level bonus spell — <b>always prepared</b>, doesn't count against prepared spells
+
+</details>
+
+</details>
+
+---
+
+<details>
+<summary><h2>🌳 6th Level Spells (1 prepared)</h2></summary>
+
+<details>
+<summary><h3>🌳 Transport via Plants</h3></summary>
+
+**Level:** 6th-level conjuration<br>
+**Casting Time:** 1 action<br>
+**Range:** 10 feet<br>
+**Target:** A Large or larger inanimate plant and another plant, at any distance, on the same plane of existence<br>
+**Components:** V, S<br>
+**Duration:** 1 round<br>
+**Classes:** Druid
+
+#### Official Text
+
+This spell creates a magical link between a Large or larger inanimate plant within range and another plant, at any distance, on the same plane of existence. You must have seen or touched the destination plant at least once before. For the duration, any creature can step into the target plant and exit from the destination plant by using 5 feet of movement.
+
+#### Ribbitz Notes
+- Destination plant must be on the same plane of existence.
+- Ribbitz must have seen or touched the destination plant at least once before.
+- Any creature can travel through the linked plant while the spell lasts.
 
 </details>
 
@@ -967,8 +1063,8 @@ You are surrounded by invisible, necrotic spores that are harmless until you unl
 | 14th | 1d10 necrotic |
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span>
-- <span style="color: #8a2be2;"><b>Damage at Druid Level 10 = 1d8</b></span> necrotic
+- <span style="color: #8a2be2;"><b>Save DC = 18</b></span>
+- <span style="color: #8a2be2;"><b>Damage at Druid Level 11 = 1d8</b></span> necrotic
 - <span style="color: #8a2be2;"><b>With Symbiotic Entity active = 2d8</b></span> (roll damage die twice)
 
 </details>
@@ -990,7 +1086,7 @@ You gain the ability to channel magic into your spores. As an action, you can ex
 These benefits last for 10 minutes, until you lose all these temporary hit points, or until you use your Wild Shape again.
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Temp HP = 40</b></span> (4 × Druid level 10)
+- <span style="color: #8a2be2;"><b>Temp HP = 44</b></span> (4 × Druid level 11)
 - Duration: **10 minutes** (or until temp HP depleted or Wild Shape used again)
 - While active: Halo damage die rolled **twice**; melee attacks gain **+1d6 necrotic**
 
@@ -1039,7 +1135,7 @@ While the cube of spores persists, you can't use your Halo of Spores reaction.
 - <span style="color: #8a2be2;"><b>Bonus action</b></span> while Symbiotic Entity is active
 - <span style="color: #8a2be2;"><b>Range = 30 ft</b></span>; creates a **10-foot cube**
 - <span style="color: #8a2be2;"><b>Duration = 1 minute</b></span>
-- <span style="color: #8a2be2;"><b>Save DC = 17 CON</b></span>
+- <span style="color: #8a2be2;"><b>Save DC = 18 CON</b></span>
 - <span style="color: #8a2be2;"><b>Damage = Halo damage</b></span> (currently **2d8** while Symbiotic Entity is active)
 - While the cube persists, Ribbitz cannot use Halo of Spores as a reaction.
 
@@ -1063,7 +1159,7 @@ Any creature that grapples you or comes into direct contact with your skin or sa
 - Gold: Charms the victim and grants the ability to speak the grung language
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span> (= 9 + PB 5 + CON 3)
+- <span style="color: #8a2be2;"><b>Save DC = 18</b></span> (= 9 + PB 6 + CON 3)
 - <span style="color: #8a2be2;"><b>Purple Grung Effect:</b></span> Drives victims to desperately seek water
 
 </details>
@@ -1078,8 +1174,8 @@ Any creature that grapples you or comes into direct contact with your skin or sa
 You can apply your Grung color based poison to any weapon as a bonus action. The target must succeed on a saving throw with a DC of 9 + your proficiency bonus + your CON to take poison's effect. This ability can be used equal to your proficiency bonus per day, and only if you have submerged in water or moistened your skin within the last 24 hours.
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span> (= 9 + PB 5 + CON 3)
-- <span style="color: #8a2be2;"><b>Uses = 5 per day</b></span> (= Proficiency Bonus)
+- <span style="color: #8a2be2;"><b>Save DC = 18</b></span> (= 9 + PB 6 + CON 3)
+- <span style="color: #8a2be2;"><b>Uses = 6 per day</b></span> (= Proficiency Bonus)
 - Requirement: must have moistened/submerged within last 24h
 
 </details>
@@ -1106,7 +1202,7 @@ You can apply your Grung color based poison to any weapon as a bonus action. The
 - **Targets within 15 ft of the caster** are **deafened for 1 turn**
 
 #### Ribbitz Notes
-- <span style="color: #8a2be2;"><b>Save DC = 17</b></span> (uses Spell Save DC)
+- <span style="color: #8a2be2;"><b>Save DC = 18</b></span> (uses Spell Save DC)
 - Tracker: see Long Rest Resets section
 
 </details>

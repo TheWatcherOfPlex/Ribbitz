@@ -10,8 +10,8 @@ Ribbitz is the D&D character/stream helper project used by Dice Knights livestre
 
 - Detailed project handoff: `/srv/docker/ribbitz/HANDOFF.md`
 - Project README: `/srv/docker/ribbitz/README.md`
-- Central AI index: `/Data/AI-Handoffs/INDEX.md`
-- Linux FullScope index: `/Data/AI-Handoffs/FullScopeHandoff - Linux.md`
+- Central AI index: `/Data/AI-Handoffs/FullScopeHandoff.md`
+- Linux FullScope index: `/Data/AI-Handoffs/FullScopeHandoff.md`
 - Dice Knights source handoff: `/srv/docker/dice-knights-git/AI_HANDOFF.md`
 
 Read this file first for routing, then open the detailed handoff only for the area you need.

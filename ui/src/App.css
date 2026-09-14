@@ -169,16 +169,22 @@
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  /* Let panels collapse to content height (avoid huge empty panel backgrounds). */
-  grid-auto-rows: auto;
+  /* Flex-wrap instead of a fixed-column grid: panels keep their own natural
+     minimum width and wrap to a new row once there's no room, rather than
+     every panel shrinking below what its own content (skill rows, ability
+     cards, etc.) needs — that shrinking is what caused rows like "Athletics
+     (Swim/Climb)  +7  CHECK" to wrap into an unreadable stack when the
+     window wasn't maximized. */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   gap: 10px;
-  align-items: start;
 }
 
 .panel {
-  grid-column: span 6;
+  /* Each panel has its own min-width below in a per-panel rule; this is
+     just the shared shrink/grow behavior within that bound. */
+  flex: 1 1 320px;
   background: rgba(26, 22, 44, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 14px;
@@ -249,39 +255,46 @@
 }
 
 .panel--primary {
-  grid-column: span 6;
+  /* Quick Stats is a 3-column max-content grid (AC / Initiative / etc.) —
+     it needs real room or it overflows into the next panel rather than
+     wrapping, since a fixed max-width doesn't let the box grow to fit it. */
+  flex: 1 1 420px;
+  min-width: 400px;
 }
 
 .panel--compact {
-  grid-column: span 6;
+  flex: 1 1 280px;
+  min-width: 260px;
 }
 
 .panel--skills {
-  grid-column: span 12;
+  flex: 1 1 400px;
+  min-width: 380px;
 }
 
-
 .panel--slots {
-  grid-column: span 8;
+  flex: 1 1 380px;
+  min-width: 360px;
 }
 
 .panel--ammo {
-  grid-column: span 4;
+  flex: 1 1 280px;
+  min-width: 260px;
 }
 
 .panel--kit {
-  grid-column: span 3;
+  flex: 1 1 460px;
+  min-width: 440px;
 }
 
 .panel--grung {
-  /* default before wide-screen rules kick in */
-  grid-column: span 12;
+  flex: 1 1 100%;
+  min-width: 380px;
 }
 
 /* Dense dashboard layout for large monitors (2560x1440 target) */
 @media (min-width: 1800px) {
   .grid {
-    grid-auto-rows: auto;
     gap: 12px;
   }
 }
@@ -754,20 +767,14 @@
 
 /* Magic panel layout */
 .panel--magic {
-  /* Target 3-column width for the Magic panel */
-  grid-column: span 3;
+  flex: 1 1 420px;
+  min-width: 400px;
 }
 
 .magic-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
-}
-
-@media (min-width: 1400px) {
-  .panel--magic {
-    grid-column: span 3;
-  }
 }
 
 .magic-section {
@@ -1195,6 +1202,8 @@
 
 .spores-panel__entity-btn {
   width: 100%;
+  height: auto;
+  min-height: 0;
   padding: 9px 10px;
   border: 1px solid rgba(147, 255, 112, 0.35);
   border-radius: 10px;
@@ -1202,6 +1211,8 @@
   color: #ffffff;
   font-size: 12px;
   font-weight: 800;
+  line-height: 1.4;
+  white-space: normal;
   cursor: pointer;
 }
 
@@ -1234,6 +1245,40 @@
 
 .spores-panel__roll--wide {
   grid-column: 1 / -1;
+}
+
+.spores-panel__roll--btn {
+  appearance: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.ability-topic {
+  grid-column: 1 / -1;
+}
+
+.ability-topic__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ability-topic__name {
+  appearance: none;
+  background: none;
+  border: none;
+  color: #c9bfff;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.ability-topic__name:hover {
+  color: #ffffff;
+  text-decoration: underline;
 }
 
 .spores-panel__note {
@@ -1411,6 +1456,36 @@
   gap: 8px;
 }
 
+.currency-box {
+  border-color: rgba(255, 205, 117, 0.35);
+  box-shadow: 0 0 14px rgba(255, 205, 117, 0.12);
+}
+
+.currency-list {
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.currency-list .stat-control {
+  width: 100%;
+}
+
+.currency-list .stat-control__field {
+  grid-template-columns: 28px minmax(5ch, 1fr) 28px;
+  justify-content: stretch;
+}
+
+.currency-list .stat-control__btn {
+  height: 28px;
+  width: 28px;
+}
+
+.currency-list .stat-control__input {
+  height: 28px;
+  font-size: 15px;
+  font-weight: 800;
+}
+
 .quick-stat {
   padding: 6px 8px;
   border-radius: 12px;
@@ -1567,7 +1642,8 @@
 }
 
 .panel--exhaustion {
-  grid-column: span 4;
+  flex: 1 1 400px;
+  min-width: 380px;
 }
 
 .exhaustion {
@@ -1920,42 +1996,9 @@
   gap: 10px;
 }
 
-/* Wide-screen dashboard layout (kick in earlier so we don't get a single-column dashboard) */
-@media (min-width: 1180px) {
-  /* Row 1: Quick Stats/Healing | Ability Scores/Skills | Magic | Combat Kit | Exhaustion */
-  .panel--primary {
-    grid-column: 1 / span 2;
-    grid-row: 1;
-  }
-
-  .panel--skills {
-    grid-column: 3 / span 2;
-    grid-row: 1;
-  }
-
-  /* Row 3: Magic next to Ammo */
-  .panel--magic {
-    grid-column: 5 / span 3;
-    grid-row: 1;
-  }
-
-  .panel--ammo {
-    grid-column: span 3;
-    grid-row: 2;
-  }
-
-  .panel--kit {
-    grid-column: 8 / span 3;
-    grid-row: 1;
-  }
-
-  .panel--exhaustion {
-    grid-column: 11 / span 2;
-    grid-row: 1;
-  }
-
-  /* Ranger section is now inside Ability Scores: stack label/value to avoid wraps */
-}
+/* Panel order/position now comes from flex-wrap + each panel's own
+   min-width (see .panel--* rules above) — no explicit per-breakpoint
+   grid-column/grid-row placement needed any more. */
 
 .combat-kit {
   display: grid;
@@ -2127,6 +2170,30 @@
   box-shadow: 0 0 10px rgba(255, 205, 117, 0.2);
 }
 
+.skill-row__roll-btn {
+  border: 1px solid rgba(147, 112, 255, 0.45);
+  border-radius: 999px;
+  background: rgba(120, 110, 255, 0.2);
+  color: #eae6ff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 5px 9px;
+  cursor: pointer;
+}
+
+.skill-row__roll-btn:hover:not(:disabled) {
+  background: rgba(120, 110, 255, 0.4);
+  border-color: rgba(147, 112, 255, 0.75);
+}
+
+.skill-row__roll-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 .feature-row {
   display: grid;
   /* Put value close to label (avoid huge blank middle space) */
@@ -2200,23 +2267,7 @@
     grid-template-columns: 260px 1fr;
   }
 
-  .panel--primary,
-  .panel--compact {
-    /* 3 columns wide */
-    grid-column: span 3;
-  }
-
   .ability-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-/* Mid-size dashboards: keep multi-column layout, but slightly larger ability grid */
-@media (max-width: 1180px) {
-  .panel--primary,
-  .panel--compact,
-  .panel--skills,
-  .panel--magic {
-    grid-column: span 12;
   }
 }
