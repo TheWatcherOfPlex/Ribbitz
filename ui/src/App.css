@@ -2283,9 +2283,13 @@
   background: rgba(26, 22, 44, 0.9);
   border: 1px solid rgba(120, 110, 255, 0.22);
   border-radius: 10px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  /* Panels don't scroll internally — the whole page scrolls instead, so a
+     panel taller than its grid box just grows downward rather than getting
+     its own trapped scrollbar. */
+  height: auto !important;
+  min-height: 100%;
 }
 
 .dashboard-canvas__drag-handle {
@@ -2303,7 +2307,7 @@
 
 .dashboard-canvas__item-body {
   flex: 1;
-  overflow: auto;
+  overflow: visible;
   padding: 10px;
 }
 

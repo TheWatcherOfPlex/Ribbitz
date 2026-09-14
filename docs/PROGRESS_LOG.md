@@ -6,6 +6,40 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-14 (7) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- App confirmed working by owner. They confirmed whole-panel drag is
+  exactly what they wanted. One UX complaint: the Skills panel had its own
+  trapped inner scrollbar (from `.dashboard-canvas__item-body {
+  overflow: auto }`) — wanted the whole page to scroll instead, with one
+  scrollbar on the right edge of the screen.
+- Fix: panel items no longer clip/scroll internally
+  (`.dashboard-canvas__item` height forced to `auto !important` instead of
+  the grid-calculated pixel height, `.dashboard-canvas__item-body` overflow
+  changed to `visible`). A panel taller than its nominal grid `h` now just
+  grows downward and contributes to the normal page scroll, instead of
+  being clipped into its own scroll box. Bumped the Skills panel's default
+  `layout.h` from 20 to 46 too, closer to its real content height (cosmetic
+  only — the CSS override is what actually fixes the behavior regardless
+  of this number).
+- **Known limitation, not a problem yet but will be in Phase 3**: this
+  `height: auto !important` approach only looks right because there's
+  currently exactly one panel on the canvas. Once a second panel is added
+  and both need auto-height, react-grid-layout's own collision/compaction
+  math won't know a panel visually grew taller than its declared `h` —
+  panels below a tall one could visually overlap it. Options when that
+  comes up: either keep `h` values manually tuned close to real content
+  height per panel (fragile), or look into whether a newer react-grid-layout
+  version/library feature handles auto-height items properly (don't
+  default back to installing "whatever's latest" per the §3.3 warning —
+  check the actual API before adding it). Flag this to the owner when the
+  second panel is being built rather than silently hoping it looks fine.
+- `npm run build` passes, deployed. Not yet re-confirmed by the owner.
+- Committed + pushed.
+- Next AI should: confirm the scroll fix looks right, then continue
+  Phase 3 (next panel extraction) — but read the "Known limitation" note
+  above first if that's the next task, since it directly affects how to
+  approach adding a second panel.
+
 ## 2026-09-14 (6) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - **Real bug #2, found via the owner's browser console (I asked, they
   provided it — this is exactly why that ask matters, see below)**:

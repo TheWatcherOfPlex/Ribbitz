@@ -31,7 +31,7 @@ export default function CanvasPreviewPage() {
     {
       id: 'skills',
       title: 'Skills',
-      layout: { x: 0, y: 0, w: 6, h: 20 },
+      layout: { x: 0, y: 0, w: 6, h: 46 },
       component: <SkillsPanel statMap={statMap} />,
     },
   ]
