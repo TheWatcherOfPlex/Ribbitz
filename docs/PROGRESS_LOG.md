@@ -6,6 +6,53 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-14 (8) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- Owner confirmed the scroll fix and whole-panel drag pattern are exactly
+  right, and wants the same treatment "for the whole character sheet."
+  Presented two sequencing options; owner chose: **extract every
+  remaining panel first (verified on the real Dashboard each time), only
+  wire the draggable canvas to all of them at the very end** — `/` itself
+  will eventually get swapped to render via `DashboardCanvas`, retiring
+  `/canvas-preview` as a separate page. Full rationale recorded in
+  REBUILD_PLAN.md's new "Phase 3 sequencing decision" section — read that
+  before continuing, don't re-litigate the choice.
+- Did: extracted `panels/PrimaryPanel.jsx` (Currency, Quick Stats,
+  Vitality/HP/Symbiotic HP, Healing, Hit Dice, Death Saves) — 17 props,
+  the most dependency-heavy panel so far. Real `/` Dashboard now renders
+  `<PrimaryPanel .../>` instead of ~185 inline lines.
+- Did: extracted `panels/ExhaustionPanel.jsx` (Potions & Poisons,
+  Exhaustion track, Conditions checklist, Ranger Features quick links) —
+  10 props.
+- Did: also relocated shared helper components that multiple panels use —
+  `components/StatControl.jsx`, `components/CounterRow.jsx`,
+  `lib/triState.js` (triStateClass/cycleTriState). `StatControl` is still
+  imported directly in `App.jsx` too since the not-yet-extracted Combat
+  Kit panel also uses it.
+- Followed the §5.1 process exactly both times: read the *entire* line
+  range before deleting (not just boundaries — this is the rule added
+  after tonight's real bug), then ran the declaration-diff safety check
+  after each extraction. Every removed declaration both times was
+  confirmed as an intentional relocation before proceeding — full list
+  each time is in the commit messages. No new collateral-damage bugs.
+- `npm run build` passes after each step (382 modules after Primary, 383
+  after Exhaustion), deployed after each, spot-checked a distinctive
+  string from each panel's content in the deployed bundle both times.
+- Did **not** add Primary or Exhaustion to `/canvas-preview` — per the
+  sequencing decision above, that happens all at once later, not
+  incrementally per panel.
+- Committed + pushed (two commits, one per panel).
+- Next AI should: continue the same exact process for the two remaining
+  panels — **Magic** (Spell Slots / Prepared Spells / Other Magical
+  Abilities — this one's likely the largest and most complex, has the
+  click-to-expand spell list and the Circle of Spores roll buttons built
+  in an earlier session) then **Combat Kit** (Weapons / Ammo / Drugs &
+  Herbs — uses `StatControl`, already available via the shared import).
+  Follow REBUILD_PLAN.md's "Phase 3 sequencing decision" step-by-step
+  process exactly, in order, both times. Once all 5 panels exist as
+  standalone files, the final step is swapping `/` to render through
+  `DashboardCanvas` and retiring `/canvas-preview` — don't do that until
+  all 5 are done and each individually verified.
+
 ## 2026-09-14 (7) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - App confirmed working by owner. They confirmed whole-panel drag is
   exactly what they wanted. One UX complaint: the Skills panel had its own

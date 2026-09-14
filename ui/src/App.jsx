@@ -7,8 +7,12 @@ import InventoryPage from './pages/InventoryPage.jsx'
 import CanvasPreviewPage from './pages/CanvasPreviewPage.jsx'
 import { rollFlatDice } from './lib/diceRoller.js'
 import SkillsPanel from './panels/SkillsPanel.jsx'
+import PrimaryPanel from './panels/PrimaryPanel.jsx'
+import ExhaustionPanel from './panels/ExhaustionPanel.jsx'
 import TrackerGroup from './components/TrackerGroup.jsx'
+import StatControl from './components/StatControl.jsx'
 import { slugifyHeading } from './utils/slugifyHeading.js'
+import { cycleTriState } from './lib/triState.js'
 
 const sheetUrl =
   'https://docs.google.com/spreadsheets/d/1Vn1Xaq04AWDrrdz-RGO8m6V7SzuFyHrW31e47fnH2v0'
@@ -68,76 +72,6 @@ const navLinks = [
   { label: 'Images', href: '/images' },
 ]
 
-const quickStats = [
-  { label: 'AC', key: 'ac', fallback: '19' },
-  { label: 'Initiative', key: 'initiative', fallback: '+5' },
-  { label: 'Speed', key: 'speed', fallback: '25 ft' },
-  { label: 'Proficiency', key: 'proficiency', fallback: '+6' },
-  { label: 'Darkvision', key: 'darkvision', fallback: '90 ft' },
-  { label: 'Passive Perception', key: 'passive-perception', fallback: '20' },
-  { label: 'Spell Save DC', key: 'spell-dc', fallback: '18' },
-  { label: 'Spell Attack', key: 'spell-attack', fallback: '+10' },
-  { label: 'Size', key: 'size', fallback: `Small (4' 0", 55 lbs)` },
-]
-
-const currencyItems = [
-  { label: 'Gold', inventoryName: 'Gold Pieces: 252 gp', fallback: 7223, suffix: 'gp' },
-  { label: 'Golden Beetles', inventoryName: '100 Golden Beetles', fallback: 100, suffix: 'beetles' },
-]
-
-const conditionsList = [
-  'Blinded',
-  'Charmed',
-  'Deafened',
-  'Frightened',
-  'Grappled',
-  'Incapacitated',
-  'Invisible',
-  'Paralyzed',
-  'Petrified',
-  'Poisoned',
-  'Prone',
-  'Restrained',
-  'Stunned',
-  'Unconscious',
-]
-
-const conditionDetails = {
-  Blinded:
-    "Can't see; automatically fails sight-based ability checks. Attacks against it have advantage, and its attacks have disadvantage.",
-  Charmed:
-    "Can't attack the charmer or target the charmer with harmful abilities. The charmer has advantage on social checks against it.",
-  Deafened: "Can't hear and automatically fails hearing-based ability checks.",
-  Frightened:
-    "Disadvantage on ability checks and attacks while the source is in sight; can't willingly move closer to the source.",
-  Grappled: "Speed becomes 0. Ends if the grappler is incapacitated or the target is moved out of reach.",
-  Incapacitated: "Can't take actions or reactions.",
-  Invisible:
-    "Can't be seen without special senses or magic. Attacks against it have disadvantage, and its attacks have advantage.",
-  Paralyzed:
-    'Incapacitated, cannot move or speak, fails STR/DEX saves. Attacks against it have advantage; hits within 5 ft are critical hits.',
-  Petrified:
-    'Transformed into solid material, incapacitated, unaware, resistant to all damage, immune to poison/disease, and fails STR/DEX saves.',
-  Poisoned: 'Disadvantage on attack rolls and ability checks.',
-  Prone:
-    'Can crawl or stand by spending half movement. Attacks within 5 ft have advantage; ranged attacks against it have disadvantage.',
-  Restrained:
-    "Speed becomes 0. Attacks against it have advantage, its attacks have disadvantage, and it has disadvantage on DEX saves.",
-  Stunned:
-    "Incapacitated, can't move, can speak only falteringly, fails STR/DEX saves, and attacks against it have advantage.",
-  Unconscious:
-    'Incapacitated, prone, unaware, drops held items, fails STR/DEX saves. Attacks within 5 ft are critical hits.',
-}
-
-const exhaustionEffects = [
-  { level: 1, effect: 'Disadvantage on ability checks' },
-  { level: 2, effect: 'Speed halved' },
-  { level: 3, effect: 'Disadvantage on attack rolls and saving throws' },
-  { level: 4, effect: 'Hit point maximum halved' },
-  { level: 5, effect: 'Speed reduced to 0' },
-  { level: 6, effect: 'Death' },
-]
-
 const restDefinitions = {
   shortRest: {
     label: 'Short Rest',
@@ -195,19 +129,6 @@ const vitalKeyMap = {
 }
 
 const spellLevelOrder = ['Cantrips', '1st', '2nd', '3rd', '4th', '5th', '6th']
-
-const potionDefinitions = [
-  {
-    name: 'Healing Potion (Common/Standard)',
-    label: 'Common',
-    detail: '2d4+2',
-  },
-  { name: 'Healing Potion (Greater)', label: 'Greater', detail: '4d4+4' },
-  { name: 'Healing Potion (Superior)', label: 'Superior', detail: '8d4+8' },
-  { name: 'Healing Potion (Supreme)', label: 'Supreme', detail: '10d4+20' },
-  { name: 'Golden Elixir', label: 'Golden', detail: 'Full +10 temp' },
-  { name: 'Frog Salve Meds', label: 'Frog Salve', detail: 'Grung heal' },
-]
 
 const statUpdateMetadata = {
   inspiration: {
@@ -438,40 +359,6 @@ function AbilityTopicRow({ ability, expanded, onToggle, onRoll, rollLabel }) {
   )
 }
 
-function CounterRow({ label, value, detail, onStep, disabled }) {
-  return (
-    <div className="counter-row">
-      <div className="counter-row__meta">
-        <div className="counter-row__label">{label}</div>
-        {detail && <div className="counter-row__detail">{detail}</div>}
-      </div>
-      <div className="counter-row__controls">
-        <button
-          className="counter-row__btn"
-          type="button"
-          onClick={() => onStep(-1)}
-          disabled={disabled}
-          aria-label={`Decrease ${label}`}
-        >
-          −
-        </button>
-        <div className="counter-row__value" aria-label={`${label} value`}>
-          {value}
-        </div>
-        <button
-          className="counter-row__btn"
-          type="button"
-          onClick={() => onStep(1)}
-          disabled={disabled}
-          aria-label={`Increase ${label}`}
-        >
-          +
-        </button>
-      </div>
-    </div>
-  )
-}
-
 function GrungDcBlock({ label, value, formula, linkTo }) {
   return (
     <div className="grung-dc">
@@ -480,64 +367,6 @@ function GrungDcBlock({ label, value, formula, linkTo }) {
       </Link>
       <div className="grung-dc__value">{value}</div>
       <div className="grung-dc__formula">{formula}</div>
-    </div>
-  )
-}
-
-function StatControl({ label, value, helper, onChange, accent }) {
-  const [localValue, setLocalValue] = useState(value)
-
-  useEffect(() => {
-    setLocalValue(value)
-  }, [value])
-
-  const handleBlur = () => {
-    onChange?.(localValue)
-  }
-
-  const handleStep = (delta) => {
-    const numericValue = Number(localValue)
-    if (Number.isNaN(numericValue)) {
-      return
-    }
-    const nextValue = numericValue + delta
-    setLocalValue(nextValue)
-    onChange?.(nextValue)
-  }
-
-  const accentClass = accent
-    ? accent === true
-      ? 'stat-control--accent'
-      : `stat-control--${accent}`
-    : ''
-
-  return (
-    <div className={`stat-control${accentClass ? ` ${accentClass}` : ''}`}>
-      <div className="stat-control__label">{label}</div>
-      <div className="stat-control__field">
-        <button
-          className="stat-control__btn"
-          aria-label={`Decrease ${label}`}
-          onClick={() => handleStep(-1)}
-        >
-          −
-        </button>
-        <input
-          className="stat-control__input"
-          value={localValue}
-          onChange={(event) => setLocalValue(event.target.value)}
-          onBlur={handleBlur}
-          aria-label={`${label} value`}
-        />
-        <button
-          className="stat-control__btn"
-          aria-label={`Increase ${label}`}
-          onClick={() => handleStep(1)}
-        >
-          +
-        </button>
-      </div>
-      {helper && <div className="stat-control__helper">{helper}</div>}
     </div>
   )
 }
@@ -574,17 +403,6 @@ function SpellInlineDetails({ spell }) {
       ) : null}
     </div>
   )
-}
-
-function triStateClass(value) {
-  if (value === 1) return 'is-green'
-  if (value === 2) return 'is-red'
-  return 'is-neutral'
-}
-
-function cycleTriState(value) {
-  const numeric = Number(value) || 0
-  return (numeric + 1) % 3
 }
 
 function App() {
@@ -1306,190 +1124,25 @@ function App() {
             element={
               <section className="grid">
                 <div className="panel panel--primary panel--tight">
-                  <div className="panel__stack">
-                    <div className="panel__box currency-box">
-                      <div className="panel__section-title">Currency</div>
-                      <div className="panel__content currency-list">
-                        {currencyItems.map((item) => (
-                          <StatControl
-                            key={item.label}
-                            label={item.label}
-                            value={getInventoryQuantity(item.inventoryName, item.fallback)}
-                            helper={item.suffix}
-                            onChange={(nextValue) =>
-                              setInventoryItemValue(item.inventoryName, nextValue)
-                            }
-                            accent="gold"
-                          />
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="panel__box">
-                      <div className="panel__section-title">Quick Stats</div>
-                      <div className="panel__content quick-stats">
-                        <StatControl
-                          label="Inspiration"
-                          value={inspirationValue}
-                          helper="Points"
-                          onChange={updateStat('inspiration')}
-                          accent="gold"
-                        />
-                        {quickStats.map((stat) => (
-                          <div key={stat.label} className="quick-stat">
-                            <div className="quick-stat__value">
-                              {statMap?.[stat.key] ?? stat.fallback}
-                            </div>
-                            <div className="quick-stat__label">{stat.label}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="panel__box">
-                      <div className="panel__section-title">Vitality</div>
-                      <div className="panel__content panel__content--vitals">
-                        <StatControl
-                          label="HP"
-                          value={vitals.hp}
-                          helper={`Max ${statMap?.['hp-max'] ?? 112}`}
-                          onChange={updateVital('hp')}
-                        />
-                        <StatControl
-                          label="Temp HP"
-                          value={vitals.tempHp}
-                          onChange={updateVital('tempHp')}
-                        />
-                        <div className="symbiotic-hp-control">
-                          <div className="symbiotic-hp-control__topline">
-                            <span>Symbiotic HP</span>
-                            <span>{symbioticActive ? 'Active' : 'Inactive'}</span>
-                          </div>
-                          <div className="symbiotic-hp-control__field">
-                            <button
-                              className="stat-control__btn"
-                              type="button"
-                              onClick={() => stepSymbioticTempHp(-1)}
-                              disabled={!symbioticActive}
-                              aria-label="Decrease Symbiotic HP"
-                            >
-                              −
-                            </button>
-                            <div className="symbiotic-hp-control__value">{symbioticTempHp}</div>
-                            <button
-                              className="stat-control__btn"
-                              type="button"
-                              onClick={() => stepSymbioticTempHp(1)}
-                              disabled={!symbioticActive}
-                              aria-label="Increase Symbiotic HP"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="vitals-actions">
-                          <button
-                            className="ghost"
-                            type="button"
-                            onClick={() => handleRest('shortRest')}
-                          >
-                            Short Rest
-                          </button>
-                          <button
-                            className="primary"
-                            type="button"
-                            onClick={() => handleRest('longRest')}
-                          >
-                            Long Rest
-                          </button>
-                        </div>
-                      </div>
-
-                      <div className="panel__content vitality-healing">
-                        <div className="vitality-healing__header">
-                          <div className="vitality-healing__title">Healing</div>
-                          {!inventoryOnline && (
-                            <div className="vitality-healing__badge">Offline</div>
-                          )}
-                        </div>
-                        {inventoryError && (
-                          <div className="combat-kit__notice">{inventoryError}</div>
-                        )}
-                        <div className="combat-kit__potions">
-                          {potionDefinitions.map((potion) => (
-                            <CounterRow
-                              key={potion.name}
-                              label={potion.label}
-                              detail={potion.detail}
-                              value={getInventoryQuantity(potion.name, 0)}
-                              disabled={!inventoryOnline}
-                              onStep={(delta) => stepInventoryItem(potion.name, delta)}
-                            />
-                          ))}
-                        </div>
-                        <div className="healing-spells">
-                          {healingQuickLinks.map((entry) => (
-                            <div key={entry.name} className="healing-spell-row">
-                              <Link
-                                className="healing-spell-row__name"
-                                to={entry.href || `/spells#${slugifyHeading(entry.name)}`}
-                              >
-                                {entry.name}
-                              </Link>
-                              <div className="healing-spell-row__detail">{entry.detail}</div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="panel__content vitality-survival">
-                        <div className="vitality-survival__grid">
-                          <div className="hit-dice">
-                            <div className="hit-dice__title">Hit Dice</div>
-                            <div className="hit-dice__detail">Ranger 6d10 • Druid 11d8</div>
-                          </div>
-
-                          <div className="death-saves">
-                            <div className="death-saves__title">Death Saves</div>
-                            <div className="death-saves__rows">
-                              <div className="death-saves__row">
-                                <div className="death-saves__label">Success</div>
-                                <div className="death-saves__slots">
-                                  {Array.from({ length: 3 }).map((_, index) => (
-                                    <button
-                                      key={`death-success-${index}`}
-                                      type="button"
-                                      className={`death-save-slot ${triStateClass(deathSaves[index])}`}
-                                      onClick={() => toggleDeathSave(index)}
-                                      aria-label={`Toggle death save success slot ${index + 1}`}
-                                    />
-                                  ))}
-                                </div>
-                              </div>
-
-                              <div className="death-saves__row">
-                                <div className="death-saves__label">Failure</div>
-                                <div className="death-saves__slots">
-                                  {Array.from({ length: 3 }).map((_, index) => (
-                                    <button
-                                      key={`death-fail-${index}`}
-                                      type="button"
-                                      className={`death-save-slot ${triStateClass(
-                                        deathSaves[index + 3],
-                                      )}`}
-                                      onClick={() => toggleDeathSave(index + 3)}
-                                      aria-label={`Toggle death save failure slot ${index + 1}`}
-                                    />
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <PrimaryPanel
+                    statMap={statMap}
+                    vitals={vitals}
+                    symbioticActive={symbioticActive}
+                    symbioticTempHp={symbioticTempHp}
+                    inspirationValue={inspirationValue}
+                    inventoryOnline={inventoryOnline}
+                    inventoryError={inventoryError}
+                    healingQuickLinks={healingQuickLinks}
+                    deathSaves={deathSaves}
+                    getInventoryQuantity={getInventoryQuantity}
+                    setInventoryItemValue={setInventoryItemValue}
+                    stepInventoryItem={stepInventoryItem}
+                    updateStat={updateStat}
+                    updateVital={updateVital}
+                    stepSymbioticTempHp={stepSymbioticTempHp}
+                    handleRest={handleRest}
+                    toggleDeathSave={toggleDeathSave}
+                  />
                 </div>
 
                 <div className="panel panel--skills panel--tight">
@@ -1497,190 +1150,18 @@ function App() {
                 </div>
 
                 <div className="panel panel--exhaustion panel--tight">
-                  <div className="panel__content exhaustion">
-                    <div className="consumables-panel">
-                      <div className="consumables-panel__title">Potions &amp; Poisons</div>
-                      <div className="consumables-panel__list">
-                        {potionPoisonItems.length ? (
-                          potionPoisonItems.map((item) => (
-                            <div key={item.name} className="consumable-item">
-                              <Link
-                                className="consumable-item__name"
-                                to={`/inventory#${slugifyHeading(item.name)}`}
-                              >
-                                {item.name}
-                              </Link>
-                              <div className="consumable-item__controls">
-                                <button
-                                  className="counter-row__btn"
-                                  type="button"
-                                  onClick={() => stepInventoryItem(item.name, -1)}
-                                  disabled={!inventoryOnline}
-                                  aria-label={`Decrease ${item.name}`}
-                                >
-                                  −
-                                </button>
-                                <input
-                                  className="consumable-item__input"
-                                  value={item.quantity ?? ''}
-                                  onChange={(event) =>
-                                    setInventoryItemValue(item.name, event.target.value)
-                                  }
-                                  onBlur={(event) =>
-                                    setInventoryItemValue(item.name, event.target.value)
-                                  }
-                                  aria-label={`${item.name} quantity`}
-                                />
-                                <button
-                                  className="counter-row__btn"
-                                  type="button"
-                                  onClick={() => stepInventoryItem(item.name, 1)}
-                                  disabled={!inventoryOnline}
-                                  aria-label={`Increase ${item.name}`}
-                                >
-                                  +
-                                </button>
-                              </div>
-                            </div>
-                          ))
-                        ) : (
-                          <div className="consumables-panel__empty">
-                            No combat potions or poisons loaded.
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="exhaustion-panel">
-                      <div className="exhaustion-panel__title">Exhaustion</div>
-                      <div className="exhaustion__slots" aria-label="Exhaustion level">
-                        {Array.from({ length: 6 }).map((_, index) => (
-                          <button
-                            key={`exhaustion-${index}`}
-                            type="button"
-                            className={`exhaustion__slot${
-                              exhaustionLevel > index ? ' exhaustion__slot--active' : ''
-                            }`}
-                            onClick={() => setExhaustionFromSlot(index)}
-                            aria-label={`Set exhaustion to ${index + 1}`}
-                          >
-                            {index + 1}
-                          </button>
-                        ))}
-                      </div>
-
-                      <div className="exhaustion__effects" aria-label="Exhaustion effects">
-                        <div className="exhaustion__effects-title">Effects</div>
-                        <div className="exhaustion__effects-list">
-                          {exhaustionEffects.map((entry) => (
-                            <div
-                              key={entry.level}
-                              className={`exhaustion-effect${
-                                exhaustionLevel >= entry.level
-                                  ? ' exhaustion-effect--active'
-                                  : ''
-                              }`}
-                            >
-                              <span className="exhaustion-effect__level">
-                                {entry.level}
-                              </span>
-                              <span className="exhaustion-effect__text">
-                                {entry.effect}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="conditions">
-                      <div className="conditions__title">Conditions</div>
-                      <div className="conditions__list">
-                        {conditionsList.map((condition) => {
-                          const slug = slugifyHeading(condition)
-                          return (
-                            <div
-                              key={condition}
-                              className={`conditions__item${
-                                conditions?.[slug] ? ' conditions__item--active' : ''
-                              }`}
-                            >
-                              <input
-                                type="checkbox"
-                                checked={Boolean(conditions?.[slug])}
-                                onChange={() => toggleCondition(condition)}
-                                aria-label={`Toggle ${condition}`}
-                              />
-                              <button
-                                className="conditions__link"
-                                type="button"
-                                onClick={() =>
-                                  setExpandedConditionKey(
-                                    expandedConditionKey === slug ? '' : slug,
-                                  )
-                                }
-                              >
-                                {condition}
-                              </button>
-                              {expandedConditionKey === slug ? (
-                                <div className="conditions__detail">
-                                  {conditionDetails[condition]}
-                                </div>
-                              ) : null}
-                            </div>
-                          )
-                        })}
-                      </div>
-                    </div>
-                    <div className="ranger-panel">
-                      <div className="ranger-panel__title">Ranger Features</div>
-                      <div className="feature-row">
-                        <strong>
-                          <Link className="feature-link" to="/features#favored-enemy">
-                            Favored Enemy
-                          </Link>
-                        </strong>
-                        <span>
-                          <Link className="feature-link" to="/features#favored-enemy">
-                            Snakes/Yuan-ti, Orcs
-                          </Link>
-                        </span>
-                      </div>
-                      <div className="feature-row">
-                        <strong>
-                          <Link className="feature-link" to="/features#natural-explorer">
-                            Natural Explorer
-                          </Link>
-                        </strong>
-                        <span>
-                          <Link className="feature-link" to="/features#natural-explorer">
-                            Swamp &amp; Forest
-                          </Link>
-                        </span>
-                      </div>
-                      <div className="feature-row">
-                        <strong>
-                          <Link className="feature-link" to="/features#ranger-6-gloom-stalker">
-                            Gloom Stalker
-                          </Link>
-                        </strong>
-                        <span>
-                          <Link
-                            className="feature-link"
-                            to="/features#dread-ambusher-gloom-stalker-3rd-level"
-                          >
-                            Dread Ambusher
-                          </Link>
-                          {', '}
-                          <Link
-                            className="feature-link"
-                            to="/features#umbral-sight-gloom-stalker-3rd-level"
-                          >
-                            Umbral Sight
-                          </Link>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                  <ExhaustionPanel
+                    potionPoisonItems={potionPoisonItems}
+                    inventoryOnline={inventoryOnline}
+                    stepInventoryItem={stepInventoryItem}
+                    setInventoryItemValue={setInventoryItemValue}
+                    exhaustionLevel={exhaustionLevel}
+                    setExhaustionFromSlot={setExhaustionFromSlot}
+                    conditions={conditions}
+                    toggleCondition={toggleCondition}
+                    expandedConditionKey={expandedConditionKey}
+                    setExpandedConditionKey={setExpandedConditionKey}
+                  />
                 </div>
 
                 <div className="panel panel--magic panel--tight">

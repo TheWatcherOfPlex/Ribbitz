@@ -512,6 +512,46 @@ What changed:
   rather than assuming) — then Combat Kit, Magic/Spell Slots, Exhaustion,
   the same extract-and-wrap way.
 
+### Phase 3 sequencing decision (owner, 2026-09-14)
+
+Owner confirmed the whole-panel approach ("that but for the whole
+character sheet") and chose the sequencing explicitly: **extract every
+remaining panel into its own file first (verified working on the real `/`
+Dashboard each time, same process as Skills/Primary), and only wire the
+draggable canvas up to ALL of them at the very end** — at that point `/`
+itself gets swapped to render via `DashboardCanvas` (retiring
+`/canvas-preview` as a separate page), rather than growing
+`/canvas-preview` one partially-wired panel at a time. Rationale
+(owner-approved, not just mine): each extraction step stays small/
+low-risk, matching how Skills and Primary just went; the tradeoff is not
+seeing the full draggable sheet until the last step.
+
+**Order for the remaining panels** (next panel after Skills+Primary, in
+file order): Exhaustion (Potions & Poisons / Exhaustion / Conditions /
+Ranger Features), then Magic (Spell Slots / Prepared Spells / Other
+Magical Abilities), then Combat Kit (Weapons / Ammo / Drugs & Herbs).
+
+**Per-panel process (proven twice now, follow it exactly):**
+1. Read the ENTIRE line range being extracted, not just its start/end
+   boundaries — this is the §5.1 rule, it's there because skipping this
+   step caused a real production-breaking bug once already.
+2. Check every helper function/const the block uses is either (a) a
+   simple prop to pass through, or (b) needs relocating to `components/`
+   or `lib/` if it's shared by other panels too (check with `grep -c` for
+   other usages before assuming it's exclusive to this panel).
+3. Create `panels/<Name>Panel.jsx`, taking everything it needs as props.
+4. Replace the block in `App.jsx` with `<NamePanel ...all the props... />`.
+5. Remove any now-fully-relocated consts/functions from `App.jsx`, add the
+   needed imports.
+6. Run the declaration-diff safety check from §5.1 — confirm every
+   removed name is an intentional relocation you can account for.
+7. `npm run build`, deploy, confirm the deployed bundle contains a
+   distinctive string from the extracted content (same spot-check used
+   for Skills/Primary).
+8. Commit with a clear message, update this plan + the progress log.
+9. Do **not** add the new panel to `/canvas-preview` yet, per the
+   sequencing decision above — that happens all at once at the end.
+
 ### Phase 3 — Content migration, category by category
 Order (roughly easiest/highest-value first, adjust based on what Phase 2
 teaches you):
