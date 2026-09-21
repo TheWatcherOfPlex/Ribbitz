@@ -6,6 +6,44 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-21 (13) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- Owner tested (12) after a week and reported the bottom-of-panel blank
+  gap was still there, and "even weirder, it slowly grows the longer I
+  have the window open."
+- Real bug, a feedback loop in the (12) auto-fit `ResizeObserver`: it
+  observed `.dashboard-canvas__item-body`, which has `flex: 1` (stretches
+  to fill whatever height the grid box currently is). `scrollHeight` is
+  always >= an element's own rendered box height — so once the box grew
+  even slightly past real content (from the `+4px` rounding slack in
+  `pxToRows`), the observer read that *larger box* as "more content,"
+  grew `h` again, which grew the box again, forever. Growing "the longer
+  the window is open" was literally correct — every ResizeObserver tick
+  fed the loop another notch.
+- Fix: added an inner wrapper div (`.dashboard-canvas__item-content`,
+  plain block, no flex/height rules) between `item-body` and
+  `panel.component`, and moved the measurement ref to that inner div
+  instead. Its height is now driven only by its own content, never by the
+  outer flex box, so there's nothing left to feed back into. No CSS
+  needed for the new class beyond "don't give it any sizing rules."
+- **Lesson for next time a "measure and resize a container" pattern is
+  built**: never `ResizeObserver.observe()` an element whose own size is
+  *derived from* the thing you're about to set based on that measurement
+  — that's the textbook setup for this exact loop. Always measure an
+  inner, unstretched wrapper.
+- No localStorage cleanup needed: the inflated h values were never
+  written to `ribbitz.canvasManualSized.v2.*` (only a real owner drag
+  writes there), so every affected panel re-measures correctly and
+  self-corrects on the next load — confirmed this is still true, didn't
+  change that part of the logic.
+- `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed `item-content` string present in the
+  deployed bundle.
+- **Not yet done**: owner has not yet re-tested. Given the past two
+  rounds both needed a correction, explicitly watch for: (a) does the
+  gap stay closed on first load, (b) does it stay closed / does NOT grow
+  after leaving the tab open a few minutes this time.
+
 ## 2026-09-14 (12) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - Owner tested (11): "huge blank spots at the bottom of each panel." Root
   cause: the fixed `h` estimates baked into each panel's default layout

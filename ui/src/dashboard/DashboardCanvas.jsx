@@ -105,12 +105,20 @@ export default function DashboardCanvas({ characterId, panels }) {
     const observers = []
     panels.forEach((panel) => {
       if (manualSizedRef.current.has(panel.id)) return
-      const bodyEl = bodyRefs.current[panel.id]
-      if (!bodyEl) return
+      // Measure the inner content wrapper, NOT the flex:1 item-body — the
+      // body stretches to fill whatever height the grid box currently is,
+      // and scrollHeight is always >= an element's own box height, so
+      // observing the body creates a feedback loop: grow h -> box grows ->
+      // body's scrollHeight grows to match -> observer fires -> grow h
+      // again, forever (this is what "blank spot slowly grows the longer
+      // the window is open" was). The inner wrapper below has no flex
+      // stretching applied, so its height reflects only its own content.
+      const contentEl = bodyRefs.current[panel.id]
+      if (!contentEl) return
       const measureAndApply = () => {
         const handleEl = handleRefs.current[panel.id]
         const handleHeight = handleEl ? handleEl.getBoundingClientRect().height : 30
-        const neededRows = pxToRows(bodyEl.scrollHeight + handleHeight)
+        const neededRows = pxToRows(contentEl.scrollHeight + handleHeight)
         setLayout((prev) => {
           const idx = prev.findIndex((item) => item.i === panel.id)
           if (idx === -1 || prev[idx].h === neededRows) return prev
@@ -120,7 +128,7 @@ export default function DashboardCanvas({ characterId, panels }) {
         })
       }
       const observer = new ResizeObserver(measureAndApply)
-      observer.observe(bodyEl)
+      observer.observe(contentEl)
       measureAndApply()
       observers.push(observer)
     })
@@ -166,13 +174,15 @@ export default function DashboardCanvas({ characterId, panels }) {
                 >
                   ⠿ {panel.title}
                 </div>
-                <div
-                  className="dashboard-canvas__item-body"
-                  ref={(node) => {
-                    bodyRefs.current[panel.id] = node
-                  }}
-                >
-                  {panel.component}
+                <div className="dashboard-canvas__item-body">
+                  <div
+                    className="dashboard-canvas__item-content"
+                    ref={(node) => {
+                      bodyRefs.current[panel.id] = node
+                    }}
+                  >
+                    {panel.component}
+                  </div>
                 </div>
               </div>
             )
