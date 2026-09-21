@@ -6,6 +6,34 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-21 (16) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- Owner ask: "I need a way to change the width myself with a drag and
+  drop motion." Previously only `resizeHandles`'s library default (`se`,
+  bottom-right corner) was enabled — that lets you drag width+height
+  together but there was no dedicated width-only handle, and no explicit
+  `resizeHandles` prop had been set at all until now (relying on the
+  library default).
+- Fix: added `resizeHandles={['e', 'se']}` to `<GridLayout>` — `e` gives
+  a vertically-centered handle on the right edge of each panel for a
+  pure width-only drag, `se` keeps the corner for both at once. Both
+  handle styles already ship in `react-resizable/css/styles.css` (already
+  imported), no new CSS needed.
+- Bug caught while wiring this up (not yet reported by the owner, fixed
+  proactively): `onResizeStop` was marking a panel "manually sized"
+  (opting it out of auto-fit-to-content height, see (12)) on ANY resize,
+  including a pure width-only drag via the new `e` handle — so widening a
+  panel would have silently frozen its height too, even though the owner
+  never touched that dimension. Fixed: `handleResizeStop` now only marks
+  manual-sized when `oldItem.h !== newItem.h`, i.e. only when height
+  actually changed.
+- `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200.
+- **Not yet done**: owner has not yet re-tested. Ask them to confirm (a)
+  they can now grab a handle on the right edge of a panel and drag width
+  only, and (b) doing that doesn't lock the panel's height (it should
+  still auto-fit if content changes later).
+
 ## 2026-09-21 (15) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - Owner tested (14): sizing/oscillation is fixed ("much closer"), but on
   a 1440p monitor panels could only ever occupy ~2 columns' worth of

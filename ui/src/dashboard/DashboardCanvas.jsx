@@ -147,7 +147,11 @@ export default function DashboardCanvas({ characterId, panels }) {
     saveStoredLayout(characterId, nextLayout)
   }
 
-  const handleResizeStop = (_layout, _oldItem, newItem) => {
+  const handleResizeStop = (_layout, oldItem, newItem) => {
+    // Only a HEIGHT change opts a panel out of auto-fit — a pure width
+    // drag (the 'e' handle) shouldn't freeze the panel's height at
+    // whatever it happened to be, since the owner never touched that.
+    if (oldItem.h === newItem.h) return
     manualSizedRef.current.add(newItem.i)
     saveManualSizedIds(characterId, [...manualSizedRef.current])
   }
@@ -164,6 +168,7 @@ export default function DashboardCanvas({ characterId, panels }) {
         onResizeStop={handleResizeStop}
         draggableHandle=".dashboard-canvas__drag-handle"
         compactType="vertical"
+        resizeHandles={['e', 'se']}
       >
         {layout
           .filter((item) => byId[item.i])
