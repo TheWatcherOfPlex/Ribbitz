@@ -25,6 +25,16 @@ const COLS = 12
 const ROW_HEIGHT = 30
 const MARGIN = [10, 10]
 
+// Panels whose internal content reflows with available width (multi-column
+// grids etc.) need a permanently-reserved scrollbar gutter to avoid the
+// resize-oscillation bug fixed 2026-09-21 (see docs/PROGRESS_LOG.md). That
+// reservation shows as a thin, always-there strip even with no real
+// overflow — fine for a panel that actually needs it, but applying it to
+// every panel made ordinary, correctly-sized panels look like they had a
+// stray scrollbar. Keep this allowlist as small as the oscillation bug
+// actually requires.
+const WIDTH_SENSITIVE_PANEL_IDS = new Set(['magic'])
+
 // Converts a pixel height (drag-handle + item-body content, both measured
 // via scrollHeight/getBoundingClientRect so it reflects real content even
 // while the box is visually clipped) into the number of grid rows needed,
@@ -168,7 +178,7 @@ export default function DashboardCanvas({ characterId, panels }) {
         onResizeStop={handleResizeStop}
         draggableHandle=".dashboard-canvas__drag-handle"
         compactType="vertical"
-        resizeHandles={['e', 'se']}
+        resizeHandles={['e', 's', 'se']}
       >
         {layout
           .filter((item) => byId[item.i])
@@ -184,7 +194,11 @@ export default function DashboardCanvas({ characterId, panels }) {
                 >
                   ⠿ {panel.title}
                 </div>
-                <div className="dashboard-canvas__item-body">
+                <div
+                  className={`dashboard-canvas__item-body${
+                    WIDTH_SENSITIVE_PANEL_IDS.has(panel.id) ? ' dashboard-canvas__item-body--reserve-gutter' : ''
+                  }`}
+                >
                   <div
                     className="dashboard-canvas__item-content"
                     ref={(node) => {

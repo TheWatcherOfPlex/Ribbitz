@@ -2311,16 +2311,22 @@
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  /* Reserve the scrollbar's width permanently, whether or not one is
-     currently showing. Without this, the auto-fit ResizeObserver's
-     measure -> resize -> scrollbar toggles in/out -> content width
-     shifts -> reflows to a different height -> measure again cycle
-     never settles for any panel whose content reflows with width (e.g.
-     Magic's multi-column spell grid) — it oscillates constantly instead
-     of converging. See docs/PROGRESS_LOG.md 2026-09-21.
-     Falls back silently on browsers that don't support the property. */
-  scrollbar-gutter: stable;
   padding: 10px;
+}
+
+/* Only for panels in DashboardCanvas.jsx's WIDTH_SENSITIVE_PANEL_IDS
+   (currently just Magic). Reserves the scrollbar's width permanently,
+   whether or not one is currently showing — without this, the auto-fit
+   ResizeObserver's measure -> resize -> scrollbar toggles in/out ->
+   content width shifts -> reflows to a different height -> measure again
+   cycle never settles for a panel whose content reflows with width (e.g.
+   Magic's multi-column spell grid). Deliberately NOT applied to every
+   panel: it shows as a thin, always-there strip even with no real
+   overflow, which read as "most panels have a stray scrollbar" when it
+   was tried globally. See docs/PROGRESS_LOG.md 2026-09-21. Falls back
+   silently on browsers that don't support the property. */
+.dashboard-canvas__item-body--reserve-gutter {
+  scrollbar-gutter: stable;
 }
 
 .dashboard-canvas__unknown-type {

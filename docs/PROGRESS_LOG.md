@@ -6,6 +6,43 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-21 (17) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- Owner tested (16): width handle works, but "most of the panels have
+  scroll bars on the right side" — and clarified they're fine WITH real
+  scrollbars on a panel they've deliberately squeezed smaller, they just
+  also want a way to make a panel *taller* via the same drag controls
+  (mirroring the width handle from (16)), so they can size things the
+  way they want instead of scrolling by default.
+- Two changes:
+  1. Added an `s` (bottom-edge, height-only) resize handle alongside the
+     existing `e` (width-only) and `se` (corner) ones —
+     `resizeHandles={['e', 's', 'se']}`. `handleResizeStop`'s existing
+     "only freeze auto-fit if `h` actually changed" check (from (16))
+     already does the right thing here with no further change needed.
+  2. Root cause of "most panels have scroll bars": (14)'s
+     `scrollbar-gutter: stable` fix was applied to `.dashboard-canvas__item-body`
+     globally (all 5 panels), to fix ONE panel's (Magic's) real
+     width-reflow oscillation bug. That reserved gutter shows as a thin,
+     always-present strip even on panels with zero actual overflow — so
+     every ordinary, correctly-auto-fit panel looked like it had a stray
+     scrollbar, when only Magic's multi-column grid actually needed the
+     reservation. Scoped it down: added
+     `WIDTH_SENSITIVE_PANEL_IDS = new Set(['magic'])` in
+     `DashboardCanvas.jsx`, moved `scrollbar-gutter: stable` in
+     `App.css` into a new `.dashboard-canvas__item-body--reserve-gutter`
+     modifier class applied only to panels in that set. If a *different*
+     panel starts oscillating in the future (per the (14) lesson about
+     width-sensitive content), add its id to this set rather than
+     re-broadening the CSS rule back to global.
+- `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed `reserve-gutter` string present in the
+  deployed bundle.
+- **Not yet done**: owner has not yet re-tested. Confirm (a) a bottom-edge
+  handle now lets height be dragged directly, (b) panels other than Magic
+  no longer show a scrollbar strip when they don't need one, and (c)
+  Magic still doesn't oscillate (the whole reason for the allowlist).
+
 ## 2026-09-21 (16) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - Owner ask: "I need a way to change the width myself with a drag and
   drop motion." Previously only `resizeHandles`'s library default (`se`,
