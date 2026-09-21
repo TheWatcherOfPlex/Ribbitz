@@ -6,6 +6,40 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-21 (14) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- Owner tested (13): most panels fixed, but "the spell box is glitching
+  constantly changing size" — MagicPanel specifically, continuously.
+- Different bug from (13)'s feedback loop (that one was confirmed fixed —
+  this is a second, separate oscillation cause). Root cause: MagicPanel's
+  content reflows with available width (its multi-column
+  `prepared-spells__grid` and the Circle of Spores grid). `item-body` has
+  `overflow-y: auto`, and during the auto-fit measure -> resize cycle the
+  scrollbar was toggling in and out — each toggle changes the available
+  content width by the scrollbar's width (~15-17px), which reflows
+  MagicPanel's grid to a *different* height, which triggers another
+  measurement, which toggles the scrollbar again... an oscillation that
+  never converges. Other panels (Primary, Skills, Exhaustion, Kit) don't
+  have width-sensitive multi-column content, so they never hit this even
+  though the same mechanism was present for all of them.
+- Fix: `scrollbar-gutter: stable` on `.dashboard-canvas__item-body` —
+  reserves the scrollbar's width permanently whether or not one is
+  actually showing, so the available content width never changes and
+  there's nothing left for a width-sensitive panel to reflow against.
+  One CSS line, no JS change.
+- **Lesson**: any panel with width-dependent internal layout (multi-column
+  grids, flex-wrap, etc.) combined with a conditionally-visible scrollbar
+  on its container is a latent version of this same oscillation — if a
+  *different* panel starts "glitching/resizing constantly" in the future,
+  check for width-sensitive content first before assuming it's another
+  variant of the (13) height-feedback-loop bug.
+- `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed `scrollbar-gutter` present in the
+  deployed CSS bundle.
+- **Not yet done**: owner has not yet re-tested. Ask them to specifically
+  watch the Magic/Spell panel this time, plus leave the tab open a few
+  minutes per the still-open ask from (13).
+
 ## 2026-09-21 (13) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - Owner tested (12) after a week and reported the bottom-of-panel blank
   gap was still there, and "even weirder, it slowly grows the longer I
