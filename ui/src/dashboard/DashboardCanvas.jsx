@@ -74,8 +74,18 @@ function saveStoredLayout(characterId, layout) {
 // drag/resize — so "a layout is saved" does NOT mean "the owner chose this
 // panel's height." Only onResizeStop marks a panel here, so only an actual
 // manual resize opts a panel out of auto-fit-to-content below.
+//
+// v3 (2026-09-21): bumped because handleResizeStop didn't yet distinguish
+// width-only from height-changing resizes until today's fix — any earlier
+// resize (e.g. testing the width handle on Currency/Skills) would have
+// wrongly frozen that panel's height at a stale value forever, which is
+// exactly why those two kept showing a real scrollbar (genuine overflow,
+// not the (17) phantom-gutter issue) while newer/untouched panels didn't.
+// Bumping clears every owner's stale flags so today's correct logic
+// starts fresh for everyone instead of requiring a manual localStorage
+// clear per affected panel.
 function manualSizedStorageKey(characterId) {
-  return `ribbitz.canvasManualSized.v2.${characterId}`
+  return `ribbitz.canvasManualSized.v3.${characterId}`
 }
 
 function loadManualSizedIds(characterId) {

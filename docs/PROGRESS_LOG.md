@@ -6,6 +6,37 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-21 (18) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- Owner tested (17): "worked for spell slots, weapons, and potions
+  panels, but not the currency and skills panels" (still showing a
+  scrollbar there).
+- Different cause from (17)'s phantom-gutter issue — this one is a real
+  overflow. `handleResizeStop` didn't distinguish width-only from
+  height-changing resizes until the (16) fix landed; any resize before
+  that point (e.g. testing an early drag on Currency/Skills, which were
+  likely the first two panels tried since they sit top-left in the
+  default layout) would have wrongly frozen that panel's height forever
+  at whatever it happened to be at the time — permanently opting it out
+  of auto-fit, even though the owner never deliberately chose that
+  height. Spell Slots/Weapons/Potions apparently hadn't been
+  resize-tested yet at that point, so they were never wrongly frozen and
+  picked up the (16)/(17) fixes cleanly.
+- Fix: bumped the manual-sized storage key from
+  `ribbitz.canvasManualSized.v2.<id>` to `...v3.<id>` — clears every
+  owner's stale manual-sized flags (there's no way to tell a
+  legitimately-chosen v2 height apart from a wrongly-frozen one after
+  the fact, so the clean fix is the same "bump the key" pattern used for
+  the layout key back in (11)). After this deploy, Currency and Skills
+  (and anything else stale) go back to auto-fit; a real resize from here
+  on uses the corrected height-vs-width logic.
+- `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed `canvasManualSized.v3` string present
+  in the deployed bundle.
+- **Not yet done**: owner has not yet re-tested. If Currency/Skills (or
+  any panel) is still wrong after this, it's no longer a stale-flag
+  issue — something else is going on and needs fresh investigation.
+
 ## 2026-09-21 (17) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - Owner tested (16): width handle works, but "most of the panels have
   scroll bars on the right side" — and clarified they're fine WITH real
