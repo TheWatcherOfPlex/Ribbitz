@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
-import GridLayout from 'react-grid-layout'
+import RGL, { WidthProvider } from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
+
+// WidthProvider measures the grid's actual container width (and re-measures
+// on window resize) instead of the old hardcoded 1180px — that hardcode was
+// why panels couldn't be dragged past a fixed point regardless of real
+// screen size (owner: 1440p monitor, still stuck at ~2 columns' worth of
+// width). See docs/PROGRESS_LOG.md 2026-09-21.
+const GridLayout = WidthProvider(RGL)
 
 // Owner correction (2026-09-14, see docs/PROGRESS_LOG.md): dragging happens
 // at the whole-category/panel level ("drag my spell list up, move my
@@ -17,7 +24,6 @@ import 'react-resizable/css/styles.css'
 const COLS = 12
 const ROW_HEIGHT = 30
 const MARGIN = [10, 10]
-const GRID_WIDTH = 1180 // TODO Phase 3: swap for react-grid-layout's WidthProvider for real responsiveness
 
 // Converts a pixel height (drag-handle + item-body content, both measured
 // via scrollHeight/getBoundingClientRect so it reflects real content even
@@ -153,7 +159,6 @@ export default function DashboardCanvas({ characterId, panels }) {
         layout={layout}
         cols={COLS}
         rowHeight={ROW_HEIGHT}
-        width={GRID_WIDTH}
         margin={MARGIN}
         onLayoutChange={handleLayoutChange}
         onResizeStop={handleResizeStop}

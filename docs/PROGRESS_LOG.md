@@ -6,6 +6,34 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-21 (15) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- Owner tested (14): sizing/oscillation is fixed ("much closer"), but on
+  a 1440p monitor panels could only ever occupy ~2 columns' worth of
+  width and couldn't be dragged onto the right side of the screen at all.
+- Cause: `GRID_WIDTH` was hardcoded to `1180` px (a leftover placeholder
+  from Phase 2, flagged with a `TODO` comment at the time it was added —
+  see the Phase 3 final-swap entry). The grid's actual pixel width never
+  grew past that regardless of real window/monitor size, so on anything
+  wider than ~1180px the canvas just sat pinned to the left with dead
+  space on the right that nothing could be dragged into.
+- Fix: swapped in react-grid-layout's own `WidthProvider` HOC
+  (`WidthProvider(RGL)`), which measures the grid's real container width
+  (and re-measures on window resize) instead of a hardcoded number.
+  Removed the `GRID_WIDTH` constant and the `width={GRID_WIDTH}` prop
+  entirely — `WidthProvider` injects the real width itself. No change
+  needed to `pxToRows()` (it's width-independent) or to
+  `.dashboard-canvas`/`.main-panel` CSS — neither had a competing
+  `max-width` that would've capped it anyway (checked).
+- No layout-storage migration needed: `x`/`y`/`w`/`h` in a saved layout
+  are column/row units (0-12 cols), not pixels, so existing saved
+  layouts are still valid — panels just render wider per column now.
+- `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200.
+- **Not yet done**: owner has not yet re-tested on the 1440p monitor to
+  confirm panels can now be dragged/placed across the full screen width,
+  not just the old ~1180px band.
+
 ## 2026-09-21 (14) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - Owner tested (13): most panels fixed, but "the spell box is glitching
   constantly changing size" — MagicPanel specifically, continuously.
