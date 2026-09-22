@@ -6,6 +6,103 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-22 (23) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — character content audit (not part of canvas rebuild)
+- Owner asked to circle back to "the actual character, math, and OBS
+  workflows" now that Phases 4-6 are done. This entry covers the
+  character/math half; workflow (OBS/dice) work is a separate future
+  step, not started this entry.
+- **7th-level spell slot**: owner confirmed (after last session's
+  research) he should have one. Attempted a live write via
+  `POST /api/stats` with `slots-7th` — response claimed `notFound:1` but
+  `rowsCreated:0` (inconsistent), and a re-fetch confirmed no row was
+  actually created. The deployed Apps Script web app likely differs from
+  the `.gs` file in this repo (`OBS Auto Sync/Engine/Google Apps Script
+  Framework.gs`) — do not trust that write path without re-verifying
+  first. Owner was given the exact row to add manually (Label "7th Level
+  Slots", Value "1/1", Type "slots", Key "slots-7th", OutputFile
+  "slots-7th.txt") — **not yet confirmed done on the actual sheet**.
+- **Does he need a 7th-level spell?** No — researched and confirmed:
+  multiclass spell SLOTS come from the combined-level table, but which
+  spells you can know/prepare is based on each class's OWN level
+  separately (verified via WebSearch, PHB multiclassing text). Druid 11
+  caps at 6th-level spell access, Ranger 6 caps at 2nd — neither reaches
+  7th yet, so the 7th-level slot exists purely for upcasting a
+  lower-level spell. Confirmed with the owner as the answer.
+- **Full spell audit** (owner: "look at the ones given as perks... then
+  the ones I just get as druid/ranger, make sure I have the right
+  amount"). Researched every relevant table via WebSearch/WebFetch
+  (2014 5e rules only, per owner's explicit edition constraint from last
+  session):
+  - Gloom Stalker Magic (Ranger 3rd/5th, always prepared, free):
+    Disguise Self, Rope Trick. Both already present, now explicitly
+    tagged.
+  - Circle of Spores Circle Spells (Druid 2/3/5/7/9, always prepared,
+    free): Chill Touch, Blindness/Deafness, Gentle Repose, Animate Dead,
+    Gaseous Form, Blight, Confusion, Cloudkill, Contagion — verified the
+    REAL table via WebFetch (dnd5e.wikidot.com/druid:spores), which
+    corrected an earlier wrong assumption from last session (I'd
+    initially guessed Revivify/Bestow Curse were on this list — they are
+    NOT; the real table is exactly the 9 above). All 9 present, now
+    tagged.
+  - Fey Touched feat (always prepared, free): Misty Step + Hunter's Mark.
+    Present, tagged.
+  - Owner corrected me on **Toll the Dead**: I'd flagged it as a likely
+    error (not on Druid/Ranger list) — owner confirmed it's a real DM
+    grant, reward for reading a necromancy spell. Updated its Source
+    line to document this instead of removing it.
+  - Owner also revealed **Summon Undead** (Tasha's Cauldron, 3rd-level
+    necromancy) — a DM grant, 1 free casting per long rest OR cast
+    normally with a real 3rd-level+ slot, doesn't count against
+    anything. This spell did NOT exist anywhere in the content file —
+    added it as a new entry in the 3rd Level Spells section (verified
+    real spell text/stats via WebSearch) plus a tracker line in the
+    Reset/Usage Trackers section at the top of the doc.
+  - Owner confirmed his 4 Ranger-known spells (Ranger 6, fixed per the
+    2014 Ranger table, chosen by the player not derivable from rules
+    alone): **Goodberry, Detect Magic, Jump, Wild Cunning**. This let me
+    finish the accounting: of 19 total non-bonus spells across 1st-6th
+    level, exactly 4 are these Ranger picks and the remaining 15 are
+    Druid-prepared — which matches Druid's own formula (Wis mod +4 +
+    Druid level 11 = 15) exactly. Nothing needed to change numerically;
+    only the missing tags.
+  - Added an explicit **`**Prep Source:**`** line to all 38
+    spells/abilities in the file (one Python script pass, not 38 manual
+    edits — see scratchpad `tag_prep_source.py`, not committed) tagging
+    each as one of: Druid (prepared) / Ranger (known) / Druid (free
+    cantrip choice) / Circle of Spores Circle Spell / Gloom Stalker
+    Magic / Fey Touched feat / DM Homebrew Grant. This is the
+    `prep_source` tagging system referenced from an earlier session as
+    a planned-but-never-built feature — it's now actually in the content
+    file itself (as a Prep Source line per entry), not yet as a
+    UI-visible filter/badge anywhere in the dashboard — that would be a
+    separate future UI task if wanted.
+  - Verified counts after tagging: 15 "Druid (prepared)", 4 "Ranger
+    (known)", 4 "Druid (free cantrip choice)", 9 Circle of Spores
+    entries (1+2+2+2+2 across the 5 threshold levels), 2 Gloom Stalker
+    Magic, 2 Fey Touched feat, 2 DM Homebrew Grant (Toll the Dead +
+    Summon Undead). All match expected totals exactly.
+- **Important repo gotcha rediscovered**: there are TWO copies of this
+  file — `Spells and Magic Abilities.md` at the repo root, and
+  `ui/public/content/Spells and Magic Abilities.md` (the one actually
+  served/built into the app). No automated sync exists between them.
+  I edited the served copy first, then diffed and copied it over the
+  root copy to keep them in sync — do this every time, in this order
+  (edit the served one, verify content renders, THEN sync to root),
+  since the root copy isn't what a rebuild actually picks up.
+- Deployed via `docker compose build ribbitz && docker compose up -d
+  ribbitz` after each content change; verified via `curl .../content/...`
+  that the served markdown actually contains the new content each time
+  (not just a successful build — content is static, so this is a
+  simpler check than the JS-bundle grep used for code changes).
+- Committed to git (see commit for exact message).
+- **Not yet done**: owner still needs to manually add the `slots-7th`
+  row to the actual Google Sheet (the app couldn't do it reliably — see
+  above). The `prep_source` tags are in the markdown content only, not
+  surfaced anywhere in the dashboard UI yet — that's a reasonable future
+  ask if the owner wants a visual filter/badge for it. OBS/dice-roll
+  workflow work (the other half of what the owner asked to circle back
+  to) has not been started this session.
+
 ## 2026-09-22 (22) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — Phase 6 DONE (scoped)
 - Scoped Phase 6 down deliberately: the plan's Phase 6 bullet list
   included "full pass on advantage/disadvantage roll coverage" — that

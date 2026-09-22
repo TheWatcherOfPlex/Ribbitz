@@ -62,6 +62,10 @@ Do not publish/distribute.
 - *Misty Step*: 🟩
 - *Hunter's Mark*: 🟩
 
+**Summon Undead (DM Grant) - Free Cast**
+- Uses: **1** per long rest (can also be cast normally with a 3rd-level+ slot, unlimited)
+- Tracker: 🟩
+
 ---
 
 ## 🧙 Spell Slots Tracker
@@ -100,6 +104,7 @@ Do not publish/distribute.
 **Duration:** Concentration, up to 1 minute
 
 **Source:** *Player's Handbook* (2014) — p. 248
+**Prep Source:** Druid (free cantrip choice)
 
 #### Official Text
 
@@ -120,6 +125,7 @@ You touch one willing creature. Once, before the spell ends, the target can roll
 **Duration:** Instantaneous
 
 **Source:** *Player's Handbook* (2014) — p. 266
+**Prep Source:** Druid (free cantrip choice)
 
 #### Official Text
 
@@ -143,6 +149,7 @@ You extend your hand toward a creature you can see within range and project a pu
 **Duration:** Instantaneous
 
 **Source:** *Xanathar's Guide to Everything* (2017) — p. 163
+**Prep Source:** Druid (free cantrip choice)
 
 #### Official Text
 
@@ -166,6 +173,7 @@ You channel primal magic to cause your teeth or fingernails to sharpen, ready to
 **Duration:** 1 round
 
 **Source:** *Player's Handbook* (2014) — p. 221
+**Prep Source:** Circle of Spores Circle Spell (bonus, free — Druid 2nd level)
 
 #### Official Text
 
@@ -191,6 +199,7 @@ If you hit an undead target, it also has disadvantage on attack rolls against yo
 **Duration:** Instantaneous
 
 **Source:** *Xanathar's Guide to Everything* (2017) — p. 157
+**Prep Source:** Druid (free cantrip choice)
 
 #### Official Text
 
@@ -214,7 +223,8 @@ You seize the air and compel it to create one of the following effects at a poin
 **Components:** V, S  
 **Duration:** Instantaneous
 
-**Source:** *Xanathar's Guide to Everything*
+**Source:** *Xanathar's Guide to Everything* — granted free by the DM (2026-09-22, confirmed with owner) as a reward for reading a necromancy spell; this is NOT on the Druid or Ranger spell list normally. Always known/prepared for free — does not count against the 4 base Druid cantrips or the Circle of Spores bonus cantrip.
+**Prep Source:** DM Homebrew Grant (bonus, free)
 
 #### Official Text
 
@@ -222,7 +232,7 @@ You point at one creature you can see within range, and the sound of a dolorous 
 
 **At Higher Levels:** The spell's damage increases by one die when you reach 5th level (2d8 or 2d12), 11th level (3d8 or 3d12), and 17th level (4d8 or 4d12).
 
-**Spell Lists:** Cleric, Warlock, Wizard
+**Spell Lists:** Cleric, Warlock, Wizard (not Druid/Ranger — DM homebrew grant, see Source above)
 
 #### Ribbitz Notes
 - <span style="color: #8a2be2;"><b>Save DC = 18</b></span> Wisdom
@@ -248,6 +258,7 @@ You point at one creature you can see within range, and the sound of a dolorous 
 **Duration:** Instantaneous
 
 **Source:** *Player's Handbook* (2014) — p. 230
+**Prep Source:** Druid (prepared)
 
 #### Official Text
 
@@ -272,6 +283,7 @@ A creature you touch regains a number of hit points equal to 1d8 + your spellcas
 **Duration:** 10 minutes
 
 **Source:** *Player's Handbook* (2014) — p. 277
+**Prep Source:** Druid (prepared)
 
 #### Official Text
 
@@ -292,6 +304,7 @@ You gain the ability to comprehend and verbally communicate with beasts for the 
 **Duration:** Instantaneous
 
 **Source:** *Unearthed Arcana: Starter Spells* (2017) — p. 5
+**Prep Source:** Ranger (known)
 
 #### Official Text
 
@@ -319,6 +332,7 @@ You call out to the spirits of nature to aid you. When you cast this spell, choo
 **Duration:** 1 round
 
 **Source:** *Xanathar's Guide to Everything* (2017) — p. 150
+**Prep Source:** Druid (prepared)
 
 #### Official Text
 
@@ -342,6 +356,7 @@ The spell captures some of the incoming energy, lessening its effect on you and 
 **Duration:** Concentration, up to 1 minute
 
 **Source:** *Player's Handbook* (2014) — p. 239
+**Prep Source:** Druid (prepared)
 
 #### Official Text
 
@@ -367,6 +382,7 @@ Any attack roll against an affected creature or object has advantage if the atta
 **Duration:** Instantaneous
 
 **Source:** *Player's Handbook* (2014) — p. 246
+**Prep Source:** Ranger (known)
 
 #### Official Text
 
@@ -391,6 +407,7 @@ The berries lose their potency if they have not been consumed within 24 hours of
 **Duration:** Instantaneous
 
 **Source:** *Player's Handbook* (2014) — p. 229
+**Prep Source:** Druid (prepared)
 
 #### Official Text
 
@@ -417,6 +434,7 @@ You either create or destroy water.
 **Duration:** Concentration, up to 10 minutes
 
 **Source:** *Player's Handbook* (2014) — p. 231
+**Prep Source:** Ranger (known)
 
 #### Official Text
 
@@ -440,6 +458,7 @@ The spell can penetrate most barriers, but it is blocked by 1 foot of stone, 1 i
 **Duration:** 1 minute
 
 **Source:** *Player's Handbook* (2014) — p. 254
+**Prep Source:** Ranger (known)
 
 #### Official Text
 
@@ -457,6 +476,7 @@ You touch a creature. The creature's jump distance is tripled until the spell en
 **Duration:** 1 hour
 
 **Source:** *Player's Handbook* (2014) — p. 233
+**Prep Source:** Gloom Stalker Magic (bonus, free — Ranger 3rd level)
 
 #### Official Text
 
@@ -481,6 +501,7 @@ To discern that you are disguised, a creature can use its action to inspect your
 **Duration:** Concentration, up to 1 hour
 
 **Source:** *Player's Handbook* (2014) — p. 251
+**Prep Source:** Fey Touched feat (bonus, free)
 
 #### Official Text
 
@@ -513,6 +534,7 @@ If the target drops to 0 hit points before this spell ends, you can use a bonus 
 **Duration:** Concentration, up to 1 minute
 
 **Source:** *Xanathar's Guide to Everything* (2017) — p. 157
+**Prep Source:** Druid (prepared)
 
 #### Official Text
 
@@ -543,6 +565,7 @@ The spirit can heal a number of times equal to 1 + your spellcasting ability mod
 **Duration:** Concentration, up to 1 minute
 
 **Source:** *Player's Handbook* (2014) — p. 261
+**Prep Source:** Druid (prepared)
 
 #### Official Text
 
@@ -573,6 +596,7 @@ On each of your turns after you cast this spell, you can use an action to move t
 **Duration:** Concentration, up to 1 minute
 
 **Source:** *Player's Handbook* (2014) — p. 248
+**Prep Source:** Druid (prepared)
 
 #### Official Text
 
@@ -599,6 +623,7 @@ As a bonus action on each of your turns before the spell ends, you can change th
 **Duration:** Instantaneous
 
 **Source:** *Player's Handbook* (2014) — p. 255
+**Prep Source:** Druid (prepared)
 
 #### Official Text
 
@@ -616,6 +641,7 @@ You touch a creature and can end either one disease or one condition afflicting 
 **Duration:** Concentration, up to 1 hour
 
 **Source:** *Player's Handbook* (2014) — p. 264
+**Prep Source:** Druid (prepared)
 
 #### Official Text
 
@@ -637,6 +663,7 @@ A veil of shadows and silence radiates from you, masking you and your companions
 **Duration:** 1 hour
 
 **Source:** *Player's Handbook* (2014) — p. 272
+**Prep Source:** Gloom Stalker Magic (bonus, free — Ranger 5th level)
 
 #### Official Text
 
@@ -663,6 +690,7 @@ Anything inside the extradimensional space drops out when the spell ends.
 **Duration:** Instantaneous
 
 **Source:** *Player's Handbook* (2014) — p. 260
+**Prep Source:** Fey Touched feat (bonus, free)
 
 #### Official Text
 
@@ -683,6 +711,7 @@ Briefly surrounded by silvery mist, you teleport up to 30 feet to an unoccupied 
 **Duration:** 1 minute
 
 **Source:** *Player's Handbook* (2014) — p. 219
+**Prep Source:** Circle of Spores Circle Spell (bonus, free — Druid 3rd level)
 
 #### Official Text
 
@@ -706,6 +735,7 @@ You can blind or deafen a foe. Choose one creature that you can see within range
 **Duration:** 10 days
 
 **Source:** *Player's Handbook* (2014) — p. 245
+**Prep Source:** Circle of Spores Circle Spell (bonus, free — Druid 3rd level)
 
 #### Official Text
 
@@ -735,6 +765,7 @@ The spell also effectively extends the time limit on raising the target from the
 **Duration:** Instantaneous
 
 **Source:** *Player's Handbook* (2014) — p. 234
+**Prep Source:** Druid (prepared)
 
 #### Official Text
 
@@ -757,6 +788,7 @@ Choose any creature, object, or magical effect within range. Any spell of 3rd le
 **Duration:** Instantaneous
 
 **Source:** *Player's Handbook* (2014) — p. 272
+**Prep Source:** Druid (prepared)
 
 #### Official Text
 
@@ -777,6 +809,7 @@ You touch a creature that has died within the last minute. That creature returns
 **Duration:** Instantaneous
 
 **Source:** *Player's Handbook* (2014) — p. 212
+**Prep Source:** Circle of Spores Circle Spell (bonus, free — Druid 5th level)
 
 #### Official Text
 
@@ -800,6 +833,7 @@ The creature is under your control for 24 hours, after which it stops obeying an
 **Duration:** Concentration, up to 1 hour
 
 **Source:** *Player's Handbook* (2014) — p. 244
+**Prep Source:** Circle of Spores Circle Spell (bonus, free — Druid 5th level)
 
 #### Official Text
 
@@ -808,6 +842,30 @@ You transform a willing creature you touch, along with everything it's wearing a
 While in this form, the target's only method of movement is a flying speed of 10 feet. The target can enter and occupy the space of another creature. The target has resistance to nonmagical damage, and it has advantage on Strength, Dexterity, and Constitution saving throws. The target can pass through small holes, narrow openings, and even mere cracks, though it treats liquids as though they were solid surfaces. The target can't fall and remains hovering in the air even when stunned or otherwise incapacitated.
 
 While in the form of a misty cloud, the target can't talk or manipulate objects, and any objects it was carrying or holding can't be dropped, used, or otherwise interacted with. The target can't attack or cast spells.
+
+</details>
+
+<details>
+<summary><h3>🧟‍♂️ Summon Undead (Concentration) (DM Grant)</h3></summary>
+
+**Level:** 3rd-level necromancy  
+**Casting Time:** 1 action  
+**Range:** 90 feet  
+**Components:** V, S, M (a gilded humanoid skull worth at least 300 gp)  
+**Duration:** Concentration, up to 1 hour
+
+**Source:** *Tasha's Cauldron of Everything* (2020) — granted free by the DM (2026-09-22, confirmed with owner): 1 free casting per long rest, OR cast normally using an actual 3rd-level (or higher) spell slot. The free casting does NOT count against the 15 prepared Druid spells or any spell slot.
+**Prep Source:** DM Homebrew Grant (free 1/long rest, or a real 3rd-level+ slot)
+
+#### Official Text
+
+You call forth an undead spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Ghostly, Putrid, or Skeletal Spirit stat block, which you choose. The creature is friendly to you and your companions for the duration. Roll initiative for the creature, which has its own turns. It obeys your verbal commands, and it takes the Dodge action if you don't issue any. The creature disappears when it drops to 0 hit points or when the spell ends.
+
+**At Higher Levels:** When you cast this spell using a spell slot of 4th level or higher, the creature's stat block changes to reflect the higher level; using a slot of 5th level or higher gives it the profile associated with that level.
+
+#### Ribbitz Notes
+- **Free use:** 1 per long rest, tracked separately from prepared spells/slots
+- Choose Ghostly, Putrid, or Skeletal form at time of casting
 
 </details>
 
@@ -828,6 +886,7 @@ While in the form of a misty cloud, the target can't talk or manipulate objects,
 **Duration:** Concentration, up to 1 hour
 
 **Source:** *Player's Handbook* (2014) — p. 266
+**Prep Source:** Druid (prepared)
 
 #### Official Text
 
@@ -857,6 +916,7 @@ The target's gear melds into the new form. The creature can't activate, use, wie
 **Duration:** Instantaneous
 
 **Source:** *Player's Handbook* (2014) — p. 219
+**Prep Source:** Circle of Spores Circle Spell (bonus, free — Druid 7th level)
 
 #### Official Text
 
@@ -883,6 +943,7 @@ If you target a plant creature or a magical plant, it makes the saving throw wit
 **Duration:** Concentration, up to 1 minute
 
 **Source:** *Player's Handbook* (2014) — p. 224
+**Prep Source:** Circle of Spores Circle Spell (bonus, free — Druid 7th level)
 
 #### Official Text
 
@@ -927,6 +988,7 @@ At the end of its turns, an affected target can make a Wisdom saving throw. If i
 **Duration:** Instantaneous
 
 **Source:** *Player's Handbook*
+**Prep Source:** Druid (prepared)
 
 #### Official Text
 
@@ -953,6 +1015,7 @@ A wave of healing energy washes out from a point of your choice within range. Ch
 **Duration:** Concentration, up to 10 minutes
 
 **Source:** *Player's Handbook* (2014) — p. 222
+**Prep Source:** Circle of Spores Circle Spell (bonus, free — Druid 9th level)
 
 #### Official Text
 
@@ -983,6 +1046,7 @@ The fog moves 10 feet away from you at the start of each of your turns, rolling 
 **Duration:** 7 days
 
 **Source:** *Player's Handbook* (2014) — p. 221
+**Prep Source:** Circle of Spores Circle Spell (bonus, free — Druid 9th level)
 
 #### Official Text
 
@@ -1050,6 +1114,7 @@ This spell creates a magical link between a Large or larger inanimate plant with
 **Circle of Spores Feature (2nd level)**
 
 **Source:** *Tasha's Cauldron of Everything* (2020) — p. 36
+**Prep Source:** Druid (prepared)
 
 #### Official Text
 

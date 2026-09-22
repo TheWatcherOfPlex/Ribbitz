@@ -23,12 +23,35 @@ section — plus owner review of tonight's Phase 4/5/6 work.
 - **Deferred backlog — do NOT start without the owner asking**: the
   2026-09-12 math-audit fixes (Tongue Slap/Bite +7->+8, Initiative
   +8->+9, a stale DC 17->18 in two spots, damage-table averages, Polymorph
-  "level 15"->17, the 7th-level-spell-slot discrepancy also surfaced again
-  in Phase 5), the advantage/disadvantage roll-button mechanism
+  "level 15"->17 — the 7th-level-spell-slot item was resolved 2026-09-22,
+  see below), the advantage/disadvantage roll-button mechanism
   (designed, never built), the toggle-individual-item-onto-dashboard
   feature (Element/schema.js model reserved for it, unused), further
   `App.jsx` splitting beyond what Phase 6 already did, and multi-character
   support (explicitly deferred to "a whole new character," not Ribbitz).
+- **2026-09-22 — character content/rules audit (separate from the canvas
+  rebuild, done at the owner's explicit request to "circle back to the
+  actual character, math"):** Fixed the 7th-level-spell-slot gap (owner
+  confirmed via AskUserQuestion-equivalent conversation he was missing
+  it — added `slots-7th` to the live sheet manually since the app's
+  write-back API silently failed, see PROGRESS_LOG). Full spell-list
+  audit against real 2014 5e rules: added a missing DM-granted spell
+  (Summon Undead, free 1/long rest) that wasn't in the content at all,
+  confirmed Toll the Dead is a legitimate DM-homebrew cantrip grant (not
+  an error as first suspected), and tagged all 38 spells/abilities in
+  `Spells and Magic Abilities.md` with an explicit `**Prep Source:**`
+  line (Druid prepared / Ranger known / Circle of Spores Circle Spell /
+  Gloom Stalker Magic / Fey Touched feat / DM Homebrew Grant) — the
+  `prep_source` tagging system that was talked about in an earlier
+  session but never actually built. Counts now verified exact: 15 Druid
+  prepared (Wis+4 + Druid 11), 4 Ranger known (owner-confirmed: Goodberry,
+  Detect Magic, Jump, Wild Cunning), 4 free Druid cantrips + all
+  subclass/feat bonus spells correctly separate. See
+  `docs/PROGRESS_LOG.md` 2026-09-22 for the full research trail and
+  sources. **Root-level `Spells and Magic Abilities.md` and
+  `ui/public/content/Spells and Magic Abilities.md` are two copies kept
+  manually in sync — no automated sync step exists. Always diff and
+  copy both when editing this file.**
 
 > ⚠️ **Important correction (2026-09-14), read before continuing Phase 3:**
 > §3.1–§3.2 below describe an atomized "one Element per skill/spell/item"
