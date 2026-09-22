@@ -1,23 +1,25 @@
 # Ribbitz Dashboard Rebuild — Master Plan
 
-**Status:** 🚧 IN PROGRESS — Phase 3 complete (all 5 panels extracted + live
-on the real `/` dashboard via DashboardCanvas). Ready to start Phase 4
-(theming).
-**Last updated:** 2026-09-14 by Claude (session `session_01HxUfGH7xyRjP9JoeBgPrJH`).
-**Current phase:** Phase 3 is done. All 5 panels — PrimaryPanel, SkillsPanel,
-ExhaustionPanel, MagicPanel, KitPanel — are extracted into
-`ui/src/panels/*.jsx` and the real `/` Dashboard route now renders them
-through `DashboardCanvas` (single-column default layout, x:0/w:12 for all
-five, generous per-panel `h` estimates to avoid overlap — see the
-"Phase 3 final swap" note below). The old `/canvas-preview` route and
-`CanvasPreviewPage.jsx` have been deleted — canvas *is* the dashboard now.
-Deployed + build-verified (all 5 panels' distinctive strings confirmed in
-the compiled bundle), but **not yet owner-verified in a live browser** —
-next session (or the owner) should open the real dashboard, confirm no
-panel overlap and that drag/resize/scroll work across all 5 panels
-together, before Phase 4 (theming) builds on top of this. Next: Phase 4 —
-theming (App.css currently has zero CSS custom properties, confirmed by
-audit — this is a from-scratch build, not a refactor).
+**Status:** ✅ Phase 3 complete AND owner-verified (2026-09-22) — all 5
+panels live on the real `/` dashboard via DashboardCanvas, drag/resize/
+auto-fit all confirmed working after several rounds of real-world bug
+fixes. Ready to start Phase 4 (theming).
+**Last updated:** 2026-09-22 by Claude (session `session_01HxUfGH7xyRjP9JoeBgPrJH`).
+**Current phase:** Phase 3 is done and confirmed working by the owner —
+"that's working great." All 5 panels (PrimaryPanel, SkillsPanel,
+ExhaustionPanel, MagicPanel, KitPanel) live in `ui/src/panels/*.jsx`,
+rendered through `DashboardCanvas` with a responsive (WidthProvider) grid,
+per-panel auto-fit-to-content height, and e/s/se resize handles. The old
+`/canvas-preview` route is gone — canvas *is* the dashboard now. See
+`docs/PROGRESS_LOG.md` entries 2026-09-14 (10) through 2026-09-21 (18) for
+the full bug-fix history (multiple real issues: dead resize, blank gaps,
+a runaway auto-fit feedback loop, a Magic-panel-specific oscillation, a
+fixed grid width capping usable screen space, and stale manual-sized
+flags) — worth reading before touching `DashboardCanvas.jsx` again, since
+several of these were subtle (feedback loops, storage-key versioning)
+and easy to reintroduce. Next: **Phase 4 — theming** (App.css currently
+has zero CSS custom properties, confirmed by audit — this is a
+from-scratch build, not a refactor).
 
 > ⚠️ **Important correction (2026-09-14), read before continuing Phase 3:**
 > §3.1–§3.2 below describe an atomized "one Element per skill/spell/item"
