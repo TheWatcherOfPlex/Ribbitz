@@ -2453,3 +2453,131 @@
   border-radius: 4px;
   padding: 1px 5px;
 }
+
+/* Phase 5: Level Up planning page (2026-09-22) */
+.level-up-page {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.level-up-page__intro {
+  color: rgba(var(--white-rgb), 0.7);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.level-up-page__error {
+  background: rgba(var(--danger-rgb), 0.2);
+  border: 1px solid rgba(var(--danger-rgb), 0.5);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
+.level-up-page__current {
+  font-size: 13px;
+  color: rgba(var(--white-rgb), 0.75);
+}
+
+.level-up-page__selector {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 260px;
+}
+
+.level-up-page__selector select {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(var(--accent-rgb), 0.35);
+  background: rgba(var(--bg-panel-rgb), 0.9);
+  color: var(--color-white);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.level-up-page__detail {
+  background: rgba(var(--bg-item-rgb), 0.9);
+  border: 1px solid rgba(var(--accent-rgb), 0.22);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.level-up-page__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.level-up-page__row--slots {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.level-up-page__slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.level-up-page__slot-pill {
+  background: rgba(var(--accent-rgb), 0.2);
+  border: 1px solid rgba(var(--accent-rgb), 0.4);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.level-up-page__discrepancy {
+  background: rgba(var(--gold-rgb), 0.12);
+  border: 1px solid rgba(var(--gold-rgb), 0.35);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.level-up-page__features {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.level-up-page__feature {
+  background: rgba(var(--bg-panel-rgb), 0.6);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+.level-up-page__feature-name {
+  font-weight: 700;
+}
+
+.level-up-page__feature-source {
+  font-weight: 400;
+  color: rgba(var(--white-rgb), 0.55);
+  font-size: 11px;
+}
+
+.level-up-page__feature-summary {
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(var(--white-rgb), 0.78);
+  line-height: 1.5;
+}
+
+.level-up-page__notes {
+  font-size: 12px;
+  font-style: italic;
+  color: rgba(var(--white-rgb), 0.6);
+}

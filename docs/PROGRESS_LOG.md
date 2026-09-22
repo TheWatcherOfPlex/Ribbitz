@@ -6,6 +6,69 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-22 (21) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — Phase 5 DONE (scoped)
+- Mid-implementation, owner sent two important corrections that shaped
+  the data:
+  1. "dont roll my health level ups for each of those, my DM likes us to
+     do that live" — HP is intentionally NOT computed/pre-filled anywhere
+     in `levelPresets.js`. Every level has an `hpNote` reminder string
+     instead. **Do not add a numeric HP value to any preset without being
+     asked again** — this was explicit and specific.
+  2. "We are still using old version of 5E not the new 5.5 / D&D One
+     version" — confirmed after research was already using 2014-ruleset
+     sources (5thsrd.org SRD mirror, Tasha's-era Circle of Spores text),
+     so no rework needed, but this is now a hard constraint for any
+     future rules research on this character: **2014 5e only, never
+     2024/5.5e**, even if a source doesn't say which edition it is.
+- Also asked (AskUserQuestion) which class should get the 3 remaining
+  levels to reach 20, since that's a build/roleplay decision only the
+  owner knows, not something researchable — genuinely blocking, not a
+  judgment call to make unilaterally. Answer: **all 3 into Druid**
+  (Ranger stays at 6; Druid goes 11 -> 12 -> 13 -> 14 across levels
+  18/19/20).
+- Researched real 2014 5e rules via WebFetch (not guessed): PHB
+  Multiclass Spellcaster spell-slot table (5thsrd.org mirror) and Circle
+  of Spores' level-14 "Fungal Body" feature text (dnd5e.wikidot.com,
+  cross-checked wording matches across two fetches). Also caught and
+  flagged (did NOT silently fix) a real discrepancy: RAW says caster
+  level 14 (current: Ranger6/2=3 + Druid11=14 combined) should have a
+  7th-level spell slot, but Ribbitz's live sheet has none — this is the
+  exact same "7th-level spell slot" issue already flagged and
+  deliberately left unfixed by the 2026-09-12 math audit (still deferred
+  per owner's "return to older issues later" instruction). Each preset
+  from 17 onward carries a `sheetDiscrepancyNote` surfacing this rather
+  than silently reconciling it either direction.
+- Built:
+  - `ui/src/characters/ribbitz/levelPresets.js` — `RIBBITZ_LEVEL_PRESETS`
+    array, levels 17 (current, reference/baseline) through 20. Each entry:
+    class-level split, proficiency bonus, RAW spell slots, the
+    discrepancy note, `newFeatures` (ASI reminder at 12, prepared-spell
+    note at 13, Fungal Body at 14 — ASI and spell *choices* are left to
+    the player, never pre-selected), and the HP reminder.
+  - `ui/src/pages/LevelUpPage.jsx` — reads the character's CURRENT level
+    live from `/api/stats` via the existing `fetchStatMap()` (never
+    hardcoded), offers a level selector limited to
+    `currentLevel..20` only (never below), and renders the matching
+    preset as a read-only checklist. Explicitly a preview/reference, not
+    a live-sheet mutator — matches the Phase 5 plan's UI spec.
+  - Nav link "⬆️ Level Up" + `/level-up` route wired into `App.jsx`.
+    CSS added to `App.css` using the Phase 4 theme variables (so it
+    already respects the theme switcher with no extra work).
+- `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /level-up` returns 200; confirmed "Fungal Body" text present in
+  the deployed bundle.
+- Multi-character support (character switcher) was explicitly NOT built —
+  owner deferred that to "a whole new character" later, not Ribbitz, not
+  now. Don't add it unprompted.
+- **Not yet done**: owner has not yet reviewed the Level Up page content
+  for accuracy — this is real 5e rules content researched and written by
+  an AI; ask them (and ideally their DM) to sanity-check it before
+  relying on it at the table, especially the flagged 7th-level-slot
+  discrepancy which needs an actual decision, not just a note.
+- Phase 5 marked DONE (scoped) in `REBUILD_PLAN.md`. Moving on to Phase 6
+  (polish/cleanup) next in this same session.
+
 ## 2026-09-22 (20) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — Phase 4 DONE
 - Implemented all of Phase 4 (theming) in one pass:
   1. Audited every hardcoded color in `App.css` (grep for hex + rgba

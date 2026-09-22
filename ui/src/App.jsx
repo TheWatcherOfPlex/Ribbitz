@@ -5,6 +5,7 @@ import './App.css'
 import ribbitzPortrait from './assets/ribbitz-flying.png'
 import MarkdownPage from './components/MarkdownPage.jsx'
 import InventoryPage from './pages/InventoryPage.jsx'
+import LevelUpPage from './pages/LevelUpPage.jsx'
 import DashboardCanvas from './dashboard/DashboardCanvas.jsx'
 import { rollFlatDice } from './lib/diceRoller.js'
 import SkillsPanel from './panels/SkillsPanel.jsx'
@@ -73,6 +74,7 @@ const navLinks = [
   { label: 'Notes', href: '/notes' },
   { label: 'Misc', href: '/misc' },
   { label: 'Images', href: '/images' },
+  { label: '⬆️ Level Up', href: '/level-up' },
 ]
 
 const restDefinitions = {
@@ -1160,6 +1162,7 @@ function App() {
             element={<MarkdownPage title="Actions" source={contentPath('Actions.md')} />}
           />
           <Route path="/inventory" element={<InventoryPage />} />
+          <Route path="/level-up" element={<LevelUpPage />} />
           <Route
             path="/spells"
             element={

@@ -645,7 +645,16 @@ For **every** category migrated:
 - **Not yet owner-verified in a live browser** — see
   `docs/PROGRESS_LOG.md` 2026-09-22 (20) for exactly what to check.
 
-### Phase 5 — Level presets (SCOPED DOWN, owner decision 2026-09-22)
+### Phase 5 — Level presets (SCOPED DOWN, owner decision 2026-09-22) ✅ DONE 2026-09-22
+> Implemented: `ui/src/characters/ribbitz/levelPresets.js` +
+> `ui/src/pages/LevelUpPage.jsx` (route `/level-up`). Owner chose all 3
+> remaining levels go into Druid (11->12->13->14, Ranger stays 6). HP is
+> deliberately NOT computed anywhere — owner's DM rolls HP live at the
+> table (explicit instruction, 2026-09-22). A real RAW-vs-sheet spell-slot
+> discrepancy (7th-level slot) was found and flagged, NOT silently fixed —
+> same issue as the deferred 2026-09-12 math audit. **Not yet
+> owner-reviewed for rules accuracy** — see `docs/PROGRESS_LOG.md`
+> 2026-09-22 (21) for what to check.
 > **Owner decision, read this before touching level presets:** Ribbitz has
 > been played for years and the owner does NOT want to reconstruct his
 > historical stats at earlier levels — that's "tricky" and not worth doing
