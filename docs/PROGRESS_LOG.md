@@ -6,6 +6,62 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-22 (22) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — Phase 6 DONE (scoped)
+- Scoped Phase 6 down deliberately: the plan's Phase 6 bullet list
+  included "full pass on advantage/disadvantage roll coverage" — that
+  item predates this whole canvas rebuild and is part of the SAME older
+  backlog (math-audit fixes, adv/dis buttons, toggle-onto-dashboard) the
+  owner explicitly said to leave for when they can focus in. Did NOT
+  touch it. Only did the two objective, mechanical cleanup items:
+- **Dead code removal**: `npm run lint` found one real issue —
+  `rollFlatDice` imported in `App.jsx` but never used (leftover from the
+  MagicPanel extraction weeks ago; the actual usage moved to
+  `MagicPanel.jsx`/`lib/diceRoller.js` but the now-dead import in
+  `App.jsx` was never cleaned up). Removed it. Also manually checked for
+  leftover duplicate sub-components/consts from past extractions
+  (`AbilityTopicRow`, `SpellInlineDetails`, `GrungDcBlock`,
+  `conditionsList`, `exhaustionEffects`, `currencyItems`, `quickStats`,
+  `abilities`, `skillGroups`) — none found still sitting in `App.jsx`,
+  all cleanly relocated in past sessions. Remaining 4 lint warnings are
+  pre-existing `react-hooks/exhaustive-deps` patterns unrelated to the
+  rebuild — left alone, out of scope.
+- **File-splitting audit**: confirmed `App.jsx` actually shrank as
+  intended — was 2470 lines before the rebuild (tag
+  `pre-rebuild-2026-09-14`), now 1085 (56% reduction) after this
+  session's extractions. Found one more good candidate flagged since
+  Phase 3 but never done (`REBUILD_PLAN.md` §5 "Reusable pieces" called
+  it out explicitly): the markdown-parsing helpers (`stripHtml`,
+  `extractField`, `extractSection`, `summarizeMarkdownBlock`,
+  `extractBulletNotes`, `parsePreparedSpellsIndex`,
+  `parseMagicAbilitiesIndex`) were still sitting in `App.jsx`. Verified
+  via grep that all internal calls were self-contained within that block
+  (only `parsePreparedSpellsIndex`/`parseMagicAbilitiesIndex` were called
+  from elsewhere in `App()`), extracted the whole block verbatim into
+  `ui/src/lib/markdownParsers.js`, left the two entry points imported.
+  Ran the full §5.1 safety process (declaration-diff against
+  `pre-rebuild-2026-09-14` — all 7 new relocated names accounted for,
+  nothing unexpected).
+- `npm run lint` now passes with 0 errors (down from 1). `npm run build`
+  passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; spot-checked the deployed bundle for content
+  strings from 3 different panels/pages, all present.
+- **Not yet done**: nothing outstanding for the *scoped* Phase 6 — the
+  file-splitting audit and dead-code sweep are both complete. `App.jsx`
+  is still ~1085 lines (mostly the single `App()` function's state/
+  handlers/routing shell) and could be split further in a future pass if
+  the owner wants that, but that's new scope, not part of what was asked
+  this session — don't start it unprompted.
+- **All of Phases 4-6 (as scoped by the owner 2026-09-22) are now DONE.**
+  The canvas dashboard rebuild's active work is complete pending owner
+  review of: the theme switcher, the Level Up page's rules content, and
+  a general look-over of tonight's changes. The remaining known backlog
+  is entirely the older, explicitly-deferred items — see
+  `REBUILD_PLAN.md`'s "Pending Tasks" / deferred-backlog notes for the
+  full list (math-audit fixes, advantage/disadvantage roll buttons,
+  toggle-item-onto-dashboard, further `App.jsx` splitting, multi-character
+  support). Don't start any of those without the owner asking.
+
 ## 2026-09-22 (21) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — Phase 5 DONE (scoped)
 - Mid-implementation, owner sent two important corrections that shaped
   the data:

@@ -7,7 +7,6 @@ import MarkdownPage from './components/MarkdownPage.jsx'
 import InventoryPage from './pages/InventoryPage.jsx'
 import LevelUpPage from './pages/LevelUpPage.jsx'
 import DashboardCanvas from './dashboard/DashboardCanvas.jsx'
-import { rollFlatDice } from './lib/diceRoller.js'
 import SkillsPanel from './panels/SkillsPanel.jsx'
 import PrimaryPanel from './panels/PrimaryPanel.jsx'
 import ExhaustionPanel from './panels/ExhaustionPanel.jsx'
@@ -18,6 +17,7 @@ import StatControl from './components/StatControl.jsx'
 import ThemeSwitcher from './components/ThemeSwitcher.jsx'
 import { slugifyHeading } from './utils/slugifyHeading.js'
 import { cycleTriState } from './lib/triState.js'
+import { parsePreparedSpellsIndex, parseMagicAbilitiesIndex } from './lib/markdownParsers.js'
 
 const sheetUrl =
   'https://docs.google.com/spreadsheets/d/1Vn1Xaq04AWDrrdz-RGO8m6V7SzuFyHrW31e47fnH2v0'
@@ -170,161 +170,6 @@ function parseSignedInt(value, fallback = 0) {
   const cleaned = String(value).trim().replace(/[^0-9-]+/g, '')
   const parsed = Number.parseInt(cleaned, 10)
   return Number.isNaN(parsed) ? fallback : parsed
-}
-
-function stripHtml(text) {
-  return String(text)
-    .replace(/<[^>]*>/g, '')
-    .replace(/\s+/g, ' ')
-    .trim()
-}
-
-function extractField(block, label) {
-  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  const match = block.match(new RegExp(`\\*\\*${escaped}:\\*\\*\\s*([^\\n]+)`, 'i'))
-  return match ? stripHtml(match[1]) : ''
-}
-
-function extractSection(block, heading) {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  const match = block.match(new RegExp(`#### ${escaped}\\n+([\\s\\S]*?)(?=\\n#### |\\n</details>|$)`, 'i'))
-  return match ? match[1].trim() : ''
-}
-
-function summarizeMarkdownBlock(markdownText) {
-  const cleaned = stripHtml(
-    String(markdownText || '')
-      .replace(/\*\*At Higher Levels:\*\*[\s\S]*/i, '')
-      .replace(/\*\*Spell Lists:\*\*[\s\S]*/i, '')
-      .replace(/\*\*/g, ''),
-  )
-  if (!cleaned) return ''
-  return cleaned.length > 360 ? `${cleaned.slice(0, 357).trim()}...` : cleaned
-}
-
-function extractBulletNotes(markdownText) {
-  return String(markdownText || '')
-    .split('\n')
-    .map((line) => stripHtml(line.replace(/^[-*]\s*/, '').replace(/\*\*/g, '')))
-    .filter(Boolean)
-}
-
-function parsePreparedSpellsIndex(markdownText) {
-  const normalized = String(markdownText || '').replace(/\r\n/g, '\n')
-  const index = {}
-
-  // Find each level section (summary/h2)
-  const sectionRegex = /<summary><h2>([\s\S]*?)<\/h2><\/summary>/g
-  const sections = []
-  let match
-  while ((match = sectionRegex.exec(normalized))) {
-    sections.push({
-      titleHtml: match[1],
-      start: match.index,
-      end: sectionRegex.lastIndex,
-    })
-  }
-
-  for (let i = 0; i < sections.length; i += 1) {
-    const current = sections[i]
-    const next = sections[i + 1]
-    const block = normalized.slice(current.end, next?.start ?? normalized.length)
-
-    const title = stripHtml(current.titleHtml)
-    const cantrip = /cantrips/i.test(title)
-    const levelMatch = title.match(/(\d)(?:st|nd|rd|th)\s+level\s+spells/i)
-
-    if (!cantrip && !levelMatch) {
-      continue
-    }
-
-    const levelLabel = cantrip ? 'Cantrips' : `${levelMatch[1]}${levelMatch[1] === '1' ? 'st' : levelMatch[1] === '2' ? 'nd' : levelMatch[1] === '3' ? 'rd' : 'th'}`
-
-    const spellRegex = /<summary><h3>([\s\S]*?)<\/h3><\/summary>/g
-    const spells = []
-    let spellMatch
-    while ((spellMatch = spellRegex.exec(block))) {
-      const spellName = stripHtml(spellMatch[1])
-      if (!spellName) continue
-      const spellBlockStart = spellRegex.lastIndex
-      const spellBlockEnd = (() => {
-        const nextMatch = block.slice(spellBlockStart).match(/<summary><h3>[\s\S]*?<\/h3><\/summary>/)
-        return nextMatch ? spellBlockStart + nextMatch.index : block.length
-      })()
-      const spellBlock = block.slice(spellBlockStart, spellBlockEnd)
-      const officialText = extractSection(spellBlock, 'Official Text')
-      const ribbitzNotes = extractSection(spellBlock, 'Ribbitz Notes')
-      spells.push({
-        name: spellName,
-        slug: slugifyHeading(spellName),
-        level: extractField(spellBlock, 'Level'),
-        castingTime: extractField(spellBlock, 'Casting Time'),
-        range: extractField(spellBlock, 'Range'),
-        components: extractField(spellBlock, 'Components'),
-        duration: extractField(spellBlock, 'Duration'),
-        source: extractField(spellBlock, 'Source'),
-        summary: summarizeMarkdownBlock(officialText),
-        notes: extractBulletNotes(ribbitzNotes),
-      })
-    }
-
-    if (spells.length) {
-      index[levelLabel] = spells
-    }
-  }
-
-  return index
-}
-
-// Same shape/parsing approach as parsePreparedSpellsIndex, but for the flat
-// "Magic Abilities (Non-Spell)" section (Halo of Spores, Symbiotic Entity,
-// etc.) — no per-level grouping, just name -> { summary, notes, subtitle }.
-function parseMagicAbilitiesIndex(markdownText) {
-  const normalized = String(markdownText || '').replace(/\r\n/g, '\n')
-  const index = {}
-
-  const sectionRegex = /<summary><h2>([\s\S]*?)<\/h2><\/summary>/g
-  const sections = []
-  let match
-  while ((match = sectionRegex.exec(normalized))) {
-    sections.push({ titleHtml: match[1], start: match.index, end: sectionRegex.lastIndex })
-  }
-
-  const magicSection = sections.find((s) => /magic abilities/i.test(stripHtml(s.titleHtml)))
-  if (!magicSection) return index
-
-  const sectionIndex = sections.indexOf(magicSection)
-  const next = sections[sectionIndex + 1]
-  const block = normalized.slice(magicSection.end, next?.start ?? normalized.length)
-
-  const abilityRegex = /<summary><h3>([\s\S]*?)<\/h3><\/summary>/g
-  let abilityMatch
-  while ((abilityMatch = abilityRegex.exec(block))) {
-    const name = stripHtml(abilityMatch[1])
-    if (!name) continue
-    const blockStart = abilityRegex.lastIndex
-    const blockEnd = (() => {
-      const nextMatch = block.slice(blockStart).match(/<summary><h3>[\s\S]*?<\/h3><\/summary>/)
-      return nextMatch ? blockStart + nextMatch.index : block.length
-    })()
-    const abilityBlock = block.slice(blockStart, blockEnd)
-    const officialText = extractSection(abilityBlock, 'Official Text')
-    const ribbitzNotes = extractSection(abilityBlock, 'Ribbitz Notes')
-    // The "**Circle of Spores Feature (Nth level)**" style line right under
-    // the heading, if present — shown as a small subtitle.
-    const subtitleMatch = abilityBlock.match(/^\s*\*\*([^*]+)\*\*\s*$/m)
-    const slug = slugifyHeading(name)
-    index[slug] = {
-      name,
-      slug,
-      subtitle: subtitleMatch ? stripHtml(subtitleMatch[1]) : '',
-      source: extractField(abilityBlock, 'Source'),
-      summary: summarizeMarkdownBlock(officialText),
-      notes: extractBulletNotes(ribbitzNotes),
-    }
-  }
-
-  return index
 }
 
 // Compact "topic" row: name + optional roll button, click to expand full

@@ -1,25 +1,34 @@
 # Ribbitz Dashboard Rebuild — Master Plan
 
-**Status:** ✅ Phase 3 complete AND owner-verified (2026-09-22) — all 5
-panels live on the real `/` dashboard via DashboardCanvas, drag/resize/
-auto-fit all confirmed working after several rounds of real-world bug
-fixes. Ready to start Phase 4 (theming).
+**Status:** ✅ Phases 1-6 all DONE (as scoped by the owner 2026-09-22).
+The canvas dashboard rebuild's active work is complete. What remains is
+entirely the older, explicitly-deferred backlog — see the bottom of this
+section — plus owner review of tonight's Phase 4/5/6 work.
 **Last updated:** 2026-09-22 by Claude (session `session_01HxUfGH7xyRjP9JoeBgPrJH`).
-**Current phase:** Phase 3 is done and confirmed working by the owner —
-"that's working great." All 5 panels (PrimaryPanel, SkillsPanel,
-ExhaustionPanel, MagicPanel, KitPanel) live in `ui/src/panels/*.jsx`,
-rendered through `DashboardCanvas` with a responsive (WidthProvider) grid,
-per-panel auto-fit-to-content height, and e/s/se resize handles. The old
-`/canvas-preview` route is gone — canvas *is* the dashboard now. See
-`docs/PROGRESS_LOG.md` entries 2026-09-14 (10) through 2026-09-21 (18) for
-the full bug-fix history (multiple real issues: dead resize, blank gaps,
-a runaway auto-fit feedback loop, a Magic-panel-specific oscillation, a
-fixed grid width capping usable screen space, and stale manual-sized
-flags) — worth reading before touching `DashboardCanvas.jsx` again, since
-several of these were subtle (feedback loops, storage-key versioning)
-and easy to reintroduce. Next: **Phase 4 — theming** (App.css currently
-has zero CSS custom properties, confirmed by audit — this is a
-from-scratch build, not a refactor).
+**Current phase:** Nothing in-flight. If you're picking this up cold:
+- Phase 3 (canvas) — done, owner-verified 2026-09-22 ("that's working
+  great") after several rounds of real bug fixes. See
+  `docs/PROGRESS_LOG.md` (10) through (18) for that history — worth
+  reading before touching `DashboardCanvas.jsx` again, several of those
+  bugs were subtle (feedback loops, storage-key versioning) and easy to
+  reintroduce.
+- Phase 4 (theming) — done, NOT yet owner-verified. See PROGRESS_LOG (20).
+- Phase 5 (level presets) — done (scoped to Ribbitz current-level-through-
+  20 only, per owner decision), NOT yet owner-verified, and the rules
+  content (real 5e research) hasn't been sanity-checked by the owner/DM
+  yet either. See PROGRESS_LOG (21).
+- Phase 6 (polish) — done (scoped to dead-code + file-split audit only,
+  NOT the adv/dis roll-button item — that's part of the deferred backlog
+  below). See PROGRESS_LOG (22).
+- **Deferred backlog — do NOT start without the owner asking**: the
+  2026-09-12 math-audit fixes (Tongue Slap/Bite +7->+8, Initiative
+  +8->+9, a stale DC 17->18 in two spots, damage-table averages, Polymorph
+  "level 15"->17, the 7th-level-spell-slot discrepancy also surfaced again
+  in Phase 5), the advantage/disadvantage roll-button mechanism
+  (designed, never built), the toggle-individual-item-onto-dashboard
+  feature (Element/schema.js model reserved for it, unused), further
+  `App.jsx` splitting beyond what Phase 6 already did, and multi-character
+  support (explicitly deferred to "a whole new character," not Ribbitz).
 
 > ⚠️ **Important correction (2026-09-14), read before continuing Phase 3:**
 > §3.1–§3.2 below describe an atomized "one Element per skill/spell/item"
@@ -681,14 +690,25 @@ For **every** category migrated:
   values (preview/planning, not a live-sheet mutation — the Google Sheet
   stays the source of truth for the character's *actual* current state).
 
-### Phase 6 — Polish / cleanup
+### Phase 6 — Polish / cleanup ✅ DONE (scoped) 2026-09-22
+> Scoped down deliberately: the "advantage/disadvantage roll coverage"
+> bullet below is the SAME item as the older deferred backlog (it predates
+> this rebuild) — left untouched on purpose, don't start it without being
+> asked. Only the two objective/mechanical items were done:
 - Remove now-dead old hardcoded JSX from `App.jsx` once everything is
-  migrated (don't delete early — keep old and new running in parallel
-  until a category is *fully* migrated and confirmed).
+  migrated. ✅ `npm run lint` found and removed one real leftover (unused
+  `rollFlatDice` import); manually verified no other leftover
+  duplicate sub-components/consts from past extractions remain.
 - Re-run the file-splitting audit (§3.6) — confirm `App.jsx` actually
-  shrank the way it was supposed to.
-- Full pass on advantage/disadvantage roll coverage, tracker completeness,
-  toggle coverage.
+  shrank the way it was supposed to. ✅ 2470 -> 1085 lines (56%
+  reduction). Also extracted the markdown-parsing helpers
+  (`stripHtml`/`extractField`/`extractSection`/etc., flagged as a good
+  candidate since Phase 3's §5 "Reusable pieces" but never done) into
+  `ui/src/lib/markdownParsers.js`.
+- ~~Full pass on advantage/disadvantage roll coverage, tracker
+  completeness, toggle coverage.~~ **NOT done — deferred**, this is the
+  older backlog item, see the "Deferred backlog" note in the Status
+  section at the top of this file.
 
 ### 2026-09-22 owner directive: proceed through Phases 4-6 autonomously
 Owner explicitly asked for Phases 4-6 to be worked without per-step
