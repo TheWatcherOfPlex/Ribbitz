@@ -634,12 +634,32 @@ For **every** category migrated:
 - Build the settings panel + theme switcher.
 - Confirm no hardcoded colors slipped through during Phase 3 migrations.
 
-### Phase 5 — Multi-character + level presets
-- Character switcher UI.
-- Level preset authoring workflow (likely: owner + AI go through the
-  long-form pages together at each level and fill in `levelPresets`).
-- This is also the natural point to onboard the owner's other planned
-  characters, if they're ready.
+### Phase 5 — Level presets (SCOPED DOWN, owner decision 2026-09-22)
+> **Owner decision, read this before touching level presets:** Ribbitz has
+> been played for years and the owner does NOT want to reconstruct his
+> historical stats at earlier levels — that's "tricky" and not worth doing
+> retroactively. **Ribbitz gets presets from his CURRENT level up through
+> 20 only** (level-UP planning, prepared in advance), never below his
+> current level. Multi-character support (character switcher UI, onboarding
+> a second character) is explicitly deferred — "we will do that for a whole
+> new character instead," not Ribbitz, and not now. Don't build a character
+> switcher as part of this phase; just get level-up presets working for the
+> one existing character.
+- Read Ribbitz's current level from his live stat sheet (Google
+  Sheets-backed, via the existing `/api/stats` pipeline) — don't hardcode
+  it, since it'll change as the owner actually levels him up in play.
+- Author `levelPresets` entries for current level through 20 (whatever the
+  current level is at authoring time — check the live sheet, don't guess).
+  Each preset needs whatever changes at that level per 5e rules for his
+  actual class/subclass progression (Ranger/Druid multiclass, Circle of
+  Spores) — use `/srv/docker/dnd-ai-library` or web search for exact 5e
+  rules, 5th edition only, per the owner's standing instruction. This is
+  the single most rules-research-heavy part of Phase 5 — budget time for
+  it and verify against a real source per level, don't eyeball it.
+- UI: a level selector that only offers current-level-and-up, applies the
+  matching preset's stat/slot/proficiency deltas on top of the live sheet
+  values (preview/planning, not a live-sheet mutation — the Google Sheet
+  stays the source of truth for the character's *actual* current state).
 
 ### Phase 6 — Polish / cleanup
 - Remove now-dead old hardcoded JSX from `App.jsx` once everything is
@@ -649,6 +669,19 @@ For **every** category migrated:
   shrank the way it was supposed to.
 - Full pass on advantage/disadvantage roll coverage, tracker completeness,
   toggle coverage.
+
+### 2026-09-22 owner directive: proceed through Phases 4-6 autonomously
+Owner explicitly asked for Phases 4-6 to be worked without per-step
+check-ins ("you should be able to complete those tasks without me"). The
+older deferred backlog (math-audit fixes, advantage/disadvantage roll
+buttons, toggle-onto-dashboard) is explicitly OUT of scope for this pass —
+"we will return to the older issues after when I can focus in." Do NOT
+touch those unless separately asked. Because of the "just in case we run
+out of tokens" framing, **commit + update this doc and PROGRESS_LOG.md
+after every meaningfully-complete step**, not just at phase boundaries —
+if a session ends mid-phase, the next one (human or AI) needs to be able
+to tell exactly what's done vs. in-flight from these docs alone, without
+relying on conversation history surviving.
 
 ---
 

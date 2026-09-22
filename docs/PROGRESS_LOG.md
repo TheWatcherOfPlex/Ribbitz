@@ -6,6 +6,40 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-22 (19) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
+- Owner confirmed all Phase 3 canvas bugs are fixed ("that's working
+  great") and gave direction for what's next:
+  - Proceed through **Phase 4 (theming), Phase 5 (level presets), Phase 6
+    (polish)** without per-step check-ins — "you should be able to
+    complete those tasks without me."
+  - The older deferred backlog (math-audit fixes, advantage/disadvantage
+    roll buttons, toggle-item-onto-dashboard) stays OUT of scope — owner
+    will return to it later when they can focus in. Don't touch it
+    unprompted.
+  - **Level presets are scoped down, this is a real decision not a
+    guess**: Ribbitz only gets presets from his CURRENT level up through
+    20 (level-up planning). No presets below current level — the owner
+    doesn't want to reconstruct years of historical stats, and called it
+    explicitly "not useful for Ribbitz." Multi-character support / a
+    character switcher is explicitly deferred to "a whole new character"
+    later, not built now. Full reasoning recorded in
+    `REBUILD_PLAN.md`'s Phase 5 section — read it before writing any
+    level-preset code so the scope doesn't silently creep back to a full
+    multi-character system.
+  - Because of the "in case we run out of tokens" framing: committing +
+    updating these docs after every meaningfully-complete step this
+    session, not just at phase boundaries.
+- REBUILD_PLAN.md updated: Phase 3 status marked owner-verified, Phase 5
+  section rewritten with the scoped-down decision above, and a new
+  "2026-09-22 owner directive" note added telling future sessions to keep
+  going autonomously through 4-6 and to leave the older backlog alone.
+- **Not yet done**: none of Phase 4/5/6's actual implementation has
+  started yet as of this entry — this entry is the checkpoint made
+  immediately before starting Phase 4 (theming). If you're picking this
+  up cold, check whether there's a newer entry above this one describing
+  actual theming work; if this is still the newest entry, Phase 4 hasn't
+  been started.
+
 ## 2026-09-21 (18) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - Owner tested (17): "worked for spell slots, weapons, and potions
   panels, but not the currency and skills panels" (still showing a
