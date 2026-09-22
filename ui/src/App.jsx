@@ -1,5 +1,6 @@
 import { Link, NavLink, Route, Routes } from 'react-router-dom'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import './themes.css'
 import './App.css'
 import ribbitzPortrait from './assets/ribbitz-flying.png'
 import MarkdownPage from './components/MarkdownPage.jsx'
@@ -13,6 +14,7 @@ import MagicPanel from './panels/MagicPanel.jsx'
 import KitPanel from './panels/KitPanel.jsx'
 import TrackerGroup from './components/TrackerGroup.jsx'
 import StatControl from './components/StatControl.jsx'
+import ThemeSwitcher from './components/ThemeSwitcher.jsx'
 import { slugifyHeading } from './utils/slugifyHeading.js'
 import { cycleTriState } from './lib/triState.js'
 
@@ -1028,6 +1030,7 @@ function App() {
           >
             Sync {syncMode.enabled ? 'ON' : 'OFF'}
           </button>
+          <ThemeSwitcher characterId="ribbitz" />
         </div>
       </aside>
 

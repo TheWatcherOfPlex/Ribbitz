@@ -629,10 +629,21 @@ For **every** category migrated:
   said accuracy matters.
 - Deploy and get owner confirmation before moving to the next category.
 
-### Phase 4 — Theming
-- Extract Ribbitz's current look into a named theme file.
-- Build the settings panel + theme switcher.
-- Confirm no hardcoded colors slipped through during Phase 3 migrations.
+### Phase 4 — Theming ✅ DONE 2026-09-22
+- Extract Ribbitz's current look into a named theme file. ✅
+  `ui/src/themes.css` — `:root` is "Twilight Violet" (the original look).
+- Build the settings panel + theme switcher. ✅
+  `ui/src/components/ThemeSwitcher.jsx`, a `<select>` in the sidebar
+  footer; theme registry in `ui/src/dashboard/themes.js`.
+- Confirm no hardcoded colors slipped through during Phase 3 migrations. ✅
+  Every hex/rgba literal in `App.css` replaced with `var(--name)`;
+  verified 0 remaining literal-color matches.
+- Bonus: added a second theme ("Grung Green") to prove the switcher
+  actually switches something, not just infrastructure with nothing to
+  select. Adding a 3rd theme is a copy-paste of one CSS block + one
+  registry entry — see the how-to comment at the top of `themes.css`.
+- **Not yet owner-verified in a live browser** — see
+  `docs/PROGRESS_LOG.md` 2026-09-22 (20) for exactly what to check.
 
 ### Phase 5 — Level presets (SCOPED DOWN, owner decision 2026-09-22)
 > **Owner decision, read this before touching level presets:** Ribbitz has

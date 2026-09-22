@@ -6,6 +6,53 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-22 (20) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — Phase 4 DONE
+- Implemented all of Phase 4 (theming) in one pass:
+  1. Audited every hardcoded color in `App.css` (grep for hex + rgba
+     literals) — found 11 distinct RGB triples and 11 distinct hex
+     colors in use across ~2400 lines.
+  2. Wrote a one-off Python script
+     (`/tmp/.../scratchpad/theme_tokenize.py`, not committed — scratch
+     only) that mechanically replaced every occurrence of each literal
+     color with a `var(--name)` reference, preserving the exact same
+     rendered values (a pure find/replace, not a redesign — zero visual
+     risk). Verified after: `grep -cE "#[0-9a-fA-F]{3,8}"` and the rgba
+     literal-triple grep both return 0 matches in `App.css` now — no
+     hardcoded colors slipped through.
+  3. Created `ui/src/themes.css`: `:root` holds the default theme
+     ("Twilight Violet" — Ribbitz's original look, same values as
+     before, just parameterized) and a `[data-theme="grung"]` block
+     overrides the accent/background vars for a second theme ("Grung
+     Green", named for his race). Semantic state colors (danger/gold/
+     success) are deliberately NOT themed — they stay constant so
+     "danger=red"/"success=green" doesn't flip per theme.
+  4. Created `ui/src/dashboard/themes.js`: the `THEMES` registry (id +
+     label pairs) plus `loadThemeId`/`saveThemeId` (localStorage,
+     `ribbitz.theme.<characterId>`) and `applyThemeId` (sets/removes
+     `data-theme` on `<html>`).
+  5. Created `ui/src/components/ThemeSwitcher.jsx` (a `<select>`) and
+     wired it into the sidebar footer in `App.jsx`, right under the Sync
+     toggle. Imported `themes.css` in `App.jsx` before `App.css`.
+- To add a future theme: add a `[data-theme="id"]` block in themes.css
+  overriding whichever vars should differ, then add `{id, label}` to the
+  `THEMES` array in `dashboard/themes.js`. No other code changes needed —
+  this was a deliberate design goal, confirmed by how small the Grung
+  Green addition ended up being.
+- `npm run build` passed (41.4KB CSS, up from 35.9KB — the var()
+  indirection costs a little size, expected and fine). Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed `data-theme=grung` present in the built
+  CSS and `theme-switcher` present in the built JS.
+- **Not yet done**: owner has not yet tried the theme switcher live —
+  ask them to confirm (a) the dropdown appears in the sidebar and
+  actually swaps the look, (b) the choice survives a refresh
+  (localStorage persistence), (c) nothing regressed visually from the
+  tokenization pass (the mechanical find/replace should be zero-risk but
+  hasn't been eyeballed in a real browser yet).
+- Phase 4 marked DONE in `REBUILD_PLAN.md`. Moving on to Phase 5 (level
+  presets, scoped to Ribbitz current-level-through-20 per the 2026-09-22
+  owner decision) next in this same session.
+
 ## 2026-09-22 (19) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH)
 - Owner confirmed all Phase 3 canvas bugs are fixed ("that's working
   great") and gave direction for what's next:

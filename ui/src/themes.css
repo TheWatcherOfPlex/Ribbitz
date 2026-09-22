@@ -1,0 +1,70 @@
+/* Ribbitz Dashboard — theme definitions (Phase 4, 2026-09-22)
+ *
+ * Every color in App.css now goes through one of the CSS custom
+ * properties defined here instead of a hardcoded hex/rgba value —
+ * see docs/PROGRESS_LOG.md 2026-09-22 for the extraction pass and
+ * docs/REBUILD_PLAN.md Phase 4 for the original ask.
+ *
+ * RGB-triple vars (named "*-rgb") hold bare "r, g, b" so callers can do
+ * `rgba(var(--accent-rgb), 0.2)` and still control alpha per-use. Solid
+ * vars hold a full color (hex).
+ *
+ * How to add a new theme: copy the `[data-theme="grung"]` block below,
+ * change the selector to a new theme id, override whichever vars should
+ * differ. You don't have to override every var — anything you omit falls
+ * back to the `:root` default. Then add the theme to the THEMES list in
+ * `dashboard/themes.js` so it shows up in the switcher.
+ */
+
+:root {
+  /* Twilight Violet (default) — Ribbitz's original look, unchanged. */
+  --accent-rgb: 120, 110, 255;
+  --accent-alt-rgb: 147, 112, 255;
+  --accent-gradient-light: #7f66ff;
+  --accent-gradient-dark: #4b45a6;
+
+  --bg-gradient-start: #2d2a4a;
+  --bg-gradient-end: #120f1c;
+  --bg-deep-rgb: 12, 10, 22;
+  --bg-panel-rgb: 18, 16, 34;
+  --bg-item-rgb: 26, 22, 44;
+
+  --color-white: #ffffff;
+  --white-rgb: 255, 255, 255;
+
+  /* Semantic state colors — deliberately NOT overridden per-theme, so
+     "danger" stays red and "success" stays green no matter which theme
+     is active. Only the brand/accent/background colors above vary. */
+  --danger-rgb: 196, 74, 74;
+  --gold-rgb: 255, 205, 117;
+  --success-rgb: 147, 255, 112;
+  --success-alt-rgb: 73, 180, 119;
+  --success-bg-rgb: 28, 90, 42;
+
+  --text-mint: #eaffde;
+  --text-lavender: #eae6ff;
+  --text-blush: #ffb3b3;
+  --text-pale: #f7f3ff;
+  --text-lilac: #c9bfff;
+  --text-violet: #c9a4ff;
+}
+
+[data-theme='grung'] {
+  /* Grung Green — an alternate accent/background palette, named for
+     Ribbitz's own race. Swaps the purple family for green; leaves the
+     semantic state colors (danger/gold/success) alone on purpose. */
+  --accent-rgb: 96, 209, 143;
+  --accent-alt-rgb: 140, 227, 172;
+  --accent-gradient-light: #7be8a5;
+  --accent-gradient-dark: #1f7a4d;
+
+  --bg-gradient-start: #1c3327;
+  --bg-gradient-end: #0a130e;
+  --bg-deep-rgb: 8, 16, 12;
+  --bg-panel-rgb: 14, 26, 19;
+  --bg-item-rgb: 20, 36, 27;
+
+  --text-lavender: #e4ffe9;
+  --text-lilac: #bff0cf;
+  --text-violet: #a4e8bf;
+}
