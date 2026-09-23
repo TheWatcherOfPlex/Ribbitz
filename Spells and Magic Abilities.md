@@ -62,7 +62,7 @@ Do not publish/distribute.
 - *Misty Step*: 🟩
 - *Hunter's Mark*: 🟩
 
-**Summon Undead (DM Grant) - Free Cast**
+**Summon Undead (Necromancy Book) - Free Cast**
 - Uses: **1** per long rest (can also be cast normally with a 3rd-level+ slot, unlimited)
 - Tracker: 🟩
 
@@ -224,7 +224,7 @@ You seize the air and compel it to create one of the following effects at a poin
 **Duration:** Instantaneous
 
 **Source:** *Xanathar's Guide to Everything* — granted free by the DM (2026-09-22, confirmed with owner) as a reward for reading a necromancy spell; this is NOT on the Druid or Ranger spell list normally. Always known/prepared for free — does not count against the 4 base Druid cantrips or the Circle of Spores bonus cantrip.
-**Prep Source:** DM Homebrew Grant (bonus, free)
+**Prep Source:** Necromancy Book (DM grant, bonus, free)
 
 #### Official Text
 
@@ -846,7 +846,7 @@ While in the form of a misty cloud, the target can't talk or manipulate objects,
 </details>
 
 <details>
-<summary><h3>🧟‍♂️ Summon Undead (Concentration) (DM Grant)</h3></summary>
+<summary><h3>🧟‍♂️ Summon Undead (Concentration) (Necromancy Book)</h3></summary>
 
 **Level:** 3rd-level necromancy  
 **Casting Time:** 1 action  
@@ -855,7 +855,7 @@ While in the form of a misty cloud, the target can't talk or manipulate objects,
 **Duration:** Concentration, up to 1 hour
 
 **Source:** *Tasha's Cauldron of Everything* (2020) — granted free by the DM (2026-09-22, confirmed with owner): 1 free casting per long rest, OR cast normally using an actual 3rd-level (or higher) spell slot. The free casting does NOT count against the 15 prepared Druid spells or any spell slot.
-**Prep Source:** DM Homebrew Grant (free 1/long rest, or a real 3rd-level+ slot)
+**Prep Source:** Necromancy Book (DM grant, free 1/long rest, or a real 3rd-level+ slot)
 
 #### Official Text
 
