@@ -6,6 +6,71 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-23 (25) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — dice overlay crash fix + equipped ammo selector
+- Owner tested (24)'s attack buttons: "that works quite well" but reported
+  "sometimes when I roll, it gets where the dice is about to land and it
+  just fades to black. Its like its maybe erroring or something."
+- **This is a Stream Commander (`jukebox` container) bug, not a Ribbitz UI
+  bug** — found and fixed in
+  `/srv/docker/stream-commander/templates/dice_overlay.html`. Root cause:
+  the overlay's `poll()` loop called `box.roll(notation)` immediately every
+  time it saw a new pending roll id, with NO guard against a previous
+  roll's physics animation still being in progress. The backend
+  (`/api/dice/roll` in `stream-commander/app/main.py`) stores only a
+  single `dice_pending_roll` setting — so firing several attacks quickly
+  (exactly the owner's real workflow: heavy bow, then standard, then Dread
+  Ambusher in the same few seconds) reliably produced overlapping
+  `box.roll()` calls on the same DiceBox/WebGL instance, which is
+  consistent with a corrupted render going black mid-animation.
+- Fix: added a client-side roll queue (`rollQueue`/`isRolling` in
+  `dice_overlay.html`) — `poll()` now pushes new roll ids onto a queue
+  instead of rolling immediately; `processQueue()` only starts the next
+  roll once `onRollComplete` has fired for the current one (and calls
+  `box.clear()` before every new roll to reset the tray cleanly). Rebuilt
+  and redeployed the `jukebox` container (`docker compose -f
+  /srv/compose/stack.yml build/up jukebox`); confirmed `rollQueue` present
+  in the served `/dice-overlay` page.
+- **Known remaining limitation, not fixed**: the backend's single-slot
+  `dice_pending_roll` setting means if two rolls happen within the same
+  ~400ms poll window (very fast double-click), the first could be
+  silently overwritten before the overlay ever sees it — a true multi-item
+  server-side queue would fix this but wasn't required to address the
+  reported symptom (visual corruption, not missed rolls) and would be a
+  bigger change. Revisit if the owner reports rolls actually going
+  missing (not just glitching).
+- **Ammo selector**: owner ask — "add equipped buttons to each ammo type
+  for darts and arrows. By default standard is selected, but if we switch
+  to a different type of ammo it adds that ammo type to our roll... roll
+  damage with a fire dart equipped." Added `AmmoSelector` (Standard/Fire/
+  Water/Lava toggle buttons) under each ammo group in
+  `panels/AttackPanel.jsx`, session-local state (`blowgunAmmoId`/
+  `longbowAmmoId`, default `'standard'`, not persisted to the sheet — this
+  is "what's loaded for this attack," not inventory state). When a
+  non-standard type is equipped, the weapon's Standard/Heavy damage
+  buttons automatically append that ammo's bonus die and relabel
+  themselves (e.g. "Standard + Fire (1d8+1d6)").
+- Elemental damage dice sourced from `ui/public/content/Inventory.md`'s
+  "Ammunition & Weapons" section: Fire Darts = 1d8 Piercing + 1d6 Fire,
+  Water Darts = 1d8 Piercing + 1d6 Water, Lava Darts = 1d8 Piercing +
+  "Lava effects" (no die given — Lava equips fine but rolls no bonus die,
+  labeled plainly rather than inventing a number). **Important caveat
+  documented in code**: only Darts are explicitly documented with these
+  values — Arrows have the identical Fire/Water/Lava tracking structure
+  in `vitals` but no separate documented table, so the same rule was
+  applied to Arrows BY ANALOGY, not because it's separately confirmed.
+  Flag this to the owner if Arrows turn out to work differently.
+- `npm run lint` passed (0 errors). `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed `attack-panel__ammo-select` present in
+  both the deployed JS and CSS.
+- **Not yet done**: owner hasn't tested either fix live yet. Ask them to
+  (a) fire several attacks in quick succession again and confirm the dice
+  overlay no longer goes black, and (b) try equipping Fire/Water on the
+  Blowgun or Longbow and confirm the damage button label and resulting
+  roll actually include the extra 1d6 — and separately confirm whether
+  the Arrows-by-analogy assumption above is actually correct for this
+  character.
+
 ## 2026-09-23 (24) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — split Kit panel + weapon attack buttons
 - Owner: "we now want to start working through other stuff on the UI...
   weapons ammo drugs herbs and grung abilities all combined into one big

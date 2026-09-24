@@ -2199,6 +2199,33 @@
   background: rgba(var(--accent-rgb), 0.3);
 }
 
+.attack-panel__ammo-select {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+  grid-column: 1 / -1;
+}
+
+.attack-panel__ammo-select-btn {
+  flex: 1;
+  padding: 4px 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(var(--white-rgb), 0.18);
+  background: rgba(var(--bg-deep-rgb), 0.6);
+  color: rgba(var(--white-rgb), 0.75);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+}
+
+.attack-panel__ammo-select-btn--active {
+  border-color: rgba(var(--success-alt-rgb), 0.7);
+  background: rgba(var(--success-alt-rgb), 0.28);
+  color: var(--color-white);
+}
+
 /* Inventory Panel (Drugs & Herbs, 2026-09-23) */
 .inventory-panel {
   display: grid;

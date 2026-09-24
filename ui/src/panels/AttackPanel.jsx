@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import StatControl from '../components/StatControl.jsx'
 import { rollDice, rollDamage, parseStatNumber } from '../lib/diceRoller.js'
@@ -30,11 +31,49 @@ const ATTACK_MODES = {
   dreadAmbusher: 'Dread Ambusher (Round 1 bonus attack)',
 }
 
+// Elemental ammo bonus damage — sourced from ui/public/content/Inventory.md's
+// "Ammunition & Weapons" section (Fire Darts: 1d8 Piercing + 1d6 Fire; Water
+// Darts: 1d8 Piercing + 1d6 Water; Lava Darts: 1d8 Piercing + "Lava effects",
+// no clean die given). Only Darts are explicitly documented there — Arrows
+// get the same 4 elemental variants tracked in `vitals` (arrowFire/
+// arrowWater/arrowLava) with the identical structure, so the same +1d6
+// fire/water rule is applied to them by analogy, NOT because it's separately
+// documented for arrows. Flag this to the owner if arrows ever turn out to
+// work differently.
+const AMMO_TYPES = [
+  { id: 'standard', label: 'Standard', elementalDie: null },
+  { id: 'fire', label: 'Fire', elementalDie: '1d6' },
+  { id: 'water', label: 'Water', elementalDie: '1d6' },
+  { id: 'lava', label: 'Lava', elementalDie: null }, // "Lava effects" — no die documented
+]
+
 function AttackButton({ label, onClick }) {
   return (
     <button type="button" className="attack-panel__roll-btn" onClick={onClick}>
       {label}
     </button>
+  )
+}
+
+// Owner ask (2026-09-23): "add equipped buttons to each ammo type for darts
+// and arrows. By default standard is selected, but if we switch to a
+// different type of ammo it adds that ammo type to our roll." This is the
+// toggle row — clicking a type sets it as the currently-equipped ammo for
+// that weapon's damage rolls (Standard/Fire/Water/Lava), default Standard.
+function AmmoSelector({ equippedId, onSelect }) {
+  return (
+    <div className="attack-panel__ammo-select">
+      {AMMO_TYPES.map((type) => (
+        <button
+          key={type.id}
+          type="button"
+          className={`attack-panel__ammo-select-btn${equippedId === type.id ? ' attack-panel__ammo-select-btn--active' : ''}`}
+          onClick={() => onSelect(type.id)}
+        >
+          {type.label}
+        </button>
+      ))}
+    </div>
   )
 }
 
@@ -54,6 +93,7 @@ function RangedWeapon({
   dmgDie,
   dmgFlatLabel,
   dmgBonus,
+  ammoType,
 }) {
   const hasCore = Number.isFinite(dexMod) && Number.isFinite(proficiency) && Number.isFinite(weaponBonus)
   const standardHitParts = [
@@ -68,6 +108,14 @@ function RangedWeapon({
   // bonus. Always pass dmgBonus explicitly rather than reusing weaponBonus.
   const standardDmgParts = dmgFlatLabel ? [{ label: dmgFlatLabel, value: dexMod + dmgBonus }] : []
   const heavyDmgParts = [...standardDmgParts, { label: 'Sharpshooter Bonus', value: 10 }]
+
+  // Equipped ammo (Standard/Fire/Water/Lava) adds its own die on top of the
+  // weapon's own damage die, e.g. Fire dart = weapon's 1d8 + 1d6 fire. Lava
+  // has no documented bonus die, so it just rolls the base weapon damage.
+  const elementalDie = ammoType?.elementalDie
+  const standardDieNotation = elementalDie ? `${dmgDie}+${elementalDie}` : dmgDie
+  const heavyDieNotation = elementalDie ? `${dmgDie}+${elementalDie}` : dmgDie
+  const ammoSuffix = ammoType && ammoType.id !== 'standard' ? ` + ${ammoType.label}` : ''
 
   return (
     <div className="attack-panel__weapon">
@@ -94,12 +142,14 @@ function RangedWeapon({
       <div className="attack-panel__group">
         <span className="attack-panel__group-label">Damage</span>
         <AttackButton
-          label={`Standard (${dmgDie}${standardDmgParts.length ? '+' + standardDmgParts[0].value : ''})`}
-          onClick={() => rollDamage(`${name} — Standard Damage`, dmgDie, standardDmgParts)}
+          label={`Standard${ammoSuffix} (${standardDieNotation}${
+            standardDmgParts.length ? '+' + standardDmgParts[0].value : ''
+          })`}
+          onClick={() => rollDamage(`${name} — Standard Damage${ammoSuffix}`, standardDieNotation, standardDmgParts)}
         />
         <AttackButton
-          label={`Heavy (${dmgDie}+${heavyDmgParts.reduce((s, p) => s + p.value, 0)})`}
-          onClick={() => rollDamage(`${name} — Heavy Damage`, dmgDie, heavyDmgParts)}
+          label={`Heavy${ammoSuffix} (${heavyDieNotation}+${heavyDmgParts.reduce((s, p) => s + p.value, 0)})`}
+          onClick={() => rollDamage(`${name} — Heavy Damage${ammoSuffix}`, heavyDieNotation, heavyDmgParts)}
         />
       </div>
     </div>
@@ -165,6 +215,14 @@ export default function AttackPanel({
   const dexMod = parseStatNumber(statMap?.['dex-mod'])
   const proficiency = parseStatNumber(statMap?.['proficiency'])
 
+  // Which ammo type is currently "loaded" per weapon — defaults to Standard,
+  // per the owner's ask. Session-local (not persisted to the sheet); this is
+  // about which ammo you just loaded for THIS attack, not inventory state.
+  const [blowgunAmmoId, setBlowgunAmmoId] = useState('standard')
+  const [longbowAmmoId, setLongbowAmmoId] = useState('standard')
+  const blowgunAmmo = AMMO_TYPES.find((t) => t.id === blowgunAmmoId)
+  const longbowAmmo = AMMO_TYPES.find((t) => t.id === longbowAmmoId)
+
   return (
     <div className="panel__content attack-panel">
       <div className="attack-panel__section">
@@ -180,6 +238,7 @@ export default function AttackPanel({
           dmgDie="1d8"
           dmgFlatLabel={null}
           dmgBonus={0}
+          ammoType={blowgunAmmo}
         />
 
         <RangedWeapon
@@ -192,6 +251,7 @@ export default function AttackPanel({
           dmgDie="1d10"
           dmgFlatLabel="Dexterity + Magic Weapon"
           dmgBonus={2}
+          ammoType={longbowAmmo}
         />
 
         <MeleeWeapon
@@ -232,6 +292,7 @@ export default function AttackPanel({
             <StatControl label="Fire" value={vitals.dartFire} onChange={updateVital('dartFire')} />
             <StatControl label="Water" value={vitals.dartWater} onChange={updateVital('dartWater')} />
             <StatControl label="Lava" value={vitals.dartLava} onChange={updateVital('dartLava')} />
+            <AmmoSelector equippedId={blowgunAmmoId} onSelect={setBlowgunAmmoId} />
           </div>
           <div className="ammo-group">
             <div className="ammo-group__title">Arrows</div>
@@ -243,6 +304,7 @@ export default function AttackPanel({
             <StatControl label="Fire" value={vitals.arrowFire} onChange={updateVital('arrowFire')} />
             <StatControl label="Water" value={vitals.arrowWater} onChange={updateVital('arrowWater')} />
             <StatControl label="Lava" value={vitals.arrowLava} onChange={updateVital('arrowLava')} />
+            <AmmoSelector equippedId={longbowAmmoId} onSelect={setLongbowAmmoId} />
           </div>
           <div className="ammo-group ammo-group--single">
             <StatControl
