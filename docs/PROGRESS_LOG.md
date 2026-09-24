@@ -6,6 +6,62 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-24 (35) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — cast flow for Magic Abilities (non-spell)
+- Owner: "continue with the rest of the magic... this is how I want
+  pretty much the whole UI to work... then we can move on to the items."
+  Explicit long-term direction: extend this same cast-flow pattern to
+  everything roll-related eventually (potions, items, abilities) so the
+  owner never has to think about what to roll — just act, and the UI
+  walks them through it.
+- Finished the "Magic Abilities (Non-Spell)" section (Halo of Spores,
+  Symbiotic Entity, Fungal Infestation, Spreading Spores, Poison Skin,
+  Poison Weapon, Song of the Grung) — read every one's actual Official
+  Text. Only 3 needed a real cast-flow card (the rest are toggles,
+  passive traits, or already handled elsewhere — Poison Weapon is in
+  AttackPanel's ammo rows, Poison Skin is a reactive/passive trait with
+  no Ribbitz-side roll):
+  - **Halo of Spores** (`halo-of-spores-reaction`): save-negates, CON,
+    necrotic — now offers BOTH the normal and Symbiotic-Entity-doubled
+    damage die as separate buttons after a failed save, matching how the
+    old manual buttons worked but now behind the same Attack/Save +
+    Outcome flow as everything else.
+  - **Spreading Spores** (`spreading-spores`): save-negates, CON,
+    necrotic — always the doubled Halo die (a prerequisite of the
+    feature itself requires Symbiotic Entity to be active already).
+  - **Song of the Grung** (`song-of-the-grung`): save-half, CON, thunder
+    — plus a note under the Fail branch about the deafened/pushed rider
+    effects that aren't damage but matter on a fail.
+- Extended `lib/spellCasts.js`/`SpellCastCard.jsx` to support
+  `dieStatKey`/`dieFallback` instead of a hard-coded `die` literal — Halo
+  of Spores' damage die actually scales with Druid level and is already
+  tracked live on the sheet (`statMap['halo-damage']`), so the card
+  resolves it at render time instead of hardcoding a number that would
+  go stale the moment the character levels again.
+- Wired `SPELL_CASTS` lookup into `AbilityTopicRow` (used for the Magic
+  Abilities section) the same way it's already wired into
+  `SpellInlineDetails` (Prepared Spells) — both just look up by the
+  ability/spell's own `slug`, no special-casing needed since it's the
+  same config table either way.
+- Removed the old manual Halo of Spores / Symbiotic Entity roll buttons
+  (`spores-panel__grid`, the two `rollFlatDice` calls) now that the new
+  cards fully replace them — also removed the now-unused `rollFlatDice`
+  import and `haloDamage`/`haloSymbioticDamage` consts from
+  `MagicPanel.jsx`. The `.spores-panel__grid`/`.spores-panel__roll` CSS
+  rules in `App.css` are now dead (unused) — not removed this round,
+  low-priority cleanup for later.
+- `npm run lint` passed (0 errors, confirms the removed
+  imports/consts really were unused). `npm run build` passed. Deployed
+  via `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed "Wisdom Modifier", `dmg-badge--thunder`,
+  and `song-of-the-grung` all present in the deployed bundle.
+- **Not yet done**: owner hasn't tested this batch live yet — ask them to
+  expand Halo of Spores and confirm both damage-die options still work
+  after a failed save, and to try Song of the Grung's save-half flow.
+  Next up per the owner's own stated order: items (health potions and
+  anything else roll-related) — see the (34) entry's "Deliberately out
+  of scope" note for what's still open on the magic side if they want it
+  (dead CSS cleanup is optional, not blocking).
+
 ## 2026-09-24 (34) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — spell cast flow + element color system
 - Owner: add the missing 7th-level spell slot; then go through every spell
   and add roll buttons for anything that requires one, labeled like the

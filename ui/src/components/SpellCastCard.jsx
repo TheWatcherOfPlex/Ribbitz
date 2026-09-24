@@ -37,6 +37,11 @@ export default function SpellCastCard({ spellName, config, statMap }) {
     rollDamage(`${spellName} — ${label}${halved ? ' (halve the total, round down)' : ''} (${dmgType})`, die, [])
   }
 
+  // Some damage dice scale with level and are already tracked live on the
+  // sheet (e.g. Halo of Spores) — resolve those from statMap instead of a
+  // hardcoded literal so this never goes stale as the character levels.
+  const resolveDie = (d) => d.die || statMap?.[d.dieStatKey] || d.dieFallback || '—'
+
   if (config.kind === 'spell-attack' || config.kind === 'melee-spell-attack') {
     return (
       <div className="spell-cast">
@@ -73,9 +78,9 @@ export default function SpellCastCard({ spellName, config, statMap }) {
                 key={d.label}
                 type="button"
                 className="attack-panel__roll-btn"
-                onClick={() => rollDamageDie(d.label, d.die, d.dmgType, false)}
+                onClick={() => rollDamageDie(d.label, resolveDie(d), d.dmgType, false)}
               >
-                {d.die} <DmgBadge dmgType={d.dmgType}>{d.label}</DmgBadge>
+                {resolveDie(d)} <DmgBadge dmgType={d.dmgType}>{d.label}</DmgBadge>
               </button>
             ))}
           </div>
@@ -128,13 +133,15 @@ export default function SpellCastCard({ spellName, config, statMap }) {
                 key={d.label}
                 type="button"
                 className="attack-panel__roll-btn"
-                onClick={() => rollDamageDie(d.label, d.die, d.dmgType, false)}
+                onClick={() => rollDamageDie(d.label, resolveDie(d), d.dmgType, false)}
               >
-                {d.die} <DmgBadge dmgType={d.dmgType}>{d.label}</DmgBadge>
+                {resolveDie(d)} <DmgBadge dmgType={d.dmgType}>{d.label}</DmgBadge>
               </button>
             ))}
           </div>
         ) : null}
+
+        {outcome === 'fail' && config.note ? <div className="spell-cast__note">{config.note}</div> : null}
 
         {outcome === 'success' && isHalf && config.damage ? (
           <div className="spell-cast__row">
@@ -144,9 +151,9 @@ export default function SpellCastCard({ spellName, config, statMap }) {
                 key={d.label}
                 type="button"
                 className="attack-panel__roll-btn"
-                onClick={() => rollDamageDie(d.label, d.die, d.dmgType, true)}
+                onClick={() => rollDamageDie(d.label, resolveDie(d), d.dmgType, true)}
               >
-                {d.die} <DmgBadge dmgType={d.dmgType}>{d.label}</DmgBadge> ÷2
+                {resolveDie(d)} <DmgBadge dmgType={d.dmgType}>{d.label}</DmgBadge> ÷2
               </button>
             ))}
             <span className="spell-cast__half-note">Roll shows the full die — halve the total, round down.</span>

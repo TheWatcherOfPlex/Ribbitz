@@ -1,25 +1,53 @@
 # Ribbitz Dashboard Rebuild — Master Plan
 
-**Status:** ✅ Phases 1-6 all DONE (as scoped by the owner 2026-09-22).
-The canvas dashboard rebuild's active work is complete. What remains is
-entirely the older, explicitly-deferred backlog — see the bottom of this
-section — plus owner review of tonight's Phase 4/5/6 work.
-**Last updated:** 2026-09-22 by Claude (session `session_01HxUfGH7xyRjP9JoeBgPrJH`).
-**Current phase:** Nothing in-flight. If you're picking this up cold:
-- Phase 3 (canvas) — done, owner-verified 2026-09-22 ("that's working
-  great") after several rounds of real bug fixes. See
-  `docs/PROGRESS_LOG.md` (10) through (18) for that history — worth
-  reading before touching `DashboardCanvas.jsx` again, several of those
-  bugs were subtle (feedback loops, storage-key versioning) and easy to
-  reintroduce.
+**Status:** ✅ Phases 1-6 (canvas rebuild) DONE and owner-verified. 🚧
+NEW active work since 2026-09-23: converting every roll-relevant part of
+the UI to a "cast/attack flow" pattern (Attack or Save row → Outcome
+toggle → Damage/Heal row, colored by element) so the owner never has to
+remember spell/ability mechanics mid-game — see "Cast-flow rollout" below,
+this is the current priority, not a phase number.
+**Last updated:** 2026-09-24 by Claude (session `session_01HxUfGH7xyRjP9JoeBgPrJH`).
+**Current phase:** No canvas-rebuild phase is in-flight (1-6 all done, see
+below for that history). The active thread right now is the **cast-flow
+rollout**, an owner-directed initiative that started with weapon attacks,
+moved through spells, and is explicitly meant to keep going:
+- **Weapons** (`panels/AttackPanel.jsx`) — done. Attack (Standard/Heavy/
+  Dread Ambusher) + Damage rows per weapon, ammo type selector
+  (Standard/Fire/Water/Lava/Poison) with its own +/- stepper and grey-out-
+  if-empty, all damage/element text color-coded. See PROGRESS_LOG (24)
+  through (32).
+- **Spells + Magic Abilities** (`panels/MagicPanel.jsx`,
+  `components/SpellCastCard.jsx`, `lib/spellCasts.js`) — done for
+  everything that actually needs a roll (spell-attack / save-negates /
+  save-half / heal / ability-check kinds). See PROGRESS_LOG (34)-(35) for
+  exactly which spells/abilities got cards and which were intentionally
+  skipped (utility/buff spells with no roll, and bonus-damage-on-a-weapon-
+  hit spells like Hunter's Mark where the roll happens on the weapon
+  attack, not independently).
+- **NEXT (explicit owner instruction, 2026-09-24): items** — "Items like
+  health potions or things that do things involving rolls should be
+  edited to this format... then we can move on to the items." Likely
+  candidates in `panels/PrimaryPanel.jsx`: the Healing potions
+  (`CounterRow`-based, already has a working +/- stepper — the roll
+  itself, not the counter, needs the cast-flow treatment) and the Combat
+  Consumables / Drugs & Herbs lists for anything with a save or damage
+  die. Read each item's real mechanics from `Inventory.md` before
+  building — do NOT invent damage numbers (see the Pond Poppers entry,
+  PROGRESS_LOG (33), for what happens when the docs don't have the
+  number: ask, don't guess).
+- **Reusable pieces already built, don't reinvent them**: `SpellCastCard`
+  (`kind`: spell-attack / melee-spell-attack / save-negates / save-half /
+  heal / ability-check) works for ANY d20-based roll-flow, not just
+  spells — likely directly reusable for potion/item saves. The `--dmg-*`
+  color palette (`themes.css`) + `.dmg-badge` classes (`App.css`) are the
+  shared element-color system — reuse the existing type keys (fire, cold,
+  poison, grung-poison, necrotic, radiant, psychic, acid, force, thunder,
+  lightning, physical, arcane, healing) before inventing a new one.
 - Phase 4 (theming) — done, NOT yet owner-verified. See PROGRESS_LOG (20).
 - Phase 5 (level presets) — done (scoped to Ribbitz current-level-through-
   20 only, per owner decision), NOT yet owner-verified, and the rules
   content (real 5e research) hasn't been sanity-checked by the owner/DM
   yet either. See PROGRESS_LOG (21).
-- Phase 6 (polish) — done (scoped to dead-code + file-split audit only,
-  NOT the adv/dis roll-button item — that's part of the deferred backlog
-  below). See PROGRESS_LOG (22).
 - **Deferred backlog — do NOT start without the owner asking**: the
   2026-09-12 math-audit fixes (Tongue Slap/Bite +7->+8, Initiative
   +8->+9, a stale DC 17->18 in two spots, damage-table averages, Polymorph

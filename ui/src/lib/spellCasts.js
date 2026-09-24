@@ -23,7 +23,12 @@
 // `damage`: array of { label, die, dmgType } — dmgType keys into the
 // --dmg-* CSS custom properties (themes.css) for consistent color-coding.
 // Multiple entries = the caster picks one at cast time (e.g. Toll the
-// Dead's uninjured-vs-injured die).
+// Dead's uninjured-vs-injured die). Use `dieStatKey` + `dieFallback`
+// instead of a literal `die` for anything that scales with level and is
+// already tracked live on the sheet (e.g. Halo of Spores' damage die
+// grows with Druid level) — SpellCastCard resolves
+// `statMap[dieStatKey] ?? dieFallback` at render time so it never goes
+// stale as the character levels.
 //
 // `heal`: array of { label, die, includeWisMod } for 'heal' kind.
 export const SPELL_CASTS = {
@@ -106,5 +111,39 @@ export const SPELL_CASTS = {
   'dispel-magic': {
     kind: 'ability-check',
     checkLabel: 'Wisdom (vs. 10 + the spell’s level, for spells 4th level or higher)',
+  },
+
+  // --- Magic Abilities (Non-Spell) — Circle of Spores / homebrew ---
+  // Keyed the same way MagicPanel already keys `magicAbilities` (slug of
+  // the ability's own heading), not the spell list — same SPELL_CASTS
+  // table works for either since both are just "roll config by slug."
+  'halo-of-spores-reaction': {
+    kind: 'save-negates',
+    saveAbility: 'Constitution',
+    damage: [
+      { label: 'Necrotic', dieStatKey: 'halo-damage', dieFallback: '1d8', dmgType: 'necrotic' },
+      {
+        label: 'Necrotic (Symbiotic Entity)',
+        dieStatKey: 'halo-damage-symbiotic',
+        dieFallback: '2d8',
+        dmgType: 'necrotic',
+      },
+    ],
+  },
+  'spreading-spores': {
+    kind: 'save-negates',
+    saveAbility: 'Constitution',
+    // Only usable while Symbiotic Entity is active (a prerequisite of the
+    // feature itself), so it's always the doubled Halo die, never the plain one.
+    damage: [
+      { label: 'Necrotic (AoE)', dieStatKey: 'halo-damage-symbiotic', dieFallback: '2d8', dmgType: 'necrotic' },
+    ],
+  },
+  'song-of-the-grung': {
+    kind: 'save-half',
+    saveAbility: 'Constitution',
+    damage: [{ label: 'Thunder', die: '2d8', dmgType: 'thunder' }],
+    note:
+      'On a failed save: also deafened for 1 minute and pushed 10 ft away. Anyone within 15 ft of you is deafened for 1 turn regardless of their save.',
   },
 }

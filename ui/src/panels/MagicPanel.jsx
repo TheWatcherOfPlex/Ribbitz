@@ -1,19 +1,21 @@
 import TrackerGroup from '../components/TrackerGroup.jsx'
 import SpellCastCard from '../components/SpellCastCard.jsx'
-import { rollFlatDice } from '../lib/diceRoller.js'
 import { SPELL_CASTS } from '../lib/spellCasts.js'
 
 // Extracted from App.jsx's Dashboard route during the rebuild (Phase 3) —
 // exact original content (Spell Slots, Prepared Spells click-to-expand
 // list, Other Magical Abilities incl. Circle of Spores rolls), just moved
 // into its own file. See docs/REBUILD_PLAN.md §3.6/Phase 3.
+//
+// 2026-09-24: Halo of Spores / Spreading Spores / Song of the Grung's
+// manual roll buttons replaced by SpellCastCard (via AbilityTopicRow) —
+// see lib/spellCasts.js for their cast-flow config.
 
 const spellLevelOrder = ['Cantrips', '1st', '2nd', '3rd', '4th', '5th', '6th']
-const haloDamage = '1d8'
-const haloSymbioticDamage = '2d8'
 
-function AbilityTopicRow({ ability, expanded, onToggle, onRoll, rollLabel }) {
+function AbilityTopicRow({ ability, expanded, onToggle, onRoll, rollLabel, statMap }) {
   if (!ability) return null
+  const castConfig = SPELL_CASTS[ability.slug]
   return (
     <div className="ability-topic">
       <div className="ability-topic__row">
@@ -33,6 +35,7 @@ function AbilityTopicRow({ ability, expanded, onToggle, onRoll, rollLabel }) {
               <strong>{ability.subtitle}</strong>
             </div>
           ) : null}
+          {castConfig ? <SpellCastCard spellName={ability.name} config={castConfig} statMap={statMap} /> : null}
           {ability.summary ? <div className="inline-detail__summary">{ability.summary}</div> : null}
           {ability.notes?.length ? (
             <ul className="inline-detail__notes">
@@ -165,6 +168,7 @@ export default function MagicPanel({
             ability={magicAbilities['fungal-infestation']}
             expanded={expandedAbilityKey === 'fungal-infestation'}
             onToggle={() => toggleAbility('fungal-infestation')}
+            statMap={statMap}
           />
 
           <div className="spores-panel">
@@ -176,43 +180,27 @@ export default function MagicPanel({
             >
               {symbioticActive ? `End Symbiotic Entity (${symbioticTempHp} HP)` : 'Activate Symbiotic Entity (+44 HP)'}
             </button>
-            <div className="spores-panel__grid">
-              <button
-                type="button"
-                className="spores-panel__roll spores-panel__roll--btn"
-                onClick={() => rollFlatDice(statMap?.['halo-damage'] ?? haloDamage, 'Halo of Spores')}
-              >
-                Halo {statMap?.['halo-damage'] ?? haloDamage}
-              </button>
-              <button
-                type="button"
-                className="spores-panel__roll spores-panel__roll--btn"
-                onClick={() =>
-                  rollFlatDice(statMap?.['halo-damage-symbiotic'] ?? haloSymbioticDamage, 'Halo of Spores (Symbiotic Entity)')
-                }
-              >
-                Symbiotic {statMap?.['halo-damage-symbiotic'] ?? haloSymbioticDamage}
-              </button>
-              <div className="spores-panel__roll spores-panel__roll--wide">Spreading Spores</div>
-            </div>
             <div className="spores-panel__note">
-              DC {statMap?.['spell-dc'] ?? '18'} CON save. Spreading Spores is a bonus action while Symbiotic Entity is
-              active; while the cube persists, Halo cannot be used as a reaction.
+              Spreading Spores is a bonus action while Symbiotic Entity is active; while the cube persists, Halo
+              cannot be used as a reaction. Expand Halo of Spores / Spreading Spores below for roll buttons.
             </div>
             <AbilityTopicRow
               ability={magicAbilities['symbiotic-entity']}
               expanded={expandedAbilityKey === 'symbiotic-entity'}
               onToggle={() => toggleAbility('symbiotic-entity')}
+              statMap={statMap}
             />
             <AbilityTopicRow
               ability={magicAbilities['halo-of-spores-reaction']}
               expanded={expandedAbilityKey === 'halo-of-spores-reaction'}
               onToggle={() => toggleAbility('halo-of-spores-reaction')}
+              statMap={statMap}
             />
             <AbilityTopicRow
               ability={magicAbilities['spreading-spores']}
               expanded={expandedAbilityKey === 'spreading-spores'}
               onToggle={() => toggleAbility('spreading-spores')}
+              statMap={statMap}
             />
           </div>
 
@@ -241,6 +229,7 @@ export default function MagicPanel({
             ability={magicAbilities['song-of-the-grung']}
             expanded={expandedAbilityKey === 'song-of-the-grung'}
             onToggle={() => toggleAbility('song-of-the-grung')}
+            statMap={statMap}
           />
 
           <TrackerGroup title="Active Camo" items={parseTracker('active-camo', 'Active Camo', { compact: true })} onToggle={handleToggle} />
