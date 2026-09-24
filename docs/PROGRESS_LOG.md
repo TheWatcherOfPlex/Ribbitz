@@ -6,6 +6,31 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-24 (33) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — Pond Poppers roll BLOCKED, needs real numbers
+- Owner: "add dice rolls for the pond poppers."
+- Checked every content doc (`Inventory.md`'s only mention: "Explode with
+  confetti and deal psychic damage") — no damage die, no save DC anywhere
+  in the character sheet content. Did not guess/fabricate a number.
+  Asked the owner (AskUserQuestion); they need to check with their DM —
+  "let me ask my dm. i thought it would be in our notes but apparently
+  not."
+  **No code changed this entry.**
+- **Pick this up when the owner returns with real numbers** (damage die,
+  and whether there's a target save + DC, or if it's a no-save
+  always-hits effect). Once known:
+  - If it needs a to-hit roll: follow the `RangedWeapon`/`MeleeWeapon`
+    pattern in `panels/AttackPanel.jsx` (`rollDice` with labeled parts).
+  - If it's a save-DC effect with no attack roll (more likely, given
+    "psychic damage" + "explode" phrasing sounds like a thrown-item
+    save, similar to Poison Weapon's design from (28)): a `PoisonSaveNote`-
+    style reminder plus a `rollDamage`/`rollCompoundDamage` button for the
+    damage die, modeled on how Poison Weapon's UI works.
+  - Pond Poppers already has a quantity counter + selection wiring in
+    `AttackPanel.jsx` (`pondPoppersQuantity`, the `ammo-group--single`
+    block) — the roll button(s) should go right there, reusing the
+    existing `stepInventoryItem`/`pondPoppersName` plumbing already in
+    place, not a new subsystem.
+
 ## 2026-09-24 (32) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — fully separate every dice-breakdown component
 - Owner: "I notice that it's not showing the magic weapon value separate
   when it's displaying the math. It adds it to another stat. I want
