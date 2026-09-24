@@ -152,26 +152,30 @@ function RangedWeapon({
   linkTo,
   dexMod,
   proficiency,
-  weaponBonusLabel,
-  weaponBonus,
+  hitExtras,
+  dmgIncludesDex,
+  dmgExtras,
   dmgDie,
-  dmgFlatLabel,
-  dmgBonus,
   ammoType,
   poisonDc,
 }) {
-  const hasCore = Number.isFinite(dexMod) && Number.isFinite(proficiency) && Number.isFinite(weaponBonus)
+  const hasCore = Number.isFinite(dexMod) && Number.isFinite(proficiency)
+  // Owner ask (2026-09-24): "I want everything separated out so you can
+  // see exactly how every roll is getting added up" — every contributing
+  // bonus is its OWN labeled part now (no more merging e.g. "Archery Style
+  // + Magic Weapon" into one number). `hitExtras`/`dmgExtras` are arrays
+  // of { label, value } literal weapon-property bonuses, one entry each.
   const standardHitParts = [
     { label: 'Dexterity Modifier', value: dexMod },
     { label: 'Proficiency Bonus', value: proficiency },
-    { label: weaponBonusLabel, value: weaponBonus },
+    ...hitExtras,
   ]
   const heavyHitParts = [...standardHitParts, { label: 'Sharpshooter Penalty', value: -5 }]
-  // Damage's flat bonus is NOT the same as the to-hit weaponBonus above —
-  // e.g. Longbow's Archery Fighting Style (+2) adds to the ATTACK roll
-  // only, never to damage, so damage only gets DEX + the magic weapon
-  // bonus. Always pass dmgBonus explicitly rather than reusing weaponBonus.
-  const standardDmgParts = dmgFlatLabel ? [{ label: dmgFlatLabel, value: dexMod + dmgBonus }] : []
+  // Damage's flat bonuses are NOT the same as the to-hit ones above — e.g.
+  // Longbow's Archery Fighting Style (+2) adds to the ATTACK roll only,
+  // never to damage. `dmgIncludesDex`/`dmgExtras` are passed explicitly
+  // per weapon rather than derived from the hit bonuses.
+  const standardDmgParts = dmgIncludesDex ? [{ label: 'Dexterity Modifier', value: dexMod }, ...dmgExtras] : []
   const heavyDmgParts = [...standardDmgParts, { label: 'Sharpshooter Bonus', value: 10 }]
 
   // Equipped ammo (Standard/Fire/Water/Lava) adds its own die on top of the
@@ -221,7 +225,7 @@ function RangedWeapon({
         <span className="attack-panel__group-label">Damage</span>
         <AttackButton
           label={`Standard${ammoSuffix} (${dmgDie}${elementalDie ? '+' + elementalDie : ''}${
-            standardDmgParts.length ? '+' + standardDmgParts[0].value : ''
+            standardDmgParts.length ? '+' + standardDmgParts.reduce((s, p) => s + p.value, 0) : ''
           })`}
           onClick={() => rollWeaponDamage(`${name} — Standard Damage${ammoSuffix}`, dmgDie, standardDmgParts)}
         />
@@ -249,22 +253,21 @@ function MeleeWeapon({
   linkTo,
   dexMod,
   proficiency,
-  weaponBonusLabel,
-  weaponBonus,
+  hitExtras,
+  dmgIncludesDex,
+  dmgExtras,
   dmgDie,
-  dmgFlatLabel,
-  dmgBonus,
   poisoned,
   onTogglePoison,
   poisonDc,
 }) {
-  const hasCore = Number.isFinite(dexMod) && Number.isFinite(proficiency) && Number.isFinite(weaponBonus)
+  const hasCore = Number.isFinite(dexMod) && Number.isFinite(proficiency)
   const hitParts = [
     { label: 'Dexterity Modifier', value: dexMod },
     { label: 'Proficiency Bonus', value: proficiency },
-    ...(weaponBonus ? [{ label: weaponBonusLabel, value: weaponBonus }] : []),
+    ...hitExtras,
   ]
-  const dmgParts = dmgFlatLabel ? [{ label: dmgFlatLabel, value: dexMod + dmgBonus }] : []
+  const dmgParts = dmgIncludesDex ? [{ label: 'Dexterity Modifier', value: dexMod }, ...dmgExtras] : []
   const dmgSuffix = poisoned ? ' + Poison' : ''
 
   const rollWeaponDamage = () =>
@@ -303,7 +306,7 @@ function MeleeWeapon({
       <div className="attack-panel__group">
         <span className="attack-panel__group-label">Damage</span>
         <AttackButton
-          label={`${dmgDie}${dmgParts.length ? '+' + dmgParts[0].value : ''}${poisoned ? '+2d4' : ''}${dmgSuffix}`}
+          label={`${dmgDie}${dmgParts.length ? '+' + dmgParts.reduce((s, p) => s + p.value, 0) : ''}${poisoned ? '+2d4' : ''}${dmgSuffix}`}
           onClick={rollWeaponDamage}
         />
       </div>
@@ -354,11 +357,13 @@ export default function AttackPanel({
           linkTo="/actions#vanguard-blowgun-1-broken---single-shot"
           dexMod={dexMod}
           proficiency={proficiency}
-          weaponBonusLabel="Archery Style + Magic Weapon"
-          weaponBonus={3}
+          hitExtras={[
+            { label: 'Archery Fighting Style', value: 2 },
+            { label: 'Magic Weapon Bonus', value: 1 },
+          ]}
           dmgDie="1d8"
-          dmgFlatLabel={null}
-          dmgBonus={0}
+          dmgIncludesDex={false}
+          dmgExtras={[]}
           ammoType={blowgunAmmo}
           poisonDc={poisonDc}
         />
@@ -368,11 +373,13 @@ export default function AttackPanel({
           linkTo="/actions#skywardens-longbow-2"
           dexMod={dexMod}
           proficiency={proficiency}
-          weaponBonusLabel="Archery Style + Magic Weapon"
-          weaponBonus={4}
+          hitExtras={[
+            { label: 'Archery Fighting Style', value: 2 },
+            { label: 'Magic Weapon Bonus', value: 2 },
+          ]}
           dmgDie="1d10"
-          dmgFlatLabel="Dexterity + Magic Weapon"
-          dmgBonus={2}
+          dmgIncludesDex
+          dmgExtras={[{ label: 'Magic Weapon Bonus', value: 2 }]}
           ammoType={longbowAmmo}
           poisonDc={poisonDc}
         />
@@ -382,11 +389,10 @@ export default function AttackPanel({
           linkTo="/actions#dagger-1-fey-blessing"
           dexMod={dexMod}
           proficiency={proficiency}
-          weaponBonusLabel="Fey Blessing"
-          weaponBonus={1}
+          hitExtras={[{ label: 'Fey Blessing', value: 1 }]}
           dmgDie="1d4"
-          dmgFlatLabel="Dexterity + Fey Blessing"
-          dmgBonus={1}
+          dmgIncludesDex
+          dmgExtras={[{ label: 'Fey Blessing', value: 1 }]}
           poisoned={daggerFeyPoisoned}
           onTogglePoison={() => setDaggerFeyPoisoned((v) => !v)}
           poisonDc={poisonDc}
@@ -397,11 +403,10 @@ export default function AttackPanel({
           linkTo="/actions#dagger-non-magical-poison-dipped"
           dexMod={dexMod}
           proficiency={proficiency}
-          weaponBonusLabel=""
-          weaponBonus={0}
+          hitExtras={[]}
           dmgDie="1d4"
-          dmgFlatLabel="Dexterity Modifier"
-          dmgBonus={0}
+          dmgIncludesDex
+          dmgExtras={[]}
           poisoned={daggerPlainPoisoned}
           onTogglePoison={() => setDaggerPlainPoisoned((v) => !v)}
           poisonDc={poisonDc}

@@ -6,6 +6,52 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-24 (32) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — fully separate every dice-breakdown component
+- Owner: "I notice that it's not showing the magic weapon value separate
+  when it's displaying the math. It adds it to another stat. I want
+  everything separated out so you can see exactly how every roll is
+  getting added up."
+- Root cause: `RangedWeapon`'s `weaponBonusLabel`/`weaponBonus` and
+  `MeleeWeapon`'s equivalents were pre-merged single numbers — e.g.
+  Blowgun/Longbow's `"Archery Style + Magic Weapon"` was one labeled part
+  worth 3 or 4, not two separate parts; Longbow's damage
+  `"Dexterity + Magic Weapon"` and Dagger+1's damage
+  `"Dexterity + Fey Blessing"` were the same pattern. The overlay showed
+  whatever label was handed to it, so a merged label showed as one merged
+  line — this wasn't an overlay bug, `AttackPanel.jsx` was building the
+  merged value in the first place.
+- Fixed by reworking `RangedWeapon`/`MeleeWeapon`'s props: replaced the
+  single `weaponBonusLabel`/`weaponBonus` and `dmgFlatLabel`/`dmgBonus`
+  with arrays — `hitExtras`/`dmgExtras` (each `{label, value}`, one entry
+  per real bonus source) plus a `dmgIncludesDex` boolean (Blowgun's
+  damage has NO flat bonus at all, not even Dexterity, per its documented
+  house rule — `dmgIncludesDex={false}` there, `true` everywhere else).
+  Every weapon now lists its true breakdown:
+  - Blowgun/Longbow to-hit: Dexterity Modifier, Proficiency Bonus, Archery
+    Fighting Style, Magic Weapon Bonus — 4 separate parts, not 3.
+  - Longbow damage: Dexterity Modifier, Magic Weapon Bonus — 2 parts, not 1.
+  - Dagger +1 (Fey Blessed) damage: Dexterity Modifier, Fey Blessing —
+    2 parts, not 1.
+- **Real bug caught and fixed while doing this** (not owner-reported):
+  the Standard/Heavy damage button LABELS (the text on the button, before
+  rolling) computed their displayed total via `dmgParts[0].value` —
+  correct only when there was exactly one part. Once `dmgExtras` could
+  contain more than one entry, that silently showed the wrong total on
+  the button face (though the actual roll math via `rollDamage`/
+  `rollCompoundDamage` was always correct — this was a label-only bug).
+  Fixed both occurrences to `dmgParts.reduce((s, p) => s + p.value, 0)`.
+- `npm run lint` passed (0 errors). `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed "Archery Fighting Style", "Magic Weapon
+  Bonus", and "Fey Blessing" all present as distinct strings in the
+  deployed bundle.
+- **Not yet done**: owner hasn't tested live yet — ask them to fire an
+  attack/damage roll on the Longbow specifically (the weapon with the
+  most separate components: DEX, Proficiency, Archery, Magic Weapon on
+  to-hit; DEX, Magic Weapon on damage) and confirm every part shows on
+  its own line with the right label, and that the button-face totals
+  (before rolling) match the post-roll totals.
+
 ## 2026-09-24 (31) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — ammo amount uses the Healing potions' +/- stepper
 - Owner: "make the same plus and minus buttons that we used for the health
   potions to adjust it up and down, not the version we currently have on
