@@ -41,11 +41,19 @@ const ATTACK_MODES = {
 // so the same rule is applied to them by analogy, NOT because it's
 // separately documented for arrows. Flag this to the owner if arrows ever
 // turn out to work differently.
+// `dmgColorType` keys into the shared --dmg-* color palette (themes.css /
+// .dmg-badge classes) also used by spell damage types in SpellCastCard —
+// owner ask (2026-09-24): "fire, water, poison, purple grung poison...
+// those are all things that should have theme based colors" so the same
+// element always reads as the same color everywhere in the app. Grung
+// Poison Weapon gets its OWN distinct purple (not the same green as a
+// generic poison type) per the owner's explicit "purple grung poison"
+// wording.
 const AMMO_TYPES = [
-  { id: 'standard', label: 'Standard', elementalDie: null, dmgTypeLabel: 'Piercing' },
-  { id: 'fire', label: 'Fire', elementalDie: '1d6', dmgTypeLabel: 'Fire' },
-  { id: 'water', label: 'Water', elementalDie: '1d6', dmgTypeLabel: 'Water' },
-  { id: 'lava', label: 'Lava', elementalDie: '1d6', dmgTypeLabel: 'Lava' },
+  { id: 'standard', label: 'Standard', elementalDie: null, dmgTypeLabel: 'Piercing', dmgColorType: 'physical' },
+  { id: 'fire', label: 'Fire', elementalDie: '1d6', dmgTypeLabel: 'Fire', dmgColorType: 'fire' },
+  { id: 'water', label: 'Water', elementalDie: '1d6', dmgTypeLabel: 'Water', dmgColorType: 'cold' },
+  { id: 'lava', label: 'Lava', elementalDie: '1d6', dmgTypeLabel: 'Lava', dmgColorType: 'fire' },
   // Grung "Poison Weapon" racial ability (2026-09-23 addition) — verified
   // via web research (Volo's Guide RAW): applies to any PIERCING weapon,
   // target makes a CON save (Ribbitz's scaled DC, see statMap['poison-weapon-dc'],
@@ -55,7 +63,7 @@ const AMMO_TYPES = [
   // Fire/Water/Lava this isn't a stocked ammo item, but the owner asked
   // for "poisoned dart, poisoned arrow, poisoned dagger" using the same
   // framing as the other ammo types, so it's offered the same way here.
-  { id: 'poison', label: 'Poison', elementalDie: '2d4', dmgTypeLabel: 'Poison', requiresSave: true },
+  { id: 'poison', label: 'Poison', elementalDie: '2d4', dmgTypeLabel: 'Poison', dmgColorType: 'grung-poison', requiresSave: true },
 ]
 
 function AttackButton({ label, onClick }) {
@@ -108,10 +116,12 @@ function AmmoRowList({ weaponPiercingDie, equippedId, onSelect, amounts }) {
           >
             <span className="ammo-row__name">{type.label}</span>
             <span className="ammo-row__damage">
-              <span className="ammo-row__damage-line">{weaponPiercingDie} Piercing</span>
+              <span className="ammo-row__damage-line">
+                {weaponPiercingDie} <span className="dmg-badge dmg-badge--physical">Piercing</span>
+              </span>
               {type.elementalDie ? (
                 <span className="ammo-row__damage-line">
-                  {type.elementalDie} {type.dmgTypeLabel}
+                  {type.elementalDie} <span className={`dmg-badge dmg-badge--${type.dmgColorType}`}>{type.dmgTypeLabel}</span>
                 </span>
               ) : null}
             </span>

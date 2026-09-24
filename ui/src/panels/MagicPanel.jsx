@@ -1,5 +1,7 @@
 import TrackerGroup from '../components/TrackerGroup.jsx'
+import SpellCastCard from '../components/SpellCastCard.jsx'
 import { rollFlatDice } from '../lib/diceRoller.js'
+import { SPELL_CASTS } from '../lib/spellCasts.js'
 
 // Extracted from App.jsx's Dashboard route during the rebuild (Phase 3) —
 // exact original content (Spell Slots, Prepared Spells click-to-expand
@@ -45,7 +47,7 @@ function AbilityTopicRow({ ability, expanded, onToggle, onRoll, rollLabel }) {
   )
 }
 
-function SpellInlineDetails({ spell }) {
+function SpellInlineDetails({ spell, statMap }) {
   if (!spell) return null
   const facts = [
     ['Level', spell.level],
@@ -54,6 +56,7 @@ function SpellInlineDetails({ spell }) {
     ['Duration', spell.duration],
     ['Components', spell.components],
   ].filter(([, value]) => value)
+  const castConfig = SPELL_CASTS[spell.slug]
 
   return (
     <div className="inline-detail spell-inline-detail">
@@ -67,6 +70,7 @@ function SpellInlineDetails({ spell }) {
           ))}
         </div>
       ) : null}
+      {castConfig ? <SpellCastCard spellName={spell.name} config={castConfig} statMap={statMap} /> : null}
       {spell.summary ? <div className="inline-detail__summary">{spell.summary}</div> : null}
       {spell.notes?.length ? (
         <ul className="inline-detail__notes">
@@ -108,6 +112,7 @@ export default function MagicPanel({
           <TrackerGroup title="4th" items={parseTracker('slots-4th', '4th', { compact: true })} onToggle={handleToggle} />
           <TrackerGroup title="5th" items={parseTracker('slots-5th', '5th', { compact: true })} onToggle={handleToggle} />
           <TrackerGroup title="6th" items={parseTracker('slots-6th', '6th', { compact: true })} onToggle={handleToggle} />
+          <TrackerGroup title="7th" items={parseTracker('slots-7th', '7th', { compact: true })} onToggle={handleToggle} />
         </div>
       </div>
 
@@ -133,7 +138,7 @@ export default function MagicPanel({
                           >
                             {spell.name}
                           </button>
-                          {expanded ? <SpellInlineDetails spell={spell} /> : null}
+                          {expanded ? <SpellInlineDetails spell={spell} statMap={statMap} /> : null}
                         </div>
                       )
                     })

@@ -6,6 +6,101 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-24 (34) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — spell cast flow + element color system
+- Owner: add the missing 7th-level spell slot; then go through every spell
+  and add roll buttons for anything that requires one, labeled like the
+  weapon Attack/Damage rows, with a hit/miss or save/fail outcome toggle
+  that "walks me through casting it" (owner has dyslexia and gets caught
+  up trying to keep track of rules mid-RP — explicit goal is offloading
+  that onto the UI). Also asked for a consistent color system per element/
+  damage type (fire, water, poison, purple grung poison, magic, etc.)
+  reused everywhere, plus general dyslexia-friendly touches (bold/color
+  emphasis, clear separation, high contrast, dark mode) without going
+  overboard — "should feel like a modern video game."
+- **7th-level slot**: added a `TrackerGroup` for `slots-7th` next to the
+  existing 1st-6th in `MagicPanel.jsx`. Verified it degrades gracefully
+  (renders an empty/title-only box, no crash) if the sheet row the owner
+  was asked to add manually back in (23) still doesn't exist yet.
+- **Read every spell's actual Official Text** in `Spells and Magic
+  Abilities.md` before building anything (cantrips through 6th level,
+  ~38 entries) rather than guessing from titles/notes. Most need no roll
+  at all (buffs, utility, healing-only, etc.) — only spells with a real
+  attack roll, a save-based damage roll, or a distinct ability check got
+  cast-flow buttons. Identified and built: Poison Spray, Primal Savagery,
+  Chill Touch, Toll the Dead (cantrips); Cure Wounds (1st); Healing
+  Spirit, Moonbeam (2nd); Blight (4th); Mass Cure Wounds, Cloudkill,
+  Contagion (5th); Dispel Magic (3rd, ability check not a save).
+- **New reusable system**, not a one-off per spell:
+  - `lib/spellCasts.js` — data-only config per spell, keyed by the spell's
+    real slug. `kind`: `spell-attack` / `melee-spell-attack` (Ribbitz
+    rolls to hit, damage only on Hit) / `save-negates` (full damage on
+    target's failed save, ZERO on success — e.g. Poison Spray) /
+    `save-half` (full on fail, HALF round-down on success — e.g.
+    Moonbeam, matching the owner's own example) / `heal` (no attack/save,
+    just a healing roll, sometimes with a slot-level choice) /
+    `ability-check` (Ribbitz's own check, not a target's save — Dispel
+    Magic). Every entry uses the character's single flat
+    `statMap['spell-attack']`/`['spell-dc']` — unlike weapons, no
+    per-spell numeric override is needed since it's the same DC/bonus for
+    every spell.
+  - `components/SpellCastCard.jsx` — renders the Attack/Save row, the
+    Outcome toggle (Hit/Miss or Save Failed/Succeeded — this is literally
+    "the spot where I click if it hit or missed or saved/failed" from the
+    ask), then reveals the right Damage/Heal row only after an outcome is
+    picked. `save-half`'s Success branch rolls the same die but labels it
+    "(halve the total, round down)" — dice-box can't roll a literal half
+    step, so the honest approach is rolling the real die and telling the
+    player exactly what to do with the number, not faking a fractional
+    roll.
+  - Wired into `MagicPanel.jsx`'s existing spell-expand view
+    (`SpellInlineDetails`) via `SPELL_CASTS[spell.slug]` — no change to
+    how spells are browsed, the cast card just appears inline when a
+    spell has one.
+- **Real bug caught before shipping**: `slugifyHeading()` does NOT strip
+  parenthetical suffixes like "(Concentration)" from spell names — I
+  initially keyed the config as `moonbeam`/`healing-spirit`, which would
+  have silently matched nothing since the real slugs are
+  `moonbeam-concentration`/`healing-spirit-concentration`. Caught this by
+  actually reading `slugifyHeading.js`'s implementation rather than
+  assuming, fixed both keys, left a comment explaining why for the next
+  spell added.
+- **Element color system**: added `--dmg-*` CSS custom properties to
+  `themes.css` (fire, cold [used for the "water" flavor], poison, a
+  SEPARATE grung-poison purple per the owner's explicit "purple grung
+  poison" distinction from regular green poison, necrotic, radiant,
+  psychic, acid, force, thunder, lightning, physical, arcane, healing) +
+  `.dmg-badge`/`.dmg-badge--<type>` classes in `App.css`. Deliberately
+  NOT themed per `data-theme` (same reasoning as the danger/success
+  semantic colors from Phase 4) — an element's color needs to stay
+  constant regardless of which visual theme is active, or "fire is
+  orange" stops being reliably true. Retrofitted this onto
+  `AttackPanel.jsx`'s ammo rows too (Fire/Water/Lava/Poison damage-type
+  text is now colored, Poison using the distinct grung-poison purple, not
+  the same color as a hypothetical generic poison spell) — the owner
+  asked for this to be consistent everywhere, not spell-only.
+- `npm run lint` passed (0 errors). `npm run build` passed. Ran the
+  §5.1 declaration-diff safety check (clean, no new unaccounted
+  removals). Deployed via `docker compose build ribbitz && docker
+  compose up -d ribbitz`; `curl /` returns 200; confirmed
+  `spell-cast__outcome-btn`, `dmg-badge--fire`, `dmg-badge--grung-poison`,
+  and `Spell Attack Bonus` all present in the deployed bundle.
+- **Deliberately out of scope this round** (flag if the owner wants these
+  next): the "Magic Abilities (Non-Spell)" section (Halo of Spores,
+  Spreading Spores, etc.) already has its own simpler roll buttons from
+  an earlier session — not rebuilt onto the new SpellCastCard pattern
+  yet, would be a natural follow-up for visual/mechanical consistency.
+  Spells with only a bonus-damage-on-a-weapon-hit effect (Absorb
+  Elements, Hunter's Mark) were left alone since they're not independent
+  rolls — the actual roll happens on the weapon attack itself.
+- **Not yet done**: owner hasn't tested any of this live yet. Given the
+  size of this change (new reusable component + 12 spell configs + a new
+  color system touching 2 panels), ask them to specifically walk through
+  at least one of each `kind` — a spell-attack (Chill Touch), a
+  save-negates (Poison Spray), a save-half (Moonbeam, their own named
+  example), and a heal (Cure Wounds) — to confirm the outcome toggle and
+  damage buttons behave as described before treating this as fully
+  verified.
+
 ## 2026-09-24 (33) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — Pond Poppers roll BLOCKED, needs real numbers
 - Owner: "add dice rolls for the pond poppers."
 - Checked every content doc (`Inventory.md`'s only mention: "Explode with

@@ -47,6 +47,32 @@
   --text-pale: #f7f3ff;
   --text-lilac: #c9bfff;
   --text-violet: #c9a4ff;
+
+  /* Damage/element colors (2026-09-24) — same idea across the whole app:
+     ammo elemental types (Fire/Water/Lava/Poison in AttackPanel) and spell
+     damage types (spells in MagicPanel) both use this same palette, so
+     "fire" always means the same color everywhere. Deliberately NOT
+     themed per data-theme (like the semantic state colors above) — a
+     player scanning for "which one is fire" needs that to stay constant
+     no matter which visual theme is active. Not every one of these
+     appears in Ribbitz's current spell list, but the set covers the
+     standard 5e damage types plus his homebrew ones (Grung poison,
+     Arcane) so future spells/abilities don't need a new color invented
+     each time. */
+  --dmg-fire: #ff8a3d;
+  --dmg-cold: #6fd7ff;
+  --dmg-poison: #7bdc6b;
+  --dmg-grung-poison: #b06bff;
+  --dmg-necrotic: #8f7bd6;
+  --dmg-radiant: #ffe27a;
+  --dmg-psychic: #ff7ad1;
+  --dmg-acid: #c6ff5e;
+  --dmg-force: #b39dff;
+  --dmg-thunder: #6bc6ff;
+  --dmg-lightning: #ffe95e;
+  --dmg-physical: #d8d8e0;
+  --dmg-arcane: #9d8cff;
+  --dmg-healing: #7be8a5;
 }
 
 [data-theme='grung'] {

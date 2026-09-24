@@ -2815,3 +2815,115 @@
   font-style: italic;
   color: rgba(var(--white-rgb), 0.6);
 }
+
+/* Damage/element color badges (2026-09-24) — shared across weapon ammo
+   types (AttackPanel) and spell damage types (SpellCastCard) so "fire" (or
+   any element) always reads as the same color everywhere in the app. See
+   the --dmg-* vars in themes.css for the palette and how to add a type. */
+.dmg-badge {
+  font-weight: 800;
+  padding: 0 2px;
+  border-radius: 4px;
+}
+
+.dmg-badge--fire { color: var(--dmg-fire); }
+.dmg-badge--cold { color: var(--dmg-cold); }
+.dmg-badge--poison { color: var(--dmg-poison); }
+.dmg-badge--grung-poison { color: var(--dmg-grung-poison); }
+.dmg-badge--necrotic { color: var(--dmg-necrotic); }
+.dmg-badge--radiant { color: var(--dmg-radiant); }
+.dmg-badge--psychic { color: var(--dmg-psychic); }
+.dmg-badge--acid { color: var(--dmg-acid); }
+.dmg-badge--force { color: var(--dmg-force); }
+.dmg-badge--thunder { color: var(--dmg-thunder); }
+.dmg-badge--lightning { color: var(--dmg-lightning); }
+.dmg-badge--physical { color: var(--dmg-physical); }
+.dmg-badge--arcane { color: var(--dmg-arcane); }
+.dmg-badge--healing { color: var(--dmg-healing); }
+
+/* Spell Cast card (2026-09-24) — "walk me through casting it": Attack/Save
+   row, an Outcome toggle, then Damage/Heal row, styled like the weapon
+   Attack/Damage rows for consistency. Owner is dyslexic and specifically
+   asked for high-contrast, colorful, bold/emphasized text to make results
+   easy to track at a glance without re-reading — larger bold numbers for
+   DCs/totals, colored damage types, clearly separated rows rather than
+   dense paragraphs. */
+.spell-cast {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(var(--bg-deep-rgb), 0.7);
+  border: 1px solid rgba(var(--accent-rgb), 0.25);
+}
+
+.spell-cast__row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.spell-cast__row--wrap {
+  align-items: flex-start;
+}
+
+.spell-cast__row-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 800;
+  color: rgba(var(--white-rgb), 0.55);
+  min-width: 54px;
+}
+
+.spell-cast__save-dc {
+  font-size: 13px;
+  color: var(--color-white);
+}
+
+.spell-cast__save-dc strong {
+  font-size: 18px;
+  color: rgba(var(--gold-rgb), 1);
+}
+
+.spell-cast__outcome-btn {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 2px solid rgba(var(--white-rgb), 0.25);
+  background: rgba(var(--bg-panel-rgb), 0.9);
+  color: var(--color-white);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.spell-cast__outcome-btn--active {
+  border-color: var(--color-white);
+  background: rgba(var(--accent-rgb), 0.35);
+}
+
+.spell-cast__outcome-btn--fail.spell-cast__outcome-btn--active {
+  border-color: rgba(var(--danger-rgb), 1);
+  background: rgba(var(--danger-rgb), 0.3);
+}
+
+.spell-cast__outcome-btn--success.spell-cast__outcome-btn--active {
+  border-color: rgba(var(--success-alt-rgb), 1);
+  background: rgba(var(--success-alt-rgb), 0.3);
+}
+
+.spell-cast__note {
+  font-size: 12px;
+  font-style: italic;
+  color: rgba(var(--white-rgb), 0.7);
+  padding: 4px 2px;
+}
+
+.spell-cast__half-note {
+  font-size: 10px;
+  color: rgba(var(--white-rgb), 0.55);
+  width: 100%;
+}
