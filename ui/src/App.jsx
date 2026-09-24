@@ -11,7 +11,9 @@ import SkillsPanel from './panels/SkillsPanel.jsx'
 import PrimaryPanel from './panels/PrimaryPanel.jsx'
 import ExhaustionPanel from './panels/ExhaustionPanel.jsx'
 import MagicPanel from './panels/MagicPanel.jsx'
-import KitPanel from './panels/KitPanel.jsx'
+import AttackPanel from './panels/AttackPanel.jsx'
+import InventoryPanel from './panels/InventoryPanel.jsx'
+import GrungPanel from './panels/GrungPanel.jsx'
 import TrackerGroup from './components/TrackerGroup.jsx'
 import StatControl from './components/StatControl.jsx'
 import ThemeSwitcher from './components/ThemeSwitcher.jsx'
@@ -972,11 +974,11 @@ function App() {
                     ),
                   },
                   {
-                    id: 'kit',
-                    title: 'Weapons / Ammo / Drugs & Herbs / Grung Abilities',
+                    id: 'attack',
+                    title: 'Weapons / Ammo',
                     layout: { x: 0, y: 98, w: 6, h: 46 },
                     component: (
-                      <KitPanel
+                      <AttackPanel
                         statMap={statMap}
                         vitals={vitals}
                         updateVital={updateVital}
@@ -984,15 +986,28 @@ function App() {
                         standardBlowgunDartsQuantity={standardBlowgunDartsQuantity}
                         standardArrowsQuantity={standardArrowsQuantity}
                         pondPoppersQuantity={pondPoppersQuantity}
+                      />
+                    ),
+                  },
+                  {
+                    id: 'inventory-panel',
+                    title: 'Drugs & Herbs',
+                    layout: { x: 6, y: 98, w: 6, h: 30 },
+                    component: (
+                      <InventoryPanel
                         drugsHerbsList={drugsHerbsList}
                         expandedDrugKey={expandedDrugKey}
                         setExpandedDrugKey={setExpandedDrugKey}
                         drugStatuses={drugStatuses}
                         toggleDrugHerb={toggleDrugHerb}
-                        parseTracker={parseTracker}
-                        handleToggle={handleToggle}
                       />
                     ),
+                  },
+                  {
+                    id: 'grung',
+                    title: 'Grung Abilities',
+                    layout: { x: 6, y: 128, w: 6, h: 30 },
+                    component: <GrungPanel statMap={statMap} parseTracker={parseTracker} handleToggle={handleToggle} />,
                   },
                 ]}
               />

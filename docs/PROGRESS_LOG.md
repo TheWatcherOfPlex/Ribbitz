@@ -6,6 +6,81 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-23 (24) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — split Kit panel + weapon attack buttons
+- Owner: "we now want to start working through other stuff on the UI...
+  weapons ammo drugs herbs and grung abilities all combined into one big
+  panel. Let's split this up." Explicit split: Attack Panel (Weapons +
+  Ammo), Drugs & Herbs -> its own Inventory panel, Grung Abilities -> its
+  own panel (no attack buttons on it yet — owner: "we may try to add it
+  to something later if it makes sense", explicitly deferred, not done
+  this entry).
+- Deleted `panels/KitPanel.jsx`, split its content into three new files:
+  `panels/AttackPanel.jsx` (Weapons + Ammo), `panels/InventoryPanel.jsx`
+  (Drugs & Herbs), `panels/GrungPanel.jsx` (Grung Abilities, unchanged
+  including the still-deferred stale "+7 hit" bug). Updated
+  `App.jsx`'s `DashboardCanvas` panels array: 1 panel -> 3
+  (`attack`/`inventory-panel`/`grung`). Ran the standard §5.1
+  declaration-diff safety check — clean, no new removed names (only
+  imports/JSX changed, not top-level App.jsx declarations).
+- **Attack buttons** (the main ask): owner's exact requirement — "for my
+  ranged weapons we have to have a standard attack, then a heavy, then a
+  Dread Ambusher attack... need buttons for each possible attack with
+  each weapon... dice show out the math and how we get to the total, be
+  detailed." Researched what "Dread Ambusher" actually means for THIS
+  character by reading `ui/public/content/Actions.md` (already
+  DM-verified content, not re-derived from scratch) — it's not a separate
+  damage formula, it's Ribbitz's Gloom Stalker feature granting a 3rd
+  attack on the first round of combat ("First round (Dread Ambusher): 3
+  attacks = 3 shots"). So each ranged weapon (Blowgun, Longbow) got 3
+  to-hit buttons — Standard, Heavy (Sharpshooter), Dread Ambusher — where
+  Dread Ambusher uses the SAME math as Standard, just labeled separately
+  so the owner has a distinct button to click for that bonus 3rd attack
+  during round 1. Melee weapons (both Daggers) got Standard-only per the
+  owner's explicit scoping to ranged weapons for the heavy/Dread Ambusher
+  modes.
+- **Math breakdown**: added `rollDamage(label, dieNotation, parts)` to
+  `lib/diceRoller.js` (new — mirrors the existing `rollDice` but for
+  non-d20 damage dice with a labeled flat-bonus breakdown, e.g. "1d8
+  (Rolled) + 10 (Sharpshooter Bonus) ="). To-hit and damage flat bonuses
+  are broken into real labeled parts: Dexterity Modifier and Proficiency
+  Bonus pulled LIVE from `statMap` (`dex-mod`, `proficiency`), plus each
+  weapon's own fixed bonus (Archery Fighting Style + Magic Weapon,
+  Fey Blessing, Sharpshooter Penalty) hardcoded per weapon since those
+  are static weapon/feat properties, not sheet-tracked stats. Every
+  number was cross-verified against `Actions.md`'s own documented
+  per-weapon breakdown AND the live sheet's combined `blowgun-hit` /
+  `longbow-hit` / etc. values before shipping — they reconcile exactly
+  (e.g. Blowgun Standard: DEX 5 + PB 6 + Archery+Magic 3 = 14, matches
+  `statMap['blowgun-hit']`).
+- **Real bug caught and fixed before shipping** (not owner-reported —
+  found during implementation): my first draft reused the SAME
+  "weaponBonus" value for both the to-hit breakdown AND the damage flat
+  bonus. That's wrong for the Longbow specifically — Archery Fighting
+  Style (+2) adds to the ATTACK roll only, never to damage, so damage
+  should only include DEX + the Magic Weapon bonus (+2), not DEX +
+  (Archery + Magic) (+4). Fixed by adding a separate explicit `dmgBonus`
+  prop so to-hit and damage bonuses are never silently conflated again —
+  a component that reuses one derived value for two conceptually
+  different quantities is worth double-checking on sight in any future
+  weapon addition here.
+- `npm run lint` passed (0 errors, same 4 pre-existing warnings). `npm
+  run build` passed. Deployed via `docker compose build ribbitz &&
+  docker compose up -d ribbitz`; `curl /` returns 200; grepped the
+  deployed bundle for "Dread Ambusher", "Sharpshooter Penalty", "Drugs",
+  "Grung Abilities", and the new `attack-panel__roll-btn` CSS class — all
+  present.
+- **Not yet done**: owner has not yet tested the new attack buttons live
+  — ask them to fire a few and confirm the dice overlay shows the
+  breakdown as expected (each labeled part + the rolled die), and that
+  the totals match what they'd expect from the sheet. Damage buttons
+  were added alongside the requested attack (to-hit) buttons since they're
+  a natural pairing and reuse the same "detailed math" ask — flag if the
+  owner wanted attack-only for now. Ammo/elemental bonus damage (Blowgun's
+  `blowgun-elemental` stat, Longbow's undocumented "Gloom" fallback that
+  was never real sheet data) were intentionally left out of scope this
+  round — not requested, and the "Gloom" one was fabricated placeholder
+  text in the old KitPanel that was never backed by a real stat anyway.
+
 ## 2026-09-22 (23) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — character content audit (not part of canvas rebuild)
 - Owner asked to circle back to "the actual character, math, and OBS
   workflows" now that Phases 4-6 are done. This entry covers the

@@ -2112,6 +2112,107 @@
   gap: 6px;
 }
 
+/* Attack Panel (2026-09-23) — split out of the old combined Kit panel,
+   reuses .combat-kit's section/title/weapon-name look for consistency. */
+.attack-panel {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 1180px) {
+  .attack-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+.attack-panel__section {
+  display: grid;
+  gap: 10px;
+  background: rgba(var(--bg-panel-rgb), 0.6);
+  border: 1px solid rgba(var(--accent-rgb), 0.15);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.attack-panel__title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: var(--color-white);
+  text-align: center;
+}
+
+.attack-panel__weapon {
+  display: grid;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(var(--bg-deep-rgb), 0.6);
+}
+
+.attack-panel__weapon + .attack-panel__weapon {
+  border-top: 1px solid rgba(var(--accent-rgb), 0.15);
+  padding-top: 8px;
+}
+
+.attack-panel__weapon-name {
+  color: var(--color-white);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.attack-panel__weapon-name:hover {
+  color: var(--color-white);
+  text-decoration: underline;
+}
+
+.attack-panel__group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.attack-panel__group-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: rgba(var(--white-rgb), 0.55);
+  min-width: 52px;
+}
+
+.attack-panel__roll-btn {
+  padding: 5px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--accent-rgb), 0.4);
+  background: rgba(var(--accent-rgb), 0.16);
+  color: var(--color-white);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.attack-panel__roll-btn:hover {
+  background: rgba(var(--accent-rgb), 0.3);
+}
+
+/* Inventory Panel (Drugs & Herbs, 2026-09-23) */
+.inventory-panel {
+  display: grid;
+  gap: 8px;
+}
+
+.inventory-panel__title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: var(--color-white);
+  text-align: center;
+}
+
 .counter-row {
   display: flex;
   gap: 10px;

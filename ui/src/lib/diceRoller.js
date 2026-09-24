@@ -37,6 +37,23 @@ export const rollDice = (label, parts = []) => {
   }).catch(() => {})
 }
 
+// Same idea as rollDice, but for a damage roll — any die (not just d20),
+// with a labeled flat-bonus breakdown (e.g. [{ label: 'Sharpshooter Bonus',
+// value: 10 }]) baked into the notation so the overlay shows exactly what
+// made up the total, same as an attack roll does. `dieNotation` is just the
+// dice part, e.g. '1d8' or '1d10' — this appends the summed parts itself.
+export const rollDamage = (label, dieNotation, parts = []) => {
+  if (!dieNotation) return
+  if (parts.some((p) => !Number.isFinite(p.value))) return
+  const flatTotal = parts.reduce((sum, p) => sum + p.value, 0)
+  const notation = `${dieNotation}${flatTotal !== 0 ? (flatTotal >= 0 ? '+' : '') + flatTotal : ''}`
+  fetch(`${DICE_API_BASE}/api/dice/roll`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ notation, label, parts }),
+  }).catch(() => {})
+}
+
 // Parses a signed stat-sheet string like "+5" or "-1" into a number, or
 // null if it's not available yet ('—').
 export const parseStatNumber = (value) => {
