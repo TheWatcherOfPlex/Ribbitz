@@ -54,6 +54,33 @@ export const rollDamage = (label, dieNotation, parts = []) => {
   }).catch(() => {})
 }
 
+// For a damage roll made of DIFFERENT-sided dice that each need their own
+// visible, labeled result — e.g. a weapon's own damage die plus a separate
+// elemental bonus die ("6 (Piercing) + 4 (Fire)"), not just one combined
+// total. dice-box's notation parser only understands ONE die type per
+// string — a bare '1d8+1d6' silently mis-parses as '1d8' with a flat "+1"
+// modifier and drops the second die entirely (found 2026-09-23, when the
+// ammo-type selector's "+ Fire" damage only ever showed one die). The fix
+// is sending each die type as its own array entry, with a parallel
+// `diceLabels` array the overlay uses to label each group's result
+// instead of a generic "(Rolled)". `diceGroups`: [{ notation: '1d8',
+// label: 'Piercing' }, { notation: '1d6', label: 'Fire' }]. Any flat
+// modifier from `parts` is appended to the FIRST group only.
+export const rollCompoundDamage = (label, diceGroups, parts = []) => {
+  if (!diceGroups?.length) return
+  if (parts.some((p) => !Number.isFinite(p.value))) return
+  const flatTotal = parts.reduce((sum, p) => sum + p.value, 0)
+  const notation = diceGroups.map((group, index) =>
+    index === 0 && flatTotal !== 0 ? `${group.notation}${flatTotal >= 0 ? '+' : ''}${flatTotal}` : group.notation,
+  )
+  const diceLabels = diceGroups.map((group) => group.label)
+  fetch(`${DICE_API_BASE}/api/dice/roll`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ notation, label, parts, diceLabels }),
+  }).catch(() => {})
+}
+
 // Parses a signed stat-sheet string like "+5" or "-1" into a number, or
 // null if it's not available yet ('—').
 export const parseStatNumber = (value) => {

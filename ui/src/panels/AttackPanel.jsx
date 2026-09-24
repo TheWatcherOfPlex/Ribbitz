@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import StatControl from '../components/StatControl.jsx'
-import { rollDice, rollDamage, parseStatNumber } from '../lib/diceRoller.js'
+import { rollDice, rollDamage, rollCompoundDamage, parseStatNumber } from '../lib/diceRoller.js'
 
 // Extracted from KitPanel.jsx (Weapons + Ammo half only) — split out per
 // owner request 2026-09-23: "Weapons, Ammo, Drugs & Herbs, Grung Abilities"
@@ -112,10 +112,23 @@ function RangedWeapon({
   // Equipped ammo (Standard/Fire/Water/Lava) adds its own die on top of the
   // weapon's own damage die, e.g. Fire dart = weapon's 1d8 + 1d6 fire. Lava
   // has no documented bonus die, so it just rolls the base weapon damage.
+  // The two dice are DIFFERENT sides (e.g. 1d8 + 1d6) — dice-box can't
+  // parse that as one notation string (see rollCompoundDamage's comment in
+  // lib/diceRoller.js), so when there's an elemental die we send each as
+  // its own labeled group instead of concatenating them into one string.
   const elementalDie = ammoType?.elementalDie
-  const standardDieNotation = elementalDie ? `${dmgDie}+${elementalDie}` : dmgDie
-  const heavyDieNotation = elementalDie ? `${dmgDie}+${elementalDie}` : dmgDie
   const ammoSuffix = ammoType && ammoType.id !== 'standard' ? ` + ${ammoType.label}` : ''
+  const rollWeaponDamage = (label, primaryNotation, parts) =>
+    elementalDie
+      ? rollCompoundDamage(
+          label,
+          [
+            { notation: primaryNotation, label: 'Piercing' },
+            { notation: elementalDie, label: ammoType.label },
+          ],
+          parts,
+        )
+      : rollDamage(label, primaryNotation, parts)
 
   return (
     <div className="attack-panel__weapon">
@@ -142,14 +155,14 @@ function RangedWeapon({
       <div className="attack-panel__group">
         <span className="attack-panel__group-label">Damage</span>
         <AttackButton
-          label={`Standard${ammoSuffix} (${standardDieNotation}${
+          label={`Standard${ammoSuffix} (${dmgDie}${elementalDie ? '+' + elementalDie : ''}${
             standardDmgParts.length ? '+' + standardDmgParts[0].value : ''
           })`}
-          onClick={() => rollDamage(`${name} — Standard Damage${ammoSuffix}`, standardDieNotation, standardDmgParts)}
+          onClick={() => rollWeaponDamage(`${name} — Standard Damage${ammoSuffix}`, dmgDie, standardDmgParts)}
         />
         <AttackButton
-          label={`Heavy${ammoSuffix} (${heavyDieNotation}+${heavyDmgParts.reduce((s, p) => s + p.value, 0)})`}
-          onClick={() => rollDamage(`${name} — Heavy Damage${ammoSuffix}`, heavyDieNotation, heavyDmgParts)}
+          label={`Heavy${ammoSuffix} (${dmgDie}${elementalDie ? '+' + elementalDie : ''}+${heavyDmgParts.reduce((s, p) => s + p.value, 0)})`}
+          onClick={() => rollWeaponDamage(`${name} — Heavy Damage${ammoSuffix}`, dmgDie, heavyDmgParts)}
         />
       </div>
     </div>

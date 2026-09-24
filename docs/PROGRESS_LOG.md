@@ -6,6 +6,71 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-23 (26) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — fix: compound damage rolls only showed 1 die
+- Owner tested (25)'s ammo selector: "I click fire, then shoot a standard +
+  fire dice. Only 1 dice is showing up on the screen, it should be 2 dice
+  each owing their own damage. It should show the piercing damage from the
+  blowgun dart, then show separate damage that's the fire damage."
+- Root cause, found by reading dice-box's own minified source
+  (`static/vendor/dice-box/dice-box.es.js`, `parse()` function): its
+  notation parser only understands ONE die type per string. Given
+  `"1d8+1d6"` (what `AttackPanel.jsx` was sending for Standard+Fire), the
+  regex matches `1d8` as the die, then tries to parse the REMAINDER
+  `"+1d6"` as a plain numeric modifier via `/([+-])(\d+)/` — which matches
+  the `+1` inside `+1d6` and silently discards the `d6` entirely. So the
+  roll was actually being sent as "1d8 with a flat +1 modifier" — one die,
+  wrong number — never two dice. dice-box DOES support multiple different
+  dice types, but only via an ARRAY of notation strings (e.g. `["1d8",
+  "1d6"]`), which nothing in this codebase had ever exercised before
+  (every prior roll used one die type).
+- Three-layer fix, all needed together:
+  1. **Stream Commander backend** (`app/main.py` `/api/dice/roll`): was
+     force-casting `notation` to a string (`str(data.get("notation"))`),
+     which would have mangled a real JS array into a Python list's string
+     repr — completely broken. Now accepts `notation` as either a string
+     or a list of up to 4 strings (kept as real JSON, not stringified),
+     plus a new optional `diceLabels` array (parallel to a list notation,
+     e.g. `["Piercing", "Fire"]`) for per-die labeling.
+  2. **Stream Commander overlay** (`templates/dice_overlay.html`):
+     `buildBreakdown()` now takes the raw `groups` array from dice-box's
+     `onRollComplete` and, when the roll included `diceLabels` matching
+     `groups.length`, labels each group's own value (e.g. "6 (Piercing) +
+     4 (Fire)") instead of flattening every individual die into a
+     generic "(Rolled)" list. Falls back to the old generic behavior
+     whenever `diceLabels` isn't supplied — zero behavior change for
+     every existing simple (single die type) roll in the app.
+  3. **Ribbitz UI** (`lib/diceRoller.js`): added
+     `rollCompoundDamage(label, diceGroups, parts)` —
+     `diceGroups: [{ notation, label }, ...]` — builds the array
+     notation + parallel diceLabels, appends any flat modifier (parts)
+     to the FIRST group only. `panels/AttackPanel.jsx`'s `RangedWeapon`
+     now calls this instead of the plain `rollDamage` whenever
+     `ammoType.elementalDie` is set, sending `[{notation: dmgDie,
+     label:'Piercing'}, {notation: elementalDie, label: ammoType.label}]`.
+     Plain `rollDamage` (single string) is untouched and still used for
+     every damage roll with no elemental ammo equipped.
+- **Caveat, not fully verified**: group ordering in dice-box's
+  `onRollComplete` is assumed to match the input notation array's order
+  (read from source, not confirmed live in a browser — no browser access
+  this session). If the Piercing/Fire labels ever come back swapped on
+  the overlay, that assumption is the first thing to check.
+- Verified via direct `curl -X POST .../api/dice/roll` with a test array
+  notation + diceLabels — backend correctly stored and echoed both fields
+  intact (previously this would have been mangled to a stringified
+  Python list). Rebuilt + redeployed both containers: `ribbitz` (`docker
+  compose build/up ribbitz`) and `jukebox` (`docker compose -f
+  /srv/compose/stack.yml build/up jukebox`); confirmed `diceLabels`
+  string present in both the deployed Ribbitz JS bundle and the served
+  `/dice-overlay` page.
+- `npm run lint` passed (0 errors, same 4 pre-existing warnings).
+- **Not yet done**: owner hasn't tested live yet — ask them to equip Fire
+  or Water again and confirm (a) 2 physical dice actually appear on the
+  overlay, (b) the breakdown text reads "Piercing"/"Fire" (or "Water")
+  rather than generic numbers, and (c) the total is correct (weapon die +
+  elemental die + any flat bonus, e.g. Heavy+Fire Blowgun should be
+  1d8+10+1d6). If Piercing/Fire ever show up swapped, revisit the group-
+  ordering assumption above.
+
 ## 2026-09-23 (25) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — dice overlay crash fix + equipped ammo selector
 - Owner tested (24)'s attack buttons: "that works quite well" but reported
   "sometimes when I roll, it gets where the dice is about to land and it
