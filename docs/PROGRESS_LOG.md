@@ -6,6 +6,51 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-24 (29) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — ammo row layout + poison quantity
+- Owner: add a poison dart/arrow inventory slot, and redo the ammo layout
+  as one clickable row per type — Name / Damage / Damage Type / Amount —
+  where clicking a row equips it (3px white border on the selected row,
+  Standard selected by default).
+- **New quantity tracking**: added `dartPoison`/`arrowPoison` to
+  `App.jsx`'s `vitals` state, `vitalKeyMap` (sheet keys `dart-poison`/
+  `arrow-poison`), and the stat-sync effect — exact same pattern as the
+  existing `dartFire`/`arrowFire` etc. entries, so it persists/syncs the
+  same way. **Note for next session**: while reading this code I noticed
+  `vitals.dartStandard`/`arrowStandard` (sheet keys `dart-standard`/
+  `arrow-standard`) are defined and synced but never actually read
+  anywhere — the real "Standard" quantity in the UI comes from a
+  different mechanism entirely (`getInventoryQuantity` matched by item
+  name via the Inventory page's item list, not `vitals`). This is
+  pre-existing dead state from before this session, not something I
+  introduced or fixed — flagging it since it's easy to assume
+  `vitals.dartStandard` is live when it isn't.
+- **New UI**: replaced the old 4-StatControl-grid-plus-separate-selector-
+  buttons layout with `AmmoRowList` in `panels/AttackPanel.jsx` — one row
+  per `AMMO_TYPES` entry (now 5: Standard/Fire/Water/Lava/Poison), each
+  showing Name, Damage (the type's own bonus die, or the weapon's base
+  die for the Standard row), Damage Type, and an editable Amount input.
+  Clicking anywhere on a row equips that ammo type (`onSelect`); clicking
+  the amount input stops propagation so editing quantity doesn't also
+  re-select the row. Selected row gets a 3px solid white border
+  (`.ammo-row--selected`), unselected rows have a 3px *transparent*
+  border (kept in the CSS at the same width, not just 0, so the row
+  doesn't visually shift size when selection changes).
+  Old `AmmoSelector` (the standalone button row) is fully removed for
+  ranged weapons — the row list replaces it entirely. The melee daggers'
+  separate Poison ON/OFF toggle button is untouched (daggers have no
+  ammo type to select between, just the one on/off toggle from (28)).
+- `npm run lint` passed (0 errors). `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed `ammo-row--selected` and
+  `ammo-row-list__header` present in both the deployed JS and CSS.
+- **Not yet done**: owner hasn't tested live yet — ask them to confirm
+  (a) all 5 rows appear correctly for both Blowgun Darts and Arrows, (b)
+  clicking a row selects it (3px white border) without the amount field
+  interfering, (c) editing the Poison amount actually persists/syncs
+  like the other ammo counts do, and (d) the row layout (column
+  alignment between the header and the rows) looks right at actual panel
+  widths — this was built without a live browser to check against.
+
 ## 2026-09-23 (28) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — poisoned dart/arrow/dagger options
 - Owner: "Ribbits has the ability to poison weapon, we need a poisoned
   dart, poisoned arrow, poisoned dagger options all added."

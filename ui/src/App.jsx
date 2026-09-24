@@ -127,10 +127,12 @@ const vitalKeyMap = {
   dartFire: 'dart-fire',
   dartWater: 'dart-water',
   dartLava: 'dart-lava',
+  dartPoison: 'dart-poison',
   arrowStandard: 'arrow-standard',
   arrowFire: 'arrow-fire',
   arrowWater: 'arrow-water',
   arrowLava: 'arrow-lava',
+  arrowPoison: 'arrow-poison',
 }
 
 const statUpdateMetadata = {
@@ -195,10 +197,12 @@ function App() {
     dartFire: 11,
     dartWater: 17,
     dartLava: 5,
+    dartPoison: 0,
     arrowStandard: 60,
     arrowFire: 0,
     arrowWater: 0,
     arrowLava: 0,
+    arrowPoison: 0,
   })
   const [statMap, setStatMap] = useState({})
   const [expandedSpellKey, setExpandedSpellKey] = useState('')
@@ -359,10 +363,12 @@ function App() {
         dartFire: Number(mapped?.[vitalKeyMap.dartFire]) || prev.dartFire,
         dartWater: Number(mapped?.[vitalKeyMap.dartWater]) || prev.dartWater,
         dartLava: Number(mapped?.[vitalKeyMap.dartLava]) || prev.dartLava,
+        dartPoison: Number(mapped?.[vitalKeyMap.dartPoison]) || prev.dartPoison,
         arrowStandard: Number(mapped?.[vitalKeyMap.arrowStandard]) || prev.arrowStandard,
         arrowFire: Number(mapped?.[vitalKeyMap.arrowFire]) || prev.arrowFire,
         arrowWater: Number(mapped?.[vitalKeyMap.arrowWater]) || prev.arrowWater,
         arrowLava: Number(mapped?.[vitalKeyMap.arrowLava]) || prev.arrowLava,
+        arrowPoison: Number(mapped?.[vitalKeyMap.arrowPoison]) || prev.arrowPoison,
       }))
     } catch {
       setIsOnline(false)

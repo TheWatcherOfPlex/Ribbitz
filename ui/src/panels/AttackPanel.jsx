@@ -41,10 +41,10 @@ const ATTACK_MODES = {
 // documented for arrows. Flag this to the owner if arrows ever turn out to
 // work differently.
 const AMMO_TYPES = [
-  { id: 'standard', label: 'Standard', elementalDie: null },
-  { id: 'fire', label: 'Fire', elementalDie: '1d6' },
-  { id: 'water', label: 'Water', elementalDie: '1d6' },
-  { id: 'lava', label: 'Lava', elementalDie: null }, // "Lava effects" — no die documented
+  { id: 'standard', label: 'Standard', elementalDie: null, dmgTypeLabel: 'Piercing' },
+  { id: 'fire', label: 'Fire', elementalDie: '1d6', dmgTypeLabel: 'Fire' },
+  { id: 'water', label: 'Water', elementalDie: '1d6', dmgTypeLabel: 'Water' },
+  { id: 'lava', label: 'Lava', elementalDie: null, dmgTypeLabel: 'Lava' }, // "Lava effects" — no die documented
   // Grung "Poison Weapon" racial ability (2026-09-23 addition) — verified
   // via web research (Volo's Guide RAW): applies to any PIERCING weapon,
   // target makes a CON save (Ribbitz's scaled DC, see statMap['poison-weapon-dc'],
@@ -54,7 +54,7 @@ const AMMO_TYPES = [
   // Fire/Water/Lava this isn't a stocked ammo item, but the owner asked
   // for "poisoned dart, poisoned arrow, poisoned dagger" using the same
   // framing as the other ammo types, so it's offered the same way here.
-  { id: 'poison', label: 'Poison', elementalDie: '2d4', requiresSave: true },
+  { id: 'poison', label: 'Poison', elementalDie: '2d4', dmgTypeLabel: 'Poison', requiresSave: true },
 ]
 
 function AttackButton({ label, onClick }) {
@@ -77,24 +77,38 @@ function PoisonSaveNote({ dc }) {
   )
 }
 
-// Owner ask (2026-09-23): "add equipped buttons to each ammo type for darts
-// and arrows. By default standard is selected, but if we switch to a
-// different type of ammo it adds that ammo type to our roll." This is the
-// toggle row — clicking a type sets it as the currently-equipped ammo for
-// that weapon's damage rolls (Standard/Fire/Water/Lava), default Standard.
-function AmmoSelector({ equippedId, onSelect }) {
+// Owner ask (2026-09-23, refined 2026-09-24): each ammo type is its own
+// clickable row — Name / Damage / Damage Type / Amount in inventory — click
+// anywhere on the row (not the amount field) to equip that type for the
+// weapon's damage rolls; the selected row gets a 3px white border. Standard
+// selected by default. `weaponDieForStandard` is the weapon's own damage
+// die, shown in the Standard row's Damage column since Standard doesn't
+// have an elementalDie of its own to show.
+function AmmoRowList({ weaponDieForStandard, equippedId, onSelect, amounts }) {
   return (
-    <div className="attack-panel__ammo-select">
-      {AMMO_TYPES.map((type) => (
-        <button
-          key={type.id}
-          type="button"
-          className={`attack-panel__ammo-select-btn${equippedId === type.id ? ' attack-panel__ammo-select-btn--active' : ''}`}
-          onClick={() => onSelect(type.id)}
-        >
-          {type.label}
-        </button>
-      ))}
+    <div className="ammo-row-list">
+      {AMMO_TYPES.map((type) => {
+        const damageDie = type.id === 'standard' ? weaponDieForStandard : type.elementalDie || '—'
+        const entry = amounts[type.id]
+        return (
+          <div
+            key={type.id}
+            className={`ammo-row${equippedId === type.id ? ' ammo-row--selected' : ''}`}
+            onClick={() => onSelect(type.id)}
+          >
+            <span className="ammo-row__name">{type.label}</span>
+            <span className="ammo-row__damage">{damageDie}</span>
+            <span className="ammo-row__damage-type">{type.dmgTypeLabel}</span>
+            <input
+              type="number"
+              className="ammo-row__amount"
+              value={entry?.value ?? 0}
+              onClick={(event) => event.stopPropagation()}
+              onChange={(event) => entry?.onChange?.(event.target.value)}
+            />
+          </div>
+        )
+      })}
     </div>
   )
 }
@@ -362,30 +376,54 @@ export default function AttackPanel({
 
       <div className="attack-panel__section">
         <div className="attack-panel__title">Ammo</div>
-        <div className="panel__content--ammo combat-kit__ammo">
-          <div className="ammo-group">
+        <div className="attack-panel__ammo-groups combat-kit__ammo">
+          <div className="ammo-group ammo-group--rows">
             <div className="ammo-group__title">Blowgun Darts</div>
-            <StatControl
-              label="Standard"
-              value={standardBlowgunDartsQuantity}
-              onChange={(nextValue) => setInventoryItemValue(standardBlowgunDartsName, nextValue)}
+            <div className="ammo-row-list__header">
+              <span>Name</span>
+              <span>Damage</span>
+              <span>Type</span>
+              <span>Amount</span>
+            </div>
+            <AmmoRowList
+              weaponDieForStandard="1d8"
+              equippedId={blowgunAmmoId}
+              onSelect={setBlowgunAmmoId}
+              amounts={{
+                standard: {
+                  value: standardBlowgunDartsQuantity,
+                  onChange: (nextValue) => setInventoryItemValue(standardBlowgunDartsName, nextValue),
+                },
+                fire: { value: vitals.dartFire, onChange: updateVital('dartFire') },
+                water: { value: vitals.dartWater, onChange: updateVital('dartWater') },
+                lava: { value: vitals.dartLava, onChange: updateVital('dartLava') },
+                poison: { value: vitals.dartPoison, onChange: updateVital('dartPoison') },
+              }}
             />
-            <StatControl label="Fire" value={vitals.dartFire} onChange={updateVital('dartFire')} />
-            <StatControl label="Water" value={vitals.dartWater} onChange={updateVital('dartWater')} />
-            <StatControl label="Lava" value={vitals.dartLava} onChange={updateVital('dartLava')} />
-            <AmmoSelector equippedId={blowgunAmmoId} onSelect={setBlowgunAmmoId} />
           </div>
-          <div className="ammo-group">
+          <div className="ammo-group ammo-group--rows">
             <div className="ammo-group__title">Arrows</div>
-            <StatControl
-              label="Standard"
-              value={standardArrowsQuantity}
-              onChange={(nextValue) => setInventoryItemValue(standardArrowsName, nextValue)}
+            <div className="ammo-row-list__header">
+              <span>Name</span>
+              <span>Damage</span>
+              <span>Type</span>
+              <span>Amount</span>
+            </div>
+            <AmmoRowList
+              weaponDieForStandard="1d10"
+              equippedId={longbowAmmoId}
+              onSelect={setLongbowAmmoId}
+              amounts={{
+                standard: {
+                  value: standardArrowsQuantity,
+                  onChange: (nextValue) => setInventoryItemValue(standardArrowsName, nextValue),
+                },
+                fire: { value: vitals.arrowFire, onChange: updateVital('arrowFire') },
+                water: { value: vitals.arrowWater, onChange: updateVital('arrowWater') },
+                lava: { value: vitals.arrowLava, onChange: updateVital('arrowLava') },
+                poison: { value: vitals.arrowPoison, onChange: updateVital('arrowPoison') },
+              }}
             />
-            <StatControl label="Fire" value={vitals.arrowFire} onChange={updateVital('arrowFire')} />
-            <StatControl label="Water" value={vitals.arrowWater} onChange={updateVital('arrowWater')} />
-            <StatControl label="Lava" value={vitals.arrowLava} onChange={updateVital('arrowLava')} />
-            <AmmoSelector equippedId={longbowAmmoId} onSelect={setLongbowAmmoId} />
           </div>
           <div className="ammo-group ammo-group--single">
             <StatControl
