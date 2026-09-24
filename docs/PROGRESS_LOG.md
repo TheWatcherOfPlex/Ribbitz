@@ -6,6 +6,47 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-23 (27) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — separate totals per damage type
+- Owner tested (26): 2 dice now show and are labeled, but "each dice needs
+  to be labeled and show 2 different totals. 1d8 piercing damage and 1d6
+  fire damage. My DM will need to know the different damage types and
+  amounts" — the overlay was still summing both dice into ONE combined
+  grand total underneath, which isn't how 5e damage typing actually works
+  (piercing and fire resistance/vulnerability are tracked separately —
+  adding them into one number loses information the DM needs).
+- Stream Commander overlay (`templates/dice_overlay.html`) changes:
+  - Split `buildBreakdown` into two functions: the original (unchanged,
+    used for every normal single-damage-type roll) and a new
+    `buildCompoundBreakdown(roll, groups)` used only when `diceLabels` is
+    present and matches `groups.length`. The compound version shows each
+    die's raw roll, any flat modifier attached to just the FIRST group
+    (e.g. Sharpshooter Bonus only ever applies to the weapon's own damage
+    type, never the elemental one), and that group's own labeled total —
+    e.g. "6 (Rolled) + 10 (Sharpshooter Bonus) → 16 Piercing · 4 (Rolled)
+    → 4 Fire". No trailing "=" since there's no single sum following.
+  - Added `buildTotalsHtml(groups, diceLabels)` + a new `.compound` state
+    on `#dice-total`: instead of one giant number, renders one labeled
+    total per damage type ("PIERCING 16" / "FIRE 4" side by side, smaller
+    font since it's more text than a single number).
+  - `isCompoundRoll(roll, groups)` gates which path runs — non-compound
+    rolls (every attack roll, every plain damage roll with no elemental
+    ammo) are completely unaffected, byte-for-byte the same behavior as
+    before this change.
+- No Ribbitz UI changes needed this round — `rollCompoundDamage` from
+  (26) already sends everything the overlay needs (`diceLabels`,
+  per-group `parts` semantics); this was purely a Stream Commander
+  rendering fix.
+- Rebuilt + redeployed `jukebox`
+  (`docker compose -f /srv/compose/stack.yml build/up jukebox`); confirmed
+  `buildCompoundBreakdown`/`dice-total-item` present in the served
+  `/dice-overlay` page.
+- **Not yet done**: owner hasn't tested live yet. Ask them to confirm (a)
+  two clearly separate, correctly-labeled totals appear (not one combined
+  number), (b) the Sharpshooter Bonus (when using Heavy+Fire etc.) shows
+  up folded into the Piercing total only, not the elemental one, and (c)
+  the still-unverified group-ordering assumption from (26) — Piercing
+  should always be first/left, matching the weapon's own damage die.
+
 ## 2026-09-23 (26) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — fix: compound damage rolls only showed 1 die
 - Owner tested (25)'s ammo selector: "I click fire, then shoot a standard +
   fire dice. Only 1 dice is showing up on the screen, it should be 2 dice
