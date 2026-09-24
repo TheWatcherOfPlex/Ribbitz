@@ -6,6 +6,53 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-23 (28) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — poisoned dart/arrow/dagger options
+- Owner: "Ribbits has the ability to poison weapon, we need a poisoned
+  dart, poisoned arrow, poisoned dagger options all added."
+- Researched real 2014 5e rules for the Grung "Poison Weapon" trait before
+  building anything (WebSearch, Volo's Guide RAW) — this matters because
+  the local docs (`Racial Traits.md`/`Actions.md`) only documented the
+  save DC, never what actually happens on a fail. Confirmed: applies to
+  any PIERCING weapon, target makes a CON save (Ribbitz's scaled DC 18,
+  `statMap['poison-weapon-dc']`) or takes **2d4 poison damage** — it's a
+  save-NEGATES bonus damage die, not a flat always-on bonus like Fire/
+  Water, and not a "poisoned condition" effect (that's a different Grung
+  trait, Poisonous Skin, which doesn't apply here). Limited to
+  Proficiency Bonus uses/day (`statMap['poison-weapon']`, currently 6/6).
+  All three requested weapons (Darts, Arrows, both Daggers) are piercing-
+  capable, so no RAW conflict with the request.
+- This turned out to be a clean fit for the compound-damage system built
+  for Fire/Water (25)-(27) — same mechanism, added Poison as a 5th
+  `AMMO_TYPES` entry (`elementalDie: '2d4'`, plus a `requiresSave: true`
+  flag) for the ranged weapons' existing selector.
+- Daggers (melee) had NO ammo/elemental system at all before this — added
+  a simple on/off "Poison ON/OFF" toggle button per dagger instance
+  (`MeleeWeapon` gained `poisoned`/`onTogglePoison`/`poisonDc` props;
+  state lives in `AttackPanel` as `daggerFeyPoisoned`/
+  `daggerPlainPoisoned`), since there's nothing else to pick between for
+  a melee weapon the way there is for ranged ammo types.
+- Added a visible `PoisonSaveNote` reminder (shown only when Poison is
+  active) on both ranged and melee weapons: "Poison Weapon: target CON DC
+  {dc} save or take the poison damage below (uses = Proficiency Bonus/day)"
+  — since this is fundamentally different from Fire/Water (which just
+  always apply), it seemed important not to let it look like an automatic
+  bonus. No interactive use-tracking wired up (would need `handleToggle`/
+  `parseTracker` threaded into `AttackPanel`, which doesn't have them
+  currently) — this is purely a static reminder of the DC and daily cap,
+  not a decrementing counter. Flag to the owner if they want real
+  use-tracking added later.
+- `npm run lint` passed (0 errors). `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed "Poison Weapon" string present in the
+  deployed bundle.
+- **Not yet done**: owner hasn't tested live yet. Ask them to confirm (a)
+  the Poison option appears in the dart/arrow selector and does what's
+  expected (2d4 poison die alongside Piercing, correctly labeled per the
+  (27) totals-per-type display), (b) the new Poison ON/OFF toggle appears
+  under both daggers and works the same way, and (c) the DC shown in the
+  reminder note matches what they expect (currently pulled live from
+  `statMap['poison-weapon-dc']`, falling back to 18 if unavailable).
+
 ## 2026-09-23 (27) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — separate totals per damage type
 - Owner tested (26): 2 dice now show and are labeled, but "each dice needs
   to be labeled and show 2 different totals. 1d8 piercing damage and 1d6

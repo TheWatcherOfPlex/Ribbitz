@@ -45,6 +45,16 @@ const AMMO_TYPES = [
   { id: 'fire', label: 'Fire', elementalDie: '1d6' },
   { id: 'water', label: 'Water', elementalDie: '1d6' },
   { id: 'lava', label: 'Lava', elementalDie: null }, // "Lava effects" — no die documented
+  // Grung "Poison Weapon" racial ability (2026-09-23 addition) — verified
+  // via web research (Volo's Guide RAW): applies to any PIERCING weapon,
+  // target makes a CON save (Ribbitz's scaled DC, see statMap['poison-weapon-dc'],
+  // fallback 18) or takes 2d4 poison damage — it's a save-NEGATES bonus
+  // damage die, not a flat always-on bonus like Fire/Water. Limited uses
+  // per day (statMap['poison-weapon'], = Proficiency Bonus/day). Unlike
+  // Fire/Water/Lava this isn't a stocked ammo item, but the owner asked
+  // for "poisoned dart, poisoned arrow, poisoned dagger" using the same
+  // framing as the other ammo types, so it's offered the same way here.
+  { id: 'poison', label: 'Poison', elementalDie: '2d4', requiresSave: true },
 ]
 
 function AttackButton({ label, onClick }) {
@@ -52,6 +62,18 @@ function AttackButton({ label, onClick }) {
     <button type="button" className="attack-panel__roll-btn" onClick={onClick}>
       {label}
     </button>
+  )
+}
+
+// Shown whenever Poison is the equipped/toggled option — Poison Weapon is
+// a save-negates bonus die (target rolls, not Ribbitz), unlike Fire/Water
+// which just always apply. Worth a visible reminder so it's not mistaken
+// for an automatic bonus.
+function PoisonSaveNote({ dc }) {
+  return (
+    <div className="attack-panel__poison-note">
+      Poison Weapon: target CON DC {dc ?? '18'} save or take the poison damage below (uses = Proficiency Bonus/day)
+    </div>
   )
 }
 
@@ -94,6 +116,7 @@ function RangedWeapon({
   dmgFlatLabel,
   dmgBonus,
   ammoType,
+  poisonDc,
 }) {
   const hasCore = Number.isFinite(dexMod) && Number.isFinite(proficiency) && Number.isFinite(weaponBonus)
   const standardHitParts = [
@@ -165,6 +188,8 @@ function RangedWeapon({
           onClick={() => rollWeaponDamage(`${name} — Heavy Damage${ammoSuffix}`, dmgDie, heavyDmgParts)}
         />
       </div>
+
+      {ammoType?.requiresSave ? <PoisonSaveNote dc={poisonDc} /> : null}
     </div>
   )
 }
@@ -172,6 +197,11 @@ function RangedWeapon({
 // Melee weapon: just a Standard to-hit + Standard damage button — no
 // Sharpshooter (ranged-only feat) and the owner scoped Dread Ambusher to
 // ranged weapons specifically (2026-09-23).
+// Melee weapons have no ammo type to switch, but Poison Weapon (see
+// AMMO_TYPES comment) can be applied to any piercing weapon, daggers
+// included — the owner explicitly asked for a "poisoned dagger" option.
+// This is a simple on/off toggle rather than a 4-way selector since
+// there's nothing else to pick between for a melee weapon.
 function MeleeWeapon({
   name,
   linkTo,
@@ -182,6 +212,9 @@ function MeleeWeapon({
   dmgDie,
   dmgFlatLabel,
   dmgBonus,
+  poisoned,
+  onTogglePoison,
+  poisonDc,
 }) {
   const hasCore = Number.isFinite(dexMod) && Number.isFinite(proficiency) && Number.isFinite(weaponBonus)
   const hitParts = [
@@ -190,6 +223,19 @@ function MeleeWeapon({
     ...(weaponBonus ? [{ label: weaponBonusLabel, value: weaponBonus }] : []),
   ]
   const dmgParts = dmgFlatLabel ? [{ label: dmgFlatLabel, value: dexMod + dmgBonus }] : []
+  const dmgSuffix = poisoned ? ' + Poison' : ''
+
+  const rollWeaponDamage = () =>
+    poisoned
+      ? rollCompoundDamage(
+          `${name} — Damage${dmgSuffix}`,
+          [
+            { notation: dmgDie, label: 'Piercing' },
+            { notation: '2d4', label: 'Poison' },
+          ],
+          dmgParts,
+        )
+      : rollDamage(`${name} — Damage`, dmgDie, dmgParts)
 
   return (
     <div className="attack-panel__weapon">
@@ -203,15 +249,24 @@ function MeleeWeapon({
           label={ATTACK_MODES.standard}
           onClick={() => hasCore && rollDice(`${name} — Attack`, hitParts)}
         />
+        <button
+          type="button"
+          className={`attack-panel__ammo-select-btn${poisoned ? ' attack-panel__ammo-select-btn--active' : ''}`}
+          onClick={onTogglePoison}
+        >
+          Poison {poisoned ? 'ON' : 'OFF'}
+        </button>
       </div>
 
       <div className="attack-panel__group">
         <span className="attack-panel__group-label">Damage</span>
         <AttackButton
-          label={`${dmgDie}${dmgParts.length ? '+' + dmgParts[0].value : ''}`}
-          onClick={() => rollDamage(`${name} — Damage`, dmgDie, dmgParts)}
+          label={`${dmgDie}${dmgParts.length ? '+' + dmgParts[0].value : ''}${poisoned ? '+2d4' : ''}${dmgSuffix}`}
+          onClick={rollWeaponDamage}
         />
       </div>
+
+      {poisoned ? <PoisonSaveNote dc={poisonDc} /> : null}
     </div>
   )
 }
@@ -227,6 +282,7 @@ export default function AttackPanel({
 }) {
   const dexMod = parseStatNumber(statMap?.['dex-mod'])
   const proficiency = parseStatNumber(statMap?.['proficiency'])
+  const poisonDc = statMap?.['poison-weapon-dc'] ?? '18'
 
   // Which ammo type is currently "loaded" per weapon — defaults to Standard,
   // per the owner's ask. Session-local (not persisted to the sheet); this is
@@ -235,6 +291,10 @@ export default function AttackPanel({
   const [longbowAmmoId, setLongbowAmmoId] = useState('standard')
   const blowgunAmmo = AMMO_TYPES.find((t) => t.id === blowgunAmmoId)
   const longbowAmmo = AMMO_TYPES.find((t) => t.id === longbowAmmoId)
+
+  // Poison Weapon toggle per dagger — see MeleeWeapon comment above.
+  const [daggerFeyPoisoned, setDaggerFeyPoisoned] = useState(false)
+  const [daggerPlainPoisoned, setDaggerPlainPoisoned] = useState(false)
 
   return (
     <div className="panel__content attack-panel">
@@ -252,6 +312,7 @@ export default function AttackPanel({
           dmgFlatLabel={null}
           dmgBonus={0}
           ammoType={blowgunAmmo}
+          poisonDc={poisonDc}
         />
 
         <RangedWeapon
@@ -265,6 +326,7 @@ export default function AttackPanel({
           dmgFlatLabel="Dexterity + Magic Weapon"
           dmgBonus={2}
           ammoType={longbowAmmo}
+          poisonDc={poisonDc}
         />
 
         <MeleeWeapon
@@ -277,6 +339,9 @@ export default function AttackPanel({
           dmgDie="1d4"
           dmgFlatLabel="Dexterity + Fey Blessing"
           dmgBonus={1}
+          poisoned={daggerFeyPoisoned}
+          onTogglePoison={() => setDaggerFeyPoisoned((v) => !v)}
+          poisonDc={poisonDc}
         />
 
         <MeleeWeapon
@@ -289,6 +354,9 @@ export default function AttackPanel({
           dmgDie="1d4"
           dmgFlatLabel="Dexterity Modifier"
           dmgBonus={0}
+          poisoned={daggerPlainPoisoned}
+          onTogglePoison={() => setDaggerPlainPoisoned((v) => !v)}
+          poisonDc={poisonDc}
         />
       </div>
 
