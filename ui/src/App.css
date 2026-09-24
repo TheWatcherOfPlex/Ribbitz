@@ -2257,7 +2257,7 @@
 
 .ammo-row-list__header {
   display: grid;
-  grid-template-columns: 1.3fr 0.9fr 0.9fr 0.8fr;
+  grid-template-columns: 1.2fr 1.1fr 0.7fr;
   gap: 6px;
   padding: 0 8px;
   font-size: 9px;
@@ -2273,7 +2273,7 @@
 
 .ammo-row {
   display: grid;
-  grid-template-columns: 1.3fr 0.9fr 0.9fr 0.8fr;
+  grid-template-columns: 1.2fr 1.1fr 0.7fr;
   align-items: center;
   gap: 6px;
   padding: 6px 8px;
@@ -2282,10 +2282,19 @@
   background: rgba(var(--bg-deep-rgb), 0.6);
   cursor: pointer;
   font-size: 11px;
+  transition: opacity 0.15s ease;
 }
 
 .ammo-row--selected {
   border-color: var(--color-white);
+}
+
+/* Not disabled (owner: "I could find one on the battlefield and use
+   them, or create one as a bonus action") — just visually dimmed so it's
+   obvious at a glance which types aren't currently stocked. Stays fully
+   clickable. */
+.ammo-row--empty {
+  opacity: 0.45;
 }
 
 .ammo-row__name {
@@ -2293,9 +2302,16 @@
   color: var(--color-white);
 }
 
-.ammo-row__damage,
-.ammo-row__damage-type {
+.ammo-row__damage {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
   color: rgba(var(--white-rgb), 0.75);
+  line-height: 1.25;
+}
+
+.ammo-row__damage-line {
+  white-space: nowrap;
 }
 
 .ammo-row__amount {

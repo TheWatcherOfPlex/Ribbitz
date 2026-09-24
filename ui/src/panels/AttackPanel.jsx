@@ -33,18 +33,19 @@ const ATTACK_MODES = {
 
 // Elemental ammo bonus damage — sourced from ui/public/content/Inventory.md's
 // "Ammunition & Weapons" section (Fire Darts: 1d8 Piercing + 1d6 Fire; Water
-// Darts: 1d8 Piercing + 1d6 Water; Lava Darts: 1d8 Piercing + "Lava effects",
-// no clean die given). Only Darts are explicitly documented there — Arrows
-// get the same 4 elemental variants tracked in `vitals` (arrowFire/
-// arrowWater/arrowLava) with the identical structure, so the same +1d6
-// fire/water rule is applied to them by analogy, NOT because it's separately
-// documented for arrows. Flag this to the owner if arrows ever turn out to
-// work differently.
+// Darts: 1d8 Piercing + 1d6 Water) plus owner confirmation 2026-09-24 that
+// Lava Darts are also 1d6 (the doc's "Lava effects" wording undersold it —
+// it's a real 1d6 die same as Fire/Water). Only Darts are explicitly
+// documented there — Arrows get the same 4 elemental variants tracked in
+// `vitals` (arrowFire/arrowWater/arrowLava) with the identical structure,
+// so the same rule is applied to them by analogy, NOT because it's
+// separately documented for arrows. Flag this to the owner if arrows ever
+// turn out to work differently.
 const AMMO_TYPES = [
   { id: 'standard', label: 'Standard', elementalDie: null, dmgTypeLabel: 'Piercing' },
   { id: 'fire', label: 'Fire', elementalDie: '1d6', dmgTypeLabel: 'Fire' },
   { id: 'water', label: 'Water', elementalDie: '1d6', dmgTypeLabel: 'Water' },
-  { id: 'lava', label: 'Lava', elementalDie: null, dmgTypeLabel: 'Lava' }, // "Lava effects" — no die documented
+  { id: 'lava', label: 'Lava', elementalDie: '1d6', dmgTypeLabel: 'Lava' },
   // Grung "Poison Weapon" racial ability (2026-09-23 addition) — verified
   // via web research (Volo's Guide RAW): applies to any PIERCING weapon,
   // target makes a CON save (Ribbitz's scaled DC, see statMap['poison-weapon-dc'],
@@ -78,27 +79,42 @@ function PoisonSaveNote({ dc }) {
 }
 
 // Owner ask (2026-09-23, refined 2026-09-24): each ammo type is its own
-// clickable row — Name / Damage / Damage Type / Amount in inventory — click
-// anywhere on the row (not the amount field) to equip that type for the
-// weapon's damage rolls; the selected row gets a 3px white border. Standard
-// selected by default. `weaponDieForStandard` is the weapon's own damage
-// die, shown in the Standard row's Damage column since Standard doesn't
-// have an elementalDie of its own to show.
-function AmmoRowList({ weaponDieForStandard, equippedId, onSelect, amounts }) {
+// clickable row — Name / Damage / Amount in inventory — click anywhere on
+// the row (not the amount field) to equip that type for the weapon's
+// damage rolls; the selected row gets a 3px white border. Standard
+// selected by default. `weaponPiercingDie` is the weapon's own damage die.
+// Every non-Standard row shows the Piercing damage on top and its own
+// elemental damage underneath (owner, 2026-09-24: "each should say the
+// piercing damage, then under it the elemental damage") — Standard just
+// shows Piercing alone since it has no elemental component.
+//
+// Rows with 0 in inventory are greyed out (`ammo-row--empty`) but stay
+// fully clickable — owner explicitly does NOT want them disabled ("I
+// could find one on the battlefield and use them, or create one as a
+// bonus action"), just visually obvious that none are currently stocked.
+function AmmoRowList({ weaponPiercingDie, equippedId, onSelect, amounts }) {
   return (
     <div className="ammo-row-list">
       {AMMO_TYPES.map((type) => {
-        const damageDie = type.id === 'standard' ? weaponDieForStandard : type.elementalDie || '—'
         const entry = amounts[type.id]
+        const quantity = Number(entry?.value) || 0
         return (
           <div
             key={type.id}
-            className={`ammo-row${equippedId === type.id ? ' ammo-row--selected' : ''}`}
+            className={`ammo-row${equippedId === type.id ? ' ammo-row--selected' : ''}${
+              quantity <= 0 ? ' ammo-row--empty' : ''
+            }`}
             onClick={() => onSelect(type.id)}
           >
             <span className="ammo-row__name">{type.label}</span>
-            <span className="ammo-row__damage">{damageDie}</span>
-            <span className="ammo-row__damage-type">{type.dmgTypeLabel}</span>
+            <span className="ammo-row__damage">
+              <span className="ammo-row__damage-line">{weaponPiercingDie} Piercing</span>
+              {type.elementalDie ? (
+                <span className="ammo-row__damage-line">
+                  {type.elementalDie} {type.dmgTypeLabel}
+                </span>
+              ) : null}
+            </span>
             <input
               type="number"
               className="ammo-row__amount"
@@ -382,11 +398,10 @@ export default function AttackPanel({
             <div className="ammo-row-list__header">
               <span>Name</span>
               <span>Damage</span>
-              <span>Type</span>
               <span>Amount</span>
             </div>
             <AmmoRowList
-              weaponDieForStandard="1d8"
+              weaponPiercingDie="1d8"
               equippedId={blowgunAmmoId}
               onSelect={setBlowgunAmmoId}
               amounts={{
@@ -406,11 +421,10 @@ export default function AttackPanel({
             <div className="ammo-row-list__header">
               <span>Name</span>
               <span>Damage</span>
-              <span>Type</span>
               <span>Amount</span>
             </div>
             <AmmoRowList
-              weaponDieForStandard="1d10"
+              weaponPiercingDie="1d10"
               equippedId={longbowAmmoId}
               onSelect={setLongbowAmmoId}
               amounts={{

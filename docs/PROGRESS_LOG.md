@@ -6,6 +6,41 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-24 (30) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — Lava die fix, 2-line damage, grey-out-if-empty
+- Owner corrections/asks on (29)'s row layout:
+  1. "The lava blowgun darts are also 1d6" — `AMMO_TYPES`'s lava entry had
+     `elementalDie: null` (the old assumption that "Lava effects" meant no
+     clean die existed). Fixed to `'1d6'`, same as Fire/Water. Side effect
+     worth noting: this also fixes the actual DAMAGE ROLL for Lava, not
+     just its row label — previously choosing Lava silently rolled base
+     weapon damage only, since `RangedWeapon`'s compound-roll logic keys
+     off `ammoType.elementalDie` being truthy.
+  2. "put the 1d# piercing on them as well... say the piercing damage,
+     then under it the elemental damage" — every non-Standard row's
+     Damage column now shows two stacked lines (`.ammo-row__damage-line`):
+     the weapon's own Piercing die on top, that type's elemental die
+     underneath. Standard still shows just the one Piercing line (no
+     elemental to add). Header column count dropped from 4 to 3 (Name /
+     Damage / Amount) since damage type is now inline with each line
+     instead of its own column.
+  3. "grey out any options that are not available... Dont disable them...
+     I could find one on the battlefield... or create one as a bonus
+     action... makes it a bit more obvious [what's in inventory]" — added
+     `.ammo-row--empty` (opacity 0.45) applied whenever that row's
+     quantity is 0, purely visual — `onClick`/`onSelect` are completely
+     unaffected, still fully selectable/clickable at 0 quantity. Verified
+     this is genuinely non-disabling (no `disabled` attribute, no
+     `pointer-events: none`, no early-return in the click handler).
+- `npm run lint` passed (0 errors). `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed `ammo-row--empty` and
+  `ammo-row__damage-line` present in both the deployed JS and CSS.
+- **Not yet done**: owner hasn't tested live yet. Ask them to confirm (a)
+  Lava now correctly rolls its 1d6 alongside Piercing (not just labeled
+  right), (b) the two-line Piercing/elemental damage display reads
+  clearly at actual panel width, and (c) rows at 0 quantity are
+  noticeably dimmed but still clickable/selectable exactly as before.
+
 ## 2026-09-24 (29) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — ammo row layout + poison quantity
 - Owner: add a poison dart/arrow inventory slot, and redo the ammo layout
   as one clickable row per type — Name / Damage / Damage Type / Amount —
