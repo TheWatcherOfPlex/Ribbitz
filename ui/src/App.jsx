@@ -989,6 +989,7 @@ function App() {
                         vitals={vitals}
                         updateVital={updateVital}
                         setInventoryItemValue={setInventoryItemValue}
+                        stepInventoryItem={stepInventoryItem}
                         standardBlowgunDartsQuantity={standardBlowgunDartsQuantity}
                         standardArrowsQuantity={standardArrowsQuantity}
                         pondPoppersQuantity={pondPoppersQuantity}

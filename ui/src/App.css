@@ -2314,16 +2314,22 @@
   white-space: nowrap;
 }
 
+/* Same +/- stepper as the Healing potions (CounterRow) — reuses
+   .counter-row__btn directly rather than its own button style, per owner
+   ask 2026-09-24 ("the same plus and minus buttons that we used for the
+   health potions"). */
 .ammo-row__amount {
-  width: 100%;
-  min-width: 0;
-  padding: 3px 4px;
-  border-radius: 6px;
-  border: 1px solid rgba(var(--white-rgb), 0.2);
-  background: rgba(var(--bg-panel-rgb), 0.9);
-  color: var(--color-white);
-  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.ammo-row__amount-value {
+  width: 2.5ch;
   text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-white);
 }
 
 /* Inventory Panel (Drugs & Herbs, 2026-09-23) */

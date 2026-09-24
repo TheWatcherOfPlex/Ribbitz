@@ -115,13 +115,25 @@ function AmmoRowList({ weaponPiercingDie, equippedId, onSelect, amounts }) {
                 </span>
               ) : null}
             </span>
-            <input
-              type="number"
-              className="ammo-row__amount"
-              value={entry?.value ?? 0}
-              onClick={(event) => event.stopPropagation()}
-              onChange={(event) => entry?.onChange?.(event.target.value)}
-            />
+            <div className="ammo-row__amount" onClick={(event) => event.stopPropagation()}>
+              <button
+                type="button"
+                className="counter-row__btn"
+                onClick={() => entry?.onStep?.(-1)}
+                aria-label={`Decrease ${type.label}`}
+              >
+                −
+              </button>
+              <span className="ammo-row__amount-value">{entry?.value ?? 0}</span>
+              <button
+                type="button"
+                className="counter-row__btn"
+                onClick={() => entry?.onStep?.(1)}
+                aria-label={`Increase ${type.label}`}
+              >
+                +
+              </button>
+            </div>
           </div>
         )
       })}
@@ -306,6 +318,7 @@ export default function AttackPanel({
   vitals,
   updateVital,
   setInventoryItemValue,
+  stepInventoryItem,
   standardBlowgunDartsQuantity,
   standardArrowsQuantity,
   pondPoppersQuantity,
@@ -313,6 +326,11 @@ export default function AttackPanel({
   const dexMod = parseStatNumber(statMap?.['dex-mod'])
   const proficiency = parseStatNumber(statMap?.['proficiency'])
   const poisonDc = statMap?.['poison-weapon-dc'] ?? '18'
+
+  // updateVital(key) takes the NEXT value directly, not a delta — this
+  // wraps it into the same onStep(delta) shape CounterRow/AmmoRowList use,
+  // same +/- stepper as the Healing potions (owner ask, 2026-09-24).
+  const stepVital = (key, currentValue) => (delta) => updateVital(key)(Math.max(0, (Number(currentValue) || 0) + delta))
 
   // Which ammo type is currently "loaded" per weapon — defaults to Standard,
   // per the owner's ask. Session-local (not persisted to the sheet); this is
@@ -407,12 +425,12 @@ export default function AttackPanel({
               amounts={{
                 standard: {
                   value: standardBlowgunDartsQuantity,
-                  onChange: (nextValue) => setInventoryItemValue(standardBlowgunDartsName, nextValue),
+                  onStep: (delta) => stepInventoryItem(standardBlowgunDartsName, delta),
                 },
-                fire: { value: vitals.dartFire, onChange: updateVital('dartFire') },
-                water: { value: vitals.dartWater, onChange: updateVital('dartWater') },
-                lava: { value: vitals.dartLava, onChange: updateVital('dartLava') },
-                poison: { value: vitals.dartPoison, onChange: updateVital('dartPoison') },
+                fire: { value: vitals.dartFire, onStep: stepVital('dartFire', vitals.dartFire) },
+                water: { value: vitals.dartWater, onStep: stepVital('dartWater', vitals.dartWater) },
+                lava: { value: vitals.dartLava, onStep: stepVital('dartLava', vitals.dartLava) },
+                poison: { value: vitals.dartPoison, onStep: stepVital('dartPoison', vitals.dartPoison) },
               }}
             />
           </div>
@@ -430,12 +448,12 @@ export default function AttackPanel({
               amounts={{
                 standard: {
                   value: standardArrowsQuantity,
-                  onChange: (nextValue) => setInventoryItemValue(standardArrowsName, nextValue),
+                  onStep: (delta) => stepInventoryItem(standardArrowsName, delta),
                 },
-                fire: { value: vitals.arrowFire, onChange: updateVital('arrowFire') },
-                water: { value: vitals.arrowWater, onChange: updateVital('arrowWater') },
-                lava: { value: vitals.arrowLava, onChange: updateVital('arrowLava') },
-                poison: { value: vitals.arrowPoison, onChange: updateVital('arrowPoison') },
+                fire: { value: vitals.arrowFire, onStep: stepVital('arrowFire', vitals.arrowFire) },
+                water: { value: vitals.arrowWater, onStep: stepVital('arrowWater', vitals.arrowWater) },
+                lava: { value: vitals.arrowLava, onStep: stepVital('arrowLava', vitals.arrowLava) },
+                poison: { value: vitals.arrowPoison, onStep: stepVital('arrowPoison', vitals.arrowPoison) },
               }}
             />
           </div>

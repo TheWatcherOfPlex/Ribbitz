@@ -6,6 +6,33 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-24 (31) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — ammo amount uses the Healing potions' +/- stepper
+- Owner: "make the same plus and minus buttons that we used for the health
+  potions to adjust it up and down, not the version we currently have on
+  the ammo" — the ammo rows had a plain `<input type="number">`, unlike
+  the Healing section's `CounterRow` (`components/CounterRow.jsx`) with
+  its `−`/`+` step buttons.
+- Reused `CounterRow`'s exact button class (`.counter-row__btn`, no new
+  button style) inline inside each ammo row's Amount column — didn't use
+  the full `CounterRow` component itself since it renders its own
+  label/detail block that ammo rows don't need (the type name is already
+  shown in the Name column).
+- Standard ammo now steps via the existing `stepInventoryItem(name, delta)`
+  (added as a new `AttackPanel` prop, wired from `App.jsx` — it wasn't
+  passed in before this). Fire/Water/Lava/Poison step via a new local
+  `stepVital(key, currentValue)` helper that wraps `updateVital(key)`
+  (which takes a next-value, not a delta) into the same `onStep(delta)`
+  shape, clamped at 0 — matching `stepInventoryItem`'s existing clamp
+  behavior exactly, so both mechanisms behave identically at the low end.
+- `npm run lint` passed (0 errors). `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed `ammo-row__amount-value` present in
+  both the deployed JS and CSS.
+- **Not yet done**: owner hasn't tested live yet — ask them to confirm
+  the +/- buttons look and feel identical to the Healing potions' and
+  that stepping actually persists (Standard via inventory sync, the
+  elemental/poison types via the sheet's vitals sync).
+
 ## 2026-09-24 (30) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — Lava die fix, 2-line damage, grey-out-if-empty
 - Owner corrections/asks on (29)'s row layout:
   1. "The lava blowgun darts are also 1d6" — `AMMO_TYPES`'s lava entry had
