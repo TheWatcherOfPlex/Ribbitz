@@ -6,6 +6,73 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-25 (40) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — swept the rest of the character sheet for dice
+- Owner: "look over the rest of the character sheet, are there other
+  things we can go ahead and get the dice programmed for?" Read
+  `Actions.md`'s Special Actions section, `Class Features.md`, and
+  `Racial Traits.md` in full looking for anything with a real, complete
+  documented mechanic not yet wired up.
+- **Real gap found in already-shipped functionality**: `Class
+  Features.md`'s Dread Ambusher entry says "If that attack hits, the
+  target takes an extra 1d8 damage of the weapon's damage type" — the
+  Dread Ambusher damage button built in (24) never actually added that
+  bonus die, it just rolled Standard damage with a different label. Added
+  a dedicated "Dread Ambusher Damage" button to `RangedWeapon` in
+  `panels/AttackPanel.jsx` (weapon die + a separate labeled "Dread
+  Ambusher Bonus" 1d8, using `rollCompoundDamage` — same 2-dice-groups
+  approach as the ammo elemental system from (25)-(27), since dice-box
+  still can't parse a compound single-string notation).
+- **New buttons added to `panels/GrungPanel.jsx`** (previously plain
+  static text, no rolls at all):
+  - **Bite** / **Tongue Slap**: real Attack + Damage buttons
+    (Actions.md: STR+Proficiency to hit, 1d6+STR piercing damage).
+    Computed LIVE from `statMap` (`str-mod`/`proficiency`) the same way
+    every weapon button already works — this naturally resolves to +8
+    (STR +2, Proficiency +6), not the stale "+7" still hardcoded in the
+    old static text here and still printed as-is in `Actions.md`/`Racial
+    Traits.md`. **This is not the (12)-referenced math-audit fix** (that
+    backlog item is still deliberately untouched) — it's building new
+    functionality the correct, self-updating way instead of hardcoding a
+    number on purpose. Flagged here rather than assumed silently correct.
+  - **Long Jump** / **Standing Jump**: ability-check rolls
+    (`Racial Traits.md`: d20 + STR-or-DEX + Proficiency, player's choice
+    of ability) — added both a STR and a DEX button for each, since the
+    source text explicitly allows either. Standing Jump is the same roll
+    halved (round down) — same "roll the full result, halve it yourself"
+    convention as `SpellCastCard`'s save-half kind, for consistency.
+- **Deliberately left alone** — no clean documented number to build from,
+  didn't guess: **Tongue Grapple** ("target DEX save vs your STR
+  (Athletics)" — no explicit DC given, ambiguous whether this is a
+  contested check or a fixed-DC save) and **Poison Skin (passive)**
+  (reactive/automatic trigger, target's save, no damage die at all — a
+  roll button wouldn't add anything over the existing DC display).
+- `npm run lint` passed (0 errors). `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed "Dread Ambusher Bonus", "Tongue Slap",
+  and "Long Jump" all present in the deployed bundle.
+- **Not yet done**: owner hasn't tested this live yet. Specifically ask
+  about the Bite/Tongue Slap to-hit showing +8 instead of the sheet's
+  documented +7 — this was a deliberate engineering choice (live stat
+  computation, not a hardcoded guess) but is exactly the kind of
+  math-audit-adjacent change the owner said they'd rather handle when
+  they can focus in, so it's worth their explicit sign-off even though
+  it wasn't reverted.
+
+## ⚠️ OWNER TODO (flagged 2026-09-25, not yet done — surface this until resolved)
+Owner needs to look back over the items left out of (39)'s roll-button
+pass and get the missing numbers so they can be built properly instead of
+guessed. Don't invent these — ask the owner or wait for them:
+- **Paralysis Poison** — no save DC documented anywhere in Inventory.md.
+- **Whisper Rot** — has a DC (15) but only a debuff effect (-1d4 on
+  future attack rolls), no damage die — may not need a "roll button" in
+  the usual sense, worth discussing what it should actually do.
+- **Zenith Mountain-Touched Morsel** and **Dream Root** — both are
+  table-roll effects (roll a d4/d6 against an effects table), a different
+  shape than any existing `SpellCastCard` `kind` — needs a new `kind`
+  built deliberately for this pattern, not forced into save/attack/heal.
+- **Pond Poppers** — still fully blocked since (33), owner is checking
+  with their DM for the real damage die/DC.
+
 ## 2026-09-25 (39) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — roll buttons on Inventory page items
 - Owner: "yes keep going" (continuing from (38)'s options). Did the
   remaining-category naming review first — found and merged a real

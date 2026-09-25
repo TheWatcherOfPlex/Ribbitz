@@ -243,6 +243,27 @@ function RangedWeapon({
           label={`Heavy${ammoSuffix} (${dmgDie}${elementalDie ? '+' + elementalDie : ''}+${heavyDmgParts.reduce((s, p) => s + p.value, 0)})`}
           onClick={() => rollWeaponDamage(`${name} — Heavy Damage${ammoSuffix}`, dmgDie, heavyDmgParts)}
         />
+        {/* Dread Ambusher (Gloom Stalker 3rd level, Class Features.md): "If
+            that attack hits, the target takes an extra 1d8 damage of the
+            weapon's damage type" — a real gap found 2026-09-25 in the
+            button built 2026-09-23 (which only rolled Standard damage with
+            no bonus). Own bonus die, same piercing type as the weapon. */}
+        <AttackButton
+          label={`Dread Ambusher${ammoSuffix} (${dmgDie}${elementalDie ? '+' + elementalDie : ''}+1d8${
+            standardDmgParts.length ? '+' + standardDmgParts.reduce((s, p) => s + p.value, 0) : ''
+          })`}
+          onClick={() =>
+            rollCompoundDamage(
+              `${name} — Dread Ambusher Damage${ammoSuffix}`,
+              [
+                { notation: dmgDie, label: 'Piercing' },
+                { notation: '1d8', label: 'Dread Ambusher Bonus' },
+                ...(elementalDie ? [{ notation: elementalDie, label: ammoType.label }] : []),
+              ],
+              standardDmgParts,
+            )
+          }
+        />
       </div>
 
       {ammoType?.requiresSave ? <PoisonSaveNote dc={poisonDc} /> : null}

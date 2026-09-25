@@ -1,17 +1,26 @@
 import { Link } from 'react-router-dom'
 import TrackerGroup from '../components/TrackerGroup.jsx'
+import { rollDice, rollDamage, parseStatNumber } from '../lib/diceRoller.js'
 
 // Extracted from KitPanel.jsx (Grung Abilities half only) — split out per
 // owner request 2026-09-23: "Grung Abilities should be its own panel. We
-// may try to add it to something later if it makes sense." No attack
-// buttons added here yet — that's explicitly a possible future step, not
-// part of this split.
+// may try to add it to something later if it makes sense."
 //
-// Known pre-existing issue, NOT introduced or fixed by this extraction:
-// Tongue Slap / Bite below still show a stale "+7 hit" — the 2026-09-12
-// math audit found this should be +8 (PB+5 -> PB+6 leftover). Preserved
-// verbatim per the extraction principle; fix it as its own change if/when
-// the owner wants that audit's fixes applied.
+// 2026-09-25: added real Attack/Damage roll buttons for Bite and Tongue
+// Slap, and ability-check roll buttons for the two jumps (owner: "look
+// over the rest of the character sheet, are there other things we can go
+// ahead and get the dice programmed for?" — sourced from
+// ui/public/content/Actions.md's "Special Actions" section and Racial
+// Traits.md). Bite/Tongue Slap's to-hit is now computed LIVE from
+// statMap (Strength Modifier + Proficiency), the same way every weapon
+// button in AttackPanel.jsx already works — this naturally resolves to
+// +8 (STR +2, Proficiency +6), not the stale "+7" hardcoded in the old
+// static text here and still printed in Actions.md/Racial Traits.md.
+// This isn't a silent "math audit fix" (that backlog item is still
+// deferred) — it's simply building this new button the same correct,
+// self-updating way every other attack button already works instead of
+// hardcoding a number that would go stale the next time PB changes.
+// Flagged to the owner rather than assumed.
 
 function GrungDcBlock({ label, value, formula, linkTo }) {
   return (
@@ -26,6 +35,28 @@ function GrungDcBlock({ label, value, formula, linkTo }) {
 }
 
 export default function GrungPanel({ statMap, parseTracker, handleToggle }) {
+  const strMod = parseStatNumber(statMap?.['str-mod'])
+  const dexMod = parseStatNumber(statMap?.['dex-mod'])
+  const proficiency = parseStatNumber(statMap?.['proficiency'])
+
+  const jumpParts = (abilityLabel, abilityValue) => [
+    { label: abilityLabel, value: abilityValue },
+    { label: 'Proficiency Bonus', value: proficiency },
+  ]
+  const rollJump = (jumpLabel, abilityLabel, abilityValue, half) => {
+    if (!Number.isFinite(abilityValue) || !Number.isFinite(proficiency)) return
+    rollDice(`${jumpLabel} (${abilityLabel})${half ? ' — halve the total, round down' : ''}`, jumpParts(abilityLabel, abilityValue))
+  }
+
+  const bite = {
+    hitParts: [
+      { label: 'Strength Modifier', value: strMod },
+      { label: 'Proficiency Bonus', value: proficiency },
+    ],
+    dmgParts: [{ label: 'Strength Modifier', value: strMod }],
+  }
+  const hasBiteCore = Number.isFinite(strMod) && Number.isFinite(proficiency)
+
   return (
     <div className="panel__content grung-abilities">
       <div className="grung-abilities__pane">
@@ -71,23 +102,87 @@ export default function GrungPanel({ statMap, parseTracker, handleToggle }) {
 
       <div className="grung-abilities__pane">
         <div className="grung-jumping">
-          <div className="grung-jumping__row">
-            <strong>Long Jump - Running Start</strong>
-            <span>D20 + (Str. or Dex.) + Proficiency</span>
+          <div className="grung-jumping__row grung-jumping__row--rollable">
+            <strong>Long Jump — Running Start</strong>
+            <div className="attack-panel__group">
+              <button
+                type="button"
+                className="attack-panel__roll-btn"
+                onClick={() => rollJump('Long Jump', 'Strength Modifier', strMod, false)}
+              >
+                STR (+{strMod ?? '—'})
+              </button>
+              <button
+                type="button"
+                className="attack-panel__roll-btn"
+                onClick={() => rollJump('Long Jump', 'Dexterity Modifier', dexMod, false)}
+              >
+                DEX (+{dexMod ?? '—'})
+              </button>
+            </div>
           </div>
 
-          <div className="grung-jumping__row">
+          <div className="grung-jumping__row grung-jumping__row--rollable">
             <strong>Standing Jump</strong>
-            <span>(D20 + (Str. or Dex.) + Proficiency) / 2</span>
+            <div className="attack-panel__group">
+              <button
+                type="button"
+                className="attack-panel__roll-btn"
+                onClick={() => rollJump('Standing Jump', 'Strength Modifier', strMod, true)}
+              >
+                STR (+{strMod ?? '—'}) ÷2
+              </button>
+              <button
+                type="button"
+                className="attack-panel__roll-btn"
+                onClick={() => rollJump('Standing Jump', 'Dexterity Modifier', dexMod, true)}
+              >
+                DEX (+{dexMod ?? '—'}) ÷2
+              </button>
+            </div>
+            <span className="spell-cast__half-note">Roll shows the full result — halve the total, round down.</span>
           </div>
-          <div className="grung-jumping__row">
+
+          <div className="grung-jumping__row grung-jumping__row--rollable">
             <strong>Tongue Slap</strong>
-            <span>+7 hit • 1d6+2 pierce</span>
+            <div className="attack-panel__group">
+              <button
+                type="button"
+                className="attack-panel__roll-btn"
+                onClick={() => hasBiteCore && rollDice('Tongue Slap — Attack', bite.hitParts)}
+              >
+                Attack (+{strMod != null && proficiency != null ? strMod + proficiency : '—'})
+              </button>
+              <button
+                type="button"
+                className="attack-panel__roll-btn"
+                onClick={() => rollDamage('Tongue Slap — Damage', '1d6', bite.dmgParts)}
+              >
+                1d6+{strMod ?? '—'} <span className="dmg-badge dmg-badge--physical">Piercing</span>
+              </button>
+            </div>
           </div>
-          <div className="grung-jumping__row">
+
+          <div className="grung-jumping__row grung-jumping__row--rollable">
             <strong>Bite</strong>
-            <span>+7 hit • 1d6+2 pierce</span>
+            <div className="attack-panel__group">
+              <button
+                type="button"
+                className="attack-panel__roll-btn"
+                onClick={() => hasBiteCore && rollDice('Bite — Attack', bite.hitParts)}
+              >
+                Attack (+{strMod != null && proficiency != null ? strMod + proficiency : '—'})
+              </button>
+              <button
+                type="button"
+                className="attack-panel__roll-btn"
+                onClick={() => rollDamage('Bite — Damage', '1d6', bite.dmgParts)}
+              >
+                1d6+{strMod ?? '—'} <span className="dmg-badge dmg-badge--physical">Piercing</span>
+              </button>
+            </div>
           </div>
+
           <div className="grung-jumping__row">
             <strong>Tongue Grapple</strong>
             <span>10/15 ft • Dex save vs STR (Athletics)</span>
