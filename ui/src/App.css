@@ -577,7 +577,7 @@
 
 .inventory-table__row {
   display: grid;
-  grid-template-columns: 2fr 0.7fr 0.8fr 2fr 2fr 1.2fr;
+  grid-template-columns: 1.8fr 0.6fr 0.8fr 0.7fr 1.8fr 1.6fr 1fr 1.2fr;
   gap: 10px;
   align-items: center;
 }
@@ -649,16 +649,39 @@
   gap: 16px;
 }
 
+/* Each category gets its own background tint (owner ask, 2026-09-24) via
+   the --category-rgb custom property set inline per section in
+   InventoryPage.jsx (categoryColorRgb()) — a low-alpha wash over the
+   normal panel background, plus a matching left border and header color
+   so the category reads as a distinct block at a glance without being
+   overwhelming (still dark-mode/high-contrast friendly). */
 .inventory-group {
-  background: rgba(var(--bg-panel-rgb), 0.7);
+  background: rgba(var(--category-rgb, var(--bg-panel-rgb)), 0.12);
   border-radius: 16px;
   padding: 16px;
-  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  border: 1px solid rgba(var(--category-rgb, var(--accent-rgb)), 0.35);
+  border-left: 4px solid rgba(var(--category-rgb, var(--accent-rgb)), 0.9);
 }
 
 .inventory-group__header h3 {
   margin: 0 0 12px;
   font-size: 16px;
+  color: rgb(var(--category-rgb, var(--white-rgb)));
+}
+
+.inventory-attune-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inventory-attune-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(var(--white-rgb), 0.8);
+  white-space: nowrap;
 }
 
 .inventory-actions {

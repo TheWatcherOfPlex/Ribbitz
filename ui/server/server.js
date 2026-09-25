@@ -134,6 +134,14 @@ const parseInventoryRows = (rows) => {
       weight: row.D ?? '',
       notes: row.E ?? '',
       imageUrl: row.F ?? '',
+      // Added 2026-09-24 — see OBS Auto Sync/Engine/Google Apps Script
+      // Framework.gs's header comment for the column layout. Requires the
+      // Apps Script to be redeployed with that update before these
+      // actually populate (until then G/H/I don't exist in the sheet
+      // response and these stay blank/false).
+      unit: row.G ?? '',
+      requiresAttunement: String(row.H ?? '').toLowerCase() === 'true',
+      attuned: String(row.I ?? '').toLowerCase() === 'true',
     }))
 }
 
@@ -412,6 +420,9 @@ app.post('/api/inventory', async (req, res) => {
           weight: item.weight,
           outputFile: item.notes,
           extra: item.imageUrl,
+          unit: item.unit,
+          requiresAttunement: item.requiresAttunement ? 'TRUE' : 'FALSE',
+          attuned: item.attuned ? 'TRUE' : 'FALSE',
         })),
       ),
     })
@@ -446,11 +457,43 @@ app.post('/api/inventory/item', async (req, res) => {
           weight: item.weight,
           outputFile: item.notes,
           extra: item.imageUrl,
+          unit: item.unit,
+          requiresAttunement: item.requiresAttunement ? 'TRUE' : 'FALSE',
+          attuned: item.attuned ? 'TRUE' : 'FALSE',
         },
       ]),
     })
     if (!response.ok) {
       return res.status(500).json({ message: 'Failed to update inventory item' })
+    }
+    const payload = await response.json()
+    res.json({ success: true, payload })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+// Added 2026-09-25 after a real incident: batchUpdate matches Inventory
+// rows by exact name, so renaming an item leaves the old-named row behind
+// and appends a new one instead of replacing it. This is the cleanup tool
+// for that — deletes rows by exact name match. Deliberately narrow (no
+// matching by anything else) to avoid deleting the wrong row.
+app.post('/api/inventory/delete', async (req, res) => {
+  try {
+    const { names } = req.body || {}
+    if (!Array.isArray(names) || !names.length) {
+      return res.status(400).json({ message: 'names must be a non-empty array' })
+    }
+    if (!appsScriptUrl) {
+      return res.status(400).json({ message: 'APPS_SCRIPT_WEBAPP_URL is not configured' })
+    }
+    const response = await fetch(`${appsScriptUrl}?action=deleteRows&sheet=Inventory`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(names),
+    })
+    if (!response.ok) {
+      return res.status(500).json({ message: 'Failed to delete inventory rows' })
     }
     const payload = await response.json()
     res.json({ success: true, payload })

@@ -8,12 +8,48 @@ const defaultRow = {
   weight: '',
   notes: '',
   imageUrl: '',
+  // Added 2026-09-24 — owner ask: a Unit field ("doses", "gp", "vials",
+  // etc.) alongside Quantity for items that aren't just a plain count, plus
+  // an explicit Requires Attunement / Attuned pair (most items don't
+  // require attunement at all — only set requiresAttunement true for ones
+  // that actually do). Requires the Apps Script (OBS Auto Sync/Engine/
+  // Google Apps Script Framework.gs) to be redeployed with its 2026-09-24
+  // update for these to actually persist — see docs/PROGRESS_LOG.md.
+  unit: '',
+  requiresAttunement: false,
+  attuned: false,
 }
 const API_BASE = (import.meta.env.VITE_API_BASE || '/api').replace(/\/+$/, '')
 const apiFetch = (path, init) => fetch(`${API_BASE}${path}`, init)
 const CONTENT_BASE = import.meta.env.BASE_URL || '/'
 
 const formatCategoryLabel = (category) => (category ? category : 'Uncategorized')
+
+// Each category gets its own background tint (owner ask, 2026-09-24) so
+// they're visually distinct at a glance. Cycled by index for any category
+// not explicitly named here (e.g. a new one added later), so this never
+// silently stops working — it just falls back to a less-curated color.
+const CATEGORY_COLORS = {
+  'Armor & Clothing': '167, 139, 250',
+  'Combat Consumables': '244, 114, 182',
+  'Ammunition & Weapons': '251, 146, 60',
+  'Kits & Tools & Bags': '96, 165, 250',
+  Books: '250, 204, 21',
+  'Drugs & Herbs': '134, 239, 172',
+  'Currency & Valuables': '253, 224, 71',
+  Uncategorized: '148, 163, 184',
+}
+const CATEGORY_COLOR_FALLBACK_CYCLE = [
+  '167, 139, 250',
+  '244, 114, 182',
+  '251, 146, 60',
+  '96, 165, 250',
+  '134, 239, 172',
+  '253, 224, 71',
+]
+function categoryColorRgb(category, index) {
+  return CATEGORY_COLORS[category] || CATEGORY_COLOR_FALLBACK_CYCLE[index % CATEGORY_COLOR_FALLBACK_CYCLE.length]
+}
 
 function InventoryPage() {
   const [rows, setRows] = useState([])
@@ -229,6 +265,11 @@ function InventoryPage() {
             onChange={(event) => handleNewItemChange('quantity', event.target.value)}
           />
           <input
+            placeholder="Unit (doses, gp, vials...)"
+            value={newItem.unit}
+            onChange={(event) => handleNewItemChange('unit', event.target.value)}
+          />
+          <input
             placeholder="Weight"
             value={newItem.weight}
             onChange={(event) => handleNewItemChange('weight', event.target.value)}
@@ -259,6 +300,14 @@ function InventoryPage() {
             value={newCategory}
             onChange={(event) => setNewCategory(event.target.value)}
           />
+          <label className="inventory-attune-check">
+            <input
+              type="checkbox"
+              checked={newItem.requiresAttunement}
+              onChange={(event) => handleNewItemChange('requiresAttunement', event.target.checked)}
+            />
+            Requires Attunement
+          </label>
           <button className="primary" type="button" onClick={handleSubmitNewItem}>
             Add Item
           </button>
@@ -269,8 +318,12 @@ function InventoryPage() {
         <div className="inventory-table__loading">Loading inventory...</div>
       ) : (
         <div className="inventory-groups">
-          {categories.map((category) => (
-            <section key={category} className="inventory-group">
+          {categories.map((category, categoryIndex) => (
+            <section
+              key={category}
+              className="inventory-group"
+              style={{ '--category-rgb': categoryColorRgb(category, categoryIndex) }}
+            >
               <header className="inventory-group__header">
                 <h3>{category}</h3>
               </header>
@@ -278,9 +331,11 @@ function InventoryPage() {
                 <div className="inventory-table__row inventory-table__row--header">
                   <span>Name</span>
                   <span>Qty</span>
+                  <span>Unit</span>
                   <span>Weight</span>
                   <span>Notes</span>
                   <span>Image URL</span>
+                  <span>Attunement</span>
                   <span>Actions</span>
                 </div>
                 {(groupedRows[category] || []).map((row) => {
@@ -301,6 +356,11 @@ function InventoryPage() {
                         onChange={(event) => updateRow(index, 'quantity', event.target.value)}
                       />
                       <input
+                        placeholder="doses, gp..."
+                        value={row.unit || ''}
+                        onChange={(event) => updateRow(index, 'unit', event.target.value)}
+                      />
+                      <input
                         value={row.weight}
                         onChange={(event) => updateRow(index, 'weight', event.target.value)}
                       />
@@ -312,6 +372,25 @@ function InventoryPage() {
                         value={row.imageUrl}
                         onChange={(event) => updateRow(index, 'imageUrl', event.target.value)}
                       />
+                      <div className="inventory-attune-cell">
+                        <label className="inventory-attune-check">
+                          <input
+                            type="checkbox"
+                            checked={Boolean(row.requiresAttunement)}
+                            onChange={(event) => updateRow(index, 'requiresAttunement', event.target.checked)}
+                          />
+                          Requires
+                        </label>
+                        <label className="inventory-attune-check">
+                          <input
+                            type="checkbox"
+                            checked={Boolean(row.attuned)}
+                            disabled={!row.requiresAttunement}
+                            onChange={(event) => updateRow(index, 'attuned', event.target.checked)}
+                          />
+                          Attuned
+                        </label>
+                      </div>
                       <div className="inventory-actions">
                         <select
                           value={editCategory[index] || ''}

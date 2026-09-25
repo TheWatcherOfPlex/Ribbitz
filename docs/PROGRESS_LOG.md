@@ -6,6 +6,121 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-25 (36) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — Inventory page overhaul + a real incident (duplicate rows)
+- Owner direction: remove the Drugs & Herbs dashboard panel entirely (keep
+  inventory management on the Inventory page instead), then clean up the
+  Inventory page — inconsistent naming/abbreviations, add a "Unit" field
+  next to Quantity (for things like doses/jars/gp instead of being locked
+  to a plain count), and a background color per category. "When in doubt
+  ask me" — explicit standing instruction for this pass.
+- **Removed Drugs & Herbs from the dashboard**: deleted
+  `panels/InventoryPanel.jsx`, its `DashboardCanvas` entry in `App.jsx`,
+  and all the now-fully-dead state it was the only consumer of
+  (`drugStatuses`, `expandedDrugKey`/`setExpandedDrugKey`, `toggleDrugHerb`,
+  `drugsHerbsList`, `drugsHerbsCategory`, the associated localStorage
+  persistence effect). Confirmed dead via grep before removing each piece,
+  and via the §5.1 declaration-diff check after (one new intentional
+  removal, `drugsHerbsCategory` — confirmed correct). The underlying data
+  isn't lost — Drugs & Herbs items still live in the Inventory sheet and
+  show up as a normal category on `/inventory`.
+- **Schema extension for Unit + Attunement**: this required extending the
+  actual Google Sheet column layout (Inventory only ever had A-F: name/
+  qty/category/weight/notes/imageUrl) — added G=Unit, H=Requires
+  Attunement, I=Attuned. Changed 3 places together: `OBS Auto Sync/Engine/
+  Google Apps Script Framework.gs` (`handleGetValues_` now reads 9
+  columns not 6; `handleBatchUpdate_` writes the 3 new fields at explicit
+  column numbers 7/8/9, and appends them for new rows), `ui/server/
+  server.js` (`parseInventoryRows` reads G/H/I; both POST endpoints send
+  the 3 new fields), and `pages/InventoryPage.jsx` (Unit input next to
+  Qty; Requires Attunement + Attuned checkboxes, the second disabled
+  unless the first is checked). **Same constraint as the earlier
+  slots-7th issue**: Apps Script changes in this repo don't take effect
+  live until the owner manually redeploys via the Apps Script editor
+  (Manage deployments → Edit → New version) — I have no API/CLI access to
+  do that myself. Until redeployed, `unit`/`requiresAttunement`/`attuned`
+  read back as blank/false even after being set (G/H/I don't exist in the
+  live sheet's response yet).
+- **Category colors**: added `CATEGORY_COLORS`/`categoryColorRgb()` in
+  `InventoryPage.jsx` (named colors for the 7 real categories, falls back
+  to a cycling palette for anything new) applied via a `--category-rgb`
+  CSS custom property per `.inventory-group` section — background wash +
+  left border + header text tint, still dark-mode/high-contrast.
+- **Naming cleanup — asked before assuming, per the owner's instruction**:
+  used `AskUserQuestion` for every case that was genuinely ambiguous
+  rather than guessing on a live/shared character sheet:
+  - Found a real data bug while reviewing: "Gold Pieces: 252 gp" (a
+    number baked into the NAME) vs. a Quantity column value of 1500 —
+    these disagree. Owner confirmed **1500 is correct**.
+  - Confirmed the general rule: strip embedded counts like "(x11)",
+    "(3 doses)", "(2 vials)" out of names into real Quantity + the new
+    Unit field.
+  - Attunement markers ("✅ ATTUNED", "(Not Attuned)") move into the new
+    checkbox fields, not text in the name.
+  - Category names simplify: "Armor & Clothing (Layered System)" →
+    "Armor & Clothing", "Books (Borrowed from Balthazar)" → "Books"
+    (provenance detail moved into the 3 book items' Notes instead).
+  - "One Use DOUBT" was too cryptic to safely rename alone — owner
+    clarified it's a homebrew one-time spell scroll from their DM;
+    renamed to "Doubt (Spell Scroll, Homebrew)".
+  - "Bedroll" was miscategorized under Currency & Valuables — owner
+    confirmed moving it to Kits & Tools & Bags.
+- **Real incident — read this before touching Inventory data again**:
+  applied the confirmed rules to all 93 items and bulk-saved via
+  `POST /api/inventory`. This went wrong: **the Inventory sheet's
+  batchUpdate matches existing rows by exact item NAME** (there's no
+  stable ID column for Inventory, unlike Stats' Key column) — so every
+  one of the 24 items I RENAMED didn't match its own old row, and got
+  APPENDED as a brand-new row instead of replacing it. Net result: 24
+  duplicate items now exist in the live sheet (old messy name + new clean
+  name, both present) — confirmed via a follow-up GET
+  (93 items → 117 items, exactly 93 + 24). **This is a real mistake with
+  live consequences, not a hypothetical** — flagging it prominently
+  rather than glossing over it.
+  - Fix in progress: rather than asking the owner to manually delete 24
+    rows, added a proper `deleteRows` action to the same Apps Script
+    update (bundled into the SAME redeploy they already need for Unit/
+    Attunement) plus a new `POST /api/inventory/delete` server.js
+    endpoint (`{ names: [...] }`, deletes by exact name match, narrow and
+    deliberate — no fuzzy matching, to avoid deleting the wrong row).
+    Verified it fails cleanly right now (`{"error":"Unknown action"}`,
+    not a crash) since the live Apps Script doesn't have this action yet.
+  - **The exact 24 stale duplicate names to delete once redeployed** (all
+    still present in the live sheet with their OLD messy names — the
+    NEW clean-named rows with correct data are also already present and
+    should be KEPT): Amulet (+1 Ability Score) ✅ ATTUNED; Gloves of
+    Swimming and Climbing ✅ ATTUNED; Ring of Cold Resistance ✅ ATTUNED;
+    Tongue Ring of Taunting (Not Attuned); Beaded Crown Charm (Not
+    Attuned); Potion of Fireworks (x1 bottle); Potion of Haste (x2); Ink
+    Cap Poison (3 doses); Paralysis Poison (2 vials); Venom Berry Extract
+    (x5); Zibbit Basic Poison (x4); Frog Oil (Jar); Pond Poppers (x5);
+    Fire Darts (x11); Water Darts (x17); Lava Darts (x5); Enchanted Darts
+    +1 (x135); Ball Bearings (x989); Beige w/ Red Top Mushrooms (Bag);
+    Skyberry Fungus (2 doses); Red Ruby (x1); One Use DOUBT; Gold Pieces:
+    252 gp; 100 Golden Beetles.
+  - **Lesson for next time**: NEVER bulk-rename Inventory items via the
+    save API in one shot again without a stable per-row ID. Either (a)
+    do it one item at a time via the UI's per-row "Apply" flow so the
+    owner sees each change land, or (b) wait until an ID column exists,
+    or (c) always immediately re-fetch and check the item count matches
+    expectations before considering a bulk inventory write "done" — I
+    should have done step (c) here and caught this before reporting
+    anything as finished.
+- `npm run lint` passed (0 errors — confirms the dead-state removal from
+  the dashboard-panel deletion was clean). `npm run build` passed.
+  Deployed via `docker compose build ribbitz && docker compose up -d
+  ribbitz`.
+- **Owner must do before this is actually fixed**: (1) open the Apps
+  Script editor for the character sheet, replace/update the script with
+  this repo's current `OBS Auto Sync/Engine/Google Apps Script
+  Framework.gs`, redeploy (Manage deployments → Edit → New version) —
+  this single redeploy fixes BOTH the Unit/Attunement persistence AND
+  enables the delete-duplicates fix. (2) Tell the next session (or this
+  one, if resumed) once redeployed, so the 24 duplicate rows can be
+  removed via the new endpoint and the cleanup can continue for the
+  remaining categories (Kits & Tools & Bags, Drugs & Herbs, Currency &
+  Valuables weren't all touched this pass — only the items flagged during
+  review).
+
 ## 2026-09-24 (35) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — cast flow for Magic Abilities (non-spell)
 - Owner: "continue with the rest of the magic... this is how I want
   pretty much the whole UI to work... then we can move on to the items."

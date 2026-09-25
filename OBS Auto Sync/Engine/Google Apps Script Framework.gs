@@ -4,15 +4,19 @@
  * A = Label
  * B = Value
  * C = Type (dropdown)
- * D = Key (stable id; optional)
+ * D = Key (stable id; optional) — for Inventory, this slot holds Weight instead (see updateSheetFromJson/handleBatchUpdate_)
  * E = OutputFile (optional)
  * F = Extra (optional, e.g. image URL)
- * 
+ * G = Unit (Inventory only, 2026-09-24 addition — e.g. "doses", "gp", "vials", blank = plain count)
+ * H = Requires Attunement (Inventory only, 2026-09-24 addition — "TRUE"/"FALSE")
+ * I = Attuned (Inventory only, 2026-09-24 addition — "TRUE"/"FALSE", only meaningful if H is TRUE)
+ *
  * REST API Endpoints (Web App):
  * GET  ?action=getValues&sheet=Stats  → Returns all A:F values as JSON
- * GET  ?action=getValues&sheet=Inventory → Returns all A:F values as JSON
+ * GET  ?action=getValues&sheet=Inventory → Returns all A:I values as JSON (G/H/I blank for Stats)
  * POST ?action=batchUpdate&sheet=Stats → Updates multiple cells by Key
- * POST ?action=batchUpdate&sheet=Inventory → Updates multiple cells by Label (Column A)
+ * POST ?action=batchUpdate&sheet=Inventory → Updates multiple cells by Label (Column A); accepts
+ *      unit/requiresAttunement/attuned fields in addition to the original set
  */
 
 const CONFIG = {
@@ -278,37 +282,88 @@ function doGet(e) {
  * ?action=batchUpdate&sheet=Stats → Updates cells by Key
  * ?action=batchUpdate&sheet=Inventory → Updates/creates rows by Label (Column A)
  * Body: JSON array of { key, value, label?, type?, outputFile?, extra?, weight? }
+ * ?action=deleteRows&sheet=Inventory → Deletes rows by exact Label (Column A) match
+ * Body: JSON array of strings (exact item names to delete)
  */
 function doPost(e) {
   try {
     const action = e.parameter.action;
     const sheetName = e.parameter.sheet || CONFIG.sheetName;
-    
+
     if (action === "batchUpdate") {
       return handleBatchUpdate_(e, sheetName);
     }
-    
+    if (action === "deleteRows") {
+      return handleDeleteRows_(e, sheetName);
+    }
+
     return jsonResponse_({ error: "Unknown action" }, 400);
-    
+
   } catch (error) {
     return jsonResponse_({ error: error.toString() }, 500);
   }
 }
 
 /**
- * Returns all sheet values (A:E) as JSON array
+ * Deletes rows whose Column A (Label/name) exactly matches one of the
+ * given names. Added 2026-09-25 after a real incident: batchUpdate
+ * matches rows by name, so renaming an item via batchUpdate leaves the
+ * old-named row behind and appends a new one instead of replacing it —
+ * this is the cleanup tool for that, not a general-purpose delete (no
+ * matching-by-anything-else, deliberately narrow to avoid deleting the
+ * wrong row by accident).
+ */
+function handleDeleteRows_(e, sheetName) {
+  const sh = getSheet_(sheetName);
+  const lastRow = sh.getLastRow();
+  if (lastRow < 1) {
+    return jsonResponse_({ error: "Sheet is empty" }, 400);
+  }
+
+  let names;
+  try {
+    names = JSON.parse(e.postData.contents);
+  } catch (error) {
+    return jsonResponse_({ error: "Invalid JSON: " + error.toString() }, 400);
+  }
+  if (!Array.isArray(names)) {
+    return jsonResponse_({ error: "Body must be an array of names" }, 400);
+  }
+  const nameSet = new Set(names.map(n => String(n || "").trim()).filter(Boolean));
+  if (!nameSet.size) {
+    return jsonResponse_({ error: "No names given" }, 400);
+  }
+
+  const labels = sh.getRange(1, CONFIG.columns.label, lastRow, 1).getValues().flat();
+  // Delete bottom-up so earlier row numbers don't shift while iterating.
+  let deleted = 0;
+  for (let i = labels.length - 1; i >= 0; i--) {
+    const label = String(labels[i] || "").trim();
+    if (nameSet.has(label)) {
+      sh.deleteRow(i + 1);
+      deleted++;
+    }
+  }
+
+  return jsonResponse_({ success: true, deleted: deleted });
+}
+
+/**
+ * Returns all sheet values (A:I) as JSON array — G/H/I (Unit/Requires
+ * Attunement/Attuned) only meaningfully populated on the Inventory sheet,
+ * but always read/returned so the shape is consistent either way.
  */
 function handleGetValues_(sheetName) {
   const sh = getSheet_(sheetName);
   const lastRow = sh.getLastRow();
-  
+
   if (lastRow < 1) {
     return jsonResponse_({ rows: [] });
   }
-  
-  const range = sh.getRange(1, 1, lastRow, 6);
+
+  const range = sh.getRange(1, 1, lastRow, 9);
   const values = range.getValues();
-  
+
   const rows = [];
   for (let i = 0; i < values.length; i++) {
     const row = values[i];
@@ -319,10 +374,13 @@ function handleGetValues_(sheetName) {
       C: row[2] || "",
       D: row[3] || "",
       E: row[4] || "",
-      F: row[5] || ""
+      F: row[5] || "",
+      G: row[6] || "",
+      H: row[7] || "",
+      I: row[8] || ""
     });
   }
-  
+
   return jsonResponse_({ rows: rows });
 }
 
@@ -381,7 +439,10 @@ function handleBatchUpdate_(e, sheetName) {
           stat.type ?? '',
           stat.weight ?? '',
           stat.outputFile ?? '',
-          stat.extra ?? ''
+          stat.extra ?? '',
+          stat.unit ?? '',
+          stat.requiresAttunement ?? '',
+          stat.attuned ?? ''
         ])
       } else {
         rowsToAppend.push([
@@ -443,6 +504,20 @@ function handleBatchUpdate_(e, sheetName) {
         range: sh.getRange(row, CONFIG.columns.key),
         value: stat.weight
       });
+    }
+
+    // Unit (G) / Requires Attunement (H) / Attuned (I) — Inventory only,
+    // 2026-09-24 addition. Explicit column numbers since these don't fit
+    // the shared CONFIG.columns slots (those are already double-booked
+    // between Stats and Inventory's differing layouts).
+    if (sheetName === 'Inventory' && stat.unit !== undefined) {
+      updates.push({ range: sh.getRange(row, 7), value: stat.unit });
+    }
+    if (sheetName === 'Inventory' && stat.requiresAttunement !== undefined) {
+      updates.push({ range: sh.getRange(row, 8), value: stat.requiresAttunement });
+    }
+    if (sheetName === 'Inventory' && stat.attuned !== undefined) {
+      updates.push({ range: sh.getRange(row, 9), value: stat.attuned });
     }
   });
   

@@ -12,7 +12,6 @@ import PrimaryPanel from './panels/PrimaryPanel.jsx'
 import ExhaustionPanel from './panels/ExhaustionPanel.jsx'
 import MagicPanel from './panels/MagicPanel.jsx'
 import AttackPanel from './panels/AttackPanel.jsx'
-import InventoryPanel from './panels/InventoryPanel.jsx'
 import GrungPanel from './panels/GrungPanel.jsx'
 import TrackerGroup from './components/TrackerGroup.jsx'
 import StatControl from './components/StatControl.jsx'
@@ -156,7 +155,6 @@ const statUpdateMetadata = {
 const potionPoisonPattern = /(potion|poison|venom)/i
 const extraPotionPoisonNames = new Set(['Frog Oil (Jar)'])
 const combatConsumablesCategory = 'Combat Consumables'
-const drugsHerbsCategory = 'Drugs & Herbs'
 const healingConsumables = new Set([
   'Healing Potion (Common/Standard)',
   'Healing Potion (Greater)',
@@ -206,7 +204,6 @@ function App() {
   })
   const [statMap, setStatMap] = useState({})
   const [expandedSpellKey, setExpandedSpellKey] = useState('')
-  const [expandedDrugKey, setExpandedDrugKey] = useState('')
   const [expandedConditionKey, setExpandedConditionKey] = useState('')
   const [localInspiration, setLocalInspiration] = useState(() => {
     try {
@@ -249,16 +246,6 @@ function App() {
   const [conditions, setConditions] = useState(() => {
     try {
       const saved = window.localStorage.getItem('ribbitz.conditions')
-      const parsed = JSON.parse(saved)
-      return parsed && typeof parsed === 'object' ? parsed : {}
-    } catch {
-      return {}
-    }
-  })
-
-  const [drugStatuses, setDrugStatuses] = useState(() => {
-    try {
-      const saved = window.localStorage.getItem('ribbitz.drugsHerbs')
       const parsed = JSON.parse(saved)
       return parsed && typeof parsed === 'object' ? parsed : {}
     } catch {
@@ -535,14 +522,6 @@ function App() {
 
   useEffect(() => {
     try {
-      window.localStorage.setItem('ribbitz.drugsHerbs', JSON.stringify(drugStatuses))
-    } catch {
-      // ignore
-    }
-  }, [drugStatuses])
-
-  useEffect(() => {
-    try {
       window.localStorage.setItem('ribbitz.inspiration', String(localInspiration))
     } catch {
       // ignore
@@ -783,14 +762,6 @@ function App() {
     }))
   }
 
-  const toggleDrugHerb = (name) => {
-    const slug = slugifyHeading(name)
-    setDrugStatuses((prev) => ({
-      ...prev,
-      [slug]: !prev?.[slug],
-    }))
-  }
-
   const potionPoisonItems = useMemo(
     () =>
       inventoryItems
@@ -803,18 +774,6 @@ function App() {
         .sort((a, b) => a.name.localeCompare(b.name)),
     [inventoryItems],
   )
-
-  const drugsHerbsList = useMemo(() => {
-    const itemsByName = new Map()
-    inventoryItems
-      .filter((item) => item.category === drugsHerbsCategory)
-      .forEach((item) => {
-        if (item.name && !itemsByName.has(item.name)) {
-          itemsByName.set(item.name, item)
-        }
-      })
-    return Array.from(itemsByName.values()).sort((a, b) => a.name.localeCompare(b.name))
-  }, [inventoryItems])
 
   const pondPoppersQuantity = getInventoryQuantity(pondPoppersName, 0)
   const standardBlowgunDartsQuantity = getInventoryQuantity(standardBlowgunDartsName, 60)
@@ -997,23 +956,9 @@ function App() {
                     ),
                   },
                   {
-                    id: 'inventory-panel',
-                    title: 'Drugs & Herbs',
-                    layout: { x: 6, y: 98, w: 6, h: 30 },
-                    component: (
-                      <InventoryPanel
-                        drugsHerbsList={drugsHerbsList}
-                        expandedDrugKey={expandedDrugKey}
-                        setExpandedDrugKey={setExpandedDrugKey}
-                        drugStatuses={drugStatuses}
-                        toggleDrugHerb={toggleDrugHerb}
-                      />
-                    ),
-                  },
-                  {
                     id: 'grung',
                     title: 'Grung Abilities',
-                    layout: { x: 6, y: 128, w: 6, h: 30 },
+                    layout: { x: 6, y: 98, w: 6, h: 30 },
                     component: <GrungPanel statMap={statMap} parseTracker={parseTracker} handleToggle={handleToggle} />,
                   },
                 ]}
