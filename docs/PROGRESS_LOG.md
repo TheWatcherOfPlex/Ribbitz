@@ -6,6 +6,44 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-25 (37) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — (36)'s incident RESOLVED
+- Owner redeployed the Apps Script (`OBS Auto Sync/Engine/Google Apps
+  Script Framework.gs`) — confirmed via
+  `GET /api/inventory` returning `unit`/`requiresAttunement`/`attuned`
+  keys and a working `deleteRows` action (previously answered `{"error":
+  "Unknown action"}`).
+- Called `POST /api/inventory/delete` with the exact 24 stale duplicate
+  names logged in (36) — response `{"deleted": 24}`. Re-fetched and
+  confirmed: 93 items, zero duplicate names.
+- The original cleanup write in (36) happened BEFORE the redeploy, so the
+  old (then-live) script silently ignored the unit/requiresAttunement/
+  attuned fields it didn't know about yet — they were never actually
+  written to columns G/H/I. Re-sent the same cleaned dataset via
+  `POST /api/inventory` now that the new script is live:
+  `{"matched": 93, "notFound": 0, "cellsUpdated": 837, "rowsCreated": 0}`
+  — 0 rows created confirms this was a normal in-place update, not
+  another rename-causes-append situation (every item matched by its
+  already-current name from (36), nothing renamed again).
+- Verified the actual values landed: Rations (2 days), Cherry Bomb
+  Fireworks (3 clusters), the 5 attunement items (Amulet/Gloves/Ring
+  showing requiresAttunement=true+attuned=true, Tongue Ring/Beaded Crown
+  Charm showing requiresAttunement=true+attuned=false), Potion of
+  Fireworks (1 bottle), Ink Cap Poison (3 doses), Paralysis Poison
+  (2 vials), Frog Oil (1 jar), Beige with Red Top Mushrooms (bag),
+  Skyberry Fungus (2 doses), Doubt spell scroll (1 scroll), Gold Pieces
+  (1500 gp) — all correct.
+- **This incident is now fully closed.** The Inventory page's Unit/
+  Attunement fields will now actually persist across refreshes.
+- **Not yet done**: the remaining categories the owner hasn't explicitly
+  reviewed yet (most of Kits & Tools & Bags, most of Drugs & Herbs, the
+  rest of Currency & Valuables beyond what came up during review) weren't
+  touched — only items flagged during the (36) conversation were
+  cleaned. If the owner wants a full pass across every remaining item,
+  that's still open. Also still open from the owner's original ask:
+  wiring roll-button/cast-flow functionality onto Inventory page items
+  (health potions etc.) — this session's work covered structure/naming/
+  colors only, not the SpellCastCard-style roll integration yet.
+
 ## 2026-09-25 (36) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — Inventory page overhaul + a real incident (duplicate rows)
 - Owner direction: remove the Drugs & Herbs dashboard panel entirely (keep
   inventory management on the Inventory page instead), then clean up the
