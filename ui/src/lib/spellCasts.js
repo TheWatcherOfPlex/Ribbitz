@@ -19,6 +19,14 @@
 //                            usually with a choice of slot level.
 //   'ability-check'       — Ribbitz makes his own ability check (not the
 //                            target's save) — e.g. Dispel Magic.
+//   'damage-only'         — no attack/save at all, just a repeating or
+//                            automatic damage roll — e.g. Venom Berry
+//                            Extract's "1d4 poison per round, no save".
+//
+// `fixedDc` (2026-09-25): items (poisons, consumables) print their OWN
+// save DC on the item itself, independent of Ribbitz's own spell-dc stat
+// — set this to override the DC shown/used instead of statMap['spell-dc'].
+// Spells never set this (they all share Ribbitz's real spell-dc).
 //
 // `damage`: array of { label, die, dmgType } — dmgType keys into the
 // --dmg-* CSS custom properties (themes.css) for consistent color-coding.
@@ -145,5 +153,47 @@ export const SPELL_CASTS = {
     damage: [{ label: 'Thunder', die: '2d8', dmgType: 'thunder' }],
     note:
       'On a failed save: also deafened for 1 minute and pushed 10 ft away. Anyone within 15 ft of you is deafened for 1 turn regardless of their save.',
+  },
+
+  // --- Inventory items (2026-09-25) — sourced from each item's own Notes
+  // field on the Inventory page (Inventory.md's canonical text). These use
+  // `fixedDc` since each item prints its own DC, unrelated to Ribbitz's
+  // own spell-dc stat.
+  'healing-potion-common-standard': { kind: 'heal', heal: [{ label: 'Drink', die: '2d4', flatBonus: 2 }] },
+  'healing-potion-greater': { kind: 'heal', heal: [{ label: 'Drink', die: '4d4', flatBonus: 4 }] },
+  'healing-potion-superior': { kind: 'heal', heal: [{ label: 'Drink', die: '8d4', flatBonus: 8 }] },
+  'healing-potion-supreme': { kind: 'heal', heal: [{ label: 'Drink', die: '10d4', flatBonus: 20 }] },
+  'ink-cap-poison': {
+    kind: 'save-negates',
+    saveAbility: 'Constitution',
+    fixedDc: 17,
+    damage: [{ label: 'Poison', die: '3d6', dmgType: 'poison' }],
+    note: 'On a failed save the target is also poisoned. 3 doses used against the same target auto-fail its save.',
+  },
+  'zibbit-basic-poison': {
+    kind: 'save-negates',
+    saveAbility: 'Constitution',
+    fixedDc: 17,
+    damage: [{ label: 'Poison', die: '1d4', dmgType: 'poison' }],
+    note: 'On a failed save the target is also poisoned.',
+  },
+  'kings-regret': {
+    kind: 'save-negates',
+    saveAbility: 'Constitution',
+    fixedDc: 15,
+    damage: [{ label: 'Poison', die: '4d6', dmgType: 'poison' }],
+    note: 'On a failed save, target also can’t take reactions for 1 minute and repeats this CON save at the end of each of its turns.',
+  },
+  'frost-breath-puffball': {
+    kind: 'save-half',
+    saveAbility: 'Constitution',
+    fixedDc: 16,
+    damage: [{ label: 'Cold', die: '4d6', dmgType: 'cold' }],
+    note: '20 ft radius. On a failed save the target is also slowed for 1 round.',
+  },
+  'venom-berry-extract': {
+    kind: 'damage-only',
+    damage: [{ label: 'Poison', die: '1d4', dmgType: 'poison' }],
+    note: 'Repeats each round the poison is active; stacks with itself. Cured by status-curing magic.',
   },
 }

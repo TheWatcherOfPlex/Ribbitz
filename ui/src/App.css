@@ -684,6 +684,23 @@
   white-space: nowrap;
 }
 
+/* Roll-button wiring (2026-09-25) — items with real documented mechanics
+   (Healing Potions, poisons) get a Roll toggle in their Actions cell that
+   reveals a SpellCastCard below the row, same component used for weapon
+   attacks and spells. */
+.inventory-table__row-group {
+  display: contents;
+}
+
+.inventory-roll-toggle--active {
+  border-color: var(--color-white);
+}
+
+.inventory-roll-panel {
+  grid-column: 1 / -1;
+  padding: 4px 8px 10px;
+}
+
 .inventory-actions {
   display: flex;
   gap: 8px;

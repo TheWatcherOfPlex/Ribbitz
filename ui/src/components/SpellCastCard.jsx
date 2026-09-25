@@ -24,7 +24,10 @@ export default function SpellCastCard({ spellName, config, statMap }) {
   if (!config) return null
 
   const spellAttack = parseStatNumber(statMap?.['spell-attack'])
-  const spellDc = statMap?.['spell-dc'] ?? '18'
+  // Spells all share Ribbitz's own spell-dc (statMap). Items (poisons,
+  // consumables) have their OWN fixed DC printed on the item itself,
+  // independent of Ribbitz's stats — `config.fixedDc` overrides when set.
+  const spellDc = config.fixedDc ?? statMap?.['spell-dc'] ?? '18'
   const wisMod = parseStatNumber(statMap?.['wis-mod'])
   const proficiency = parseStatNumber(statMap?.['proficiency'])
 
@@ -168,28 +171,60 @@ export default function SpellCastCard({ spellName, config, statMap }) {
   }
 
   if (config.kind === 'heal') {
+    // `includeWisMod` is Ribbitz's own Wisdom Modifier (spells). `flatBonus`
+    // is a fixed number printed on the ITEM itself (e.g. a Healing
+    // Potion's "+2") — independent of Ribbitz's stats, so it's a separate
+    // field rather than reusing includeWisMod for both.
+    const healParts = (h) => {
+      const parts = []
+      if (h.includeWisMod && Number.isFinite(wisMod)) parts.push({ label: 'Wisdom Modifier', value: wisMod })
+      if (Number.isFinite(h.flatBonus)) parts.push({ label: 'Potion Bonus', value: h.flatBonus })
+      return parts
+    }
     return (
       <div className="spell-cast">
         <div className="spell-cast__row spell-cast__row--wrap">
           <span className="spell-cast__row-label">Heal</span>
-          {config.heal.map((h) => (
+          {config.heal.map((h) => {
+            const parts = healParts(h)
+            const bonusTotal = parts.reduce((sum, p) => sum + p.value, 0)
+            return (
+              <button
+                key={h.label}
+                type="button"
+                className="attack-panel__roll-btn"
+                onClick={() => rollDamage(`${spellName} — ${h.label}`, h.die, parts)}
+              >
+                {h.label}: {h.die}
+                {parts.length ? `+${bonusTotal}` : ''} <DmgBadge dmgType="healing">HP</DmgBadge>
+              </button>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
+  // No attack roll, no save — just a repeating/automatic damage die (e.g.
+  // Venom Berry Extract's "1d4 poison per round, no save"). Simplest kind,
+  // no Outcome toggle needed since there's nothing to determine first.
+  if (config.kind === 'damage-only') {
+    return (
+      <div className="spell-cast">
+        <div className="spell-cast__row spell-cast__row--wrap">
+          <span className="spell-cast__row-label">Damage</span>
+          {config.damage.map((d) => (
             <button
-              key={h.label}
+              key={d.label}
               type="button"
               className="attack-panel__roll-btn"
-              onClick={() =>
-                rollDamage(
-                  `${spellName} — ${h.label}`,
-                  h.die,
-                  h.includeWisMod && Number.isFinite(wisMod) ? [{ label: 'Wisdom Modifier', value: wisMod }] : [],
-                )
-              }
+              onClick={() => rollDamageDie(d.label, resolveDie(d), d.dmgType, false)}
             >
-              {h.label}: {h.die}
-              {h.includeWisMod ? `+${wisMod ?? '—'}` : ''} <DmgBadge dmgType="healing">HP</DmgBadge>
+              {resolveDie(d)} <DmgBadge dmgType={d.dmgType}>{d.label}</DmgBadge>
             </button>
           ))}
         </div>
+        {config.note ? <div className="spell-cast__note">{config.note}</div> : null}
       </div>
     )
   }

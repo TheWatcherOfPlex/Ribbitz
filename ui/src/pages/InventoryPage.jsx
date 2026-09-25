@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
 import { slugifyHeading } from '../utils/slugifyHeading.js'
+import { fetchStatMap } from '../lib/api.js'
+import { SPELL_CASTS } from '../lib/spellCasts.js'
+import SpellCastCard from '../components/SpellCastCard.jsx'
 
 const defaultRow = {
   name: '',
@@ -60,6 +63,15 @@ function InventoryPage() {
   const [newCategory, setNewCategory] = useState('')
   const [editCategory, setEditCategory] = useState({})
   const [editNewCategory, setEditNewCategory] = useState({})
+  // 2026-09-25: roll-button wiring for items with real documented mechanics
+  // (Healing Potions, poisons with a save/damage die) — same SpellCastCard
+  // used for weapon attacks and spells, see lib/spellCasts.js for the item
+  // entries. statMap is fetched independently here since InventoryPage
+  // otherwise has no reason to load it (only needed for Wisdom Modifier on
+  // potions that don't have their own fixed bonus — most items here use a
+  // fixedDc/flatBonus baked into the item itself, not Ribbitz's stats).
+  const [statMap, setStatMap] = useState({})
+  const [expandedRollKey, setExpandedRollKey] = useState('')
 
   const loadSeedInventory = async () => {
     const seedResponse = await fetch(`${CONTENT_BASE}content/seed-inventory.csv`)
@@ -125,6 +137,9 @@ function InventoryPage() {
 
   useEffect(() => {
     fetchInventory()
+    fetchStatMap()
+      .then(setStatMap)
+      .catch(() => {})
   }, [])
 
   const updateRow = (index, field, value) => {
@@ -341,9 +356,11 @@ function InventoryPage() {
                 {(groupedRows[category] || []).map((row) => {
                   const index = rows.indexOf(row)
                   const rowSlug = slugifyHeading(row.name)
+                  const castConfig = SPELL_CASTS[rowSlug]
+                  const rollExpanded = expandedRollKey === rowSlug
                   return (
+                    <div key={`${row.name}-${index}`} className="inventory-table__row-group">
                     <div
-                      key={`${row.name}-${index}`}
                       id={rowSlug}
                       className="inventory-table__row"
                     >
@@ -419,7 +436,22 @@ function InventoryPage() {
                         <button className="ghost" type="button" onClick={() => handleApplyCategory(index)}>
                           Apply
                         </button>
+                        {castConfig ? (
+                          <button
+                            className={`ghost inventory-roll-toggle${rollExpanded ? ' inventory-roll-toggle--active' : ''}`}
+                            type="button"
+                            onClick={() => setExpandedRollKey(rollExpanded ? '' : rowSlug)}
+                          >
+                            {rollExpanded ? '▾ Roll' : '▸ Roll'}
+                          </button>
+                        ) : null}
                       </div>
+                    </div>
+                    {rollExpanded && castConfig ? (
+                      <div className="inventory-roll-panel">
+                        <SpellCastCard spellName={row.name} config={castConfig} statMap={statMap} />
+                      </div>
+                    ) : null}
                     </div>
                   )
                 })}

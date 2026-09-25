@@ -6,6 +6,65 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-25 (39) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — roll buttons on Inventory page items
+- Owner: "yes keep going" (continuing from (38)'s options). Did the
+  remaining-category naming review first — found and merged a real
+  duplicate ("Chunk of Jade"/"Jade Piece", confirmed same gift item via
+  AskUserQuestion) — then moved to wiring roll buttons onto Inventory
+  page items, the other half of the owner's original ask this session.
+- Extended the shared cast-flow system (used for weapons and spells) to
+  handle ITEMS, which have their own fixed mechanics printed on the item
+  rather than sharing Ribbitz's stats:
+  - Added `fixedDc` to `SpellCastCard`/`spellCasts.js` — items print their
+    own save DC (e.g. Ink Cap Poison's DC 17) independent of
+    `statMap['spell-dc']`; `config.fixedDc` overrides when set, spells
+    never set it.
+  - Added a `flatBonus` field for the `heal` kind, distinct from
+    `includeWisMod` — Healing Potions have their own fixed bonus (e.g.
+    "2d4+2") that has nothing to do with Ribbitz's Wisdom modifier;
+    conflating the two would have been wrong the moment a spell and an
+    item's heal roll sat side by side.
+  - Added a new `damage-only` kind — no attack roll, no save, just a
+    repeating/automatic damage die (Venom Berry Extract: "1d4 poison per
+    round, no save mentioned in its own text").
+- Read each item's actual Notes text before adding it (not guessed) and
+  added 8 item entries to `lib/spellCasts.js`: the 4 Healing Potions
+  (heal, each with its own flatBonus: +2/+4/+8/+20), Ink Cap Poison and
+  Zibbit Basic Poison (save-negates, fixedDc 17, poison damage + a note
+  about the poisoned condition on fail), King's Regret (save-negates,
+  fixedDc 15, 4d6 poison + reaction-loss/repeat-save note), Frost Breath
+  Puffball (save-half, fixedDc 16, 4d6 cold + slow-on-fail note), Venom
+  Berry Extract (damage-only, 1d4 poison, stacking/curable note).
+- **Deliberately left out** (documented mechanics were incomplete —
+  didn't invent numbers): Paralysis Poison (no DC given), Whisper Rot (DC
+  given but debuff-only, no damage die), Zenith Mountain-Touched Morsel
+  and Dream Root (table-roll mechanics, a different shape than any
+  existing `kind` — would need a new kind built deliberately, not
+  shoehorned in), Golden Elixir and Packed Lunches (flat non-dice
+  amounts, not really "rolls"), Pond Poppers (already blocked in (33)
+  pending real numbers from the owner's DM).
+- **UI wiring** in `pages/InventoryPage.jsx`: fetches its own `statMap`
+  now (via `fetchStatMap()`, same pattern as `LevelUpPage.jsx` — the page
+  previously had no reason to load stats at all). Each item row with a
+  matching `SPELL_CASTS` entry (keyed by `slugifyHeading(row.name)`, same
+  scheme already used for spells/abilities) gets a "▸ Roll" toggle in its
+  Actions cell; expanding it renders `SpellCastCard` in a full-width panel
+  below that row (`.inventory-table__row-group` wraps the pair with
+  `display: contents` so `.inventory-table`'s row gap stays consistent
+  whether or not a panel is expanded).
+- `npm run lint` passed (0 errors). `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed `inventory-roll-toggle`, "Potion Bonus",
+  and `venom-berry-extract` all present in the deployed bundle.
+- **Not yet done**: owner hasn't tested this live yet — ask them to
+  expand a Healing Potion (confirm the flat bonus is right, not confused
+  with Wisdom Modifier) and one of the poisons (confirm the fixedDc shows
+  correctly, e.g. Ink Cap Poison should show DC 17, not Ribbitz's own
+  spell-dc of 18). The left-out items above are real gaps, not forgotten
+  — worth a follow-up pass once the owner has the missing numbers
+  (Paralysis Poison's DC, Whisper Rot's exact mechanic) or wants a new
+  `kind` built for table-roll items.
+
 ## 2026-09-25 (38) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — inventory naming pass complete, moving to roll buttons
 - Reviewed the 3 categories not explicitly touched in (36) (Kits & Tools
   & Bags, Drugs & Herbs, Currency & Valuables) — all already reasonably
