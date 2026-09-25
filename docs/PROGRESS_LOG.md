@@ -6,6 +6,21 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-25 (38) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — inventory naming pass complete, moving to roll buttons
+- Reviewed the 3 categories not explicitly touched in (36) (Kits & Tools
+  & Bags, Drugs & Herbs, Currency & Valuables) — all already reasonably
+  clean, no embedded counts or abbreviations left to fix. Found one real
+  duplicate: "Chunk of Jade" (Kits & Tools & Bags) and "Jade Piece"
+  (Currency & Valuables) were the same gift item listed twice (both
+  noted "from the Earth Genasi King"). Asked before touching it — owner
+  confirmed merge; deleted "Chunk of Jade" via
+  `POST /api/inventory/delete`, kept "Jade Piece". 92 items total now,
+  no known duplicates remain. Inventory naming/structure cleanup is
+  considered DONE for this pass.
+- Next: wiring `SpellCastCard`-style roll buttons onto Inventory page
+  items (owner's original ask — health potions and anything else with a
+  save/damage roll), per REBUILD_PLAN.md's cast-flow rollout note.
+
 ## 2026-09-25 (37) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — (36)'s incident RESOLVED
 - Owner redeployed the Apps Script (`OBS Auto Sync/Engine/Google Apps
   Script Framework.gs`) — confirmed via
