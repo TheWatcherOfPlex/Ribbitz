@@ -60,7 +60,14 @@ export default function GrungPanel({ statMap, parseTracker, handleToggle }) {
     dmgParts: [{ label: 'Strength Modifier', value: strMod }],
   }
   const hasBiteCore = Number.isFinite(strMod) && Number.isFinite(proficiency)
-  const athletics = parseStatNumber(statMap?.['skill-athletics'])
+  // Owner correction (2026-09-25): "Ribbits not prof. in athletics, he
+  // gets prof in bite and tongue grapple bc they are race abilities" —
+  // this is STR + Proficiency (same formula as Bite), NOT
+  // statMap['skill-athletics'] (his general Athletics skill, which has
+  // no proficiency). Racial Traits.md's own text confirms this reads as
+  // a plain "Strength (Athletics) check" granted by the racial feature
+  // itself, separate from skill proficiency.
+  const tongueGrappleCheck = strMod != null && proficiency != null ? strMod + proficiency : null
 
   return (
     <div className="panel__content grung-abilities">
@@ -195,16 +202,19 @@ export default function GrungPanel({ statMap, parseTracker, handleToggle }) {
                 type="button"
                 className="attack-panel__roll-btn"
                 onClick={() =>
-                  Number.isFinite(athletics) &&
-                  rollDice('Tongue Grapple — Athletics Check', [{ label: 'Athletics', value: athletics }])
+                  tongueGrappleCheck != null &&
+                  rollDice('Tongue Grapple — Strength (Athletics) Check', [
+                    { label: 'Strength Modifier', value: strMod },
+                    { label: 'Proficiency Bonus', value: proficiency },
+                  ])
                 }
               >
-                Athletics Check (+{athletics ?? '—'})
+                Strength (Athletics) Check (+{tongueGrappleCheck ?? '—'})
               </button>
             </div>
             <span className="spell-cast__half-note">
-              10/15 ft reach (tongue). Regular contested grapple — target resists with their own Athletics or
-              Acrobatics check, rolled at the table.
+              10/15 ft reach (tongue). Your total becomes the DC — the target makes a Dexterity saving throw
+              against it, rolled at the table.
             </span>
           </div>
         </div>

@@ -6,6 +6,34 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-25 (42) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — Tongue Grapple math fix + dagger proficiency answer
+- Owner: "no Ribbits not prof. in athletics, he gets prof in bite and
+  tongue grapple bc they are race abilities" — (41)'s Tongue Grapple
+  button wrongly reused `statMap['skill-athletics']` (his general
+  Athletics skill, +2, no proficiency). Fixed to STR Modifier +
+  Proficiency Bonus (+8, same formula as Bite/Tongue Slap) — Racial
+  Traits.md's own text ("The enemy must make a Dexterity saving throw
+  against your Strength (Athletics) check") confirms this is a check
+  granted directly by the racial feature, separate from skill
+  proficiency. Also corrected the button's description text: it's not an
+  opposed check (target doesn't roll their own Athletics/Acrobatics) —
+  Ribbitz's total becomes a DC, target makes a DEX saving throw against
+  it.
+- Owner also asked: "What gives me proficiency with a dagger?" —
+  researched rather than guessed (WebSearch, 2014 5e rules per the
+  owner's standing edition constraint): **both** of Ribbitz's classes
+  grant it independently — Ranger's simple-weapon proficiency covers
+  daggers, and Druid has its own curated weapon list (clubs, daggers,
+  darts, javelins, maces, quarterstaffs, scimitars, sickles, slings,
+  spears) that explicitly includes dagger despite it normally being a
+  metal weapon. Answered in chat, no code change needed (informational).
+- `npm run lint` passed (0 errors). `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed "Strength (Athletics) Check" present in
+  the deployed bundle.
+- **Not yet done**: owner hasn't tested the corrected Tongue Grapple
+  button live yet.
+
 ## 2026-09-25 (41) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — confirmed +8, Tongue Grapple wired up
 - Owner confirmed (40)'s two open questions:
   - "we can update the wrong bite/tongue math you are right I had that
