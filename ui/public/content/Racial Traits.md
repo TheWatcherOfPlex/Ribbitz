@@ -95,7 +95,7 @@ Your teeth are a powerful natural weapon. You deal piercing damage equal to **1d
 <details>
 <summary><h3>👅 Tongue Slap</h3></summary>
 
-**Ribbitz's Tongue Slap:** 1d6 + 2 (STR) piercing damage, +7 to hit
+**Ribbitz's Tongue Slap:** 1d6 + 2 (STR) piercing damage, +8 to hit (STR 2 + Proficiency 6 — corrected 2026-09-25, matches Actions.md; was stale +7 from before Proficiency Bonus increased to +6)
 
 **Official Text:**
 Your tongue is a powerful natural weapon, allowing you to make unarmed strikes that deal piercing damage equal to **1d6 + your Strength modifier**. You use the same hit bonus as an unarmed strike.

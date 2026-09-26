@@ -6,6 +6,40 @@ Newest entries at the top.
 
 ---
 
+## 2026-09-25 (41) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — confirmed +8, Tongue Grapple wired up
+- Owner confirmed (40)'s two open questions:
+  - "we can update the wrong bite/tongue math you are right I had that
+    wrong" — the +8 (live-computed) was correct, +7 was the actual
+    mistake. Fixed the stale doc: `Racial Traits.md` line 98 said "+7 to
+    hit" while `Actions.md` already said "+8" in 3 places for the same
+    math — only Racial Traits.md was never updated. Corrected to +8 with
+    a note explaining why, synced the root-level copy (same two-copies
+    gotcha as the Spells doc from (28)-(32)).
+  - "poison skin is just a check and an effect" — confirmed leaving it
+    without a roll button was correct, no change needed.
+  - "Tongue Grapple uses the same mechanics as a regular grapple, I just
+    get a 10 ft reach on doing that bc of the tongue" — this resolves the
+    ambiguity from (40): it's a real 5e contested grapple check (attacker
+    Athletics vs. target's Athletics-or-Acrobatics, target's choice), not
+    a fixed-DC save. Added an Athletics Check roll button to
+    `panels/GrungPanel.jsx`, reusing `statMap['skill-athletics']` — the
+    SAME precomputed skill bonus the Skills panel already rolls, rather
+    than recomputing STR+proficiency separately (respects whatever
+    proficiency status is already baked into that stat). The target's
+    resisting roll happens at the table, not tracked here (no NPC roller
+    in this app).
+- `npm run lint` passed (0 errors). `npm run build` passed. Deployed via
+  `docker compose build ribbitz && docker compose up -d ribbitz`;
+  `curl /` returns 200; confirmed "Tongue Grapple" button present in the
+  deployed bundle and "corrected 2026-09-25" present in the served
+  Racial Traits.md content.
+- **Not yet done**: owner hasn't tested the Tongue Grapple button live
+  yet — ask them to confirm the Athletics bonus shown matches what they'd
+  expect (currently +2, since `skill-athletics` shows no proficiency
+  bonus added — if Ribbitz IS actually proficient in Athletics this would
+  be wrong, but that's an existing stat-sheet value this session didn't
+  touch, not something introduced here).
+
 ## 2026-09-25 (40) — Claude (session_01HxUfGH7xyRjP9JoeBgPrJH) — swept the rest of the character sheet for dice
 - Owner: "look over the rest of the character sheet, are there other
   things we can go ahead and get the dice programmed for?" Read

@@ -7,20 +7,24 @@ import { rollDice, rollDamage, parseStatNumber } from '../lib/diceRoller.js'
 // may try to add it to something later if it makes sense."
 //
 // 2026-09-25: added real Attack/Damage roll buttons for Bite and Tongue
-// Slap, and ability-check roll buttons for the two jumps (owner: "look
-// over the rest of the character sheet, are there other things we can go
-// ahead and get the dice programmed for?" — sourced from
-// ui/public/content/Actions.md's "Special Actions" section and Racial
-// Traits.md). Bite/Tongue Slap's to-hit is now computed LIVE from
-// statMap (Strength Modifier + Proficiency), the same way every weapon
-// button in AttackPanel.jsx already works — this naturally resolves to
-// +8 (STR +2, Proficiency +6), not the stale "+7" hardcoded in the old
-// static text here and still printed in Actions.md/Racial Traits.md.
-// This isn't a silent "math audit fix" (that backlog item is still
-// deferred) — it's simply building this new button the same correct,
-// self-updating way every other attack button already works instead of
-// hardcoding a number that would go stale the next time PB changes.
-// Flagged to the owner rather than assumed.
+// Slap, ability-check roll buttons for the two jumps, and a Tongue
+// Grapple check (owner: "look over the rest of the character sheet, are
+// there other things we can go ahead and get the dice programmed for?"
+// — sourced from ui/public/content/Actions.md's "Special Actions"
+// section and Racial Traits.md). Bite/Tongue Slap's to-hit is computed
+// LIVE from statMap (Strength Modifier + Proficiency) = +8, matching
+// Actions.md — owner confirmed the old static "+7" here and in Racial
+// Traits.md was simply wrong/stale (Racial Traits.md corrected to +8 the
+// same day).
+//
+// Tongue Grapple (owner, 2026-09-25): "uses the same mechanics as a
+// regular grapple, I just get a 10 ft reach on doing that bc of the
+// tongue" — a normal 5e grapple is a CONTESTED check (attacker's
+// Athletics vs. the target's Athletics or Acrobatics, target's choice),
+// not a fixed-DC save. The button below rolls Ribbitz's own Athletics
+// check (reusing statMap['skill-athletics'], the same precomputed skill
+// bonus the Skills panel already uses) — the target's resisting roll
+// happens at the table, not here.
 
 function GrungDcBlock({ label, value, formula, linkTo }) {
   return (
@@ -56,6 +60,7 @@ export default function GrungPanel({ statMap, parseTracker, handleToggle }) {
     dmgParts: [{ label: 'Strength Modifier', value: strMod }],
   }
   const hasBiteCore = Number.isFinite(strMod) && Number.isFinite(proficiency)
+  const athletics = parseStatNumber(statMap?.['skill-athletics'])
 
   return (
     <div className="panel__content grung-abilities">
@@ -183,9 +188,24 @@ export default function GrungPanel({ statMap, parseTracker, handleToggle }) {
             </div>
           </div>
 
-          <div className="grung-jumping__row">
+          <div className="grung-jumping__row grung-jumping__row--rollable">
             <strong>Tongue Grapple</strong>
-            <span>10/15 ft • Dex save vs STR (Athletics)</span>
+            <div className="attack-panel__group">
+              <button
+                type="button"
+                className="attack-panel__roll-btn"
+                onClick={() =>
+                  Number.isFinite(athletics) &&
+                  rollDice('Tongue Grapple — Athletics Check', [{ label: 'Athletics', value: athletics }])
+                }
+              >
+                Athletics Check (+{athletics ?? '—'})
+              </button>
+            </div>
+            <span className="spell-cast__half-note">
+              10/15 ft reach (tongue). Regular contested grapple — target resists with their own Athletics or
+              Acrobatics check, rolled at the table.
+            </span>
           </div>
         </div>
       </div>
